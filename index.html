@@ -155,27 +155,125 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-my-first-blog" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-DO VPS搭建SS并使用ServerSpeeder加速" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/09/25/my-first-blog/">my-first-blog</a>
-    </h1>
-  
-
-        
-        <a href="/2017/09/25/my-first-blog/" class="archive-article-date">
-  	<time datetime="2017-09-25T10:29:35.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-25</time>
-</a>
-        
-      </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="一级标题"><a href="#一级标题" class="headerlink" title="一级标题"></a>一级标题</h1><h2 id="二级标题"><a href="#二级标题" class="headerlink" title="二级标题"></a>二级标题</h2><h3 id="三级标题"><a href="#三级标题" class="headerlink" title="三级标题"></a>三级标题</h3>
+        <h1 id="DO-VPS搭建SS并使用ServerSpeeder加速"><a href="#DO-VPS搭建SS并使用ServerSpeeder加速" class="headerlink" title="DO VPS搭建SS并使用ServerSpeeder加速"></a>DO VPS搭建SS并使用ServerSpeeder加速</h1><hr>
+<h2 id="1-关于SSH："><a href="#1-关于SSH：" class="headerlink" title="1. 关于SSH："></a>1. 关于SSH：</h2><p>如何生成密钥对？<br><a href="https://www.digitalocean.com/community/tutorials/how-to-use-ssh-keys-with-digitalocean-droplets" title="https://www.digitalocean.com/community/tutorials/how-to-use-ssh-keys-with-digitalocean-droplets" target="_blank" rel="external">Linux/MAC</a>      <strong>/</strong>  <a href="https://www.digitalocean.com/community/tutorials/how-to-use-ssh-keys-with-putty-on-digitalocean-droplets-windows-users" title="https://www.digitalocean.com/community/tutorials/how-to-use-ssh-keys-with-putty-on-digitalocean-droplets-windows-users" target="_blank" rel="external">Windows</a></p>
+<p>如果使用了密钥对，就可以不用每次登陆都输入密码。</p>
+<p>如果不用DO的sshkey上传，自己在客户端生成密钥对后，将公钥id_rsa.pub写进服务端的<code>/root/.ssh/authorized_keys</code>，然后到服务端<code>/etc/ssh/sshd_config</code>修改ssh配置： <strong>将”PasswordAuthentication yes”修改为”PasswordAuthentication no”</strong></p>
+<p>这样就可以不用每次登陆都输入密码，当然如果还是yes的话就可以在没有密钥对时通过密码登录。</p>
+<p>私钥保存在本地客户端就行了（windows下为.ppk文件，Linux下就是id_rsa）</p>
+<p>如果有多台终端设备，则在设备上生成密钥对后把公钥加在服务端的<code>/root/.ssh/authorized_keys</code>后面</p>
+<p>SSH其他常用配置选项：</p>
+<ul>
+<li>服务端<code>/etc/ssh/sshd_config</code>：</li>
+</ul>
+<p><strong>Port 22</strong><br>定义了SSH服务监听的断口号，SSH服务默认使用的端口号是22</p>
+<p><strong>Proctocol 2,1</strong><br>定义了SSH服务器使用SSH协议的顺序。默认识先使用SSH2协议，如果不成功则使用SSH1协议，为了安全起见，可以设置只使用SSH2协议。</p>
+<p><strong>ListenAddress 0.0.0.0</strong><br>定义SSH服务器帮定的IP地址,默认绑定服务器所有可用的IP地址.</p>
+<p><strong>PermitRootLogin yes</strong><br>定义是否允许管理员登陆</p>
+<p><strong>PermitEmptyPasswords no</strong><br>定义是否允许空密码登陆.</p>
+<p><strong>PasswordAuthentication no</strong><br>定义是否使用口令认证方式,如果准备使用公钥认证可以设置为no</p>
+<p><strong>AuthorizedKeysFile .ssh/authorized_keys</strong><br>定义默认公钥文件路径</p>
+<p>详细见官方文档<a href="https://man.openbsd.org/sshd_config" target="_blank" rel="external">https://man.openbsd.org/sshd_config</a></p>
+<ul>
+<li>客户端<code>/etc/ssh/ssh_config</code>:</li>
+</ul>
+<p>详细见官方文档<a href="https://man.openbsd.org/ssh_config" target="_blank" rel="external">https://man.openbsd.org/ssh_config</a></p>
+<h2 id="2-关于ServerSpeeder："><a href="#2-关于ServerSpeeder：" class="headerlink" title="2. 关于ServerSpeeder："></a>2. 关于ServerSpeeder：</h2><p>先安装serverspeeder（锐速），因为锐速对支持的Linux发行版本和内核版本都有要求，安装过程中可能会让更换内核并重启，目前锐速ServerSpeeder无限带宽破解版支持的内核有：</p>
+<ul>
+<li>CentOS-6.8：2.6.32-642.el7.x86_64</li>
+<li>CentOS-7.2：3.10.0-327.el7.x86_64</li>
+<li>CentOS：4.4.0-x86_64-linode63</li>
+<li>Ubuntu_14.04：4.2.0-35-generic</li>
+<li>Debian_8：3.16.0-4-amd64</li>
+</ul>
+<p>而DO官网提供的镜像都不符合，因此还是要更换内核（我在官网选择的版本为centos 7.3.1611 x64）：</p>
+<p>1、首先下载并更换内核：</p>
+<pre><code>rpm -ivh http://xz.wn789.com/CentOSkernel/kernel-3.10.0-229.1.2.el7.x86_64.rpm --force
+rpm -qa | grep kernel #查看内核是否安装成功
+</code></pre><p>2、重启VPS，查看内核是否修改成功：</p>
+<pre><code>reboot #重启VPS
+uname -r #当前使用内核版本
+</code></pre><p><img src="https://i.imgur.com/PcKzNJc.png" alt=""></p>
+<p>3、下载脚本到服务器，然后再执行脚本安装：</p>
+<pre><code>wget -N --no-check-certificate https://raw.githubusercontent.com/wn789/serverspeeder/master/serverspeeder.sh
+bash serverspeeder.sh
+</code></pre><p>4、安装过程很简单，如果你的VPS内核支持安装，根本无需你手动操作，直接一键完成</p>
+<p>5、锐速serverspeeder常用命令：</p>
+<pre><code>service serverSpeeder start #启动
+service serverSpeeder stop #停止
+service serverSpeeder reload #重新加载配置
+service serverSpeeder restart #重启
+service serverSpeeder status #状态
+service serverSpeeder stats #统计
+service serverSpeeder renewLic #更新许可文件
+service serverSpeeder update #更新
+chattr -i /serverspeeder/etc/apx* &amp;&amp; /serverspeeder/bin/serverSpeeder.sh uninstall -f #卸载
+</code></pre><h2 id="3-关于SS："><a href="#3-关于SS：" class="headerlink" title="3. 关于SS："></a>3. 关于SS：</h2><p>使用 <a href="https://teddysun.com/342.html" target="_blank" rel="external"><strong>一键安装 Python 版 Shadowsocks</strong></a> 安装</p>
+<p>安装方法：</p>
+<pre><code>wget --no-check-certificate -O shadowsocks.sh https://raw.githubusercontent.com/teddysun/shadowsocks_install/master/shadowsocks.sh
+chmod +x shadowsocks.sh
+./shadowsocks.sh 2&gt;&amp;1 | tee shadowsocks.log
+</code></pre><p>配置：</p>
+<p>服务器地址：vps主机公网ip</p>
+<p>服务器端口：如不设定，默认为 8989</p>
+<p>密码：如不设定，默认为 teddysun.com）</p>
+<p>加密方式：<strong>aes-256-cfb</strong>（如不设定，默认为 aes-256-gcm）</p>
+<p>安装完成后，脚本提示如下：</p>
+<p><img src="https://i.imgur.com/n6Ef5lC.png" alt=""></p>
+<p>卸载方法：</p>
+<p>./shadowsocks.sh uninstall</p>
+<p>单用户配置文件示例：<br>配置文件路径：/etc/shadowsocks.json</p>
+<pre><code>{
+&quot;server&quot;:&quot;0.0.0.0&quot;,
+&quot;server_port&quot;:your_server_port,
+&quot;local_address&quot;:&quot;127.0.0.1&quot;,
+&quot;local_port&quot;:1080,
+&quot;password&quot;:&quot;your_password&quot;,
+&quot;timeout&quot;:300,
+&quot;method&quot;:&quot;your_encryption_method&quot;,
+&quot;fast_open&quot;: false
+}
+</code></pre><p>多用户多端口配置文件示例：<br>配置文件路径：/etc/shadowsocks.json</p>
+<pre><code>{
+&quot;server&quot;:&quot;0.0.0.0&quot;,
+&quot;local_address&quot;:&quot;127.0.0.1&quot;,
+&quot;local_port&quot;:1080,
+&quot;port_password&quot;:{
+     &quot;8989&quot;:&quot;password0&quot;,
+     &quot;9001&quot;:&quot;password1&quot;,
+     &quot;9002&quot;:&quot;password2&quot;,
+     &quot;9003&quot;:&quot;password3&quot;,
+     &quot;9004&quot;:&quot;password4&quot;
+},
+&quot;timeout&quot;:300,
+&quot;method&quot;:&quot;your_encryption_method&quot;,
+&quot;fast_open&quot;: false
+}
+</code></pre><p>常用命令：</p>
+<pre><code>启动：/etc/init.d/shadowsocks start
+停止：/etc/init.d/shadowsocks stop
+重启：/etc/init.d/shadowsocks restart
+状态：/etc/init.d/shadowsocks status
+</code></pre><p>Shadowsocks for Windows 客户端下载：<br><a href="&quot;https://github.com/shadowsocks/shadowsocks-windows/releases&quot;">https://github.com/shadowsocks/shadowsocks-windows/releases</a></p>
+<p>客户端配置太简单，懒，直接上图：</p>
+<p><img src="https://i.imgur.com/uf0V4Kg.png" alt=""></p>
+<p>最后可以到油管搜索4K视频测试</p>
+<hr>
+<p>参考资料：</p>
+<ol>
+<li><a href="https://teddysun.com/342.html" target="_blank" rel="external">https://teddysun.com/342.html</a></li>
+<li><a href="https://www.wn789.com/4689.html" target="_blank" rel="external">https://www.wn789.com/4689.html</a></li>
+<li><a href="http://www.openssh.com/manual.html" target="_blank" rel="external">http://www.openssh.com/manual.html</a></li>
+<li><a href="https://www.digitalocean.com/community/tutorials/how-to-use-ssh-keys-with-putty-on-digitalocean-droplets-windows-users" target="_blank" rel="external">https://www.digitalocean.com/community/tutorials/how-to-use-ssh-keys-with-putty-on-digitalocean-droplets-windows-users</a></li>
+<li><a href="https://www.digitalocean.com/community/tutorials/how-to-use-ssh-keys-with-digitalocean-droplets" target="_blank" rel="external">https://www.digitalocean.com/community/tutorials/how-to-use-ssh-keys-with-digitalocean-droplets</a></li>
+<li><a href="http://www.cnblogs.com/x_wukong/p/5319440.html" target="_blank" rel="external">http://www.cnblogs.com/x_wukong/p/5319440.html</a></li>
+</ol>
+
       
 
       
@@ -187,78 +285,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2017/09/25/my-first-blog/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-hello-world" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/09/25/hello-world/">Hello World</a>
-    </h1>
-  
-
-        
-        <a href="/2017/09/25/hello-world/" class="archive-article-date">
-  	<time datetime="2017-09-25T09:33:01.056Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-25</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/09/25/hello-world/">展开全文 >></a>
+          <a class="article-more-a" href="/2017/09/27/DO VPS搭建SS并使用ServerSpeeder加速/">展开全文 >></a>
         </p>
       
 
