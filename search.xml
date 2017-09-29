@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search> 
+  
+    
+    <entry>
+      <title><![CDATA[DO VPS搭建SS并使用ServerSpeeder加速]]></title>
+      <url>/2017/09/27/DO-VPS%E6%90%AD%E5%BB%BASS%E5%B9%B6%E4%BD%BF%E7%94%A8ServerSpeeder%E5%8A%A0%E9%80%9F/</url>
+      <content type="html"><![CDATA[<p><img src="https://i.imgur.com/pouW57g.png" alt=""></p>
+<h2 id="有话说"><a href="#有话说" class="headerlink" title="有话说"></a>有话说</h2><p><strong>10$</strong> 的 <a href="&#39;https://m.do.co/c/ba18ef5fa022&#39;"><strong>邀请码</strong></a> 和 <a href="&quot;https://education.github.com/pack&quot;"><strong>github student pack</strong></a> 赠送的 <strong>50$</strong> 优惠券让我入了DO VPS的坑。想着就借此搭个SS也不错，才发现新加坡节点比旧金山稳定多了，然后开始各种折腾。do家的vps采用kvm架构且支持ipv6，可以在校外通过它连接byrBT，校内通过ipv6实现免流，且流量可以说是不限的。<br><a id="more"></a></p>
+<h2 id="关于SSH"><a href="#关于SSH" class="headerlink" title="关于SSH"></a>关于SSH</h2><p>如何生成密钥对？<br><a href="https://www.digitalocean.com/community/tutorials/how-to-use-ssh-keys-with-digitalocean-droplets" title="https://www.digitalocean.com/community/tutorials/how-to-use-ssh-keys-with-digitalocean-droplets" target="_blank" rel="external">Linux/MAC</a>      <strong>/</strong>  <a href="https://www.digitalocean.com/community/tutorials/how-to-use-ssh-keys-with-putty-on-digitalocean-droplets-windows-users" title="https://www.digitalocean.com/community/tutorials/how-to-use-ssh-keys-with-putty-on-digitalocean-droplets-windows-users" target="_blank" rel="external">Windows</a></p>
+<p>如果使用了密钥对，就可以不用每次登陆都输入密码。</p>
+<p>如果不用DO的sshkey上传，自己在客户端生成密钥对后，将公钥id_rsa.pub写进服务端的<code>/root/.ssh/authorized_keys</code>，然后到服务端<code>/etc/ssh/sshd_config</code>修改ssh配置： <strong>将”PasswordAuthentication yes”修改为”PasswordAuthentication no”</strong></p>
+<p>这样就可以不用每次登陆都输入密码，当然如果还是yes的话就可以在没有密钥对时通过密码登录。</p>
+<p>私钥保存在本地客户端就行了（windows下为.ppk文件，Linux下就是id_rsa）</p>
+<p>如果有多台终端设备，则在设备上生成密钥对后把公钥加在服务端的<code>/root/.ssh/authorized_keys</code>后面</p>
+<p>SSH其他常用配置选项：</p>
+<ul>
+<li>服务端<code>/etc/ssh/sshd_config</code>：</li>
+</ul>
+<p><strong>Port 22</strong><br>定义了SSH服务监听的断口号，SSH服务默认使用的端口号是22</p>
+<p><strong>Proctocol 2,1</strong><br>定义了SSH服务器使用SSH协议的顺序。默认识先使用SSH2协议，如果不成功则使用SSH1协议，为了安全起见，可以设置只使用SSH2协议。</p>
+<p><strong>ListenAddress 0.0.0.0</strong><br>定义SSH服务器帮定的IP地址,默认绑定服务器所有可用的IP地址.</p>
+<p><strong>PermitRootLogin yes</strong><br>定义是否允许管理员登陆</p>
+<p><strong>PermitEmptyPasswords no</strong><br>定义是否允许空密码登陆.</p>
+<p><strong>PasswordAuthentication no</strong><br>定义是否使用口令认证方式,如果准备使用公钥认证可以设置为no</p>
+<p><strong>AuthorizedKeysFile .ssh/authorized_keys</strong><br>定义默认公钥文件路径</p>
+<p>详细见官方文档<a href="https://man.openbsd.org/sshd_config" target="_blank" rel="external">https://man.openbsd.org/sshd_config</a></p>
+<ul>
+<li>客户端<code>/etc/ssh/ssh_config</code>:</li>
+</ul>
+<p>详细见官方文档<a href="https://man.openbsd.org/ssh_config" target="_blank" rel="external">https://man.openbsd.org/ssh_config</a></p>
+<h2 id="关于ServerSpeeder"><a href="#关于ServerSpeeder" class="headerlink" title="关于ServerSpeeder"></a>关于ServerSpeeder</h2><p>先安装serverspeeder（锐速），因为锐速对支持的Linux发行版本和内核版本都有要求，安装过程中可能会让更换内核并重启，目前锐速ServerSpeeder无限带宽破解版支持的内核有：</p>
+<ul>
+<li>CentOS-6.8：2.6.32-642.el7.x86_64</li>
+<li>CentOS-7.2：3.10.0-327.el7.x86_64</li>
+<li>CentOS：4.4.0-x86_64-linode63</li>
+<li>Ubuntu_14.04：4.2.0-35-generic</li>
+<li>Debian_8：3.16.0-4-amd64</li>
+</ul>
+<p>而DO官网提供的镜像都不符合，因此还是要更换内核（我在官网选择的版本为centos 7.3.1611 x64）：</p>
+<p>1、首先下载并更换内核：</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">rpm -ivh http:<span class="regexp">//</span>xz.wn789.com<span class="regexp">/CentOSkernel/</span>kernel-<span class="number">3.10</span>.<span class="number">0</span>-<span class="number">229.1</span>.<span class="number">2</span>.el7.x86_64.rpm --force</div><div class="line">rpm -qa | grep kernel <span class="comment">#查看内核是否安装成功</span></div></pre></td></tr></table></figure>
+<p>2、重启VPS，查看内核是否修改成功：<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">reboot</span> <span class="comment">#重启VPS</span></div><div class="line">uname -r <span class="comment">#当前使用内核版本</span></div></pre></td></tr></table></figure></p>
+<p><img src="https://i.imgur.com/PcKzNJc.png" alt=""></p>
+<p>3、下载脚本到服务器，然后再执行脚本安装：<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">wget -<span class="keyword">N</span> --<span class="keyword">no</span>-check-certificate http<span class="variable">s:</span>//raw.githubusercontent.<span class="keyword">com</span>/wn789/serverspeeder/master/serverspeeder.<span class="keyword">sh</span></div><div class="line">bash serverspeeder.<span class="keyword">sh</span></div></pre></td></tr></table></figure></p>
+<p>4、安装过程很简单，如果你的VPS内核支持安装，根本无需你手动操作，直接一键完成</p>
+<p>5、锐速serverspeeder常用命令：<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">service serverSpeeder start #启动</div><div class="line">service serverSpeeder stop #停止</div><div class="line">service serverSpeeder reload #重新加载配置</div><div class="line">service serverSpeeder restart #重启</div><div class="line">service serverSpeeder status #状态</div><div class="line">service serverSpeeder stats #统计</div><div class="line">service serverSpeeder renewLic #更新许可文件</div><div class="line">service serverSpeeder update #更新</div><div class="line">chattr -i /serverspeeder/etc/apx* &amp;&amp; /serverspeeder/bin/serverSpeeder.sh uninstall -f #卸载</div></pre></td></tr></table></figure></p>
+<h2 id="关于SS"><a href="#关于SS" class="headerlink" title="关于SS"></a>关于SS</h2><p>使用 <a href="https://teddysun.com/342.html" target="_blank" rel="external"><strong>一键安装 Python 版 Shadowsocks</strong></a> 安装</p>
+<p>安装方法：<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">wget --<span class="keyword">no</span>-check-certificate -O shadowsocks.<span class="keyword">sh</span> http<span class="variable">s:</span>//raw.githubusercontent.<span class="keyword">com</span>/teddysun/shadowsocks_install/master/shadowsocks.<span class="keyword">sh</span></div><div class="line">chmod +<span class="keyword">x</span> shadowsocks.<span class="keyword">sh</span></div><div class="line">./shadowsocks.<span class="keyword">sh</span> <span class="number">2</span>&gt;&amp;<span class="number">1</span> | tee shadowsocks.<span class="built_in">log</span></div></pre></td></tr></table></figure></p>
+<p>配置：</p>
+<p>服务器地址：vps主机公网ip</p>
+<p>服务器端口：如不设定，默认为 8989</p>
+<p>密码：如不设定，默认为 teddysun.com）</p>
+<p>加密方式：<strong>aes-256-cfb</strong>（如不设定，默认为 aes-256-gcm）</p>
+<p>安装完成后，脚本提示如下：</p>
+<p><img src="https://i.imgur.com/n6Ef5lC.png" alt=""></p>
+<p>卸载方法：</p>
+<p>./shadowsocks.sh uninstall</p>
+<p>单用户配置文件示例：<br>配置文件路径：/etc/shadowsocks.json<br><figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line"><span class="attr">"server"</span>:<span class="string">"0.0.0.0"</span>,</div><div class="line"><span class="attr">"server_port"</span>:your_server_port,</div><div class="line"><span class="attr">"local_address"</span>:<span class="string">"127.0.0.1"</span>,</div><div class="line"><span class="attr">"local_port"</span>:<span class="number">1080</span>,</div><div class="line"><span class="attr">"password"</span>:<span class="string">"your_password"</span>,</div><div class="line"><span class="attr">"timeout"</span>:<span class="number">300</span>,</div><div class="line"><span class="attr">"method"</span>:<span class="string">"your_encryption_method"</span>,</div><div class="line"><span class="attr">"fast_open"</span>: <span class="literal">false</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>多用户多端口配置文件示例：<br>配置文件路径：/etc/shadowsocks.json<br><figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line"><span class="attr">"server"</span>:<span class="string">"0.0.0.0"</span>,</div><div class="line"><span class="attr">"local_address"</span>:<span class="string">"127.0.0.1"</span>,</div><div class="line"><span class="attr">"local_port"</span>:<span class="number">1080</span>,</div><div class="line"><span class="attr">"port_password"</span>:&#123;</div><div class="line"> 	<span class="attr">"8989"</span>:<span class="string">"password0"</span>,</div><div class="line"> 	<span class="attr">"9001"</span>:<span class="string">"password1"</span>,</div><div class="line"> 	<span class="attr">"9002"</span>:<span class="string">"password2"</span>,</div><div class="line"> 	<span class="attr">"9003"</span>:<span class="string">"password3"</span>,</div><div class="line"> 	<span class="attr">"9004"</span>:<span class="string">"password4"</span></div><div class="line">&#125;,</div><div class="line"><span class="attr">"timeout"</span>:<span class="number">300</span>,</div><div class="line"><span class="attr">"method"</span>:<span class="string">"your_encryption_method"</span>,</div><div class="line"><span class="attr">"fast_open"</span>: <span class="literal">false</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>常用命令：<br><figure class="highlight dts"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">启动：<span class="meta-keyword">/etc/</span>init.d/shadowsocks start</div><div class="line">停止：<span class="meta-keyword">/etc/</span>init.d/shadowsocks stop</div><div class="line">重启：<span class="meta-keyword">/etc/</span>init.d/shadowsocks restart</div><div class="line">状态：<span class="meta-keyword">/etc/</span>init.d/shadowsocks status</div></pre></td></tr></table></figure></p>
+<p>Shadowsocks for Windows 客户端下载：<br><a href="&quot;https://github.com/shadowsocks/shadowsocks-windows/releases&quot;">https://github.com/shadowsocks/shadowsocks-windows/releases</a></p>
+<p>客户端配置太简单，懒，直接上图：</p>
+<p><img src="https://i.imgur.com/uf0V4Kg.png" alt=""></p>
+<p>最后可以到油管搜索4K视频测试</p>
+<hr>
+<p>参考文章：</p>
+<ol>
+<li><a href="https://teddysun.com/342.html" target="_blank" rel="external">https://teddysun.com/342.html</a></li>
+<li><a href="https://www.wn789.com/4689.html" target="_blank" rel="external">https://www.wn789.com/4689.html</a></li>
+<li><a href="http://www.openssh.com/manual.html" target="_blank" rel="external">http://www.openssh.com/manual.html</a></li>
+<li><a href="https://www.digitalocean.com/community/tutorials/how-to-use-ssh-keys-with-putty-on-digitalocean-droplets-windows-users" target="_blank" rel="external">https://www.digitalocean.com/community/tutorials/how-to-use-ssh-keys-with-putty-on-digitalocean-droplets-windows-users</a></li>
+<li><a href="https://www.digitalocean.com/community/tutorials/how-to-use-ssh-keys-with-digitalocean-droplets" target="_blank" rel="external">https://www.digitalocean.com/community/tutorials/how-to-use-ssh-keys-with-digitalocean-droplets</a></li>
+<li><a href="http://www.cnblogs.com/x_wukong/p/5319440.html" target="_blank" rel="external">http://www.cnblogs.com/x_wukong/p/5319440.html</a></li>
+</ol>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> VPS </tag>
+            
+            <tag> 翻墙 </tag>
+            
+            <tag> SSH </tag>
+            
+            <tag> 加速 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+  
+  
+</search>
