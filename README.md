@@ -24,7 +24,7 @@
 livere:
   on: true
 ```
-然后在==\themes\yelee\layout\_partial\comments==下添加==livere.ejs==，把livere安装代码复制进去，文件内容如下，**其中data-uid就是你自己的data-uid**：
+然后在`\themes\yelee\layout\_partial\comments`下添加`livere.ejs`，把livere安装代码复制进去，文件内容如下，**其中data-uid就是你自己的data-uid**：
 
 ``` gcode?linenums
 <!-- 来必力City版安装代码 -->
@@ -46,9 +46,9 @@ livere:
 </div>
 <!-- City版安装代码已完成 -->
 ```
-**注意官网livere给的安装代码没有“margin-left:30px;margin-right:30px”，这个样式是为了不与左边栏叠加**
+**注意官网livere给的安装代码没有`margin-left:30px;margin-right:30px`，这个样式是为了不与左边栏叠加**
 
-最后在==\themes\yelee\layout\_partial\article.ejs==中的==<% if (!index && post.comments){ %>==后面插入：
+最后在`\themes\yelee\layout\_partial\article.ejs`中的`<% if (!index && post.comments){ %>`后面插入：
 
 ``` gcode?linenums
 <% if (theme.livere.on){ %>
