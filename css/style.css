@@ -2351,6 +2351,10 @@ pre .javascript .function {
 .share:hover {
   opacity: 1;
 }
+.addthis_sharing_toolbox {
+  margin-top: 0.5em;
+  margin-left: -2px;
+}
 #page-nav {
   text-align: center;
   margin-top: 30px;
