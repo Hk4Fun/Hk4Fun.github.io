@@ -16,6 +16,8 @@
 
 评论系统：[来必力（livere）][10]
 
+写作工具：[小书匠][11]
+
 由于yelee没有加入livere评论系统，需要自己添加:
 
 首先在主题的 `_config.yml `文件中添加如下配置：
@@ -61,7 +63,6 @@ livere:
 至此，为yelee主题添加livere评论插件完成
 
 
-
   [1]: https://pages.github.com/
   [2]: https://hexo.io/
   [3]: https://github.com/MOxFIVE/hexo-theme-yelee
@@ -72,4 +73,4 @@ livere:
   [8]: https://tongji.baidu.com/web/welcome/login
   [9]: http://ibruce.info/2015/04/04/busuanzi/
   [10]: https://livere.com/
-  [11]: http://www.zhoujy.me/2017/07/16/livere/
+  [11]: http://soft.xiaoshujiang.com/
