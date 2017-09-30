@@ -18,7 +18,7 @@
 
 由于yelee没有加入livere评论系统，需要自己添加:
 
-首先在主题的 _config.yml 文件中添加如下配置：
+首先在主题的 `_config.yml `文件中添加如下配置：
 
 ``` yaml
 livere:
