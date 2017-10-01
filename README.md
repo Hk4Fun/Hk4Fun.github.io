@@ -62,6 +62,8 @@ livere:
 ```
 至此，为yelee主题添加livere评论插件完成
 
+最后向Hexo作者tommy致敬！（附上[Hexo起源之地][12]）
+
 
   [1]: https://pages.github.com/
   [2]: https://hexo.io/
@@ -74,3 +76,4 @@ livere:
   [9]: http://ibruce.info/2015/04/04/busuanzi/
   [10]: https://livere.com/
   [11]: http://soft.xiaoshujiang.com/
+  [12]: https://zespia.tw/blog/2012/10/11/hexo-debut/
