@@ -22,15 +22,15 @@
 <meta property="og:url" content="https://hk4fun.github.io/2017/09/27/DO-VPS搭建SS并使用ServerSpeeder加速/index.html">
 <meta property="og:site_name" content="Hk4Fun&#39;s Blog">
 <meta property="og:description" content="有话说10$ 的 邀请码 和 github student pack 赠送的 50$ 优惠券让我入了DO VPS的坑。想着就借此搭个SS也不错，才发现新加坡节点比旧金山稳定多了，然后开始各种折腾。do家的vps采用kvm架构且支持ipv6，可以在校外通过它连接byrBT，校内通过ipv6实现免流，且流量可以说是不限的。">
-<meta property="og:image" content="https://i.imgur.com/pouW57g.png">
-<meta property="og:image" content="https://i.imgur.com/PcKzNJc.png">
-<meta property="og:image" content="https://i.imgur.com/n6Ef5lC.png">
-<meta property="og:image" content="https://i.imgur.com/uf0V4Kg.png">
-<meta property="og:updated_time" content="2017-09-29T10:57:32.170Z">
+<meta property="og:image" content="http://ox186n2j0.bkt.clouddn.com/1506760779094.jpg">
+<meta property="og:image" content="http://ox186n2j0.bkt.clouddn.com/1506760764914.jpg">
+<meta property="og:image" content="http://ox186n2j0.bkt.clouddn.com/1506760763636.jpg">
+<meta property="og:image" content="http://ox186n2j0.bkt.clouddn.com/1506760765315.jpg">
+<meta property="og:updated_time" content="2017-10-01T05:41:31.343Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="DO VPS搭建SS并使用ServerSpeeder加速">
 <meta name="twitter:description" content="有话说10$ 的 邀请码 和 github student pack 赠送的 50$ 优惠券让我入了DO VPS的坑。想着就借此搭个SS也不错，才发现新加坡节点比旧金山稳定多了，然后开始各种折腾。do家的vps采用kvm架构且支持ipv6，可以在校外通过它连接byrBT，校内通过ipv6实现免流，且流量可以说是不限的。">
-<meta name="twitter:image" content="https://i.imgur.com/pouW57g.png">
+<meta name="twitter:image" content="http://ox186n2j0.bkt.clouddn.com/1506760779094.jpg">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -314,7 +314,7 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p><img src="https://i.imgur.com/pouW57g.png" alt=""></p>
+        <p><img src="http://ox186n2j0.bkt.clouddn.com/1506760779094.jpg" alt=""></p>
 <h2 id="有话说"><a href="#有话说" class="headerlink" title="有话说"></a>有话说</h2><p><strong>10$</strong> 的 <a href="&#39;https://m.do.co/c/ba18ef5fa022&#39;"><strong>邀请码</strong></a> 和 <a href="&quot;https://education.github.com/pack&quot;"><strong>github student pack</strong></a> 赠送的 <strong>50$</strong> 优惠券让我入了DO VPS的坑。想着就借此搭个SS也不错，才发现新加坡节点比旧金山稳定多了，然后开始各种折腾。do家的vps采用kvm架构且支持ipv6，可以在校外通过它连接byrBT，校内通过ipv6实现免流，且流量可以说是不限的。<br><a id="more"></a></p>
 <h2 id="关于SSH"><a href="#关于SSH" class="headerlink" title="关于SSH"></a>关于SSH</h2><p>如何生成密钥对？<br><a href="https://www.digitalocean.com/community/tutorials/how-to-use-ssh-keys-with-digitalocean-droplets" title="https://www.digitalocean.com/community/tutorials/how-to-use-ssh-keys-with-digitalocean-droplets" target="_blank" rel="external">Linux/MAC</a>      <strong>/</strong>  <a href="https://www.digitalocean.com/community/tutorials/how-to-use-ssh-keys-with-putty-on-digitalocean-droplets-windows-users" title="https://www.digitalocean.com/community/tutorials/how-to-use-ssh-keys-with-putty-on-digitalocean-droplets-windows-users" target="_blank" rel="external">Windows</a></p>
 <p>如果使用了密钥对，就可以不用每次登陆都输入密码。</p>
@@ -350,7 +350,7 @@
 <p>1、首先下载并更换内核：</p>
 <figure class="highlight awk"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">rpm -ivh http:<span class="regexp">//</span>xz.wn789.com<span class="regexp">/CentOSkernel/</span>kernel-<span class="number">3.10</span>.<span class="number">0</span>-<span class="number">229.1</span>.<span class="number">2</span>.el7.x86_64.rpm --force</div><div class="line">rpm -qa | grep kernel <span class="comment">#查看内核是否安装成功</span></div></pre></td></tr></table></figure>
 <p>2、重启VPS，查看内核是否修改成功：<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">reboot</span> <span class="comment">#重启VPS</span></div><div class="line">uname -r <span class="comment">#当前使用内核版本</span></div></pre></td></tr></table></figure></p>
-<p><img src="https://i.imgur.com/PcKzNJc.png" alt=""></p>
+<p><img src="http://ox186n2j0.bkt.clouddn.com/1506760764914.jpg" alt=""></p>
 <p>3、下载脚本到服务器，然后再执行脚本安装：<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">wget -<span class="keyword">N</span> --<span class="keyword">no</span>-check-certificate http<span class="variable">s:</span>//raw.githubusercontent.<span class="keyword">com</span>/wn789/serverspeeder/master/serverspeeder.<span class="keyword">sh</span></div><div class="line">bash serverspeeder.<span class="keyword">sh</span></div></pre></td></tr></table></figure></p>
 <p>4、安装过程很简单，如果你的VPS内核支持安装，根本无需你手动操作，直接一键完成</p>
 <p>5、锐速serverspeeder常用命令：<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">service serverSpeeder start #启动</div><div class="line">service serverSpeeder stop #停止</div><div class="line">service serverSpeeder reload #重新加载配置</div><div class="line">service serverSpeeder restart #重启</div><div class="line">service serverSpeeder status #状态</div><div class="line">service serverSpeeder stats #统计</div><div class="line">service serverSpeeder renewLic #更新许可文件</div><div class="line">service serverSpeeder update #更新</div><div class="line">chattr -i /serverspeeder/etc/apx* &amp;&amp; /serverspeeder/bin/serverSpeeder.sh uninstall -f #卸载</div></pre></td></tr></table></figure></p>
@@ -362,7 +362,7 @@
 <p>密码：如不设定，默认为 teddysun.com）</p>
 <p>加密方式：<strong>aes-256-cfb</strong>（如不设定，默认为 aes-256-gcm）</p>
 <p>安装完成后，脚本提示如下：</p>
-<p><img src="https://i.imgur.com/n6Ef5lC.png" alt=""></p>
+<p><img src="http://ox186n2j0.bkt.clouddn.com/1506760763636.jpg" alt=""></p>
 <p>卸载方法：</p>
 <p>./shadowsocks.sh uninstall</p>
 <p>单用户配置文件示例：<br>配置文件路径：/etc/shadowsocks.json<br><figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line"><span class="attr">"server"</span>:<span class="string">"0.0.0.0"</span>,</div><div class="line"><span class="attr">"server_port"</span>:your_server_port,</div><div class="line"><span class="attr">"local_address"</span>:<span class="string">"127.0.0.1"</span>,</div><div class="line"><span class="attr">"local_port"</span>:<span class="number">1080</span>,</div><div class="line"><span class="attr">"password"</span>:<span class="string">"your_password"</span>,</div><div class="line"><span class="attr">"timeout"</span>:<span class="number">300</span>,</div><div class="line"><span class="attr">"method"</span>:<span class="string">"your_encryption_method"</span>,</div><div class="line"><span class="attr">"fast_open"</span>: <span class="literal">false</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
@@ -370,17 +370,14 @@
 <p>常用命令：<br><figure class="highlight dts"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">启动：<span class="meta-keyword">/etc/</span>init.d/shadowsocks start</div><div class="line">停止：<span class="meta-keyword">/etc/</span>init.d/shadowsocks stop</div><div class="line">重启：<span class="meta-keyword">/etc/</span>init.d/shadowsocks restart</div><div class="line">状态：<span class="meta-keyword">/etc/</span>init.d/shadowsocks status</div></pre></td></tr></table></figure></p>
 <p>Shadowsocks for Windows 客户端下载：<br><a href="&quot;https://github.com/shadowsocks/shadowsocks-windows/releases&quot;">https://github.com/shadowsocks/shadowsocks-windows/releases</a></p>
 <p>客户端配置太简单，懒，直接上图：</p>
-<p><img src="https://i.imgur.com/uf0V4Kg.png" alt=""></p>
+<p><img src="http://ox186n2j0.bkt.clouddn.com/1506760765315.jpg" alt=""></p>
 <p>最后可以到油管搜索4K视频测试</p>
 <hr>
-<p>参考文章：</p>
+<p>参考资料：</p>
 <ol>
-<li><a href="https://teddysun.com/342.html" target="_blank" rel="external">https://teddysun.com/342.html</a></li>
-<li><a href="https://www.wn789.com/4689.html" target="_blank" rel="external">https://www.wn789.com/4689.html</a></li>
-<li><a href="http://www.openssh.com/manual.html" target="_blank" rel="external">http://www.openssh.com/manual.html</a></li>
-<li><a href="https://www.digitalocean.com/community/tutorials/how-to-use-ssh-keys-with-putty-on-digitalocean-droplets-windows-users" target="_blank" rel="external">https://www.digitalocean.com/community/tutorials/how-to-use-ssh-keys-with-putty-on-digitalocean-droplets-windows-users</a></li>
-<li><a href="https://www.digitalocean.com/community/tutorials/how-to-use-ssh-keys-with-digitalocean-droplets" target="_blank" rel="external">https://www.digitalocean.com/community/tutorials/how-to-use-ssh-keys-with-digitalocean-droplets</a></li>
-<li><a href="http://www.cnblogs.com/x_wukong/p/5319440.html" target="_blank" rel="external">http://www.cnblogs.com/x_wukong/p/5319440.html</a></li>
+<li><a href="https://teddysun.com/342.html" target="_blank" rel="external"><strong><em>Shadowsocks Python版一键安装脚本</em></strong> by <strong><em>秋水逸冰</em></strong></a></li>
+<li><a href="http://www.openssh.com/manual.html" target="_blank" rel="external"><strong><em>OpenSSH Manual Pages</em></strong></a></li>
+<li><a href="https://www.digitalocean.com/community/tutorials/how-to-use-ssh-keys-with-putty-on-digitalocean-droplets-windows-users" target="_blank" rel="external"><strong><em>How To Use SSH Keys with PuTTY on DigitalOcean Droplets (Windows users)</em></strong></a></li>
 </ol>
 
       
@@ -393,7 +390,7 @@
         <p><span>本文标题:</span><a href="/2017/09/27/DO-VPS搭建SS并使用ServerSpeeder加速/">DO VPS搭建SS并使用ServerSpeeder加速</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">Hk4Fun</a></p>
         <p><span>发布时间:</span>2017-09-27, 17:34:38</p>
-        <p><span>最后更新:</span>2017-09-29, 18:57:32</p>
+        <p><span>最后更新:</span>2017-10-01, 13:41:31</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2017/09/27/DO-VPS搭建SS并使用ServerSpeeder加速/" title="DO VPS搭建SS并使用ServerSpeeder加速">https://hk4fun.github.io/2017/09/27/DO-VPS搭建SS并使用ServerSpeeder加速/</a>
             <span class="copy-path" data-clipboard-text="原文: https://hk4fun.github.io/2017/09/27/DO-VPS搭建SS并使用ServerSpeeder加速/　　作者: Hk4Fun" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
