@@ -26,7 +26,7 @@
 <meta property="og:image" content="http://ox186n2j0.bkt.clouddn.com/1506760764914.jpg">
 <meta property="og:image" content="http://ox186n2j0.bkt.clouddn.com/1506760763636.jpg">
 <meta property="og:image" content="http://ox186n2j0.bkt.clouddn.com/1506760765315.jpg">
-<meta property="og:updated_time" content="2017-10-01T07:29:49.544Z">
+<meta property="og:updated_time" content="2017-10-01T07:34:54.673Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="DO VPS搭建SS并使用ServerSpeeder加速">
 <meta name="twitter:description" content="有话说10$ 的 邀请码 和 github student pack 赠送的 50$ 优惠券让我入了DO VPS的坑。想着就借此搭个SS也不错，才发现新加坡节点比旧金山稳定多了，然后开始各种折腾。do家的vps采用kvm架构且支持ipv6，可以在校外通过它连接byrBT，校内通过ipv6实现免流，且流量可以说是不限的。">
@@ -369,6 +369,7 @@
 <p>多用户多端口配置文件示例：<br>配置文件路径：/etc/shadowsocks.json<br><figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line"><span class="attr">"server"</span>:<span class="string">"0.0.0.0"</span>,</div><div class="line"><span class="attr">"local_address"</span>:<span class="string">"127.0.0.1"</span>,</div><div class="line"><span class="attr">"local_port"</span>:<span class="number">1080</span>,</div><div class="line"><span class="attr">"port_password"</span>:&#123;</div><div class="line"> 	<span class="attr">"8989"</span>:<span class="string">"password0"</span>,</div><div class="line"> 	<span class="attr">"9001"</span>:<span class="string">"password1"</span>,</div><div class="line"> 	<span class="attr">"9002"</span>:<span class="string">"password2"</span>,</div><div class="line"> 	<span class="attr">"9003"</span>:<span class="string">"password3"</span>,</div><div class="line"> 	<span class="attr">"9004"</span>:<span class="string">"password4"</span></div><div class="line">&#125;,</div><div class="line"><span class="attr">"timeout"</span>:<span class="number">300</span>,</div><div class="line"><span class="attr">"method"</span>:<span class="string">"your_encryption_method"</span>,</div><div class="line"><span class="attr">"fast_open"</span>: <span class="literal">false</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>常用命令：<br><figure class="highlight dts"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">启动：<span class="meta-keyword">/etc/</span>init.d/shadowsocks start</div><div class="line">停止：<span class="meta-keyword">/etc/</span>init.d/shadowsocks stop</div><div class="line">重启：<span class="meta-keyword">/etc/</span>init.d/shadowsocks restart</div><div class="line">状态：<span class="meta-keyword">/etc/</span>init.d/shadowsocks status</div></pre></td></tr></table></figure></p>
 <p><a href="https://github.com/shadowsocks/shadowsocks-windows/releases" target="_blank" rel="external">Shadowsocks for Windows 客户端下载</a></p>
+<p><a href="https://github.com/shadowsocks/shadowsocks-android/releases" target="_blank" rel="external">Shadowsocks for Android 客户端下载</a></p>
 <p>客户端配置太简单，懒，直接上图：</p>
 <p><img src="http://ox186n2j0.bkt.clouddn.com/1506760765315.jpg" alt=""></p>
 <p>最后可以到油管搜索4K视频测试</p>
@@ -389,7 +390,7 @@
         <p><span>本文标题:</span><a href="/2017/09/27/DO-VPS搭建SS并使用ServerSpeeder加速/">DO VPS搭建SS并使用ServerSpeeder加速</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">Hk4Fun</a></p>
         <p><span>发布时间:</span>2017-09-27, 17:34:38</p>
-        <p><span>最后更新:</span>2017-10-01, 15:29:49</p>
+        <p><span>最后更新:</span>2017-10-01, 15:34:54</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2017/09/27/DO-VPS搭建SS并使用ServerSpeeder加速/" title="DO VPS搭建SS并使用ServerSpeeder加速">https://hk4fun.github.io/2017/09/27/DO-VPS搭建SS并使用ServerSpeeder加速/</a>
             <span class="copy-path" data-clipboard-text="原文: https://hk4fun.github.io/2017/09/27/DO-VPS搭建SS并使用ServerSpeeder加速/　　作者: Hk4Fun" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
