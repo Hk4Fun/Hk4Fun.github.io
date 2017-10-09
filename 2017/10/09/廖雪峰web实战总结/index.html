@@ -22,10 +22,12 @@
 <meta property="og:url" content="https://hk4fun.github.io/2017/10/09/廖雪峰web实战总结/index.html">
 <meta property="og:site_name" content="Hk4Fun&#39;s Blog">
 <meta property="og:description" content="前言敲完代码却一直没写个总结，因为感觉火候不到，学了一段时间的Django后回来重温，更是感觉廖大大的这个web实战很是经典，借鉴了不少的框架设计思想：orm（modle）、router（urls）、mvc（mvt）、handlers（views）等">
-<meta property="og:updated_time" content="2017-10-09T07:21:04.251Z">
+<meta property="og:image" content="http://ox186n2j0.bkt.clouddn.com/globe-2679754.jpg">
+<meta property="og:updated_time" content="2017-10-09T07:34:02.346Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="廖雪峰web实战总结">
 <meta name="twitter:description" content="前言敲完代码却一直没写个总结，因为感觉火候不到，学了一段时间的Django后回来重温，更是感觉廖大大的这个web实战很是经典，借鉴了不少的框架设计思想：orm（modle）、router（urls）、mvc（mvt）、handlers（views）等">
+<meta name="twitter:image" content="http://ox186n2j0.bkt.clouddn.com/globe-2679754.jpg">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -155,10 +157,10 @@
                 <div class="tips-box hide">
                     <div class="tips-arrow"></div>
                     <ul class="tips-inner">
-                        <li>菜单</li>
-                        <li>标签</li>
+                        <li>Menu</li>
+                        <li>Tags</li>
                         
-                        <li>友情链接</li>
+                        <li>Friends</li>
                         
                         
                     </ul>
@@ -267,7 +269,7 @@
             </nav>
         </header>                
     </div>
-    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+    <link class="menu-list" tags="Tags" friends="Friends" about="About Me"/>
 </nav>
       <div class="body-wrap"><article id="post-廖雪峰web实战总结" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -309,7 +311,8 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>敲完<a href="https://github.com/Hk4Fun/awesome-python3-webapp" target="_blank" rel="external">代码</a>却一直没写个总结，因为感觉火候不到，学了一段时间的Django后回来重温，更是感觉廖大大的<a href="https://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001432170937506ecfb2f6adf8e4757939732f3e32b781c000" target="_blank" rel="external">这个web实战</a>很是经典，借鉴了不少的框架设计思想：<code>orm（modle）、router（urls）、mvc（mvt）、handlers（views）</code>等</p>
+        <p><img src="http://ox186n2j0.bkt.clouddn.com/globe-2679754.jpg" alt="enter description here" title="globe-2679754"></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>敲完<a href="https://github.com/Hk4Fun/awesome-python3-webapp" target="_blank" rel="external">代码</a>却一直没写个总结，因为感觉火候不到，学了一段时间的Django后回来重温，更是感觉廖大大的<a href="https://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001432170937506ecfb2f6adf8e4757939732f3e32b781c000" target="_blank" rel="external">这个web实战</a>很是经典，借鉴了不少的框架设计思想：<code>orm（modle）、router（urls）、mvc（mvt）、handlers（views）</code>等</p>
 <a id="more"></a>
 <h2 id="主要模块"><a href="#主要模块" class="headerlink" title="主要模块"></a>主要模块</h2><p><strong><code>orm.py</code></strong>：建立类与数据库表的映射，对数据库进行封装。把表映射成类，把行（记录）映射为实例，把字段映射为实例的属性，而每个字段实际上是每个<code>Field</code>的实例，这也就定义了字段的类型。因为数据库中每张表的字段都不一样，所以我们需要动态的生成类，此时元类派上用场，这里推荐<a href="https://stackoverflow.com/questions/100003/what-is-a-metaclass-in-python" target="_blank" rel="external">StackOverflow上的一个高票回答</a>帮助理解元类。为什么要辛辛苦苦地建立orm而不直接连接数据库操作呢？我的理解有以下几点：</p>
 <ol>
@@ -321,9 +324,9 @@
 <p><strong><code>models.py</code></strong>：建立数据模型。与django的<code>models.py</code>功能一样，实现数据库的建模，也就是定义表的内容和结构。由于上面的orm实现的不是很完善，我们还是需要自己收到那个在数据库中建立这张表的（借助<code>schema.sql</code>实现），而在django中只需migrate（迁移）一下就可以了。这里我们定义了三张表：<code>User</code>、<code>Blog</code>、<code>Comment</code>，具体都有哪些字段及其类型看代码就清楚了</p>
 <p><strong><code>webframe.py</code></strong>：框架的核心模块。在web开发中想要让时间和精力更多放在业务逻辑函数的设计上，编写更少的代码从而提高开发效率，就只能在底层框架上封装一个更高级的框架。Django干的就是这件事，而本框架主要基于<code>aiohttp</code>异步web框架进行再次封装，主要是从URL函数中解析需要接收的参数，进而从request中获取必要的参数构造成字典以<code>**kw</code>传给该URL函数并调用，这也<code>RequestHandler</code>函数的主要功能，然后对url和静态资源进行了映射（借鉴了flask的router装饰器，即注册url函数，关于装饰器的理解，还是<a href="https://stackoverflow.com/questions/739654/how-to-make-a-chain-of-function-decorators/1594484#1594484" target="_blank" rel="external">一个StackOverflow的高票回答</a>），在app.py的初始化函数init()中被调用</p>
 <p><strong><code>handlers.py</code></strong>：编写业务逻辑函数的模块。所有处理业务逻辑的函数都在这里编写，也就是说需求改动时只需改动该模块即可（当然，要修改数据模型还得到<code>modles.py</code>中）。但该模块还是有不足之处：参考django的设计，应该把该模块按照功能进行分割，一个功能一个app，便于维护和复用，因为到后面需求越来越复杂，全部堆在一个模块肯定乱手脚（我在代码中用注释分隔开了。。。）</p>
-<p><strong><code>app.py</code></strong>：整个web app的起点和终点。实现的各个中间件（<code>middlewares</code>,也加拦截器）在请求到来时进行拦截，主要是打印相关日志信息和身份验证，而在应答数据返回时进行拦截，主要是进行模板的渲染和其他数据流类型的相关处理。在init()中完成所有的初始化：连接数据库、加载中间件和jinja2模板、注册url路由、添加静态资源、异步监听请求等</p>
+<p><strong><code>app.py</code></strong>：整个web app的起点和终点。实现的各个中间件（<code>middlewares</code>,也加拦截器）在请求到来时进行拦截，主要是打印相关日志信息和身份验证，而在应答数据返回时进行拦截，主要是进行模板的渲染和其他数据流类型的相关处理。在<code>init()</code>中完成所有的初始化：连接数据库、加载中间件和jinja2模板、注册url路由、添加静态资源、异步监听请求等</p>
 <p>从上面介绍的各个功能模块来看，该web框架借鉴了django和flask等知名web开发框架的设计思想，MVC的实现无处不在，对理解web开发框架的实现有参考价值</p>
-<p>其他模块非主要模块，主要是进行设置的读取和markdown语法的转换以及各种异常请求的处理，这里不再详细介绍。想了解以上各个模块更多的实现细节请直接阅读代码吧，毕竟 “Talk is cheap, show me the code”，你不会希望的，我几乎对每一行进行了注释以及相关知识的补充，非常适合小白（or 大白）学习</p>
+<p>其他模块非主要模块，主要是进行设置的读取和markdown语法的转换以及各种异常请求的处理，这里不再详细介绍。想了解以上各个模块更多的实现细节请直接阅读代码吧，毕竟 “<strong>Talk is cheap, show me the code</strong>”，你不会希望的，我几乎对每一行进行了注释以及相关知识的补充，非常适合小白（or 大白）学习</p>
 <h2 id="数据流向"><a href="#数据流向" class="headerlink" title="数据流向"></a>数据流向</h2><p>当收到一个http请求时，首先会被<code>logger_factory</code>（输出请求的信息）、<code>data_factory</code>（打印post提交的数据）、<code>auth_factory</code>（cookie解析）这三个中间件拦截。然后才根据请求的url被映射到到<code>handlers.py</code>中的各个相应的url函数进行处理。而在执行这些url函数之前，会被<code>RequestHandle</code>先处理（hook），主要是从url函数中解析需要接收的参数，进而从request中获取必要的参数构造成字典以<code>**kw</code>传给该url函数并调用。最后在应答返回数据前会被response_factory所拦截，进行模板的渲染，将<code>request handler</code>的返回值根据返回的类型转换为<code>web.Response</code>对象，吻合aiohttp框架的需求</p>
 <h2 id="TODO"><a href="#TODO" class="headerlink" title="TODO"></a>TODO</h2><ul>
 <li><strong>框架</strong>：其实上面已经提到了，比如<code>handlers.py</code>的臃肿、orm框架的不完善等。</li>
@@ -352,17 +355,17 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2017/10/09/廖雪峰web实战总结/">廖雪峰web实战总结</a></p>
-        <p><span>文章作者:</span><a href="/" title="回到主页">Hk4Fun</a></p>
-        <p><span>发布时间:</span>2017-10-09, 13:48:15</p>
-        <p><span>最后更新:</span>2017-10-09, 15:21:04</p>
+        <p><span>Title:</span><a href="/2017/10/09/廖雪峰web实战总结/">廖雪峰web实战总结</a></p>
+        <p><span>Author:</span><a href="/" title="Back to Homepage">Hk4Fun</a></p>
+        <p><span>Created:</span>2017-10-09, 13:48:15</p>
+        <p><span>Updated:</span>2017-10-09, 15:34:02</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2017/10/09/廖雪峰web实战总结/" title="廖雪峰web实战总结">https://hk4fun.github.io/2017/10/09/廖雪峰web实战总结/</a>
-            <span class="copy-path" data-clipboard-text="原文: https://hk4fun.github.io/2017/10/09/廖雪峰web实战总结/　　作者: Hk4Fun" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>Full URL:</span><a class="post-url" href="/2017/10/09/廖雪峰web实战总结/" title="廖雪峰web实战总结">https://hk4fun.github.io/2017/10/09/廖雪峰web实战总结/</a>
+            <span class="copy-path" data-clipboard-text="From https://hk4fun.github.io/2017/10/09/廖雪峰web实战总结/　　By Hk4Fun" title="Copy Article&#39;s Link &amp; Author"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
-            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+            <span>License:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"CC BY-NC-SA 4.0"</a> Keep Link &amp; Author if Distribute.
         </p>
     </div>
 
@@ -383,7 +386,7 @@
 </article>
 
     <div id="toc" class="toc-article">
-        <strong class="toc-title">文章目录</strong>
+        <strong class="toc-title">Contents</strong>
         
             <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#主要模块"><span class="toc-number">2.</span> <span class="toc-text">主要模块</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数据流向"><span class="toc-number">3.</span> <span class="toc-text">数据流向</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TODO"><span class="toc-number">4.</span> <span class="toc-text">TODO</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">5.</span> <span class="toc-text">总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#致谢"><span class="toc-number">6.</span> <span class="toc-text">致谢</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-number">7.</span> <span class="toc-text">参考资料</span></a></li></ol>
         
@@ -399,10 +402,10 @@
         }
     </style>
 
-    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+    <input type="button" id="tocButton" value="Hide"  title="Show or Hide Table of Contents">
 
     <script>
-        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+        yiliaConfig.toc = ["Hide", "Show", !!"false"];
     </script>
 
 
@@ -448,13 +451,13 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+            <a href="/" title="Back to Homepage"><i class="fa fa-home"></i></a>
         
 
-        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+        <a title="Mini Archives"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2017/09/27/DO-VPS搭建SS并使用ServerSpeeder加速/" title="下一篇: DO VPS搭建SS并使用ServerSpeeder加速">
+            <a href="/2017/09/27/DO-VPS搭建SS并使用ServerSpeeder加速/" title="Next: DO VPS搭建SS并使用ServerSpeeder加速">
                 <i class="fa fa-angle-right"></i>
             </a>
         
@@ -477,14 +480,14 @@
                 2017 Hk4Fun
             </div>
             <div class="footer-right">
-                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+                <a href="http://hexo.io/" target="_blank" title="A fast, simple &amp; powerful blog framework">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="Another simple and elegant theme for Hexo  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
             </div>
         </div>
         
             <div class="visit">
                 
                     <span id="busuanzi_container_site_pv" style='display:none'>
-                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        <span id="site-visit" title="Site Visitors"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
                         </span>
                     </span>
                 
@@ -493,7 +496,7 @@
                 
                 
                     <span id="busuanzi_container_page_pv" style='display:none'>
-                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        <span id="page-visit"  title="Page Hits"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
                         </span>
                     </span>
                 
@@ -526,9 +529,9 @@
 
 
 <div class="scroll" id="scroll">
-    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
-    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
-    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+    <a href="#" title="Back to Top"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="Comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="Go to Bottom"><i class="fa fa-arrow-down"></i></a>
 </div>
 <script>
     // Open in New Window
