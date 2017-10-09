@@ -5,7 +5,7 @@
     <entry>
       <title><![CDATA[廖雪峰web实战总结]]></title>
       <url>/2017/10/09/%E5%BB%96%E9%9B%AA%E5%B3%B0web%E5%AE%9E%E6%88%98%E6%80%BB%E7%BB%93/</url>
-      <content type="html"><![CDATA[<p><img src="http://ox186n2j0.bkt.clouddn.com/globe-2679754.jpg" alt="enter description here" title="globe-2679754"></p>
+      <content type="html"><![CDATA[<p><img src="http://ox186n2j0.bkt.clouddn.com/snipaste20171009_153642.png" alt="network" title="snipaste20171009_153642"></p>
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>敲完<a href="https://github.com/Hk4Fun/awesome-python3-webapp" target="_blank" rel="external">代码</a>却一直没写个总结，因为感觉火候不到，学了一段时间的Django后回来重温，更是感觉廖大大的<a href="https://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001432170937506ecfb2f6adf8e4757939732f3e32b781c000" target="_blank" rel="external">这个web实战</a>很是经典，借鉴了不少的框架设计思想：<code>orm（modle）、router（urls）、mvc（mvt）、handlers（views）</code>等</p>
 <a id="more"></a>
 <h2 id="主要模块"><a href="#主要模块" class="headerlink" title="主要模块"></a>主要模块</h2><p><strong><code>orm.py</code></strong>：建立类与数据库表的映射，对数据库进行封装。把表映射成类，把行（记录）映射为实例，把字段映射为实例的属性，而每个字段实际上是每个<code>Field</code>的实例，这也就定义了字段的类型。因为数据库中每张表的字段都不一样，所以我们需要动态的生成类，此时元类派上用场，这里推荐<a href="https://stackoverflow.com/questions/100003/what-is-a-metaclass-in-python" target="_blank" rel="external">StackOverflow上的一个高票回答</a>帮助理解元类。为什么要辛辛苦苦地建立orm而不直接连接数据库操作呢？我的理解有以下几点：</p>
