@@ -1,11 +1,315 @@
-<?xml version="1.0" encoding="utf-8"?>
-<search> 
+<!DOCTYPE html>
+<html >
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="Hk4Fun" />
+
+
+
+<meta name="description" content="每个题目标题链接到 github，可以查看所有解题思路、测试用例以及拓展题目，这里只贴上书中题目的最优解法和代码。另外，这里参考的是剑指offer第一版的题目顺序，补充部分添加的是剑指offer第二版多出来的几道题目。">
+<meta name="keywords" content="剑指offer,算法,数据结构">
+<meta property="og:type" content="article">
+<meta property="og:title" content="剑指offer题解（python实现）">
+<meta property="og:url" content="https://hk4fun.github.io/2018/07/19/剑指offer题解（python实现）/index.html">
+<meta property="og:site_name" content="Hk4Fun&#39;s Blog">
+<meta property="og:description" content="每个题目标题链接到 github，可以查看所有解题思路、测试用例以及拓展题目，这里只贴上书中题目的最优解法和代码。另外，这里参考的是剑指offer第一版的题目顺序，补充部分添加的是剑指offer第二版多出来的几道题目。">
+<meta property="og:updated_time" content="2018-07-19T10:42:12.444Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="剑指offer题解（python实现）">
+<meta name="twitter:description" content="每个题目标题链接到 github，可以查看所有解题思路、测试用例以及拓展题目，这里只贴上书中题目的最优解法和代码。另外，这里参考的是剑指offer第一版的题目顺序，补充部分添加的是剑指offer第二版多出来的几道题目。">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="Hk4Fun&#39;s Blog" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/img/blog.jpg">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>剑指offer题解（python实现） | Hk4Fun&#39;s Blog</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: true
+    }
+</script>
+
+
+    <script>
+        yiliaConfig.jquery_ui = [true, "//cdn.bootcss.com/jqueryui/1.10.4/jquery-ui.min.js", "//cdn.bootcss.com/jqueryui/1.10.4/css/jquery-ui.min.css"];
+    </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+    <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-59ce63134e828feb"></script>
+
+
+
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?7e01cbfd0c4fd52d389e022356692311";
+            var s = document.getElementsByTagName("script")[0]; 
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/blog.jpg" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">Hk4Fun</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">What dosen&#39;t kill me makes me stronger</p>
+        
+
+        
+            <form id="search-form">
+            <input type="text" id="local-search-input" name="q" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="true" />
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="local-search-result"></div>
+            <p class='no-result'>No results found <i class='fa fa-spinner fa-pulse'></i></p>
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>Menu</li>
+                        <li>Tags</li>
+                        
+                        <li>Friends</li>
+                        
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">ABOUT ME</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa GitHub" href="https://github.com/Hk4Fun" title="GitHub"></a>
+                            
+                                <a class="fa 知乎" href="https://www.zhihu.com/people/Hk4Fun/activities" title="知乎"></a>
+                            
+                                <a class="fa 微信" href="http://ox186n2j0.bkt.clouddn.com/wexinhaoyou.jpg" title="微信"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSH/">SSH</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ServerSpeeder/">ServerSpeeder</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VPS/">VPS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/django/">django</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mvc/">mvc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/orm/">orm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web/">web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/剑指offer/">剑指offer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构/">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/翻墙/">翻墙</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://moxfive.xyz/">MOxFIVE</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">Hk4Fun</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/blog.jpg" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">Hk4Fun</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">What dosen&#39;t kill me makes me stronger</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">ABOUT ME</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa GitHub" target="_blank" href="https://github.com/Hk4Fun" title="GitHub"></a>
+                            
+                                <a class="fa 知乎" target="_blank" href="https://www.zhihu.com/people/Hk4Fun/activities" title="知乎"></a>
+                            
+                                <a class="fa 微信" target="_blank" href="http://ox186n2j0.bkt.clouddn.com/wexinhaoyou.jpg" title="微信"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="Tags" friends="Friends" about="About Me"/>
+</nav>
+      <div class="body-wrap"><article id="post-剑指offer题解（python实现）" class="article article-type-post" itemscope itemprop="blogPost">
   
+    <div class="article-meta">
+      <a href="/2018/07/19/剑指offer题解（python实现）/" class="article-date">
+      <time datetime="2018-07-19T08:30:29.000Z" itemprop="datePublished">2018-07-19</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
     
-    <entry>
-      <title><![CDATA[剑指offer题解（python实现）]]></title>
-      <url>/2018/07/19/%E5%89%91%E6%8C%87offer%E9%A2%98%E8%A7%A3%EF%BC%88python%E5%AE%9E%E7%8E%B0%EF%BC%89/</url>
-      <content type="html"><![CDATA[<p>每个题目标题链接到 <a href="https://github.com/Hk4Fun/algorithm_offer/tree/master/target_offer" target="_blank" rel="external">github</a>，可以查看所有解题思路、测试用例以及拓展题目，这里只贴上书中题目的最优解法和代码。另外，这里参考的是剑指offer第一版的题目顺序，补充部分添加的是剑指offer第二版多出来的几道题目。</p>
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      剑指offer题解（python实现）
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/剑指offer/">剑指offer</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据结构/">数据结构</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法/">算法</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>每个题目标题链接到 <a href="https://github.com/Hk4Fun/algorithm_offer/tree/master/target_offer" target="_blank" rel="external">github</a>，可以查看所有解题思路、测试用例以及拓展题目，这里只贴上书中题目的最优解法和代码。另外，这里参考的是剑指offer第一版的题目顺序，补充部分添加的是剑指offer第二版多出来的几道题目。</p>
 <a id="more"></a>
 <h2 id="二维数组中的查找"><a href="#二维数组中的查找" class="headerlink" title=" 二维数组中的查找"></a><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/3_1_%E4%BA%8C%E7%BB%B4%E6%95%B0%E7%BB%84%E4%B8%AD%E7%9A%84%E6%9F%A5%E6%89%BE.py" target="_blank" rel="external"> 二维数组中的查找</a></h2><h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>在一个二维数组中，每一行都按照从左到右递增的顺序排序，每一列都按照从上到下递增的顺序排序。<br>请完成一个函数，输入这样的一个二维数组和一个整数，判断数组中是否含有该整数。</p>
 <h3 id="最优题解"><a href="#最优题解" class="headerlink" title="最优题解"></a>最优题解</h3><p>时间（O（m+n）），空间（O（1））</p>
@@ -79,159 +383,233 @@
 <h2 id="在O-1-时间删除链表节点"><a href="#在O-1-时间删除链表节点" class="headerlink" title="在O(1)时间删除链表节点"></a><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/13_%E5%9C%A8O%281%29%E6%97%B6%E9%97%B4%E5%88%A0%E9%99%A4%E9%93%BE%E8%A1%A8%E8%8A%82%E7%82%B9.py" target="_blank" rel="external">在O(1)时间删除链表节点</a></h2><h3 id="题目描述-10"><a href="#题目描述-10" class="headerlink" title="题目描述"></a>题目描述</h3><p>给定单向链表的头指针和一个结点指针,定义一个函数在O(1)时间删除该结点</p>
 <h3 id="最优题解-10"><a href="#最优题解-10" class="headerlink" title="最优题解"></a>最优题解</h3><p>不必顺序查找到结点i的前一个节点再删除，这样是O(n)，<br>要删除结点i，可以先把i的下一个结点j的内容复制到i，然后把i的指针指向j的下一个结点，<br>最后再删除结点j，其效果刚好是把结点i给删除了<br>即：当我们想删除一个结点时，并不一定要删除这个结点本身，<br>可以先把下一个结点的内容复制出来覆盖被删除结点的内容，然后把下一个结点删除<br>考虑两种特殊情况：<br>1、如果要删除的是尾结点，它没有下一个结点，此时只能从头开始顺序遍历得到该节点的前序结点，并完成删除<br>2、如果链表中只有一个结点，即要删除的节点是头结点（它连前序结点都没有），需要单独处理（删除后设为NULL）</p>
 <h3 id="代码-10"><a href="#代码-10" class="headerlink" title="代码"></a>代码</h3><figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">ListNode</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(<span class="keyword">self</span>, x=None)</span></span><span class="symbol">:</span></div><div class="line">        <span class="keyword">self</span>.val = x</div><div class="line">        <span class="keyword">self</span>.<span class="keyword">next</span> = None</div><div class="line">		</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">delete</span><span class="params">(<span class="keyword">self</span>)</span></span><span class="symbol">:</span></div><div class="line">        <span class="keyword">self</span>.val = None</div><div class="line">        <span class="keyword">self</span>.<span class="keyword">next</span> = None</div><div class="line">		</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">DeleteNode</span><span class="params">(<span class="keyword">self</span>, ListHead, ToBeDeleted)</span></span><span class="symbol">:</span></div><div class="line">        <span class="comment"># 返回删除后链表的头结点</span></div><div class="line">        <span class="keyword">if</span> <span class="keyword">not</span> ListHead <span class="keyword">or</span> <span class="keyword">not</span> <span class="symbol">ToBeDeleted:</span>   <span class="keyword">return</span> <span class="comment"># 头结点和要删除结点都为空返回None</span></div><div class="line">        <span class="keyword">if</span> ToBeDeleted.<span class="keyword">next</span> != <span class="symbol">None:</span>  <span class="comment"># 要删除的结点不是尾结点</span></div><div class="line">            Next = ToBeDeleted.<span class="keyword">next</span></div><div class="line">            ToBeDeleted.val = Next.val</div><div class="line">            ToBeDeleted.<span class="keyword">next</span> = Next.<span class="keyword">next</span></div><div class="line">            Next.delete()</div><div class="line">        elif ListHead == <span class="symbol">ToBeDeleted:</span>  <span class="comment"># 要删除的结点是头结点</span></div><div class="line">            ListHead.delete()</div><div class="line">            ToBeDeleted.delete()</div><div class="line">        <span class="symbol">else:</span>  <span class="comment"># 要删除的结点是尾结点</span></div><div class="line">            Node = ListHead</div><div class="line">            <span class="keyword">while</span> Node.<span class="keyword">next</span> != <span class="symbol">ToBeDeleted:</span></div><div class="line">                Node = Node.<span class="keyword">next</span></div><div class="line">            Node.<span class="keyword">next</span> = None</div><div class="line">            ToBeDeleted.delete()</div><div class="line">        <span class="keyword">return</span> ListHead</div></pre></td></tr></table></figure>
-]]></content>
+
       
-        
-        <tags>
-            
-            <tag> 剑指offer </tag>
-            
-            <tag> 算法 </tag>
-            
-            <tag> 数据结构 </tag>
-            
-        </tags>
-        
-    </entry>
+    </div>
     
-    <entry>
-      <title><![CDATA[廖雪峰web实战总结]]></title>
-      <url>/2017/10/09/%E5%BB%96%E9%9B%AA%E5%B3%B0web%E5%AE%9E%E6%88%98%E6%80%BB%E7%BB%93/</url>
-      <content type="html"><![CDATA[<p>敲完<a href="https://github.com/Hk4Fun/awesome-python3-webapp" target="_blank" rel="external">代码</a>却一直没写个总结，因为感觉火候不到，学了一段时间的Django后回来重温，更是感觉廖大大的<a href="https://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001432170937506ecfb2f6adf8e4757939732f3e32b781c000" target="_blank" rel="external">这个web实战</a>很是经典，借鉴了不少的框架设计思想：<code>orm（modle）、router（urls）、mvc（mvt）、handlers（views）</code>等</p>
-<a id="more"></a>
-<h2 id="主要模块"><a href="#主要模块" class="headerlink" title="主要模块"></a>主要模块</h2><h3 id="orm-py"><a href="#orm-py" class="headerlink" title="orm.py"></a>orm.py</h3><p>建立类与数据库表的映射，对数据库进行封装。<br>把表映射成类，把行（记录）映射为实例，把字段映射为实例的属性，而每个字段实际上是每个 <code>Field</code> 的实例，这也就定义了字段的类型。<br>因为数据库中每张表的字段都不一样，所以我们需要动态的生成类，此时元类派上用场，这里推荐<a href="https://stackoverflow.com/questions/100003/what-is-a-metaclass-in-python" target="_blank" rel="external">StackOverflow上的一个高票回答</a>帮助理解元类。<br>为什么要辛辛苦苦地建立orm而不直接连接数据库操作呢？我的理解有以下几点：</p>
-<ol>
-<li>安全：避免SQL语句的拼接，参数化的SQL语句可以有效防止SQL注入</li>
-<li>封装：对不懂SQL语句的程序员可直接使用orm提供的函数操作数据库，而不用专门去学习SQL语句，可应对多种数据库，无非就是 <code>migrate</code> 一下，无需关心底层的SQL语句是如何生成的</li>
-<li>插件化：从django的setting可以看出，更换数据库只需更换orm引擎，而不用更改任何的代码</li>
-<li>分层：从2、3可以看出，所以还是那句话：计算机领域没有什么问题是不能靠分层解决的</li>
-</ol>
-<h3 id="models-py"><a href="#models-py" class="headerlink" title="models.py"></a>models.py</h3><p>建立数据模型。<br>与django的 <code>models.py</code> 功能一样，实现数据库的建模，也就是定义表的内容和结构。<br>由于上面的orm实现的不是很完善，我们还是需要自己收到那个在数据库中建立这张表的（借助 <code>schema.sql</code> 实现），而在django中只需migrate（迁移）一下就可以了。<br>这里我们定义了三张表： <code>User</code> 、<code>Blog</code> 、<code>Comment</code>，具体都有哪些字段及其类型看代码就清楚了</p>
-<h3 id="webframe-py"><a href="#webframe-py" class="headerlink" title="webframe.py"></a>webframe.py</h3><p>框架的核心模块。<br>在web开发中想要让时间和精力更多放在业务逻辑函数的设计上，编写更少的代码从而提高开发效率，就只能在底层框架上封装一个更高级的框架。<br>Django干的就是这件事，而本框架主要基于 <code>aiohttp</code> 异步web框架进行再次封装，主要是从URL函数中解析需要接收的参数，进而从request中获取必要的参数构造成字典以 <code>**kw</code> 传给该URL函数并调用，然后对url和静态资源进行了映射（借鉴了flask的router装饰器，即注册url函数。<br>关于装饰器的理解，还是<a href="https://stackoverflow.com/questions/739654/how-to-make-a-chain-of-function-decorators/1594484#1594484" target="_blank" rel="external">一个StackOverflow的高票回答</a>），在app.py的初始化函数init()中被调用</p>
-<h3 id="handlers-py"><a href="#handlers-py" class="headerlink" title="handlers.py"></a>handlers.py</h3><p>编写业务逻辑函数的模块。<br>所有处理业务逻辑的函数都在这里编写，也就是说需求改动时只需改动该模块即可（当然，要修改数据模型还得到 <code>modles.py</code> 中）。<br>但该模块还是有不足之处：参考django的设计，应该把该模块按照功能进行分割，一个功能一个app，便于维护和复用，因为到后面需求越来越复杂，全部堆在一个模块肯定乱手脚（我在代码中用注释分隔开了。。。）</p>
-<h3 id="app-py"><a href="#app-py" class="headerlink" title="app.py"></a>app.py</h3><p>整个web app的起点和终点。<br>实现的各个中间件（ <code>middlewares</code> , 拦截器）在请求到来时进行拦截，主要是打印相关日志信息和身份验证，而在应答数据返回时进行拦截，主要是进行模板的渲染和其他数据流类型的相关处理。<br>在 <code>init()</code> 中完成所有的初始化：连接数据库、加载中间件和jinja2模板、注册url路由、添加静态资源、异步监听请求等。</p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>从上面介绍的各个功能模块来看，该web框架借鉴了django和flask等知名web开发框架的设计思想，MVC的实现无处不在，对理解web开发框架的实现有参考价值。</p>
-<p>其他模块非主要模块，主要是进行设置的读取和markdown语法的转换以及各种异常请求的处理，这里不再详细介绍。想了解以上各个模块更多的实现细节请直接阅读代码吧，毕竟 “<strong>Talk is cheap, show me the code</strong>”，我几乎对每一行进行了注释以及相关知识的补充，非常适合小白学习。</p>
-<h2 id="数据流向"><a href="#数据流向" class="headerlink" title="数据流向"></a>数据流向</h2><p>当收到一个http请求时，首先会被 <code>logger_factory</code> （输出请求的信息）、 <code>data_factory</code> （打印post提交的数据）、 <code>auth_factory</code> （cookie解析）这三个中间件拦截。<br>然后才根据请求的url被映射到到<code>handlers.py</code>中的各个相应的url函数进行处理。<br>而在执行这些url函数之前，会被 <code>RequestHandle</code> 先处理（hook），主要是从url函数中解析需要接收的参数，进而从request中获取必要的参数构造成字典以 <code>**kw</code> 传给该url函数并调用。<br>最后在应答返回数据前会被response_factory所拦截，进行模板的渲染，将 <code>request handler</code> 的返回值根据返回的类型转换为 <code>web.Response</code> 对象，吻合aiohttp框架的需求</p>
-<h2 id="TODO"><a href="#TODO" class="headerlink" title="TODO"></a>TODO</h2><ul>
-<li><strong>框架</strong>：其实上面已经提到了，比如 <code>handlers.py</code> 的臃肿、orm框架的不完善等。</li>
-<li><strong>功能</strong>：很多博客的小功能还未实现，如分享、标签、统计等等</li>
-<li><strong>前端</strong>：前端使用的uikit这个css框架界面不是很友好，而自己的前端知识又不足，恶补了前端知识后发现前端也是个大坑，考虑使用bootstrap</li>
-<li><strong>数据库</strong>：可以学习一下hexo的文章管理，它是不需要存储在数据库的，如果发表的文章比较长，放在数据库很不方便，单独形成一个md文件然后打开读取渲染岂不是更加灵活，也就是说我们可以在blog.body存放该文章的路径即可</li>
-</ul>
-<h2 id="致谢"><a href="#致谢" class="headerlink" title="致谢"></a>致谢</h2><ul>
-<li>廖雪峰大神的<a href="https://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000" target="_blank" rel="external">python教程</a>、<a href="https://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000" target="_blank" rel="external">git教程</a>、<a href="https://www.liaoxuefeng.com/wiki/001434446689867b27157e896e74d51a89c25cc8b43bdb3000" target="_blank" rel="external">javascript教程</a>（才发现原来廖大大是我北邮学长。。。）</li>
-<li>几位前辈优秀的代码注释和补充：<a href="https://github.com/xwlyy/awesome-python3-webapp" target="_blank" rel="external">xwlyy</a>、<a href="https://github.com/KaimingWan/PureBlog" target="_blank" rel="external">KaimingWan</a>、<a href="https://github.com/zhouxinkai/awesome-python3-webapp" target="_blank" rel="external">zhouxinkai</a>、<a href="https://github.com/Engine-Treasure/awesome-python3-webapp" target="_blank" rel="external">Engine-Treasure</a>、<a href="https://github.com/ReedSun/Preeminent" target="_blank" rel="external">Preeminent</a></li>
-</ul>
-<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
-<li><a href="http://jinja.pocoo.org/docs/2.9/" target="_blank" rel="external">Jinja2官方文档</a></li>
-<li><a href="https://docs.python.org/3/library/asyncio.html" target="_blank" rel="external">asyncio官方文档</a></li>
-<li><a href="http://aiohttp.readthedocs.io/en/stable/web.html" target="_blank" rel="external">aiohttp官方文档</a></li>
-<li><a href="http://aiomysql.readthedocs.io/en/latest/index.html" target="_blank" rel="external">aiomysql官方文档</a></li>
-</ul>
-]]></content>
-      
-        
-        <tags>
-            
-            <tag> python </tag>
-            
-            <tag> orm </tag>
-            
-            <tag> mvc </tag>
-            
-            <tag> django </tag>
-            
-            <tag> web </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[DO VPS搭建SS并使用ServerSpeeder加速]]></title>
-      <url>/2017/09/27/DO-VPS%E6%90%AD%E5%BB%BASS%E5%B9%B6%E4%BD%BF%E7%94%A8ServerSpeeder%E5%8A%A0%E9%80%9F/</url>
-      <content type="html"><![CDATA[<p><strong>10$</strong> 的 <a href="&#39;https://m.do.co/c/ba18ef5fa022&#39;"><strong>邀请码</strong></a> 和 <a href="&quot;https://education.github.com/pack&quot;"><strong>github student pack</strong></a> 赠送的 <strong>50$</strong> 优惠券让我入了DO VPS的坑。想着就借此搭个SS也不错，才发现新加坡节点比旧金山稳定多了，然后开始各种折腾。do家的vps采用kvm架构且支持ipv6，可以在校外通过它连接byrbt，校内通过ipv6实现免流，且流量可以说是不限的。<br><a id="more"></a></p>
-<h2 id="配置SSH"><a href="#配置SSH" class="headerlink" title="配置SSH"></a>配置SSH</h2><p>如何生成密钥对？<br><a href="https://www.digitalocean.com/community/tutorials/how-to-use-ssh-keys-with-digitalocean-droplets" title="https://www.digitalocean.com/community/tutorials/how-to-use-ssh-keys-with-digitalocean-droplets" target="_blank" rel="external">Linux/MAC</a>      <strong>/</strong>  <a href="https://www.digitalocean.com/community/tutorials/how-to-use-ssh-keys-with-putty-on-digitalocean-droplets-windows-users" title="https://www.digitalocean.com/community/tutorials/how-to-use-ssh-keys-with-putty-on-digitalocean-droplets-windows-users" target="_blank" rel="external">Windows</a></p>
-<p>如果使用了密钥对，就可以不用每次登陆都输入密码。</p>
-<p>如果不用DO的sshkey上传，自己在客户端生成密钥对后，将公钥id_rsa.pub写进服务端的<code>/root/.ssh/authorized_keys</code>，然后到服务端<code>/etc/ssh/sshd_config</code>修改ssh配置： <strong>将”PasswordAuthentication yes”修改为”PasswordAuthentication no”</strong></p>
-<p>这样就可以不用每次登陆都输入密码，当然如果还是yes的话就可以在没有密钥对时通过密码登录。</p>
-<p>私钥保存在本地客户端就行了（windows下为.ppk文件，Linux下就是id_rsa）</p>
-<p>如果有多台终端设备，则在设备上生成密钥对后把公钥加在服务端的<code>/root/.ssh/authorized_keys</code>后面</p>
-<p>SSH其他常用配置选项：</p>
-<ul>
-<li>服务端<code>/etc/ssh/sshd_config</code>：</li>
-</ul>
-<p><strong>Port 22</strong><br>定义了SSH服务监听的断口号，SSH服务默认使用的端口号是22</p>
-<p><strong>Proctocol 2,1</strong><br>定义了SSH服务器使用SSH协议的顺序。默认识先使用SSH2协议，如果不成功则使用SSH1协议，为了安全起见，可以设置只使用SSH2协议。</p>
-<p><strong>ListenAddress 0.0.0.0</strong><br>定义SSH服务器帮定的IP地址,默认绑定服务器所有可用的IP地址.</p>
-<p><strong>PermitRootLogin yes</strong><br>定义是否允许管理员登陆</p>
-<p><strong>PermitEmptyPasswords no</strong><br>定义是否允许空密码登陆.</p>
-<p><strong>PasswordAuthentication no</strong><br>定义是否使用口令认证方式,如果准备使用公钥认证可以设置为no</p>
-<p><strong>AuthorizedKeysFile .ssh/authorized_keys</strong><br>定义默认公钥文件路径</p>
-<p>详细见官方文档<a href="https://man.openbsd.org/sshd_config" target="_blank" rel="external">https://man.openbsd.org/sshd_config</a></p>
-<ul>
-<li>客户端<code>/etc/ssh/ssh_config</code>:</li>
-</ul>
-<p>详细见官方文档<a href="https://man.openbsd.org/ssh_config" target="_blank" rel="external">https://man.openbsd.org/ssh_config</a></p>
-<h2 id="配置ServerSpeeder"><a href="#配置ServerSpeeder" class="headerlink" title="配置ServerSpeeder"></a>配置ServerSpeeder</h2><p>先安装serverspeeder（锐速），因为锐速对支持的Linux发行版本和内核版本都有要求，安装过程中可能会让更换内核并重启，目前锐速ServerSpeeder无限带宽破解版支持的内核有：</p>
-<ul>
-<li>CentOS-6.8：2.6.32-642.el7.x86_64</li>
-<li>CentOS-7.2：3.10.0-327.el7.x86_64</li>
-<li>CentOS：4.4.0-x86_64-linode63</li>
-<li>Ubuntu_14.04：4.2.0-35-generic</li>
-<li>Debian_8：3.16.0-4-amd64</li>
-</ul>
-<p>而DO官网提供的镜像都不符合，因此还是要更换内核（我在官网选择的版本为centos 7.3.1611 x64）：</p>
-<p>1、首先下载并更换内核：</p>
-<figure class="highlight awk"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">rpm -ivh http:<span class="regexp">//</span>xz.wn789.com<span class="regexp">/CentOSkernel/</span>kernel-<span class="number">3.10</span>.<span class="number">0</span>-<span class="number">229.1</span>.<span class="number">2</span>.el7.x86_64.rpm --force</div><div class="line">rpm -qa | grep kernel <span class="comment">#查看内核是否安装成功</span></div></pre></td></tr></table></figure>
-<p>2、重启VPS，查看内核是否修改成功：<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">reboot</span> <span class="comment">#重启VPS</span></div><div class="line">uname -r <span class="comment">#当前使用内核版本</span></div></pre></td></tr></table></figure></p>
-<p><img src="http://ox186n2j0.bkt.clouddn.com/1506760764914.jpg" alt=""></p>
-<p>3、下载脚本到服务器，然后再执行脚本安装：<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">wget -<span class="keyword">N</span> --<span class="keyword">no</span>-check-certificate http<span class="variable">s:</span>//raw.githubusercontent.<span class="keyword">com</span>/wn789/serverspeeder/master/serverspeeder.<span class="keyword">sh</span></div><div class="line">bash serverspeeder.<span class="keyword">sh</span></div></pre></td></tr></table></figure></p>
-<p>4、安装过程很简单，如果你的VPS内核支持安装，根本无需你手动操作，直接一键完成</p>
-<p>5、锐速serverspeeder常用命令：<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">service serverSpeeder start #启动</div><div class="line">service serverSpeeder stop #停止</div><div class="line">service serverSpeeder reload #重新加载配置</div><div class="line">service serverSpeeder restart #重启</div><div class="line">service serverSpeeder status #状态</div><div class="line">service serverSpeeder stats #统计</div><div class="line">service serverSpeeder renewLic #更新许可文件</div><div class="line">service serverSpeeder update #更新</div><div class="line">chattr -i /serverspeeder/etc/apx* &amp;&amp; /serverspeeder/bin/serverSpeeder.sh uninstall -f #卸载</div></pre></td></tr></table></figure></p>
-<h2 id="配置Shadowsocks"><a href="#配置Shadowsocks" class="headerlink" title="配置Shadowsocks"></a>配置Shadowsocks</h2><p>使用 <a href="https://teddysun.com/342.html" target="_blank" rel="external"><strong>一键安装 Python 版 Shadowsocks</strong></a> 安装</p>
-<p>安装方法：<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">wget --<span class="keyword">no</span>-check-certificate -O shadowsocks.<span class="keyword">sh</span> http<span class="variable">s:</span>//raw.githubusercontent.<span class="keyword">com</span>/teddysun/shadowsocks_install/master/shadowsocks.<span class="keyword">sh</span></div><div class="line">chmod +<span class="keyword">x</span> shadowsocks.<span class="keyword">sh</span></div><div class="line">./shadowsocks.<span class="keyword">sh</span> <span class="number">2</span>&gt;&amp;<span class="number">1</span> | tee shadowsocks.<span class="built_in">log</span></div></pre></td></tr></table></figure></p>
-<p>配置：</p>
-<p>服务器地址：vps主机公网ip</p>
-<p>服务器端口：如不设定，默认为 8989</p>
-<p>密码：如不设定，默认为 teddysun.com）</p>
-<p>加密方式：<strong>aes-256-cfb</strong>（如不设定，默认为 aes-256-gcm）</p>
-<p>安装完成后，脚本提示如下：</p>
-<p><img src="http://ox186n2j0.bkt.clouddn.com/1506760763636.jpg" alt=""></p>
-<p>卸载方法：</p>
-<p>./shadowsocks.sh uninstall</p>
-<p>单用户配置文件示例：<br>配置文件路径：/etc/shadowsocks.json<br><figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line"><span class="attr">"server"</span>:<span class="string">"0.0.0.0"</span>,</div><div class="line"><span class="attr">"server_port"</span>:your_server_port,</div><div class="line"><span class="attr">"local_address"</span>:<span class="string">"127.0.0.1"</span>,</div><div class="line"><span class="attr">"local_port"</span>:<span class="number">1080</span>,</div><div class="line"><span class="attr">"password"</span>:<span class="string">"your_password"</span>,</div><div class="line"><span class="attr">"timeout"</span>:<span class="number">300</span>,</div><div class="line"><span class="attr">"method"</span>:<span class="string">"your_encryption_method"</span>,</div><div class="line"><span class="attr">"fast_open"</span>: <span class="literal">false</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>多用户多端口配置文件示例：<br>配置文件路径：/etc/shadowsocks.json<br><figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line"><span class="attr">"server"</span>:<span class="string">"0.0.0.0"</span>,</div><div class="line"><span class="attr">"local_address"</span>:<span class="string">"127.0.0.1"</span>,</div><div class="line"><span class="attr">"local_port"</span>:<span class="number">1080</span>,</div><div class="line"><span class="attr">"port_password"</span>:&#123;</div><div class="line"> 	<span class="attr">"8989"</span>:<span class="string">"password0"</span>,</div><div class="line"> 	<span class="attr">"9001"</span>:<span class="string">"password1"</span>,</div><div class="line"> 	<span class="attr">"9002"</span>:<span class="string">"password2"</span>,</div><div class="line"> 	<span class="attr">"9003"</span>:<span class="string">"password3"</span>,</div><div class="line"> 	<span class="attr">"9004"</span>:<span class="string">"password4"</span></div><div class="line">&#125;,</div><div class="line"><span class="attr">"timeout"</span>:<span class="number">300</span>,</div><div class="line"><span class="attr">"method"</span>:<span class="string">"your_encryption_method"</span>,</div><div class="line"><span class="attr">"fast_open"</span>: <span class="literal">false</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>常用命令：<br><figure class="highlight dts"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">启动：<span class="meta-keyword">/etc/</span>init.d/shadowsocks start</div><div class="line">停止：<span class="meta-keyword">/etc/</span>init.d/shadowsocks stop</div><div class="line">重启：<span class="meta-keyword">/etc/</span>init.d/shadowsocks restart</div><div class="line">状态：<span class="meta-keyword">/etc/</span>init.d/shadowsocks status</div></pre></td></tr></table></figure></p>
-<p><a href="https://github.com/shadowsocks/shadowsocks-windows/releases" target="_blank" rel="external">Shadowsocks for Windows 客户端下载</a></p>
-<p><a href="https://github.com/shadowsocks/shadowsocks-android/releases" target="_blank" rel="external">Shadowsocks for Android 客户端下载</a></p>
-<p>客户端配置太简单，懒，直接上图：</p>
-<p><img src="http://ox186n2j0.bkt.clouddn.com/1506760765315.jpg" alt=""></p>
-<p>最后可以到油管搜索4K视频测试</p>
-<hr>
-<h2 id="参考资料："><a href="#参考资料：" class="headerlink" title="参考资料："></a>参考资料：</h2><ol>
-<li><a href="https://teddysun.com/342.html" target="_blank" rel="external"><strong><em>Shadowsocks Python版一键安装脚本</em></strong> by <strong><em>秋水逸冰</em></strong></a></li>
-<li><a href="http://www.openssh.com/manual.html" target="_blank" rel="external"><strong><em>OpenSSH Manual Pages</em></strong></a></li>
-<li><a href="https://www.digitalocean.com/community/tutorials/how-to-use-ssh-keys-with-putty-on-digitalocean-droplets-windows-users" target="_blank" rel="external"><strong><em>How To Use SSH Keys with PuTTY on DigitalOcean Droplets (Windows users)</em></strong></a></li>
-</ol>
-]]></content>
-      
-        
-        <tags>
-            
-            <tag> VPS </tag>
-            
-            <tag> 翻墙 </tag>
-            
-            <tag> SSH </tag>
-            
-            <tag> ServerSpeeder </tag>
-            
-        </tags>
-        
-    </entry>
-    
+  </div>
   
+    
+    <div class="copyright">
+        <p><span>Title:</span><a href="/2018/07/19/剑指offer题解（python实现）/">剑指offer题解（python实现）</a></p>
+        <p><span>Author:</span><a href="/" title="Back to Homepage">Hk4Fun</a></p>
+        <p><span>Created:</span>2018-07-19, 16:30:29</p>
+        <p><span>Updated:</span>2018-07-19, 18:42:12</p>
+        <p>
+            <span>Full URL:</span><a class="post-url" href="/2018/07/19/剑指offer题解（python实现）/" title="剑指offer题解（python实现）">https://hk4fun.github.io/2018/07/19/剑指offer题解（python实现）/</a>
+            <span class="copy-path" data-clipboard-text="From https://hk4fun.github.io/2018/07/19/剑指offer题解（python实现）/　　By Hk4Fun" title="Copy Article&#39;s Link &amp; Author"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>License:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"CC BY-NC-SA 4.0"</a> Keep Link &amp; Author if Distribute.
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2017/10/09/廖雪峰web实战总结/">
+                    廖雪峰web实战总结
+                </a>
+            </div>
+        
+    </nav>
+
   
-</search>
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">Contents</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#二维数组中的查找"><span class="toc-number">1.</span> <span class="toc-text"> 二维数组中的查找</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述"><span class="toc-number">1.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解"><span class="toc-number">1.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码"><span class="toc-number">1.3.</span> <span class="toc-text">代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#拓展题目"><span class="toc-number">1.4.</span> <span class="toc-text">拓展题目</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#替换空格"><span class="toc-number">2.</span> <span class="toc-text">替换空格</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-1"><span class="toc-number">2.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-1"><span class="toc-number">2.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-1"><span class="toc-number">2.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#从尾到头打印链表"><span class="toc-number">3.</span> <span class="toc-text">从尾到头打印链表</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-2"><span class="toc-number">3.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-2"><span class="toc-number">3.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-2"><span class="toc-number">3.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#重建二叉树"><span class="toc-number">4.</span> <span class="toc-text">重建二叉树</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-3"><span class="toc-number">4.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-3"><span class="toc-number">4.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-3"><span class="toc-number">4.3.</span> <span class="toc-text">代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#举一反三"><span class="toc-number">4.4.</span> <span class="toc-text">举一反三</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#用两个栈实现队列"><span class="toc-number">5.</span> <span class="toc-text">用两个栈实现队列</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-4"><span class="toc-number">5.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-4"><span class="toc-number">5.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-4"><span class="toc-number">5.3.</span> <span class="toc-text">代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#举一反三-1"><span class="toc-number">5.4.</span> <span class="toc-text">举一反三</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#旋转数组的最小数字"><span class="toc-number">6.</span> <span class="toc-text">旋转数组的最小数字</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-5"><span class="toc-number">6.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-5"><span class="toc-number">6.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-5"><span class="toc-number">6.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#斐波那契数列"><span class="toc-number">7.</span> <span class="toc-text">斐波那契数列</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-6"><span class="toc-number">7.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-6"><span class="toc-number">7.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-6"><span class="toc-number">7.3.</span> <span class="toc-text">代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#举一反三-2"><span class="toc-number">7.4.</span> <span class="toc-text">举一反三</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二进制中1的个数"><span class="toc-number">8.</span> <span class="toc-text">二进制中1的个数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-7"><span class="toc-number">8.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-7"><span class="toc-number">8.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-7"><span class="toc-number">8.3.</span> <span class="toc-text">代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#举一反三-3"><span class="toc-number">8.4.</span> <span class="toc-text">举一反三</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数值的整数次方"><span class="toc-number">9.</span> <span class="toc-text">数值的整数次方</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-8"><span class="toc-number">9.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-8"><span class="toc-number">9.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-8"><span class="toc-number">9.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#打印1到最大的n位数"><span class="toc-number">10.</span> <span class="toc-text">打印1到最大的n位数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-9"><span class="toc-number">10.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-9"><span class="toc-number">10.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-9"><span class="toc-number">10.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#在O-1-时间删除链表节点"><span class="toc-number">11.</span> <span class="toc-text">在O(1)时间删除链表节点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-10"><span class="toc-number">11.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-10"><span class="toc-number">11.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-10"><span class="toc-number">11.3.</span> <span class="toc-text">代码</span></a></li></ol></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="Hide"  title="Show or Hide Table of Contents">
+
+    <script>
+        yiliaConfig.toc = ["Hide", "Show", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+
+    
+        <div class="addthis_sharing_toolbox"></div>
+    
+</div>
+
+
+
+
+
+
+
+    
+    <!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zMTA4Ni83NjM0" style="margin-left:30px;margin-right:30px">
+<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+</script>
+<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/" title="Back to Homepage"><i class="fa fa-home"></i></a>
+        
+
+        <a title="Mini Archives"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2017/10/09/廖雪峰web实战总结/" title="Next: 廖雪峰web实战总结">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/07/19/剑指offer题解（python实现）/">剑指offer题解（python实现）</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/09/廖雪峰web实战总结/">廖雪峰web实战总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/27/DO-VPS搭建SS并使用ServerSpeeder加速/">DO VPS搭建SS并使用ServerSpeeder加速</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2017-2018 Hk4Fun
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="A fast, simple &amp; powerful blog framework">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="Another simple and elegant theme for Hexo  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="Site Visitors"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="Page Hits"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="Back to Top"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="Comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="Go to Bottom"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+            
+            
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+    <script>
+        var originTitle = document.title;
+        var titleTime;
+        document.addEventListener("visibilitychange", function() {
+            if (document.hidden) {
+                document.title = "(つェ⊂) 我藏好了哦~ " + originTitle;
+                clearTimeout(titleTime);
+            }
+            else {
+                document.title = "(*´∇｀*) 被你发现啦~ " + originTitle;
+                titleTime = setTimeout(function() {
+                    document.title = originTitle;
+                }, 2000);
+            }
+        })
+    </script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>
