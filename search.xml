@@ -3,6 +3,48 @@
   
     
     <entry>
+      <title><![CDATA[为什么Python的corotine这么特殊]]></title>
+      <url>/2018/07/31/%E4%B8%BA%E4%BB%80%E4%B9%88Python%E7%9A%84corotine%E8%BF%99%E4%B9%88%E7%89%B9%E6%AE%8A/</url>
+      <content type="html"><![CDATA[<p>在论坛上看到一篇关于 Python 中 corotine 的文章，从一个简单的例子出发，对比了 Lua、Ruby、Python 在实现 corotine 上的区别和联系：</p>
+<p><a href="https://bbs.byr.cn/#!article/Python/22439" target="_blank" rel="external">https://bbs.byr.cn/#!article/Python/22439</a></p>
+<a id="more"></a>
+<p>这里加上自己的见解：</p>
+<p>不管是 Lua（stackless）:</p>
+<p><img src="http://ox186n2j0.bkt.clouddn.com/1532963594760.jpg" alt="Lua协程实现"></p>
+<p>还是 Ruby（stackful）： </p>
+<p><img src="http://ox186n2j0.bkt.clouddn.com/1532963645680.jpg" alt="Ruby协程实现"></p>
+<p>它们在首次进入 flatten 后都没有再去调用 resume，而是直接 flatten(elem)，因此 flatten 递归调用自己时并没有创建新的协程栈（应用栈），只在第一个 flatten 协程栈上增加函数帧，因此可以在最顶层的函数帧上直接跳回上一个应用栈（最外层），同时也可以在最外层的应用栈上直接跳到下一协程栈的最顶层函数帧。</p>
+<p>也就是说其始终只有两个应用栈，只不过 Lua 的两个应用栈对应的两个C帧在同一个C栈，而 Ruby 的两个协程栈对应了两个不同的C栈（可以在C栈间转跳）：</p>
+<p><img src="http://ox186n2j0.bkt.clouddn.com/1532968370016.jpg" alt="flatten 递归"></p>
+<p>而 Python（stackful） 很特殊：</p>
+<p><img src="http://ox186n2j0.bkt.clouddn.com/1532964433271.jpg" alt="Python 创建协程"></p>
+<p>它既不是 stackless（在同一C栈上创建新的C帧来创建新的协程栈），也没实现在C栈间转跳（创建新的C栈来创建新的协程栈）。</p>
+<p>因此其只能在同一个C栈上创建新的C帧来创建新的协程帧，这些协程帧复用了指向上一帧的指针来表示指向自己的父协程帧，因此 Python 中创建协程就相当于创建函数，但其 yield 时只消除对应的C帧而保留协程帧。</p>
+<p>因此 python 中的协程无法一次性跳回最外层的应用帧（首次发送send的帧），只能一层一层地往外（下） yield，并且也只能一层一层地往内（上）send，体现在代码上就是要多一层 for 循环来帮助内外连通（想想 for 的实现机制，for 本身在不断 send 和 捕获最后的 StopIteration，至于   yield 需要自己在 for 的代码块中写）。</p>
+<p>利用 yield from 可以简写为：</p>
+<pre><code class="python">def flatten(obj):
+    if isinstance(obj, list):
+        for elem in obj:
+            yield from flatten(elem)
+    else:
+        yield obj
+</code></pre>
+<p>引入 yield from 的目的就是为了屏蔽那个多出来一层的让人难以理解的for循环，同时又能实现内外连通。yield from 更加详细的实现机制见《流畅的Python》第16章。</p>
+<p>最后，可以使用 <a href="http://www.pythontutor.com/visualize.html#mode=edit" target="_blank" rel="external">http://www.pythontutor.com/visualize.html#mode=edit</a> 来可视化整个执行流</p>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> python </tag>
+            
+            <tag> corotine </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[剑指offer题解（python实现）]]></title>
       <url>/2018/07/19/%E5%89%91%E6%8C%87offer%E9%A2%98%E8%A7%A3%EF%BC%88python%E5%AE%9E%E7%8E%B0%EF%BC%89/</url>
       <content type="html"><![CDATA[<p>每个题目标题链接到 <a href="https://github.com/Hk4Fun/algorithm_offer/tree/master/target_offer" target="_blank" rel="external">github</a>，可以查看其他的解题思路、测试用例以及拓展题目，这里只贴上书中题目的最优解法和代码。另外，这里参考的是剑指offer第一版的题目顺序，补充部分添加的是剑指offer第二版多出来的几道题目。</p>

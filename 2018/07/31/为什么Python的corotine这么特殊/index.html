@@ -16,15 +16,22 @@
 <link href="/plugins/prettify/prettify.css" rel="stylesheet">
 
 
-<meta name="description" content="个人技术博客">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Hk4Fun&#39;s Blog">
-<meta property="og:url" content="https://hk4fun.github.io/tags/python/index.html">
+<meta name="description" content="在论坛上看到一篇关于 Python 中 corotine 的文章，从一个简单的例子出发，对比了 Lua、Ruby、Python 在实现 corotine 上的区别和联系： https://bbs.byr.cn/#!article/Python/22439">
+<meta name="keywords" content="python,corotine">
+<meta property="og:type" content="article">
+<meta property="og:title" content="为什么Python的corotine这么特殊">
+<meta property="og:url" content="https://hk4fun.github.io/2018/07/31/为什么Python的corotine这么特殊/index.html">
 <meta property="og:site_name" content="Hk4Fun&#39;s Blog">
-<meta property="og:description" content="个人技术博客">
+<meta property="og:description" content="在论坛上看到一篇关于 Python 中 corotine 的文章，从一个简单的例子出发，对比了 Lua、Ruby、Python 在实现 corotine 上的区别和联系： https://bbs.byr.cn/#!article/Python/22439">
+<meta property="og:image" content="http://ox186n2j0.bkt.clouddn.com/1532963594760.jpg">
+<meta property="og:image" content="http://ox186n2j0.bkt.clouddn.com/1532963645680.jpg">
+<meta property="og:image" content="http://ox186n2j0.bkt.clouddn.com/1532968370016.jpg">
+<meta property="og:image" content="http://ox186n2j0.bkt.clouddn.com/1532964433271.jpg">
+<meta property="og:updated_time" content="2018-07-30T16:48:03.652Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hk4Fun&#39;s Blog">
-<meta name="twitter:description" content="个人技术博客">
+<meta name="twitter:title" content="为什么Python的corotine这么特殊">
+<meta name="twitter:description" content="在论坛上看到一篇关于 Python 中 corotine 的文章，从一个简单的例子出发，对比了 Lua、Ruby、Python 在实现 corotine 上的区别和联系： https://bbs.byr.cn/#!article/Python/22439">
+<meta name="twitter:image" content="http://ox186n2j0.bkt.clouddn.com/1532963594760.jpg">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -56,7 +63,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>Tag: python | Hk4Fun&#39;s Blog</title>
+<title>为什么Python的corotine这么特殊 | Hk4Fun&#39;s Blog</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -66,9 +73,9 @@
         fancybox: true,
         animate: true,
         isHome: false,
-        isPost: false,
+        isPost: true,
         isArchive: false,
-        isTag: true,
+        isTag: false,
         isCategory: false,
         fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
         scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
@@ -268,99 +275,196 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap">
+      <div class="body-wrap"><article id="post-为什么Python的corotine这么特殊" class="article article-type-post" itemscope itemprop="blogPost">
   
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-          <div class="article-meta">
-              <a href="/2018/07/31/为什么Python的corotine这么特殊/" class="archive-article-date">
-      <time datetime="2018-07-30T16:39:05.000Z" itemprop="datePublished">07-31</time>
+    <div class="article-meta">
+      <a href="/2018/07/31/为什么Python的corotine这么特殊/" class="article-date">
+      <time datetime="2018-07-30T16:39:05.000Z" itemprop="datePublished">2018-07-31</time>
 </a>
 
 
-        </div>
-         
+    </div>
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/07/31/为什么Python的corotine这么特殊/">为什么Python的corotine这么特殊</a>
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      为什么Python的corotine这么特殊
     </h1>
   
 
-        <div class="article-info info-on-archive">
-          
+      </header>
+      
+      <div class="article-info article-info-post">
+        
 
-          
+        
     <div class="article-tag tagcloud">
         <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/corotine/">corotine</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
     </div>
 
-        </div>
         <div class="clearfix"></div>
-    </header>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>在论坛上看到一篇关于 Python 中 corotine 的文章，从一个简单的例子出发，对比了 Lua、Ruby、Python 在实现 corotine 上的区别和联系：</p>
+<p><a href="https://bbs.byr.cn/#!article/Python/22439" target="_blank" rel="external">https://bbs.byr.cn/#!article/Python/22439</a></p>
+<a id="more"></a>
+<p>这里加上自己的见解：</p>
+<p>不管是 Lua（stackless）:</p>
+<p><img src="http://ox186n2j0.bkt.clouddn.com/1532963594760.jpg" alt="Lua协程实现"></p>
+<p>还是 Ruby（stackful）： </p>
+<p><img src="http://ox186n2j0.bkt.clouddn.com/1532963645680.jpg" alt="Ruby协程实现"></p>
+<p>它们在首次进入 flatten 后都没有再去调用 resume，而是直接 flatten(elem)，因此 flatten 递归调用自己时并没有创建新的协程栈（应用栈），只在第一个 flatten 协程栈上增加函数帧，因此可以在最顶层的函数帧上直接跳回上一个应用栈（最外层），同时也可以在最外层的应用栈上直接跳到下一协程栈的最顶层函数帧。</p>
+<p>也就是说其始终只有两个应用栈，只不过 Lua 的两个应用栈对应的两个C帧在同一个C栈，而 Ruby 的两个协程栈对应了两个不同的C栈（可以在C栈间转跳）：</p>
+<p><img src="http://ox186n2j0.bkt.clouddn.com/1532968370016.jpg" alt="flatten 递归"></p>
+<p>而 Python（stackful） 很特殊：</p>
+<p><img src="http://ox186n2j0.bkt.clouddn.com/1532964433271.jpg" alt="Python 创建协程"></p>
+<p>它既不是 stackless（在同一C栈上创建新的C帧来创建新的协程栈），也没实现在C栈间转跳（创建新的C栈来创建新的协程栈）。</p>
+<p>因此其只能在同一个C栈上创建新的C帧来创建新的协程帧，这些协程帧复用了指向上一帧的指针来表示指向自己的父协程帧，因此 Python 中创建协程就相当于创建函数，但其 yield 时只消除对应的C帧而保留协程帧。</p>
+<p>因此 python 中的协程无法一次性跳回最外层的应用帧（首次发送send的帧），只能一层一层地往外（下） yield，并且也只能一层一层地往内（上）send，体现在代码上就是要多一层 for 循环来帮助内外连通（想想 for 的实现机制，for 本身在不断 send 和 捕获最后的 StopIteration，至于   yield 需要自己在 for 的代码块中写）。</p>
+<p>利用 yield from 可以简写为：</p>
+<pre><code class="python">def flatten(obj):
+    if isinstance(obj, list):
+        for elem in obj:
+            yield from flatten(elem)
+    else:
+        yield obj
+</code></pre>
+<p>引入 yield from 的目的就是为了屏蔽那个多出来一层的让人难以理解的for循环，同时又能实现内外连通。yield from 更加详细的实现机制见《流畅的Python》第16章。</p>
+<p>最后，可以使用 <a href="http://www.pythontutor.com/visualize.html#mode=edit" target="_blank" rel="external">http://www.pythontutor.com/visualize.html#mode=edit</a> 来可视化整个执行流</p>
+
+      
+    </div>
+    
   </div>
-</article>
   
     
-    
-      
-        </div></section>
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-          <div class="article-meta">
-              <a href="/2017/10/09/廖雪峰web实战总结/" class="archive-article-date">
-      <time datetime="2017-10-09T05:48:15.000Z" itemprop="datePublished">10-09</time>
-</a>
-
-
-        </div>
-         
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/10/09/廖雪峰web实战总结/">廖雪峰web实战总结</a>
-    </h1>
-  
-
-        <div class="article-info info-on-archive">
-          
-
-          
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/django/">django</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mvc/">mvc</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/orm/">orm</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/web/">web</a></li></ul>
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2018/07/31/为什么Python的corotine这么特殊/">为什么Python的corotine这么特殊</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">Hk4Fun</a></p>
+        <p><span>发布时间:</span>2018-07-31, 00:39:05</p>
+        <p><span>最后更新:</span>2018-07-31, 00:48:03</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2018/07/31/为什么Python的corotine这么特殊/" title="为什么Python的corotine这么特殊">https://hk4fun.github.io/2018/07/31/为什么Python的corotine这么特殊/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://hk4fun.github.io/2018/07/31/为什么Python的corotine这么特殊/　　作者: Hk4Fun" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
     </div>
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
+
+
+    <nav id="article-nav">
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2018/07/19/剑指offer题解（python实现）/">
+                    剑指offer题解（python实现）
+                </a>
+            </div>
+        
+    </nav>
+
+  
 </article>
-  
-  
-    </div></section>
-  
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
 
     
+<div class="share">
+    
 
+    
+        <div class="addthis_sharing_toolbox"></div>
+    
+</div>
+
+
+
+
+
+
+
+    
+    <!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zMTA4Ni83NjM0" style="margin-left:30px;margin-right:30px">
+<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+</script>
+<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2018/07/19/剑指offer题解（python实现）/" title="下一篇: 剑指offer题解（python实现）">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/07/31/为什么Python的corotine这么特殊/">为什么Python的corotine这么特殊</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/19/剑指offer题解（python实现）/">剑指offer题解（python实现）</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/09/廖雪峰web实战总结/">廖雪峰web实战总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/27/DO-VPS搭建SS并使用ServerSpeeder加速/">DO VPS搭建SS并使用ServerSpeeder加速</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
 </div>
       <footer id="footer">
     <div class="outer">
