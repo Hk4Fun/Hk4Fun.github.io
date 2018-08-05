@@ -22,7 +22,7 @@
 <meta name="description" content="个人技术博客">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Hk4Fun&#39;s Blog">
-<meta property="og:url" content="https://hk4fun.github.io/index.html">
+<meta property="og:url" content="https://hk4fun.github.io/page/2/index.html">
 <meta property="og:site_name" content="Hk4Fun&#39;s Blog">
 <meta property="og:description" content="个人技术博客">
 <meta name="twitter:card" content="summary">
@@ -275,11 +275,11 @@
 </nav>
       <div class="body-wrap">
   
-    <article id="post-Python-中-type-与-object-的关系" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-DO-VPS搭建SS并使用ServerSpeeder加速" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2018/08/05/Python-中-type-与-object-的关系/" class="article-date">
-      <time datetime="2018-08-04T17:58:08.000Z" itemprop="datePublished">2018-08-05</time>
+      <a href="/2017/09/27/DO-VPS搭建SS并使用ServerSpeeder加速/" class="article-date">
+      <time datetime="2017-09-27T09:34:38.000Z" itemprop="datePublished">2017-09-27</time>
 </a>
 
 
@@ -294,7 +294,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/05/Python-中-type-与-object-的关系/">Python 中 type 与 object 的关系</a>
+      <a class="article-title" href="/2017/09/27/DO-VPS搭建SS并使用ServerSpeeder加速/">DO VPS搭建SS并使用ServerSpeeder加速</a>
     </h1>
   
 
@@ -304,32 +304,7 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-              <p>先来看看这8个输出：</p>
-<pre><code class="python">In 1]: isinstance(object, object)
-Out[1]: True
-
-In [2]: isinstance(object, type)
-Out[2]: True
-
-In [3]: isinstance(type, type)
-Out[3]: True
-
-In [4]: isinstance(type, object)
-Out[4]: True
-
-In [5]: issubclass(object, object)
-Out[5]: True
-
-In [6]: issubclass(object, type)
-Out[6]: False
-
-In [7]: issubclass(type, type)
-Out[7]: True
-
-In [8]: issubclass(type, object)
-Out[8]: True
-</code></pre>
-<p>以上输出在 py2.x 和 py3.x 下都一样，如果都能明白为什么，那么 type 与 object 的关系也就容易弄懂了。</p>
+              <p><strong>10$</strong> 的 <a href="&#39;https://m.do.co/c/ba18ef5fa022&#39;"><strong>邀请码</strong></a> 和 <a href="&quot;https://education.github.com/pack&quot;"><strong>github student pack</strong></a> 赠送的 <strong>50$</strong> 优惠券让我入了DO VPS的坑。想着就借此搭个SS也不错，才发现新加坡节点比旧金山稳定多了，然后开始各种折腾。do家的vps采用kvm架构且支持ipv6，可以在校外通过它连接byrbt，校内通过ipv6实现免流，且流量可以说是不限的。<br>
           
       
     </div>
@@ -340,205 +315,12 @@ Out[8]: True
 
       
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SSH/">SSH</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ServerSpeeder/">ServerSpeeder</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/VPS/">VPS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/翻墙/">翻墙</a></li></ul>
     </div>
 
       
         <p class="article-more-link">
-          <a href="/2018/08/05/Python-中-type-与-object-的关系/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-为什么Python的corotine这么特殊" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2018/07/31/为什么Python的corotine这么特殊/" class="article-date">
-      <time datetime="2018-07-30T16:39:05.000Z" itemprop="datePublished">2018-07-31</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/07/31/为什么Python的corotine这么特殊/">为什么Python的corotine这么特殊</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <p>在论坛上看到一篇关于 Python 中 corotine 的文章，从一个简单的例子出发，对比了 Lua、Ruby、Python 在实现 corotine 上的区别和联系：</p>
-<p><a href="https://bbs.byr.cn/#!article/Python/22439" target="_blank" rel="external">https://bbs.byr.cn/#!article/Python/22439</a></p>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/corotine/">corotine</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2018/07/31/为什么Python的corotine这么特殊/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-剑指offer题解（python实现）" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2018/07/19/剑指offer题解（python实现）/" class="article-date">
-      <time datetime="2018-07-19T08:30:29.000Z" itemprop="datePublished">2018-07-19</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/07/19/剑指offer题解（python实现）/">剑指offer题解（python实现）</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <p>每个题目标题链接到 <a href="https://github.com/Hk4Fun/algorithm_offer/tree/master/target_offer" target="_blank" rel="external">github</a>，可以查看其他的解题思路、测试用例以及拓展题目，这里只贴上书中题目的最优解法和代码。另外，这里参考的是剑指offer第一版的题目顺序，补充部分添加的是剑指offer第二版多出来的几道题目。</p>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/剑指offer/">剑指offer</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据结构/">数据结构</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法/">算法</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2018/07/19/剑指offer题解（python实现）/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-廖雪峰web实战总结" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/10/09/廖雪峰web实战总结/" class="article-date">
-      <time datetime="2017-10-09T05:48:15.000Z" itemprop="datePublished">2017-10-09</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/10/09/廖雪峰web实战总结/">廖雪峰web实战总结</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <p>敲完<a href="https://github.com/Hk4Fun/awesome-python3-webapp" target="_blank" rel="external">代码</a>却一直没写个总结，因为感觉火候不到，学了一段时间的Django后回来重温，更是感觉廖大大的<a href="https://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001432170937506ecfb2f6adf8e4757939732f3e32b781c000" target="_blank" rel="external">这个web实战</a>很是经典，借鉴了不少的框架设计思想：<code>orm（modle）、router（urls）、mvc（mvt）、handlers（views）</code>等</p>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/django/">django</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mvc/">mvc</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/orm/">orm</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/web/">web</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2017/10/09/廖雪峰web实战总结/#more">more >></a>
+          <a href="/2017/09/27/DO-VPS搭建SS并使用ServerSpeeder加速/#more">more >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -559,7 +341,7 @@ Out[8]: True
   
   
     <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
     </nav>
   
 </div>

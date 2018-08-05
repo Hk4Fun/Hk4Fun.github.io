@@ -16,21 +16,27 @@
 <link href="/plugins/prettify/prettify.css" rel="stylesheet">
 
 
-<meta name="description" content="10$ 的 邀请码 和 github student pack 赠送的 50$ 优惠券让我入了DO VPS的坑。想着就借此搭个SS也不错，才发现新加坡节点比旧金山稳定多了，然后开始各种折腾。do家的vps采用kvm架构且支持ipv6，可以在校外通过它连接byrbt，校内通过ipv6实现免流，且流量可以说是不限的。">
-<meta name="keywords" content="VPS,翻墙,SSH,ServerSpeeder">
+<meta name="description" content="先来看看这8个输出： In 1]: isinstance(object, object) Out[1]: True  In [2]: isinstance(object, type) Out[2]: True  In [3]: isinstance(type, type) Out[3]: True  In [4]: isinstance(type, object) Out[4]: True  In">
+<meta name="keywords" content="python">
 <meta property="og:type" content="article">
-<meta property="og:title" content="DO VPS搭建SS并使用ServerSpeeder加速">
-<meta property="og:url" content="https://hk4fun.github.io/2017/09/27/DO-VPS搭建SS并使用ServerSpeeder加速/index.html">
+<meta property="og:title" content="Python 中 type 与 object 的关系">
+<meta property="og:url" content="https://hk4fun.github.io/2018/08/05/Python-中-type-与-object-的关系/index.html">
 <meta property="og:site_name" content="Hk4Fun&#39;s Blog">
-<meta property="og:description" content="10$ 的 邀请码 和 github student pack 赠送的 50$ 优惠券让我入了DO VPS的坑。想着就借此搭个SS也不错，才发现新加坡节点比旧金山稳定多了，然后开始各种折腾。do家的vps采用kvm架构且支持ipv6，可以在校外通过它连接byrbt，校内通过ipv6实现免流，且流量可以说是不限的。">
-<meta property="og:image" content="http://ox186n2j0.bkt.clouddn.com/1506760764914.jpg">
-<meta property="og:image" content="http://ox186n2j0.bkt.clouddn.com/1506760763636.jpg">
-<meta property="og:image" content="http://ox186n2j0.bkt.clouddn.com/1506760765315.jpg">
-<meta property="og:updated_time" content="2018-07-19T08:55:30.302Z">
+<meta property="og:description" content="先来看看这8个输出： In 1]: isinstance(object, object) Out[1]: True  In [2]: isinstance(object, type) Out[2]: True  In [3]: isinstance(type, type) Out[3]: True  In [4]: isinstance(type, object) Out[4]: True  In">
+<meta property="og:image" content="http://ox186n2j0.bkt.clouddn.com/1533408939335.jpg">
+<meta property="og:image" content="http://ox186n2j0.bkt.clouddn.com/1533409633841.jpg">
+<meta property="og:image" content="http://ox186n2j0.bkt.clouddn.com/1533410487047.jpg">
+<meta property="og:image" content="http://ox186n2j0.bkt.clouddn.com/1533418058683.jpg">
+<meta property="og:image" content="http://ox186n2j0.bkt.clouddn.com/1533418343805.jpg">
+<meta property="og:image" content="http://ox186n2j0.bkt.clouddn.com/1533418834898.jpg">
+<meta property="og:image" content="http://ox186n2j0.bkt.clouddn.com/1533436909296.jpg">
+<meta property="og:image" content="http://ox186n2j0.bkt.clouddn.com/1533437856409.jpg">
+<meta property="og:image" content="http://ox186n2j0.bkt.clouddn.com/1533441406419.jpg">
+<meta property="og:updated_time" content="2018-08-05T04:03:29.817Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="DO VPS搭建SS并使用ServerSpeeder加速">
-<meta name="twitter:description" content="10$ 的 邀请码 和 github student pack 赠送的 50$ 优惠券让我入了DO VPS的坑。想着就借此搭个SS也不错，才发现新加坡节点比旧金山稳定多了，然后开始各种折腾。do家的vps采用kvm架构且支持ipv6，可以在校外通过它连接byrbt，校内通过ipv6实现免流，且流量可以说是不限的。">
-<meta name="twitter:image" content="http://ox186n2j0.bkt.clouddn.com/1506760764914.jpg">
+<meta name="twitter:title" content="Python 中 type 与 object 的关系">
+<meta name="twitter:description" content="先来看看这8个输出： In 1]: isinstance(object, object) Out[1]: True  In [2]: isinstance(object, type) Out[2]: True  In [3]: isinstance(type, type) Out[3]: True  In [4]: isinstance(type, object) Out[4]: True  In">
+<meta name="twitter:image" content="http://ox186n2j0.bkt.clouddn.com/1533408939335.jpg">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -62,7 +68,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>DO VPS搭建SS并使用ServerSpeeder加速 | Hk4Fun&#39;s Blog</title>
+<title>Python 中 type 与 object 的关系 | Hk4Fun&#39;s Blog</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -274,11 +280,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-DO-VPS搭建SS并使用ServerSpeeder加速" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-Python-中-type-与-object-的关系" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2017/09/27/DO-VPS搭建SS并使用ServerSpeeder加速/" class="article-date">
-      <time datetime="2017-09-27T09:34:38.000Z" itemprop="datePublished">2017-09-27</time>
+      <a href="/2018/08/05/Python-中-type-与-object-的关系/" class="article-date">
+      <time datetime="2018-08-04T17:58:08.000Z" itemprop="datePublished">2018-08-05</time>
 </a>
 
 
@@ -293,7 +299,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      DO VPS搭建SS并使用ServerSpeeder加速
+      Python 中 type 与 object 的关系
     </h1>
   
 
@@ -304,7 +310,7 @@
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SSH/">SSH</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ServerSpeeder/">ServerSpeeder</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/VPS/">VPS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/翻墙/">翻墙</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -314,116 +320,282 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p><strong>10$</strong> 的 <a href="&#39;https://m.do.co/c/ba18ef5fa022&#39;"><strong>邀请码</strong></a> 和 <a href="&quot;https://education.github.com/pack&quot;"><strong>github student pack</strong></a> 赠送的 <strong>50$</strong> 优惠券让我入了DO VPS的坑。想着就借此搭个SS也不错，才发现新加坡节点比旧金山稳定多了，然后开始各种折腾。do家的vps采用kvm架构且支持ipv6，可以在校外通过它连接byrbt，校内通过ipv6实现免流，且流量可以说是不限的。<br><a id="more"></a></p>
-<h2 id="配置SSH"><a href="#配置SSH" class="headerlink" title="配置SSH"></a>配置SSH</h2><p>如何生成密钥对？<br><a href="https://www.digitalocean.com/community/tutorials/how-to-use-ssh-keys-with-digitalocean-droplets" title="https://www.digitalocean.com/community/tutorials/how-to-use-ssh-keys-with-digitalocean-droplets" target="_blank" rel="external">Linux/MAC</a>      <strong>/</strong>  <a href="https://www.digitalocean.com/community/tutorials/how-to-use-ssh-keys-with-putty-on-digitalocean-droplets-windows-users" title="https://www.digitalocean.com/community/tutorials/how-to-use-ssh-keys-with-putty-on-digitalocean-droplets-windows-users" target="_blank" rel="external">Windows</a></p>
-<p>如果使用了密钥对，就可以不用每次登陆都输入密码。</p>
-<p>如果不用DO的sshkey上传，自己在客户端生成密钥对后，将公钥id_rsa.pub写进服务端的<code>/root/.ssh/authorized_keys</code>，然后到服务端<code>/etc/ssh/sshd_config</code>修改ssh配置： <strong>将”PasswordAuthentication yes”修改为”PasswordAuthentication no”</strong></p>
-<p>这样就可以不用每次登陆都输入密码，当然如果还是yes的话就可以在没有密钥对时通过密码登录。</p>
-<p>私钥保存在本地客户端就行了（windows下为.ppk文件，Linux下就是id_rsa）</p>
-<p>如果有多台终端设备，则在设备上生成密钥对后把公钥加在服务端的<code>/root/.ssh/authorized_keys</code>后面</p>
-<p>SSH其他常用配置选项：</p>
+        <p>先来看看这8个输出：</p>
+<pre><code class="python">In 1]: isinstance(object, object)
+Out[1]: True
+
+In [2]: isinstance(object, type)
+Out[2]: True
+
+In [3]: isinstance(type, type)
+Out[3]: True
+
+In [4]: isinstance(type, object)
+Out[4]: True
+
+In [5]: issubclass(object, object)
+Out[5]: True
+
+In [6]: issubclass(object, type)
+Out[6]: False
+
+In [7]: issubclass(type, type)
+Out[7]: True
+
+In [8]: issubclass(type, object)
+Out[8]: True
+</code></pre>
+<p>以上输出在 py2.x 和 py3.x 下都一样，如果都能明白为什么，那么 type 与 object 的关系也就容易弄懂了。</p>
+<a id="more"></a>
+<p>这两者的关系类似鸡和蛋的关系，究竟谁先出现？二者其实都不能独立，它们同时出现而互相依赖。</p>
+<p>首先明白在面向对象概念中存在两种关系：</p>
 <ul>
-<li>服务端<code>/etc/ssh/sshd_config</code>：</li>
+<li>父子关系（a kinf of），即继承关系，如 “猫是哺乳动物”，可以通过 __bases__ 属性查看某个类型继承的所有父类（返回一个元组）</li>
 </ul>
-<p><strong>Port 22</strong><br>定义了SSH服务监听的断口号，SSH服务默认使用的端口号是22</p>
-<p><strong>Proctocol 2,1</strong><br>定义了SSH服务器使用SSH协议的顺序。默认识先使用SSH2协议，如果不成功则使用SSH1协议，为了安全起见，可以设置只使用SSH2协议。</p>
-<p><strong>ListenAddress 0.0.0.0</strong><br>定义SSH服务器帮定的IP地址,默认绑定服务器所有可用的IP地址.</p>
-<p><strong>PermitRootLogin yes</strong><br>定义是否允许管理员登陆</p>
-<p><strong>PermitEmptyPasswords no</strong><br>定义是否允许空密码登陆.</p>
-<p><strong>PasswordAuthentication no</strong><br>定义是否使用口令认证方式,如果准备使用公钥认证可以设置为no</p>
-<p><strong>AuthorizedKeysFile .ssh/authorized_keys</strong><br>定义默认公钥文件路径</p>
-<p>详细见官方文档<a href="https://man.openbsd.org/sshd_config" target="_blank" rel="external">https://man.openbsd.org/sshd_config</a></p>
 <ul>
-<li>客户端<code>/etc/ssh/ssh_config</code>:</li>
+<li>类型实例关系（an instance of），即类的实例化，如 “小白是猫”，可以通过 __class__ 属性或 type() 方法查看某个实例的所属类型</li>
 </ul>
-<p>详细见官方文档<a href="https://man.openbsd.org/ssh_config" target="_blank" rel="external">https://man.openbsd.org/ssh_config</a></p>
-<h2 id="配置ServerSpeeder"><a href="#配置ServerSpeeder" class="headerlink" title="配置ServerSpeeder"></a>配置ServerSpeeder</h2><p>先安装serverspeeder（锐速），因为锐速对支持的Linux发行版本和内核版本都有要求，安装过程中可能会让更换内核并重启，目前锐速ServerSpeeder无限带宽破解版支持的内核有：</p>
+<p>如果用实线（竖线）表示父子关系，用虚线（横线）表示类型实例关系，那么可以用下图来描述：</p>
+<p><img src="http://ox186n2j0.bkt.clouddn.com/1533408939335.jpg" alt="两种关系"></p>
+<p>假设有这么一张白板，分割成三部分，用来描述 Python 里面对象的关系：</p>
+<p><img src="http://ox186n2j0.bkt.clouddn.com/1533409633841.jpg" alt="白板"></p>
+<p>先来看看 type 和 object。在 Python 中，object 是父子关系的顶端，所有类型都是它的子类；type 是类型实例关系的顶端，所有类型都是它的实例（注意，不是所有对象都是 type 的实例，因为类型实例关系不具有传递性），即 <strong>object 是所有类的父类，而 type 是所有类的类</strong>：</p>
+<pre><code class="python">In [1]: object.__class__
+Out[1]: type   # object 的类型是 type
+
+In [2]: object.__bases__
+Out[2]: ()     # object 没有父类，位于链条顶端
+
+In [3]: type.__class__
+Out[3]: type  # type 的类型是它本身
+
+In [4]: type.__bases__
+Out[4]: (object,)    # type 的父类是 object
+</code></pre>
+<p>以上关系可用下图来表示：</p>
+<p><img src="http://ox186n2j0.bkt.clouddn.com/1533410487047.jpg" alt="type 与 object 的关系"></p>
+<p>至此，对于文章一开头的八个输出就可以明确四个了，分别是</p>
+<pre><code class="python">In [2]: isinstance(object, type)
+Out[2]: True  # object 的类型是 type
+
+In [3]: isinstance(type, type)
+Out[3]: True   # type 的类型是它本身
+
+In [6]: issubclass(object, type)
+Out[6]: False  # object 的父类不是 type，它没有父类
+
+In [8]: issubclass(type, object)
+Out[8]: True # type 的父类是 object
+</code></pre>
+<p>那么其他四个如何解释？</p>
+<pre><code class="python">In 1]: isinstance(object, object)
+Out[1]: True
+
+In [4]: isinstance(type, object)
+Out[4]: True
+
+In [5]: issubclass(object, object)
+Out[5]: True
+
+In [7]: issubclass(type, type)
+Out[7]: True
+</code></pre>
+<p>这就要考虑到 isinstance() 遵守的 <strong>Dashed Arrow Up Rule</strong>：</p>
+<p><strong>如果 X 是 A 的实例，且 A 是 B 的子类，那么 X 是 B 的 实例</strong></p>
+<pre><code class="python">&gt;&gt;&gt; class B:
+...     pass
+...
+&gt;&gt;&gt; class A(B):
+...     pass
+...
+&gt;&gt;&gt; X = A()
+&gt;&gt;&gt; isinstance(X, A)
+True
+&gt;&gt;&gt; issubclass(A, B)
+True
+&gt;&gt;&gt; isinstance(X, B)
+True
+</code></pre>
+<p>因此，由 isinstance(object, type) 和 issubclass(type, object)，可以得出</p>
+<pre><code class="python">In 1]: isinstance(object, object)
+Out[1]: True
+</code></pre>
+<p>由 isinstance(type, type) 和 issubclass(type, object) 可以得出</p>
+<pre><code class="python">In [4]: isinstance(type, object)
+Out[4]: True
+</code></pre>
+<p>至于最后两条，对于 issubclass() 方法来说，每个类型都是它自身的子类（父类），因此也就有</p>
+<pre><code class="python">In [5]: issubclass(object, object)
+Out[5]: True
+
+In [7]: issubclass(type, type)
+Out[7]: True
+</code></pre>
+<p>文章到这里貌似就要结束了，但好戏还在后头。。。。。。</p>
+<p>既然有 Dashed Arrow Up Rule，那就有 <strong>Dashed Arrow Down Rule</strong>：</p>
+<p><strong>如果 A 是 B 的子类，且 B 是 M 的实例，那么 A 是 M 的实例</strong></p>
+<pre><code class="python">&gt;&gt;&gt; class A(object):  
+...     pass           
+...                    
+&gt;&gt;&gt; isinstance(object, type) 
+True                         
+&gt;&gt;&gt; issubclass(A, object)    
+True                         
+&gt;&gt;&gt; isinstance(A, type)      
+True
+</code></pre>
+<p>到这里你可能会觉得 Dashed Arrow Up Rule 和 Dashed Arrow Down Rule 隐约有什么关系，其实它们的名字就已经告诉我们了，这里可用下图来描述：</p>
+<p><img src="http://ox186n2j0.bkt.clouddn.com/1533418058683.jpg" alt="Up and Down"></p>
+<p>最后还有一条很重要的Rule，<strong>Combine Solid Arrows Rule：</strong></p>
+<p><strong>如果 A 是 B 的子类，且 B 是 C 的子类，那么 A 也是 C 的子类</strong></p>
+<p>即继承关系具有传递性：</p>
+<pre><code class="python">&gt;&gt;&gt; class C:
+...     pass
+...
+&gt;&gt;&gt; class B(C):
+...     pass
+...
+&gt;&gt;&gt; class A(B):
+...     pass
+...
+&gt;&gt;&gt; issubclass(A, B)
+True
+&gt;&gt;&gt; issubclass(B, C)
+True
+&gt;&gt;&gt; issubclass(A, C)
+True
+</code></pre>
+<p>总结以上三条Rule，就是：</p>
+<p><img src="http://ox186n2j0.bkt.clouddn.com/1533418343805.jpg" alt="Three Rules"></p>
+<p>那有没有第四条Rule，即类型实例关系也具有传递性呢（前面有提过）？</p>
+<p><img src="http://ox186n2j0.bkt.clouddn.com/1533418834898.jpg" alt="类型实例关系具有传递性吗？"></p>
+<p>验证一下：</p>
+<pre><code class="python">&gt;&gt;&gt; isinstance(int, type)
+True
+&gt;&gt;&gt; isinstance(1, int)
+True
+&gt;&gt;&gt; isinstance(1, type)
+False
+</code></pre>
+<p>很明显，实例类型关系不具有传递性，但为什么继承关系可以传递而实例类型关系却不可以？</p>
+<p>Python 对象一次只能有一种类型，如果实例类型关系具有传递性，那么就会出现一个对象同时对应两种不同的类型。</p>
+<p>现在开始完善我们的白板，引入 list, dict, tuple 这些内置数据类型来看看（以下所有输出都是在 py3.x 解释器中）：</p>
+<pre><code class="python">&gt;&gt;&gt; list.__bases__
+(&lt;class &#39;object&#39;&gt;,)  # py2.x 是 (&lt;type &#39;object&#39;&gt;,)
+&gt;&gt;&gt; list.__class__
+&lt;class &#39;type&#39;&gt;  # py2.x 是 &lt;type &#39;type&#39;&gt;
+
+
+&gt;&gt;&gt; dict.__bases__
+(&lt;class &#39;object&#39;&gt;,)
+&gt;&gt;&gt; dict.__class__
+&lt;class &#39;type&#39;&gt;
+
+
+&gt;&gt;&gt; tuple.__bases__
+(&lt;class &#39;object&#39;&gt;,)
+&gt;&gt;&gt; tuple.__class__
+&lt;class &#39;type&#39;&gt;
+</code></pre>
+<p>内置类型都继承于 object，且都是 type 的实例</p>
+<p>再实例化一个list来看看：</p>
+<pre><code class="python">&gt;&gt;&gt; l = [1,2,3]
+&gt;&gt;&gt; l.__bases__
+Traceback (most recent call last):
+  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
+AttributeError: &#39;list&#39; object has no attribute &#39;__bases__&#39;
+&gt;&gt;&gt; l.__class__
+&lt;class &#39;list&#39;&gt;
+</code></pre>
+<p>实例化后的 l 对象没有 __bases__ 属性，也就是没有父类这一说法，它只是 list 的一个实例</p>
+<p>以上全部加到白板上就是：</p>
+<p><img src="http://ox186n2j0.bkt.clouddn.com/1533436909296.jpg" alt="加入内置数据类型"></p>
+<p>注：该图没有完全按照前面三条 Rules 来画，只是按照 __bases__ 和  __class__ 的结果来画，以下同。</p>
+<p>白板上除了 type 和 object，横向虚线代表实例，纵向实线代表继承</p>
+<p>当我们自己去定个一个类并实例化它的时候，和上面的对象之间又是什么关系呢？</p>
+<pre><code class="python">&gt;&gt;&gt; class A:
+...     pass
+...
+&gt;&gt;&gt; a = A()
+&gt;&gt;&gt;
+&gt;&gt;&gt; A.__bases__
+(&lt;class &#39;object&#39;&gt;,)
+&gt;&gt;&gt; A.__class__
+&lt;class &#39;type&#39;&gt;
+&gt;&gt;&gt; a.__class__
+&lt;class &#39;__main__.A&#39;&gt;
+&gt;&gt;&gt; a.__bases__
+Traceback (most recent call last):
+  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
+AttributeError: &#39;A&#39; object has no attribute &#39;__bases__&#39;
+</code></pre>
+<p>如我们所料，A 继承了 object 并成为 type 的一个实例，而 a 只是 A 的一个实例，没有继承任何父类</p>
+<p>注意到object自己也是可以实例化的：</p>
+<pre><code class="python">&gt;&gt;&gt; ob = object()
+&gt;&gt;&gt; ob.__class__
+&lt;class &#39;object&#39;&gt;
+&gt;&gt;&gt; ob.__bases__
+Traceback (most recent call last):
+  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
+AttributeError: &#39;object&#39; object has no attribute &#39;__bases__&#39;
+</code></pre>
+<p>以上全部加入白板后如下：</p>
+<p><img src="http://ox186n2j0.bkt.clouddn.com/1533437856409.jpg" alt="自定义类"></p>
+<p>到这里就会发现 type 所在那一栏只有它一个，所以引入了 metaclass 用来扩展 type，这需要我们去继承 type，这就意味着我们可以自定义生成类的模板，达到动态生成类的目的（可见 Python 的动态特性非常完美）：</p>
+<pre><code class="python">&gt;&gt;&gt; class M(type):
+...     pass
+...
+&gt;&gt;&gt; M.__class__
+&lt;class &#39;type&#39;&gt;    # 所有的类都是 type 的实例，包括自定义的元类
+&gt;&gt;&gt; M.__bases__
+(&lt;class &#39;type&#39;&gt;,)
+</code></pre>
+<p>有趣的是自定义的元类既是 type 的子类也是 type 的实例</p>
+<p>那么如何实例化元类来生成一个新类呢？ 可以直接 m = M() 吗？</p>
+<pre><code class="python">&gt;&gt;&gt; m = M()
+Traceback (most recent call last):
+  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
+TypeError: type.__new__() takes exactly 3 arguments (0 given)
+</code></pre>
+<p>显然不行，缺少三个参数，具体是哪三个见<a href="https://stackoverflow.com/questions/100003/what-are-metaclasses-in-python" target="_blank" rel="external">StackOverflow一个关于元类的高票回答</a>，这里就不再展开。</p>
+<p>那如何优雅地实例化元类呢？</p>
+<p>在 py3.x 下是直接在继承时声明：</p>
+<pre><code class="python">&gt;&gt;&gt; class T(metaclass=M):
+...     pass
+...
+&gt;&gt;&gt; T.__bases__
+(&lt;class &#39;object&#39;&gt;,)  # object 是所有类的父类
+&gt;&gt;&gt; T.__class__
+&lt;class &#39;__main__.M&#39;&gt;
+</code></pre>
+<p>在 py2.x 下是定义一个 __metaclass__ 类属性：</p>
+<pre><code class="python">&gt;&gt;&gt; class T:
+...     __metaclass__=M
+...
+&gt;&gt;&gt; T.__class__
+&lt;class &#39;__main__.M&#39;&gt;
+&gt;&gt;&gt; T.__bases__
+(&lt;type &#39;object&#39;&gt;,)
+</code></pre>
+<p>用 T 来生成一个实例看看：</p>
+<pre><code class="python">&gt;&gt;&gt; t = T()
+&gt;&gt;&gt; t.__bases__
+Traceback (most recent call last):
+  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
+AttributeError: &#39;T&#39; object has no attribute &#39;__bases__&#39;
+&gt;&gt;&gt; t.__class__
+&lt;class &#39;__main__.T&#39;&gt;
+</code></pre>
+<p>以上全部加入白板后如下：</p>
+<p><img src="http://ox186n2j0.bkt.clouddn.com/1533441406419.jpg" alt="加入 metaclass"></p>
+<p>– end –</p>
+<p> 参考资料</p>
 <ul>
-<li>CentOS-6.8：2.6.32-642.el7.x86_64</li>
-<li>CentOS-7.2：3.10.0-327.el7.x86_64</li>
-<li>CentOS：4.4.0-x86_64-linode63</li>
-<li>Ubuntu_14.04：4.2.0-35-generic</li>
-<li>Debian_8：3.16.0-4-amd64</li>
+<li><a href="https://www.zhihu.com/question/38791962?sort=created" target="_blank" rel="external">知乎回答：Python 的 type 和 object 之间是怎么一种关系？</a></li>
 </ul>
-<p>而DO官网提供的镜像都不符合，因此还是要更换内核（我在官网选择的版本为centos 7.3.1611 x64）：</p>
-<p>1、首先下载并更换内核：</p>
-<pre><code>rpm -ivh http://xz.wn789.com/CentOSkernel/kernel-3.10.0-229.1.2.el7.x86_64.rpm --force
-rpm -qa | grep kernel #查看内核是否安装成功
-</code></pre><p>2、重启VPS，查看内核是否修改成功：</p>
-<pre><code>    reboot #重启VPS
-    uname -r #当前使用内核版本
-</code></pre><p><img src="http://ox186n2j0.bkt.clouddn.com/1506760764914.jpg" alt=""></p>
-<p>3、下载脚本到服务器，然后再执行脚本安装：</p>
-<pre><code>    wget -N --no-check-certificate https://raw.githubusercontent.com/wn789/serverspeeder/master/serverspeeder.sh
-    bash serverspeeder.sh
-</code></pre><p>4、安装过程很简单，如果你的VPS内核支持安装，根本无需你手动操作，直接一键完成</p>
-<p>5、锐速serverspeeder常用命令：</p>
-<pre><code>    service serverSpeeder start #启动
-    service serverSpeeder stop #停止
-    service serverSpeeder reload #重新加载配置
-    service serverSpeeder restart #重启
-    service serverSpeeder status #状态
-    service serverSpeeder stats #统计
-    service serverSpeeder renewLic #更新许可文件
-    service serverSpeeder update #更新
-    chattr -i /serverspeeder/etc/apx* &amp;&amp; /serverspeeder/bin/serverSpeeder.sh uninstall -f #卸载
-</code></pre><h2 id="配置Shadowsocks"><a href="#配置Shadowsocks" class="headerlink" title="配置Shadowsocks"></a>配置Shadowsocks</h2><p>使用 <a href="https://teddysun.com/342.html" target="_blank" rel="external"><strong>一键安装 Python 版 Shadowsocks</strong></a> 安装</p>
-<p>安装方法：</p>
-<pre><code>    wget --no-check-certificate -O shadowsocks.sh https://raw.githubusercontent.com/teddysun/shadowsocks_install/master/shadowsocks.sh
-    chmod +x shadowsocks.sh
-    ./shadowsocks.sh 2&gt;&amp;1 | tee shadowsocks.log
-</code></pre><p>配置：</p>
-<p>服务器地址：vps主机公网ip</p>
-<p>服务器端口：如不设定，默认为 8989</p>
-<p>密码：如不设定，默认为 teddysun.com）</p>
-<p>加密方式：<strong>aes-256-cfb</strong>（如不设定，默认为 aes-256-gcm）</p>
-<p>安装完成后，脚本提示如下：</p>
-<p><img src="http://ox186n2j0.bkt.clouddn.com/1506760763636.jpg" alt=""></p>
-<p>卸载方法：</p>
-<p>./shadowsocks.sh uninstall</p>
-<p>单用户配置文件示例：<br>配置文件路径：/etc/shadowsocks.json</p>
-<pre><code>    {
-    &quot;server&quot;:&quot;0.0.0.0&quot;,
-    &quot;server_port&quot;:your_server_port,
-    &quot;local_address&quot;:&quot;127.0.0.1&quot;,
-    &quot;local_port&quot;:1080,
-    &quot;password&quot;:&quot;your_password&quot;,
-    &quot;timeout&quot;:300,
-    &quot;method&quot;:&quot;your_encryption_method&quot;,
-    &quot;fast_open&quot;: false
-    }
-</code></pre><p>多用户多端口配置文件示例：<br>配置文件路径：/etc/shadowsocks.json</p>
-<pre><code>    {
-    &quot;server&quot;:&quot;0.0.0.0&quot;,
-    &quot;local_address&quot;:&quot;127.0.0.1&quot;,
-    &quot;local_port&quot;:1080,
-    &quot;port_password&quot;:{
-         &quot;8989&quot;:&quot;password0&quot;,
-         &quot;9001&quot;:&quot;password1&quot;,
-         &quot;9002&quot;:&quot;password2&quot;,
-         &quot;9003&quot;:&quot;password3&quot;,
-         &quot;9004&quot;:&quot;password4&quot;
-    },
-    &quot;timeout&quot;:300,
-    &quot;method&quot;:&quot;your_encryption_method&quot;,
-    &quot;fast_open&quot;: false
-    }
-</code></pre><p>常用命令：</p>
-<pre><code>    启动：/etc/init.d/shadowsocks start
-    停止：/etc/init.d/shadowsocks stop
-    重启：/etc/init.d/shadowsocks restart
-    状态：/etc/init.d/shadowsocks status
-</code></pre><p><a href="https://github.com/shadowsocks/shadowsocks-windows/releases" target="_blank" rel="external">Shadowsocks for Windows 客户端下载</a></p>
-<p><a href="https://github.com/shadowsocks/shadowsocks-android/releases" target="_blank" rel="external">Shadowsocks for Android 客户端下载</a></p>
-<p>客户端配置太简单，懒，直接上图：</p>
-<p><img src="http://ox186n2j0.bkt.clouddn.com/1506760765315.jpg" alt=""></p>
-<p>最后可以到油管搜索4K视频测试</p>
-<hr>
-<h2 id="参考资料："><a href="#参考资料：" class="headerlink" title="参考资料："></a>参考资料：</h2><ol>
-<li><a href="https://teddysun.com/342.html" target="_blank" rel="external"><strong><em>Shadowsocks Python版一键安装脚本</em></strong> by <strong><em>秋水逸冰</em></strong></a></li>
-<li><a href="http://www.openssh.com/manual.html" target="_blank" rel="external"><strong><em>OpenSSH Manual Pages</em></strong></a></li>
-<li><a href="https://www.digitalocean.com/community/tutorials/how-to-use-ssh-keys-with-putty-on-digitalocean-droplets-windows-users" target="_blank" rel="external"><strong><em>How To Use SSH Keys with PuTTY on DigitalOcean Droplets (Windows users)</em></strong></a></li>
-</ol>
+<ul>
+<li><a href="http://pcyzg1np3.bkt.clouddn.com/15%20Python%20Types%20and%20Objects.pdf" target="_blank" rel="external">15 Python Types and Objects.pdf</a> </li>
+</ul>
 
       
     </div>
@@ -432,13 +604,13 @@ rpm -qa | grep kernel #查看内核是否安装成功
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2017/09/27/DO-VPS搭建SS并使用ServerSpeeder加速/">DO VPS搭建SS并使用ServerSpeeder加速</a></p>
+        <p><span>本文标题:</span><a href="/2018/08/05/Python-中-type-与-object-的关系/">Python 中 type 与 object 的关系</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">Hk4Fun</a></p>
-        <p><span>发布时间:</span>2017-09-27, 17:34:38</p>
-        <p><span>最后更新:</span>2018-07-19, 16:55:30</p>
+        <p><span>发布时间:</span>2018-08-05, 01:58:08</p>
+        <p><span>最后更新:</span>2018-08-05, 12:03:29</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2017/09/27/DO-VPS搭建SS并使用ServerSpeeder加速/" title="DO VPS搭建SS并使用ServerSpeeder加速">https://hk4fun.github.io/2017/09/27/DO-VPS搭建SS并使用ServerSpeeder加速/</a>
-            <span class="copy-path" data-clipboard-text="原文: https://hk4fun.github.io/2017/09/27/DO-VPS搭建SS并使用ServerSpeeder加速/　　作者: Hk4Fun" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2018/08/05/Python-中-type-与-object-的关系/" title="Python 中 type 与 object 的关系">https://hk4fun.github.io/2018/08/05/Python-中-type-与-object-的关系/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://hk4fun.github.io/2018/08/05/Python-中-type-与-object-的关系/　　作者: Hk4Fun" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -450,12 +622,12 @@ rpm -qa | grep kernel #查看内核是否安装成功
 
     <nav id="article-nav">
         
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2017/10/09/廖雪峰web实战总结/">
-                    廖雪峰web实战总结
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2018/07/31/为什么Python的corotine这么特殊/">
+                    为什么Python的corotine这么特殊
                 </a>
             </div>
-        
         
     </nav>
 
@@ -465,7 +637,7 @@ rpm -qa | grep kernel #查看内核是否安装成功
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#配置SSH"><span class="toc-number">1.</span> <span class="toc-text">配置SSH</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#配置ServerSpeeder"><span class="toc-number">2.</span> <span class="toc-text">配置ServerSpeeder</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#配置Shadowsocks"><span class="toc-number">3.</span> <span class="toc-text">配置Shadowsocks</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料："><span class="toc-number">4.</span> <span class="toc-text">参考资料：</span></a></li></ol>
+            
         
     </div>
     <style>
@@ -528,15 +700,15 @@ rpm -qa | grep kernel #查看内核是否安装成功
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2017/10/09/廖雪峰web实战总结/" title="上一篇: 廖雪峰web实战总结">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+            <a href="/2018/07/31/为什么Python的corotine这么特殊/" title="下一篇: 为什么Python的corotine这么特殊">
+                <i class="fa fa-angle-right"></i>
+            </a>
         
     </div>
 
