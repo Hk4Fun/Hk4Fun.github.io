@@ -23,7 +23,7 @@
 <meta property="og:url" content="https://hk4fun.github.io/2018/08/15/设计模式之单例模式/index.html">
 <meta property="og:site_name" content="Hk4Fun&#39;s Blog">
 <meta property="og:description" content="由于 Python 拥有灵活的动态语言特性和丰富的魔法方法，再加上它支持强大的元类编程，单例模式（Singleton）在 Python 上的实现方式五花八门。本文主要就是讨论单例模式在 Python 上的各种实现，其中涉及到 Python 中元类编程、魔法方法和装饰器的进阶语法知识。">
-<meta property="og:updated_time" content="2018-08-15T12:06:04.529Z">
+<meta property="og:updated_time" content="2018-08-15T12:08:06.155Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="设计模式之单例模式">
 <meta name="twitter:description" content="由于 Python 拥有灵活的动态语言特性和丰富的魔法方法，再加上它支持强大的元类编程，单例模式（Singleton）在 Python 上的实现方式五花八门。本文主要就是讨论单例模式在 Python 上的各种实现，其中涉及到 Python 中元类编程、魔法方法和装饰器的进阶语法知识。">
@@ -348,7 +348,7 @@
 <p>后面的变量名覆盖方法其实就是一种饿汉单例</p>
 <p>关于 Python 中类的加载（导入）机制，可以看《流畅的Python》第21章元类编程中：导入时和运行时的比较，其中的一个理解计算时间的练习可以让你彻底明白</p>
 <h3 id="扩展"><a href="#扩展" class="headerlink" title="扩展"></a>扩展</h3><p>多例模式，返回多个（有限个）实例对象，可以随机也可以按序</p>
-<h2 id="实现方式"><a href="#实现方式" class="headerlink" title="实现方式"></a>实现方式</h2><p>在此之前，建议看我之前的一篇文章：<a href="https://hk4fun.github.io/2018/08/15/%E9%AD%94%E6%B3%95%E6%96%B9%E6%B3%95%E4%B9%8B-new-%E4%B8%8E-init/">魔法方法之 <code>__new__()</code> 与 <code>__init__()</code></a>，因为接下来的各种实现方式很多都是通过重载 <code>__new__()</code> 和 <code>__init__()</code> 来实现的 </p>
+<h2 id="实现方式"><a href="#实现方式" class="headerlink" title="实现方式"></a>实现方式</h2><p>在此之前，建议看我之前的一篇文章：<a href="https://hk4fun.github.io/2018/08/15/%E9%AD%94%E6%B3%95%E6%96%B9%E6%B3%95%E4%B9%8B-new-%E4%B8%8E-init/">魔法方法之 <code>__new__()</code> 与 <code>__init__()</code></a>，因为接下来的各种实现方式很多都是通过重载 <code>__new__()</code> 和 <code>__init__()</code> 来实现的，否则你可能不知为何这么做就可以实现单例</p>
 <h3 id="1-重载-new"><a href="#1-重载-new" class="headerlink" title="1. 重载 __new__()"></a>1. 重载 <code>__new__()</code></h3><p>将一个类的实例绑定到类变量 <code>_instance</code> 上</p>
 <p>如果 <code>cls._instance</code> 为 None 说明该类还没有实例化过，则实例化该类并保存于 <code>cls._instance</code>，然后返回</p>
 <p>如果 <code>cls._instance</code> 不为None，则直接返回 <code>cls._instance</code></p>
@@ -675,7 +675,7 @@ print(aa)
         <p><span>本文标题:</span><a href="/2018/08/15/设计模式之单例模式/">设计模式之单例模式</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">Hk4Fun</a></p>
         <p><span>发布时间:</span>2018-08-15, 13:11:09</p>
-        <p><span>最后更新:</span>2018-08-15, 20:06:04</p>
+        <p><span>最后更新:</span>2018-08-15, 20:08:06</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2018/08/15/设计模式之单例模式/" title="设计模式之单例模式">https://hk4fun.github.io/2018/08/15/设计模式之单例模式/</a>
             <span class="copy-path" data-clipboard-text="原文: https://hk4fun.github.io/2018/08/15/设计模式之单例模式/　　作者: Hk4Fun" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
