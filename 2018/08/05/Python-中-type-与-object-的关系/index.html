@@ -16,13 +16,13 @@
 <link href="/plugins/prettify/prettify.css" rel="stylesheet">
 
 
-<meta name="description" content="先来看看这8个输出： In 1]: isinstance(object, object) Out[1]: True  In [2]: isinstance(object, type) Out[2]: True  In [3]: isinstance(type, type) Out[3]: True  In [4]: isinstance(type, object) Out[4]: True  In">
-<meta name="keywords" content="python">
+<meta name="description" content="都知道 Python 有强大的动态语言特性，得益于它“无处不对象”的语言设计思想，那么这些对象的源头来自哪里？这背后一定有它的“出发点”。相信很多人一下就想到元类（metaclass）那种复杂的东西，且慢，心急吃不了热豆腐。在深入研究元类编程之前，一些基本的但也是最重要的语言知识一定要弄清楚，否则会一头雾水。在此之前，明白 Python 中 type 与 object 的关系至关重要，它俩才是 P">
+<meta name="keywords" content="python,metaclass">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Python 中 type 与 object 的关系">
 <meta property="og:url" content="https://hk4fun.github.io/2018/08/05/Python-中-type-与-object-的关系/index.html">
 <meta property="og:site_name" content="Hk4Fun&#39;s Blog">
-<meta property="og:description" content="先来看看这8个输出： In 1]: isinstance(object, object) Out[1]: True  In [2]: isinstance(object, type) Out[2]: True  In [3]: isinstance(type, type) Out[3]: True  In [4]: isinstance(type, object) Out[4]: True  In">
+<meta property="og:description" content="都知道 Python 有强大的动态语言特性，得益于它“无处不对象”的语言设计思想，那么这些对象的源头来自哪里？这背后一定有它的“出发点”。相信很多人一下就想到元类（metaclass）那种复杂的东西，且慢，心急吃不了热豆腐。在深入研究元类编程之前，一些基本的但也是最重要的语言知识一定要弄清楚，否则会一头雾水。在此之前，明白 Python 中 type 与 object 的关系至关重要，它俩才是 P">
 <meta property="og:image" content="http://ox186n2j0.bkt.clouddn.com/1533408939335.jpg">
 <meta property="og:image" content="http://ox186n2j0.bkt.clouddn.com/1533409633841.jpg">
 <meta property="og:image" content="http://ox186n2j0.bkt.clouddn.com/1533410487047.jpg">
@@ -32,10 +32,10 @@
 <meta property="og:image" content="http://ox186n2j0.bkt.clouddn.com/1533436909296.jpg">
 <meta property="og:image" content="http://ox186n2j0.bkt.clouddn.com/1533437856409.jpg">
 <meta property="og:image" content="http://ox186n2j0.bkt.clouddn.com/1533441406419.jpg">
-<meta property="og:updated_time" content="2018-08-05T04:03:29.817Z">
+<meta property="og:updated_time" content="2018-08-15T05:02:02.563Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python 中 type 与 object 的关系">
-<meta name="twitter:description" content="先来看看这8个输出： In 1]: isinstance(object, object) Out[1]: True  In [2]: isinstance(object, type) Out[2]: True  In [3]: isinstance(type, type) Out[3]: True  In [4]: isinstance(type, object) Out[4]: True  In">
+<meta name="twitter:description" content="都知道 Python 有强大的动态语言特性，得益于它“无处不对象”的语言设计思想，那么这些对象的源头来自哪里？这背后一定有它的“出发点”。相信很多人一下就想到元类（metaclass）那种复杂的东西，且慢，心急吃不了热豆腐。在深入研究元类编程之前，一些基本的但也是最重要的语言知识一定要弄清楚，否则会一头雾水。在此之前，明白 Python 中 type 与 object 的关系至关重要，它俩才是 P">
 <meta name="twitter:image" content="http://ox186n2j0.bkt.clouddn.com/1533408939335.jpg">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
@@ -209,7 +209,7 @@
                 
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSH/">SSH</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ServerSpeeder/">ServerSpeeder</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VPS/">VPS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/corotine/">corotine</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/django/">django</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mvc/">mvc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/orm/">orm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web/">web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/剑指offer/">剑指offer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构/">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/翻墙/">翻墙</a></li></ul>
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSH/">SSH</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ServerSpeeder/">ServerSpeeder</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VPS/">VPS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/corotine/">corotine</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/django/">django</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/metaclass/">metaclass</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mvc/">mvc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/orm/">orm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web/">web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/元类编程/">元类编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/剑指offer/">剑指offer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构/">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/翻墙/">翻墙</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/魔法方法/">魔法方法</a></li></ul>
                     </div>
                 </section>
                 
@@ -310,7 +310,7 @@
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/metaclass/">metaclass</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -320,7 +320,9 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>先来看看这8个输出：</p>
+        <p>都知道 Python 有强大的动态语言特性，得益于它“无处不对象”的语言设计思想，那么这些对象的源头来自哪里？这背后一定有它的“出发点”。相信很多人一下就想到元类（metaclass）那种复杂的东西，且慢，心急吃不了热豆腐。在深入研究元类编程之前，一些基本的但也是最重要的语言知识一定要弄清楚，否则会一头雾水。在此之前，明白 Python 中 type 与 object 的关系至关重要，它俩才是 Python 中一切对象的“出发点”。</p>
+<a id="more"></a>
+<p>先来看看这8个输出：</p>
 <pre><code class="python">In 1]: isinstance(object, object)
 Out[1]: True
 
@@ -346,7 +348,6 @@ In [8]: issubclass(type, object)
 Out[8]: True
 </code></pre>
 <p>以上输出在 py2.x 和 py3.x 下都一样，如果都能明白为什么，那么 type 与 object 的关系也就容易弄懂了。</p>
-<a id="more"></a>
 <p>这两者的关系类似鸡和蛋的关系，究竟谁先出现？二者其实都不能独立，它们同时出现而互相依赖。</p>
 <p>首先明白在面向对象概念中存在两种关系：</p>
 <ul>
@@ -607,7 +608,7 @@ AttributeError: &#39;T&#39; object has no attribute &#39;__bases__&#39;
         <p><span>本文标题:</span><a href="/2018/08/05/Python-中-type-与-object-的关系/">Python 中 type 与 object 的关系</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">Hk4Fun</a></p>
         <p><span>发布时间:</span>2018-08-05, 01:58:08</p>
-        <p><span>最后更新:</span>2018-08-05, 12:03:29</p>
+        <p><span>最后更新:</span>2018-08-15, 13:02:02</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2018/08/05/Python-中-type-与-object-的关系/" title="Python 中 type 与 object 的关系">https://hk4fun.github.io/2018/08/05/Python-中-type-与-object-的关系/</a>
             <span class="copy-path" data-clipboard-text="原文: https://hk4fun.github.io/2018/08/05/Python-中-type-与-object-的关系/　　作者: Hk4Fun" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
@@ -621,6 +622,12 @@ AttributeError: &#39;T&#39; object has no attribute &#39;__bases__&#39;
 
 
     <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2018/08/15/魔法方法之-new-与-init/">
+                    魔法方法之 __new__() 与 __init__()
+                </a>
+            </div>
         
         
             <div id="article-nav-older" class="article-nav-title">
@@ -700,7 +707,9 @@ AttributeError: &#39;T&#39; object has no attribute &#39;__bases__&#39;
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+            <a href="/2018/08/15/魔法方法之-new-与-init/" title="上一篇: 魔法方法之 __new__() 与 __init__()">
+                <i class="fa fa-angle-left"></i>
+            </a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
@@ -712,7 +721,7 @@ AttributeError: &#39;T&#39; object has no attribute &#39;__bases__&#39;
         
     </div>
 
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/08/05/Python-中-type-与-object-的关系/">Python 中 type 与 object 的关系</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/31/为什么Python的corotine这么特殊/">为什么Python的corotine这么特殊</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/19/剑指offer题解（python实现）/">剑指offer题解（python实现）</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/09/廖雪峰web实战总结/">廖雪峰web实战总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/27/DO-VPS搭建SS并使用ServerSpeeder加速/">DO VPS搭建SS并使用ServerSpeeder加速</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/08/15/设计模式之单例模式/">设计模式之单例模式</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/15/魔法方法之-new-与-init/">魔法方法之 __new__() 与 __init__()</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/05/Python-中-type-与-object-的关系/">Python 中 type 与 object 的关系</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/31/为什么Python的corotine这么特殊/">为什么Python的corotine这么特殊</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/19/剑指offer题解（python实现）/">剑指offer题解（python实现）</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/09/廖雪峰web实战总结/">廖雪峰web实战总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/27/DO-VPS搭建SS并使用ServerSpeeder加速/">DO VPS搭建SS并使用ServerSpeeder加速</a></li></ul>
 
 
 

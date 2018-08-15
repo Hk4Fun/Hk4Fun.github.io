@@ -86,8 +86,36 @@
     </url>
 
     <url>
+        <loc>https://hk4fun.github.io/tags/metaclass/</loc>
+        <lastmod>2018-08-15T05:02:02.563Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://hk4fun.github.io/tags/%E9%AD%94%E6%B3%95%E6%96%B9%E6%B3%95/</loc>
+        <lastmod>2018-08-15T08:35:56.483Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
         <loc>https://hk4fun.github.io/tags/python/</loc>
-        <lastmod>2018-08-05T04:03:29.817Z</lastmod>
+        <lastmod>2018-08-15T09:22:58.476Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://hk4fun.github.io/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</loc>
+        <lastmod>2018-08-15T09:22:58.476Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://hk4fun.github.io/tags/%E5%85%83%E7%B1%BB%E7%BC%96%E7%A8%8B/</loc>
+        <lastmod>2018-08-15T09:22:58.476Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
