@@ -23,7 +23,7 @@
 <meta property="og:url" content="https://hk4fun.github.io/2018/08/15/设计模式之单例模式/index.html">
 <meta property="og:site_name" content="Hk4Fun&#39;s Blog">
 <meta property="og:description" content="由于 Python 拥有灵活的动态语言特性和丰富的魔法方法，再加上它支持强大的元类编程，单例模式（Singleton）在 Python 上的实现方式五花八门。本文主要就是讨论单例模式在 Python 上的各种实现，其中涉及到元类编程、魔法方法和装饰器的知识。">
-<meta property="og:updated_time" content="2018-08-15T11:09:32.255Z">
+<meta property="og:updated_time" content="2018-08-15T11:18:32.840Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="设计模式之单例模式">
 <meta name="twitter:description" content="由于 Python 拥有灵活的动态语言特性和丰富的魔法方法，再加上它支持强大的元类编程，单例模式（Singleton）在 Python 上的实现方式五花八门。本文主要就是讨论单例模式在 Python 上的各种实现，其中涉及到元类编程、魔法方法和装饰器的知识。">
@@ -156,10 +156,10 @@
                 <div class="tips-box hide">
                     <div class="tips-arrow"></div>
                     <ul class="tips-inner">
-                        <li>Menu</li>
-                        <li>Tags</li>
+                        <li>菜单</li>
+                        <li>标签</li>
                         
-                        <li>Friends</li>
+                        <li>友情链接</li>
                         
                         
                     </ul>
@@ -268,7 +268,7 @@
             </nav>
         </header>                
     </div>
-    <link class="menu-list" tags="Tags" friends="Friends" about="About Me"/>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
       <div class="body-wrap"><article id="post-设计模式之单例模式" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -652,11 +652,13 @@ print(aa)
 1
 </code></pre>
 <p>相信到这里你就会明白了：</p>
-<p>一个类的加载和运行是两个分开的阶段，先加载，再根据需要运行。类中的顶层代码（方法之外的定义体）在加载时执行，而方法内的代码在调用时才执行，这就是输出中 <a href="https://github.com/Hk4Fun/PyPatterns/blob/master/Creational/Singleton.py" target="_blank" rel="external">1</a> 和 <a href="https://hk4fun.github.io/2018/08/15/%E9%AD%94%E6%B3%95%E6%96%B9%E6%B3%95%E4%B9%8B-new-%E4%B8%8E-init/">2</a> 最先出现的原因</p>
+<p>一个类的加载和运行是两个分开的阶段，先加载，再根据需要运行</p>
+<p>类中的顶层代码（方法之外的定义体）在加载时执行，而方法内的代码在调用时才执行，这就是输出中 <a href="https://github.com/Hk4Fun/PyPatterns/blob/master/Creational/Singleton.py" target="_blank" rel="external">1</a> 和 <a href="https://hk4fun.github.io/2018/08/15/%E9%AD%94%E6%B3%95%E6%96%B9%E6%B3%95%E4%B9%8B-new-%E4%B8%8E-init/">2</a> 最先出现的原因</p>
 <p>但由于元类是类的类，因此以它为元类的类在加载完后会紧接着执行它指定的元类的 <code>__new__()</code> 和 <code>__init__()</code>，这也是输出中 <a href="https://github.com/Hk4Fun/PyPatterns/blob/master/Creational/Singleton.py" target="_blank" rel="external">3</a> 和 <a href="https://hk4fun.github.io/2018/08/15/%E9%AD%94%E6%B3%95%E6%96%B9%E6%B3%95%E4%B9%8B-new-%E4%B8%8E-init/">4</a> 紧跟着出现在 <a href="https://github.com/Hk4Fun/PyPatterns/blob/master/Creational/Singleton.py" target="_blank" rel="external">1</a> 和 <a href="https://hk4fun.github.io/2018/08/15/%E9%AD%94%E6%B3%95%E6%96%B9%E6%B3%95%E4%B9%8B-new-%E4%B8%8E-init/">2</a> 后面的原因</p>
 <p>至于输出中的 5、6、7，反映的就是我们调用 a = A() 时经过的魔法方法：先是元类 Meta 的 <code>__call__()</code>，然后是类 A 的<code>__new__()</code> 和 <code>__init__()</code></p>
 <p>注意到，在类生成实例时，元类的 <code>__call__()</code> 内部会调用以它为元类的类的 <code>__new__()</code> 和 <code>__init__()</code>，这是根据<a href="https://hk4fun.github.io/2018/08/15/%E9%AD%94%E6%B3%95%E6%96%B9%E6%B3%95%E4%B9%8B-new-%E4%B8%8E-init/">魔法方法之 <code>__new__()</code> 与 <code>__init__()</code></a>中讨论的内容模仿 type 而实现的简单逻辑</p>
 <p>因此我们为了可以控制一个类生成实例的行为，我们可以既可以简单地重载该类的 <code>__new__()</code>，也可以自己实现一个元类并重载它的 <code>__init__()</code> 和 <code>__call__()</code> 或 <code>__new__()</code> 和 <code>__call__()</code>，然后该类只需指明它的元类是这个自定义的元类而不是默认的 type 即可</p>
+<p>最后输出中的 [8]，是为了更好地理解 <code>__call__()</code>：类的括号调用会去调用元类的<code>__call__()</code> 作为返回，那么实例的括号调用就会去调用类的<code>__call__()</code> 作为返回，其本质是一样的，<code>__call__()</code> 总是在使用括号调用时被调用，通过对它的重载我们可以自定义这个返回的对象。</p>
 <h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
 <li>《设计模式》刘伟著</li>
 <li>《流畅的Python》第21章：元类编程</li>
@@ -670,17 +672,17 @@ print(aa)
   
     
     <div class="copyright">
-        <p><span>Title:</span><a href="/2018/08/15/设计模式之单例模式/">设计模式之单例模式</a></p>
-        <p><span>Author:</span><a href="/" title="Back to Homepage">Hk4Fun</a></p>
-        <p><span>Created:</span>2018-08-15, 13:11:09</p>
-        <p><span>Updated:</span>2018-08-15, 19:09:32</p>
+        <p><span>本文标题:</span><a href="/2018/08/15/设计模式之单例模式/">设计模式之单例模式</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">Hk4Fun</a></p>
+        <p><span>发布时间:</span>2018-08-15, 13:11:09</p>
+        <p><span>最后更新:</span>2018-08-15, 19:18:32</p>
         <p>
-            <span>Full URL:</span><a class="post-url" href="/2018/08/15/设计模式之单例模式/" title="设计模式之单例模式">https://hk4fun.github.io/2018/08/15/设计模式之单例模式/</a>
-            <span class="copy-path" data-clipboard-text="From https://hk4fun.github.io/2018/08/15/设计模式之单例模式/　　By Hk4Fun" title="Copy Article&#39;s Link &amp; Author"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2018/08/15/设计模式之单例模式/" title="设计模式之单例模式">https://hk4fun.github.io/2018/08/15/设计模式之单例模式/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://hk4fun.github.io/2018/08/15/设计模式之单例模式/　　作者: Hk4Fun" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
-            <span>License:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"CC BY-NC-SA 4.0"</a> Keep Link &amp; Author if Distribute.
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
         </p>
     </div>
 
@@ -701,7 +703,7 @@ print(aa)
 </article>
 
     <div id="toc" class="toc-article">
-        <strong class="toc-title">Contents</strong>
+        <strong class="toc-title">文章目录</strong>
         
             <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#关于单例模式"><span class="toc-number">1.</span> <span class="toc-text">关于单例模式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#定义"><span class="toc-number">1.1.</span> <span class="toc-text">定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#模式角色"><span class="toc-number">1.2.</span> <span class="toc-text">模式角色</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#优点"><span class="toc-number">1.3.</span> <span class="toc-text">优点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#缺点"><span class="toc-number">1.4.</span> <span class="toc-text">缺点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#适用场景"><span class="toc-number">1.5.</span> <span class="toc-text">适用场景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分类"><span class="toc-number">1.6.</span> <span class="toc-text">分类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#线程安全"><span class="toc-number">1.7.</span> <span class="toc-text">线程安全</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#区别"><span class="toc-number">1.8.</span> <span class="toc-text">区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#扩展"><span class="toc-number">1.9.</span> <span class="toc-text">扩展</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实现方式"><span class="toc-number">2.</span> <span class="toc-text">实现方式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-重载-new"><span class="toc-number">2.1.</span> <span class="toc-text">1. 重载 __new__()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-使用装饰器"><span class="toc-number">2.2.</span> <span class="toc-text">2. 使用装饰器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-使用共享属性"><span class="toc-number">2.3.</span> <span class="toc-text">3. 使用共享属性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-使用-metaclass"><span class="toc-number">2.4.</span> <span class="toc-text">4. 使用 metaclass</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-使用-classmethod"><span class="toc-number">2.5.</span> <span class="toc-text">5. 使用 @classmethod</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-使用变量名覆盖"><span class="toc-number">2.6.</span> <span class="toc-text">6.  使用变量名覆盖</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#线程安全-1"><span class="toc-number">2.7.</span> <span class="toc-text">线程安全</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#小结"><span class="toc-number">2.8.</span> <span class="toc-text">小结</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#总感觉还有什么没弄明白"><span class="toc-number">2.9.</span> <span class="toc-text">总感觉还有什么没弄明白</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-number">3.</span> <span class="toc-text">参考资料</span></a></li></ol>
         
@@ -717,10 +719,10 @@ print(aa)
         }
     </style>
 
-    <input type="button" id="tocButton" value="Hide"  title="Show or Hide Table of Contents">
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
 
     <script>
-        yiliaConfig.toc = ["Hide", "Show", !!"false"];
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
     </script>
 
 
@@ -766,13 +768,13 @@ print(aa)
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/" title="Back to Homepage"><i class="fa fa-home"></i></a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
 
-        <a title="Mini Archives"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2018/08/15/魔法方法之-new-与-init/" title="Next: 魔法方法之 __new__() 与 __init__()">
+            <a href="/2018/08/15/魔法方法之-new-与-init/" title="下一篇: 魔法方法之 __new__() 与 __init__()">
                 <i class="fa fa-angle-right"></i>
             </a>
         
@@ -795,14 +797,14 @@ print(aa)
                 2017-2018 Hk4Fun
             </div>
             <div class="footer-right">
-                <a href="http://hexo.io/" target="_blank" title="A fast, simple &amp; powerful blog framework">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="Another simple and elegant theme for Hexo  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
             </div>
         </div>
         
             <div class="visit">
                 
                     <span id="busuanzi_container_site_pv" style='display:none'>
-                        <span id="site-visit" title="Site Visitors"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
                         </span>
                     </span>
                 
@@ -811,7 +813,7 @@ print(aa)
                 
                 
                     <span id="busuanzi_container_page_pv" style='display:none'>
-                        <span id="page-visit"  title="Page Hits"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
                         </span>
                     </span>
                 
@@ -844,9 +846,9 @@ print(aa)
 
 
 <div class="scroll" id="scroll">
-    <a href="#" title="Back to Top"><i class="fa fa-arrow-up"></i></a>
-    <a href="#comments" onclick="load$hide();" title="Comments"><i class="fa fa-comments-o"></i></a>
-    <a href="#footer" title="Go to Bottom"><i class="fa fa-arrow-down"></i></a>
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
 </div>
 <script>
     // Open in New Window

@@ -347,11 +347,13 @@ print(aa)
 1
 </code></pre>
 <p>相信到这里你就会明白了：</p>
-<p>一个类的加载和运行是两个分开的阶段，先加载，再根据需要运行。类中的顶层代码（方法之外的定义体）在加载时执行，而方法内的代码在调用时才执行，这就是输出中 <a href="https://github.com/Hk4Fun/PyPatterns/blob/master/Creational/Singleton.py" target="_blank" rel="external">1</a> 和 <a href="https://hk4fun.github.io/2018/08/15/%E9%AD%94%E6%B3%95%E6%96%B9%E6%B3%95%E4%B9%8B-new-%E4%B8%8E-init/">2</a> 最先出现的原因</p>
+<p>一个类的加载和运行是两个分开的阶段，先加载，再根据需要运行</p>
+<p>类中的顶层代码（方法之外的定义体）在加载时执行，而方法内的代码在调用时才执行，这就是输出中 <a href="https://github.com/Hk4Fun/PyPatterns/blob/master/Creational/Singleton.py" target="_blank" rel="external">1</a> 和 <a href="https://hk4fun.github.io/2018/08/15/%E9%AD%94%E6%B3%95%E6%96%B9%E6%B3%95%E4%B9%8B-new-%E4%B8%8E-init/">2</a> 最先出现的原因</p>
 <p>但由于元类是类的类，因此以它为元类的类在加载完后会紧接着执行它指定的元类的 <code>__new__()</code> 和 <code>__init__()</code>，这也是输出中 <a href="https://github.com/Hk4Fun/PyPatterns/blob/master/Creational/Singleton.py" target="_blank" rel="external">3</a> 和 <a href="https://hk4fun.github.io/2018/08/15/%E9%AD%94%E6%B3%95%E6%96%B9%E6%B3%95%E4%B9%8B-new-%E4%B8%8E-init/">4</a> 紧跟着出现在 <a href="https://github.com/Hk4Fun/PyPatterns/blob/master/Creational/Singleton.py" target="_blank" rel="external">1</a> 和 <a href="https://hk4fun.github.io/2018/08/15/%E9%AD%94%E6%B3%95%E6%96%B9%E6%B3%95%E4%B9%8B-new-%E4%B8%8E-init/">2</a> 后面的原因</p>
 <p>至于输出中的 5、6、7，反映的就是我们调用 a = A() 时经过的魔法方法：先是元类 Meta 的 <code>__call__()</code>，然后是类 A 的<code>__new__()</code> 和 <code>__init__()</code></p>
 <p>注意到，在类生成实例时，元类的 <code>__call__()</code> 内部会调用以它为元类的类的 <code>__new__()</code> 和 <code>__init__()</code>，这是根据<a href="https://hk4fun.github.io/2018/08/15/%E9%AD%94%E6%B3%95%E6%96%B9%E6%B3%95%E4%B9%8B-new-%E4%B8%8E-init/">魔法方法之 <code>__new__()</code> 与 <code>__init__()</code></a>中讨论的内容模仿 type 而实现的简单逻辑</p>
 <p>因此我们为了可以控制一个类生成实例的行为，我们可以既可以简单地重载该类的 <code>__new__()</code>，也可以自己实现一个元类并重载它的 <code>__init__()</code> 和 <code>__call__()</code> 或 <code>__new__()</code> 和 <code>__call__()</code>，然后该类只需指明它的元类是这个自定义的元类而不是默认的 type 即可</p>
+<p>最后输出中的 [8]，是为了更好地理解 <code>__call__()</code>：类的括号调用会去调用元类的<code>__call__()</code> 作为返回，那么实例的括号调用就会去调用类的<code>__call__()</code> 作为返回，其本质是一样的，<code>__call__()</code> 总是在使用括号调用时被调用，通过对它的重载我们可以自定义这个返回的对象。</p>
 <h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
 <li>《设计模式》刘伟著</li>
 <li>《流畅的Python》第21章：元类编程</li>
