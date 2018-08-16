@@ -23,7 +23,7 @@
 <meta property="og:url" content="https://hk4fun.github.io/2018/08/15/魔法方法之-new-与-init/index.html">
 <meta property="og:site_name" content="Hk4Fun&#39;s Blog">
 <meta property="og:description" content="当我们实例化某个类时，如：a = A()， Python 先调用 __new__(cls[, ...]) 来生成实例，然后传递给 __init__(self[, ...]) 的 self，从而在 __init__(self[, ...]) 中完成初始化。 因此 __new__() 负责创建实例对象，而 __init__() 负责初始化该实例对象： class A:     def __new__(">
-<meta property="og:updated_time" content="2018-08-15T11:09:40.095Z">
+<meta property="og:updated_time" content="2018-08-15T16:40:15.469Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="魔法方法之 __new__() 与 __init__()">
 <meta name="twitter:description" content="当我们实例化某个类时，如：a = A()， Python 先调用 __new__(cls[, ...]) 来生成实例，然后传递给 __init__(self[, ...]) 的 self，从而在 __init__(self[, ...]) 中完成初始化。 因此 __new__() 负责创建实例对象，而 __init__() 负责初始化该实例对象： class A:     def __new__(">
@@ -199,7 +199,7 @@
                 
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSH/">SSH</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ServerSpeeder/">ServerSpeeder</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VPS/">VPS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/corotine/">corotine</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/django/">django</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/metaclass/">metaclass</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mvc/">mvc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/orm/">orm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web/">web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/元类编程/">元类编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/剑指offer/">剑指offer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构/">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/翻墙/">翻墙</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/魔法方法/">魔法方法</a></li></ul>
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSH/">SSH</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ServerSpeeder/">ServerSpeeder</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VPS/">VPS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/corotine/">corotine</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/django/">django</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mvc/">mvc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/orm/">orm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web/">web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/元类编程/">元类编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/剑指offer/">剑指offer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构/">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/翻墙/">翻墙</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/魔法方法/">魔法方法</a></li></ul>
                     </div>
                 </section>
                 
@@ -332,7 +332,7 @@ call A.__init__()
 <p>Called to create a new instance of class <code>cls. __new__()</code> is a static method (special-cased so you need not declare it as such) that takes the class of which an instance was requested as its first argument. The remaining arguments are those passed to the object constructor expression (the call to the class). The return value of <code>__new__()</code>should be the new object instance (usually an instance of cls).</p>
 </blockquote>
 <p>其实 <code>__new__()</code> 是一个类的静态方法，这里我更加认为是一个类方法，因为其第一个参数默认就是cls，而静态方法不需要cls也不需要self。</p>
-<p>但注意到这里并没有使用装饰器 @staticmethod 或 @classmethod，这是 <code>__new__()</code>的特殊之处——不用装饰器修饰就可以成为类的静态方法（或类方法）。</p>
+<p>但注意到这里并没有使用装饰器 @classmethod，这是 <code>__new__()</code> 的特殊之处——不用装饰器修饰就可以成为类方法。</p>
 <p><code>__new__()</code> 负责创建类的实例，因此它的返回值<strong>应该</strong>是一个新的实例，且<strong>通常</strong>是 cls 的实例。（注意体会加粗字的含义，后面会解释）</p>
 <p>那如何创建 cls 的实例呢？</p>
 <blockquote>
@@ -578,7 +578,22 @@ a = A(1) # 传进一个参数
 <pre><code>call __new__()
 1
 </code></pre><p><code>__new__()</code> 和 <code>__init__()</code> 除了第一个参数以外其他参数一致才不会出错</p>
-<p>最后，关于使用 Python 实现单例模式上面只提到了两种实现方式，且没有深入讨论，可以看看我的另一篇文章：<a href="https://hk4fun.github.io/2018/08/15/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/">设计模式之单例模式</a></p>
+<p>另外 <code>__init__()</code> 不允许返回非None 的对象，尝试这么做也会产生一个 TypeError：</p>
+<pre><code class="python">class A:
+    def __init__(self):
+        return 1
+
+a = A()
+</code></pre>
+<p>输出：</p>
+<pre><code>TypeError                                 Traceback (most recent call last)
+&lt;ipython-input-20-d00fb74e6c6d&gt; in &lt;module&gt;()
+      2     def __init__(self):
+      3         return 1
+----&gt; 4 a = A()
+
+TypeError: __init__() should return None, not &#39;int&#39;
+</code></pre><p>最后，关于使用 Python 实现单例模式上面只提到了两种实现方式，且没有深入讨论，可以看看我的另一篇文章：<a href="https://hk4fun.github.io/2018/08/15/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/">设计模式之单例模式</a></p>
 <h2 id="官方文档链接"><a href="#官方文档链接" class="headerlink" title="官方文档链接"></a>官方文档链接</h2><p><a href="https://docs.python.org/3/reference/datamodel.html#object.__new__" target="_blank" rel="external">https://docs.python.org/3/reference/datamodel.html#object.__new__</a></p>
 <p><a href="https://docs.python.org/3/reference/datamodel.html#object.__init__" target="_blank" rel="external">https://docs.python.org/3/reference/datamodel.html#object.__init__</a></p>
 
@@ -592,7 +607,7 @@ a = A(1) # 传进一个参数
         <p><span>本文标题:</span><a href="/2018/08/15/魔法方法之-new-与-init/">魔法方法之 __new__() 与 __init__()</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">Hk4Fun</a></p>
         <p><span>发布时间:</span>2018-08-15, 12:28:03</p>
-        <p><span>最后更新:</span>2018-08-15, 19:09:40</p>
+        <p><span>最后更新:</span>2018-08-16, 00:40:15</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2018/08/15/魔法方法之-new-与-init/" title="魔法方法之 __new__() 与 __init__()">https://hk4fun.github.io/2018/08/15/魔法方法之-new-与-init/</a>
             <span class="copy-path" data-clipboard-text="原文: https://hk4fun.github.io/2018/08/15/魔法方法之-new-与-init/　　作者: Hk4Fun" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>

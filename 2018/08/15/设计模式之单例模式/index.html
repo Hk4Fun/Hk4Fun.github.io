@@ -16,17 +16,17 @@
 <link href="/plugins/prettify/prettify.css" rel="stylesheet">
 
 
-<meta name="description" content="由于 Python 拥有灵活的动态语言特性和丰富的魔法方法，再加上它支持强大的元类编程，单例模式（Singleton）在 Python 上的实现方式五花八门。本文主要就是讨论单例模式在 Python 上的各种实现，其中涉及到 Python 中元类编程、魔法方法和装饰器的进阶语法知识。">
+<meta name="description" content="由于 Python 拥有灵活的动态语言特性和丰富的魔法方法，再加上它支持强大的元类编程，单例模式（Singleton）在 Python 上的实现方式五花八门。本文主要就是讨论单例模式在 Python 上的各种实现，涉及到 Python 中元类编程、魔法方法和装饰器的进阶语法知识，并在最后深入讨论和总结。">
 <meta name="keywords" content="python,元类编程,设计模式">
 <meta property="og:type" content="article">
 <meta property="og:title" content="设计模式之单例模式">
 <meta property="og:url" content="https://hk4fun.github.io/2018/08/15/设计模式之单例模式/index.html">
 <meta property="og:site_name" content="Hk4Fun&#39;s Blog">
-<meta property="og:description" content="由于 Python 拥有灵活的动态语言特性和丰富的魔法方法，再加上它支持强大的元类编程，单例模式（Singleton）在 Python 上的实现方式五花八门。本文主要就是讨论单例模式在 Python 上的各种实现，其中涉及到 Python 中元类编程、魔法方法和装饰器的进阶语法知识。">
-<meta property="og:updated_time" content="2018-08-15T12:08:06.155Z">
+<meta property="og:description" content="由于 Python 拥有灵活的动态语言特性和丰富的魔法方法，再加上它支持强大的元类编程，单例模式（Singleton）在 Python 上的实现方式五花八门。本文主要就是讨论单例模式在 Python 上的各种实现，涉及到 Python 中元类编程、魔法方法和装饰器的进阶语法知识，并在最后深入讨论和总结。">
+<meta property="og:updated_time" content="2018-08-16T04:29:43.324Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="设计模式之单例模式">
-<meta name="twitter:description" content="由于 Python 拥有灵活的动态语言特性和丰富的魔法方法，再加上它支持强大的元类编程，单例模式（Singleton）在 Python 上的实现方式五花八门。本文主要就是讨论单例模式在 Python 上的各种实现，其中涉及到 Python 中元类编程、魔法方法和装饰器的进阶语法知识。">
+<meta name="twitter:description" content="由于 Python 拥有灵活的动态语言特性和丰富的魔法方法，再加上它支持强大的元类编程，单例模式（Singleton）在 Python 上的实现方式五花八门。本文主要就是讨论单例模式在 Python 上的各种实现，涉及到 Python 中元类编程、魔法方法和装饰器的进阶语法知识，并在最后深入讨论和总结。">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -199,7 +199,7 @@
                 
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSH/">SSH</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ServerSpeeder/">ServerSpeeder</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VPS/">VPS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/corotine/">corotine</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/django/">django</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/metaclass/">metaclass</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mvc/">mvc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/orm/">orm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web/">web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/元类编程/">元类编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/剑指offer/">剑指offer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构/">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/翻墙/">翻墙</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/魔法方法/">魔法方法</a></li></ul>
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSH/">SSH</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ServerSpeeder/">ServerSpeeder</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VPS/">VPS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/corotine/">corotine</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/django/">django</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mvc/">mvc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/orm/">orm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web/">web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/元类编程/">元类编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/剑指offer/">剑指offer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构/">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/翻墙/">翻墙</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/魔法方法/">魔法方法</a></li></ul>
                     </div>
                 </section>
                 
@@ -310,7 +310,7 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>由于 Python 拥有灵活的动态语言特性和丰富的魔法方法，再加上它支持强大的元类编程，单例模式（Singleton）在 Python 上的实现方式五花八门。本文主要就是讨论单例模式在 Python 上的各种实现，其中涉及到 Python 中元类编程、魔法方法和装饰器的进阶语法知识。</p>
+        <p>由于 Python 拥有灵活的动态语言特性和丰富的魔法方法，再加上它支持强大的元类编程，单例模式（Singleton）在 Python 上的实现方式五花八门。本文主要就是讨论单例模式在 Python 上的各种实现，涉及到 Python 中元类编程、魔法方法和装饰器的进阶语法知识，并在最后深入讨论和总结。</p>
 <a id="more"></a>
 <h2 id="关于单例模式"><a href="#关于单例模式" class="headerlink" title="关于单例模式"></a>关于单例模式</h2><h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><blockquote>
 <p>Ensure a class has only one instance, and provide a global point of access to it.</p>
@@ -657,8 +657,116 @@ print(aa)
 <p>但由于元类是类的类，因此以它为元类的类在加载完后会紧接着执行它指定的元类的 <code>__new__()</code> 和 <code>__init__()</code>，这也是输出中 <a href="https://github.com/Hk4Fun/PyPatterns/blob/master/Creational/Singleton.py" target="_blank" rel="external">3</a> 和 <a href="https://hk4fun.github.io/2018/08/15/%E9%AD%94%E6%B3%95%E6%96%B9%E6%B3%95%E4%B9%8B-new-%E4%B8%8E-init/">4</a> 紧跟着出现在 <a href="https://github.com/Hk4Fun/PyPatterns/blob/master/Creational/Singleton.py" target="_blank" rel="external">1</a> 和 <a href="https://hk4fun.github.io/2018/08/15/%E9%AD%94%E6%B3%95%E6%96%B9%E6%B3%95%E4%B9%8B-new-%E4%B8%8E-init/">2</a> 后面的原因</p>
 <p>至于输出中的 5、6、7，反映的就是我们调用 a = A() 时经过的魔法方法：先是元类 Meta 的 <code>__call__()</code>，然后是类 A 的<code>__new__()</code> 和 <code>__init__()</code></p>
 <p>注意到，在类生成实例时，元类的 <code>__call__()</code> 内部会调用以它为元类的类的 <code>__new__()</code> 和 <code>__init__()</code>，这是根据<a href="https://hk4fun.github.io/2018/08/15/%E9%AD%94%E6%B3%95%E6%96%B9%E6%B3%95%E4%B9%8B-new-%E4%B8%8E-init/">魔法方法之 <code>__new__()</code> 与 <code>__init__()</code></a>中讨论的内容模仿 type 而实现的简单逻辑</p>
-<p>因此我们为了可以控制一个类生成实例的行为，我们可以既可以简单地重载该类的 <code>__new__()</code>，也可以自己实现一个元类并重载它的 <code>__init__()</code> 和 <code>__call__()</code> 或 <code>__new__()</code> 和 <code>__call__()</code>，然后该类只需指明它的元类是这个自定义的元类而不是默认的 type 即可</p>
-<p>最后输出中的 [8]，是为了更好地理解 <code>__call__()</code>：类的括号调用会去调用元类的<code>__call__()</code> 作为返回，那么实例的括号调用就会去调用类的<code>__call__()</code> 作为返回，其本质是一样的，<code>__call__()</code> 总是在使用括号调用时被调用，通过对它的重载我们可以自定义这个返回的对象。</p>
+<p>因此我们为了可以控制一个类生成实例的行为，我们可以既可以简单地重载该类的 <code>__new__()</code>，也可以自己实现一个元类并重载它的 <code>__init__()</code> 和 <code>__call__()</code> 或 <code>__new__()</code> 和 <code>__call__()</code>，然后该类只需指明它的元类是这个自定义的元类而不是默认的 type 即可（默认情况下就是<code>type.__call__(A)</code>）:</p>
+<pre><code class="python">class Meta(type):
+    def __call__(cls, *args, **kwargs):
+        print(&#39;call Meta.__call__() &#39;)
+        return super().__call__()
+
+class A(metaclass=Meta):
+    pass
+
+a = A() # 调用的是Meta.__call__()
+print(isinstance(a, A)) 
+print(&#39;* &#39; * 10)
+b = type.__call__(A) # 直接调用type.__call__()，绕过Meta.__call__()
+print(isinstance(b ,A))
+</code></pre>
+<p>输出：</p>
+<pre><code class="python">call Meta.__call__() 
+True
+* * * * * * * * * * 
+True
+</code></pre>
+<p>最后输出中的 [8]，是为了更好地理解 <code>__call__()</code>：类的括号调用会去调用元类的<code>__call__()</code> 作为返回，那么实例的括号调用就会去调用类的<code>__call__()</code> 作为返回，其本质是一样的，<code>__call__()</code> 总是在使用括号调用时被调用，通过对它的重载我们可以自定义这个返回的对象</p>
+<h2 id="更多探索"><a href="#更多探索" class="headerlink" title="更多探索"></a>更多探索</h2><p>综合前面提到的那两篇文章和本章内容，会看到：</p>
+<p>type 其实负责对 Python 中类和元类在加载完成后的处理和调用时 <code>__new__()</code> 和 <code>__init__()</code> 的调度（当然其工作不止如此），这从上面我们模仿 <code>type.__call__</code> 的逻辑实现就可以看出</p>
+<p>我们可以编写自己的元类来自定义加载后的处理和调用时的调度过程，但由于元类本身也是type的实例，因此元类也要受 type 的处理和调度</p>
+<p>我们还注意到默认情况下在子类的 <code>__new__()</code> 中总是会去调用父类的 <code>__new__()</code>，而父类的 <code>__new__()</code> 也是这么做，最终我们的 cls 参数会一路往上传递来到 object</p>
+<p>而我们知道 object 没有父类，这从 <code>object.__bases__</code> 返回空元组可知。因此 cls 来到 object 就不会再往上传递了，这时候就由解释器（Cython） 内部来实现并生成 cls 的实例并返回</p>
+<p>所以这就解释了为什么 Python 中所有的实例都是 object 的实例，而 Dashed Arrow Up Rule 的本质其实就是 cls 在 <code>__new__()</code> 中被往上传递</p>
+<p>那我们能否自定义一个类似 object 的类，它直接生成传递上来的cls的实例并返回呢？这样做可以打断这条继承链，让 object 不再是所有实例的类。。。只能说想的美：</p>
+<pre><code class="python">class obj:
+    def __new__(cls):
+        print(&#39;call obj.__new__()&#39;)
+        return cls() # 没有往上传递了，直接生成实例返回
+
+class A(obj):
+    def __new__(cls, *args, **kwargs):
+        print(&#39;call A.__new__()&#39;)
+        return super().__new__(cls)
+
+a = A()
+</code></pre>
+<p>输出：</p>
+<pre><code>call A.__new__()
+call obj.__new__()
+call A.__new__()
+call obj.__new__()
+call A.__new__()
+call obj.__new__()
+# 中间省略n行
+---------------------------------------------------------------------------
+RecursionError                            Traceback (most recent call last)
+&lt;ipython-input-41-698ca043359a&gt; in &lt;module&gt;()
+      9         return super().__new__(cls)
+     10 
+---&gt; 11 a = A()
+
+&lt;ipython-input-41-698ca043359a&gt; in __new__(cls, *args, **kwargs)
+      7     def __new__(cls, *args, **kwargs):
+      8         print(&#39;call A.__new__()&#39;)
+----&gt; 9         return super().__new__(cls)
+     10 
+     11 a = A()
+
+&lt;ipython-input-41-698ca043359a&gt; in __new__(cls)
+      2     def __new__(cls):
+      3         print(&#39;call obj.__new__()&#39;)
+----&gt; 4         return cls()
+      5 
+      6 class A(obj):
+
+... last 2 frames repeated, from the frame below ...
+
+&lt;ipython-input-41-698ca043359a&gt; in __new__(cls, *args, **kwargs)
+      7     def __new__(cls, *args, **kwargs):
+      8         print(&#39;call A.__new__()&#39;)
+----&gt; 9         return super().__new__(cls)
+     10 
+     11 a = A()
+
+RecursionError: maximum recursion depth exceeded
+</code></pre><p>Boom！直接爆炸溢出，因为父类的 return cls() 明显会再次调用子类的  <code>__new__()</code>，造成无穷递归。。。</p>
+<p>所以，还是乖乖 <code>super().__new__(cls, *args, **kwargs )</code> 吧！</p>
+<p>在 <code>__new__()</code> 中我们可以向父类传递不是本类的cls，从而生成其他类的实例，甚至可以拐个弯：</p>
+<pre><code class="python">class A:
+    def __new__(cls, *args, **kwargs):
+        print(&#39;call A.__new__()&#39;)
+        return B.__new__(cls, *args, **kwargs) # 拐了个弯，返回的其实是A的实例
+
+    def __init__(self, *args, **kwargs):
+        print(&#39;call A.__init__()&#39;) 
+
+class B:
+    def __new__(cls, *args, **kwargs):
+        print(&#39;call B.__new__()&#39;)
+        print(cls) # 来到B.__new__()的cls其实是A而不是B
+        return object.__new__(cls, *args, **kwargs) 
+
+a = A()
+</code></pre>
+<p>输出：</p>
+<pre><code class="python">call A.__new__()
+call B.__new__()
+&lt;class &#39;__main__.A&#39;&gt;
+call A.__init__() # 能自动调用A.__init__()
+</code></pre>
+<p>但无论如何最终一定会来到object，由object负责生成cls的实例</p>
+<p>因此最终：</p>
+<p>对于type，其主“外”，我们使用 metaclass 进行拦截，但最终还得回到type</p>
+<p>对于object，其主“内”，我们使用 <code>__new__()</code> 进行拦截，但最终还是来到object</p>
+<p>类内部生成的实例会经过外部元类的 <code>__call__()</code>，因此我们的单例模式既可以在类（内部）使用 <code>__new__()</code> 进行拦截，也可以在元类（外部）使用<code>__call__()</code>进行拦截</p>
 <h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
 <li>《设计模式》刘伟著</li>
 <li>《流畅的Python》第21章：元类编程</li>
@@ -675,7 +783,7 @@ print(aa)
         <p><span>本文标题:</span><a href="/2018/08/15/设计模式之单例模式/">设计模式之单例模式</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">Hk4Fun</a></p>
         <p><span>发布时间:</span>2018-08-15, 13:11:09</p>
-        <p><span>最后更新:</span>2018-08-15, 20:08:06</p>
+        <p><span>最后更新:</span>2018-08-16, 12:29:43</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2018/08/15/设计模式之单例模式/" title="设计模式之单例模式">https://hk4fun.github.io/2018/08/15/设计模式之单例模式/</a>
             <span class="copy-path" data-clipboard-text="原文: https://hk4fun.github.io/2018/08/15/设计模式之单例模式/　　作者: Hk4Fun" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
@@ -705,7 +813,7 @@ print(aa)
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#关于单例模式"><span class="toc-number">1.</span> <span class="toc-text">关于单例模式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#定义"><span class="toc-number">1.1.</span> <span class="toc-text">定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#模式角色"><span class="toc-number">1.2.</span> <span class="toc-text">模式角色</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#优点"><span class="toc-number">1.3.</span> <span class="toc-text">优点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#缺点"><span class="toc-number">1.4.</span> <span class="toc-text">缺点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#适用场景"><span class="toc-number">1.5.</span> <span class="toc-text">适用场景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分类"><span class="toc-number">1.6.</span> <span class="toc-text">分类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#线程安全"><span class="toc-number">1.7.</span> <span class="toc-text">线程安全</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#区别"><span class="toc-number">1.8.</span> <span class="toc-text">区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#扩展"><span class="toc-number">1.9.</span> <span class="toc-text">扩展</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实现方式"><span class="toc-number">2.</span> <span class="toc-text">实现方式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-重载-new"><span class="toc-number">2.1.</span> <span class="toc-text">1. 重载 __new__()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-使用装饰器"><span class="toc-number">2.2.</span> <span class="toc-text">2. 使用装饰器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-使用共享属性"><span class="toc-number">2.3.</span> <span class="toc-text">3. 使用共享属性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-使用-metaclass"><span class="toc-number">2.4.</span> <span class="toc-text">4. 使用 metaclass</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-使用-classmethod"><span class="toc-number">2.5.</span> <span class="toc-text">5. 使用 @classmethod</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-使用变量名覆盖"><span class="toc-number">2.6.</span> <span class="toc-text">6.  使用变量名覆盖</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#线程安全-1"><span class="toc-number">2.7.</span> <span class="toc-text">线程安全</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#小结"><span class="toc-number">2.8.</span> <span class="toc-text">小结</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#总感觉还有什么没弄明白"><span class="toc-number">2.9.</span> <span class="toc-text">总感觉还有什么没弄明白</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-number">3.</span> <span class="toc-text">参考资料</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#关于单例模式"><span class="toc-number">1.</span> <span class="toc-text">关于单例模式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#定义"><span class="toc-number">1.1.</span> <span class="toc-text">定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#模式角色"><span class="toc-number">1.2.</span> <span class="toc-text">模式角色</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#优点"><span class="toc-number">1.3.</span> <span class="toc-text">优点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#缺点"><span class="toc-number">1.4.</span> <span class="toc-text">缺点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#适用场景"><span class="toc-number">1.5.</span> <span class="toc-text">适用场景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分类"><span class="toc-number">1.6.</span> <span class="toc-text">分类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#线程安全"><span class="toc-number">1.7.</span> <span class="toc-text">线程安全</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#区别"><span class="toc-number">1.8.</span> <span class="toc-text">区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#扩展"><span class="toc-number">1.9.</span> <span class="toc-text">扩展</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实现方式"><span class="toc-number">2.</span> <span class="toc-text">实现方式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-重载-new"><span class="toc-number">2.1.</span> <span class="toc-text">1. 重载 __new__()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-使用装饰器"><span class="toc-number">2.2.</span> <span class="toc-text">2. 使用装饰器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-使用共享属性"><span class="toc-number">2.3.</span> <span class="toc-text">3. 使用共享属性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-使用-metaclass"><span class="toc-number">2.4.</span> <span class="toc-text">4. 使用 metaclass</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-使用-classmethod"><span class="toc-number">2.5.</span> <span class="toc-text">5. 使用 @classmethod</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-使用变量名覆盖"><span class="toc-number">2.6.</span> <span class="toc-text">6.  使用变量名覆盖</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#线程安全-1"><span class="toc-number">2.7.</span> <span class="toc-text">线程安全</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#小结"><span class="toc-number">2.8.</span> <span class="toc-text">小结</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#总感觉还有什么没弄明白"><span class="toc-number">2.9.</span> <span class="toc-text">总感觉还有什么没弄明白</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#更多探索"><span class="toc-number">3.</span> <span class="toc-text">更多探索</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-number">4.</span> <span class="toc-text">参考资料</span></a></li></ol>
         
     </div>
     <style>
