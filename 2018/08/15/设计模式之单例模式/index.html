@@ -23,7 +23,7 @@
 <meta property="og:url" content="https://hk4fun.github.io/2018/08/15/设计模式之单例模式/index.html">
 <meta property="og:site_name" content="Hk4Fun&#39;s Blog">
 <meta property="og:description" content="由于 Python 拥有灵活的动态语言特性和丰富的魔法方法，再加上它支持强大的元类编程，单例模式（Singleton）在 Python 上的实现方式五花八门。本文主要就是讨论单例模式在 Python 上的各种实现，涉及到 Python 中元类编程、魔法方法和装饰器的进阶语法知识，并在最后深入讨论和总结。">
-<meta property="og:updated_time" content="2018-08-16T04:29:43.324Z">
+<meta property="og:updated_time" content="2018-08-17T13:28:59.671Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="设计模式之单例模式">
 <meta name="twitter:description" content="由于 Python 拥有灵活的动态语言特性和丰富的魔法方法，再加上它支持强大的元类编程，单例模式（Singleton）在 Python 上的实现方式五花八门。本文主要就是讨论单例模式在 Python 上的各种实现，涉及到 Python 中元类编程、魔法方法和装饰器的进阶语法知识，并在最后深入讨论和总结。">
@@ -341,52 +341,143 @@
 </li>
 </ol>
 <h3 id="线程安全"><a href="#线程安全" class="headerlink" title="线程安全"></a>线程安全</h3><p>懒汉单例在多线程环境下需要考虑线程安全的问题，因此需要使用threading.Lock</p>
-<p>但在多线程环境测试下会发现加不加锁都是线程安全的（测试代码见<a href="https://github.com/Hk4Fun/PyPatterns/blob/master/Creational/Singleton.py" target="_blank" rel="external">Github</a>）。。。</p>
-<p>这是由于 Python GIL 的存在，使得懒汉单例不需要加 Lock 也是线程安全的</p>
 <h3 id="区别"><a href="#区别" class="headerlink" title="区别"></a>区别</h3><p>这里需要注意的是，Python 中类的加载机制与 Java 的不太一样</p>
 <p>前者动态后者静态，因此在 Python 中实现饿汉单例比较特殊</p>
-<p>后面的变量名覆盖方法其实就是一种饿汉单例</p>
-<p>关于 Python 中类的加载（导入）机制，可以看《流畅的Python》第21章元类编程中：导入时和运行时的比较，其中的一个理解计算时间的练习可以让你彻底明白</p>
+<p>后面的变量名覆盖方法和import导入其实就是一种饿汉单例</p>
+<p>关于 Python 中类的加载（导入）机制，可以看《流畅的Python》第21章元类编程中：导入时和运行时的比较，其中的一个理解计算时间的练习很有意思</p>
 <h3 id="扩展"><a href="#扩展" class="headerlink" title="扩展"></a>扩展</h3><p>多例模式，返回多个（有限个）实例对象，可以随机也可以按序</p>
 <h2 id="实现方式"><a href="#实现方式" class="headerlink" title="实现方式"></a>实现方式</h2><p>在此之前，建议看我之前的一篇文章：<a href="https://hk4fun.github.io/2018/08/15/%E9%AD%94%E6%B3%95%E6%96%B9%E6%B3%95%E4%B9%8B-new-%E4%B8%8E-init/">魔法方法之 <code>__new__()</code> 与 <code>__init__()</code></a>，因为接下来的各种实现方式很多都是通过重载 <code>__new__()</code> 和 <code>__init__()</code> 来实现的，否则你可能不知为何这么做就可以实现单例</p>
-<h3 id="1-重载-new"><a href="#1-重载-new" class="headerlink" title="1. 重载 __new__()"></a>1. 重载 <code>__new__()</code></h3><p>将一个类的实例绑定到类变量 <code>_instance</code> 上</p>
-<p>如果 <code>cls._instance</code> 为 None 说明该类还没有实例化过，则实例化该类并保存于 <code>cls._instance</code>，然后返回</p>
-<p>如果 <code>cls._instance</code> 不为None，则直接返回 <code>cls._instance</code></p>
-<p>该方法在每次生成实例时都会调用 <code>__init__()</code> 来重置实例属性，至于为什么，需要明白 <code>__new__()</code> 和 <code>__init__()</code> 的关系，这在我之前的文章中有讨论过</p>
+<h3 id="1-重载-new"><a href="#1-重载-new" class="headerlink" title="1. 重载 __new__()"></a>1. 重载 <code>__new__()</code></h3><p>使用一个字典 <code>_instances</code> 来存放出现过的实例</p>
+<p>采用字典的存储方式是考虑到Singleton可能会有子类，这样可以返回子类的单例</p>
+<p>否则直接返回 Singleton 的单例时子类的 <code>__init__()</code> 不会被调用，因为Singleton 的单例不是其子类的实例</p>
+<p>该方法在每次生成实例时都会调用 <code>__init__()</code> 来重置实例属性</p>
 <pre><code class="python">class Singleton:
-    _instance = None
+    # 使用字典是考虑到Singleton可能会有子类，这样可以返回子类的单例，
+    # 否则返回Singleton的单例时子类的__init__()不会被调用，因为Singleton的单例不是其子类的实例
+    _instances = {} 
 
-    def __new__(cls, *args, **kw):
-        if cls._instance is None:
-            cls._instance = super().__new__(cls, *args, **kw)
-        return cls._instance
+    def __new__(cls, *args, **kwargs):
+        if cls not in cls._instances:
+            cls._instances[cls] = super().__new__(cls, *args, **kwargs)
+        return cls._instances[cls]
 
-print(Singleton() is Singleton()) # 输出True
+    def __init__(self):
+        print(&#39;call Singleton.__init__()&#39;)
+
+class A(Singleton):
+    def __init__(self):
+        print(&#39;call A.__init__()&#39;)
+
+print(Singleton() is Singleton())
+print(&quot;* &quot; * 10)
+print(A() is A())
+print(&quot;* &quot; * 10)
+print(type(A()))
 </code></pre>
+<p>输出：</p>
+<pre><code class="python">call Singleton.__init__()
+call Singleton.__init__()
+True
+* * * * * * * * * * 
+call A.__init__()
+call A.__init__()
+True
+* * * * * * * * * * 
+call A.__init__()
+&lt;class &#39;__main__.A&#39;&gt;
+</code></pre>
+<p>可以看到继承单例类的子类也能成为单例类，但注意到 <code>__init__()</code> 方法被调用了多次，这意味着每次实例化时虽然返回的是同一个实例对象，但初始化创建的属性会被重置和改变（传入不同的初始化参数），这往往不是我们想看到的。</p>
+<p>我们的要求更高了，返回第一次创建的实例还不够，我们还要求实例内部的环境变量也不能改变和重置，这就要求单例模式下 <code>__init__()</code> 只会被调用一次，即只在第一次创建实例被调用，如何做到呢？</p>
 <h3 id="2-使用装饰器"><a href="#2-使用装饰器" class="headerlink" title="2. 使用装饰器"></a>2. 使用装饰器</h3><p>使用一个字典来存放不同类对应的实例，因为一个装饰器可以用来装饰多个类</p>
 <p>这样装饰器可以对不同的类生成不同的实例，对相同的类生成相同的实例</p>
 <p>且该方法比第一种方法更优：只有第一次实例化调用了 <code>__init__()</code></p>
 <pre><code class="python">def singleton(cls):
-    instances = {}  
+    instances = {}  # 使用一个字典来存放不同类对应的实例，因为一个装饰器可以用来装饰多个类
     def wrapper(*args, **kwargs):
         if cls not in instances:
             instances[cls] = cls(*args, **kwargs)
         return instances[cls]
     return wrapper
 
+
 @singleton
 class A:
-    pass
+    def __init__(self):
+        print(&#39;call A.__init__&#39;)
 
 @singleton
 class B:
-    pass
+    def __init__(self):
+        print(&#39;call B.__init__&#39;)
 
-print(A() is B()) # False，对不同的类生成不同的实例
-print(A() is A()) # True，对相同的类生成相同的实例
-print(B() is B()) # True
+print(A() is B())  # False，对不同的类生成不同的实例
+print(A() is A())  # True，对相同的类生成相同的实例
+print(B() is B())  # True
 </code></pre>
-<h3 id="3-使用共享属性"><a href="#3-使用共享属性" class="headerlink" title="3. 使用共享属性"></a>3. 使用共享属性</h3><p>首先强调一点，该方式实现的并不是严格的单例模式</p>
+<p>输出：</p>
+<pre><code class="python">call A.__init__
+call B.__init__
+False
+True
+True
+</code></pre>
+<p>可以看到，类 A 和 B 各自被调用了三次，但只有第一次才调用了各自的 <code>__init__()</code>，且装饰器 singleton 对不同的类生成不同的实例，对相同的类生成相同的实例。</p>
+<p>但使用装饰器可能存在一个问题，即用装饰器修饰的单例类不能再有子类，否则在加载子类时会出错：</p>
+<pre><code class="python">class C(A):
+    pass
+</code></pre>
+<p>输出：</p>
+<pre><code class="python">TypeError                                 Traceback (most recent call last)
+&lt;ipython-input-42-dcf34ebd5f77&gt; in &lt;module&gt;()
+----&gt; 1 class C(A):
+      2     pass
+
+TypeError: function() argument 1 must be code, not str
+</code></pre>
+<p>因为被装饰器装饰后的A已经不再是类了，而只是一个函数，类是无法去继承函数的</p>
+<p>那如何做到既能只调用一次 <code>__init__()</code>，有能让继承的子类为单例类呢？</p>
+<h3 id="3-使用-metaclass"><a href="#3-使用-metaclass" class="headerlink" title="3. 使用 metaclass"></a>3. 使用 metaclass</h3><p>重载元类的 <code>__init__()</code> 和 <code>__call__()</code> （或 <code>__new__()</code> 和 <code>__call__()</code>）</p>
+<p>其原理和重载 <code>__new__()</code> 一样，因为元类的 <code>__call__()</code> 首先就是调用类的 <code>__new__()</code> 来得到类的一个实例</p>
+<p>因此我们可以在更早的时间点拦截，即在元类中提前检查是否含有单例</p>
+<p>同时该方法和装饰器一样只调用一次 <code>__init__()</code></p>
+<pre><code class="python">class Singleton(type):
+#     def __new__(cls, name, bases, dict, **kwargs):
+#         cls._instance = None
+#         return super().__new__(cls, name, bases, dict, **kwargs)
+
+    def __init__(cls, name, bases, dict, **kwargs):
+        cls._instance = None
+        super().__init__(name, bases, dict)
+
+    def __call__(cls, *args, **kwargs):
+        if cls._instance is None: # 有就直接返回该实例对象，避免进入super().__call__()中重复调用类的__init__()
+            cls._instance = super().__call__(*args, **kwargs)
+        return cls._instance
+
+class A(metaclass=Singleton): # 直接声明元类即可
+    def __init__(self):
+        print(&#39;call A.__init__&#39;)
+
+class B(A): # 继承A，则其元类也是A的元类
+    def __init__(self):
+        print(&#39;call B.__init__&#39;)
+
+print(A() is A())
+print(&#39;* &#39; * 10 )
+print(B() is B())
+print(&#39;* &#39; * 10 )
+print(type(B()))
+</code></pre>
+<p>输出：</p>
+<pre><code>call A.__init__
+True
+* * * * * * * * * * 
+call B.__init__
+True
+* * * * * * * * * * 
+&lt;class &#39;__main__.B&#39;&gt;
+</code></pre><p>可见 B 继承 A 后也为单例类，且 <code>__init__()</code> 也只调用了一次，因为 <code>__call__()</code> 保证了不会进入<code>super().__call__()</code>中重复调用类的        <code>__init__()</code></p>
+<h3 id="4-使用共享属性"><a href="#4-使用共享属性" class="headerlink" title="4. 使用共享属性"></a>4. 使用共享属性</h3><p>首先强调一点，该方式实现的并不是严格的单例模式，实际上属于为Borg模式</p>
 <p>表面上看，单例就是所有实例对象拥有相同的状态(属性)和行为(方法)</p>
 <p>同一个类的所有实例本来就拥有相同的行为(方法)</p>
 <p>只需要保证同一个类的所有实例具有相同的状态(属性)即可</p>
@@ -400,13 +491,13 @@ print(B() is B()) # True
         inst.__dict__ = cls._state
         return inst
 
-class MyClass3(Singleton):
+class MyClass(Singleton):
     def __init__(self, v):
         self.v = v
 
-a = MyClass3(1)
+a = MyClass(1)
 print(a.v)
-b = MyClass3(2)
+b = MyClass(2)
 print(a.v) # 这里a.v会被改为2
 print(b.v)
 print(a is b) # a和b的id其实不一样
@@ -432,15 +523,15 @@ True
     def __eq__(self,other):
         return self.__dict__ is other.__dict__
 
-class MyClass3(Singleton):
+class MyClass(Singleton):
     pass
 
-a = MyClass3()
-b = MyClass3()
+a = MyClass()
+b = MyClass()
 d = {}
 d[a] = 1
 d[b] = 2
-print(d) # 输出{&lt;__main__.MyClass3 object at 0x05668550&gt;: 2}
+print(d) # 输出{&lt;__main__.MyClass object at 0x05668550&gt;: 2}
 </code></pre>
 <p>字典 d 只有一个键值对，说明实例 a 和 b 在字典 key 上表现相等。</p>
 <p>这里要说明一下： 字典在比较两个key是否相等时会使用 <code>==</code> 符号，而 <code>==</code> 符号会调用 <code>__eq__()</code> 方法</p>
@@ -450,36 +541,9 @@ print(d) # 输出{&lt;__main__.MyClass3 object at 0x05668550&gt;: 2}
 <p><code>is</code> 会去调用 <code>id()</code> 内置方法判断两个对象的内存地址是否一样，这个无法重载</p>
 <p>在共享属性的单例模式下我们两个实例的地址肯定是不一样的，这点没法修改</p>
 <p><code>hash()</code> 在默认情况下会返回一个随机值，每次返回结果几乎不一样， 但它回去调用 <code>__hash__()</code>）</p>
-<h3 id="4-使用-metaclass"><a href="#4-使用-metaclass" class="headerlink" title="4. 使用 metaclass"></a>4. 使用 metaclass</h3><p>重载元类的 <code>__init__()</code> 和 <code>__call__()</code> （或 <code>__new__()</code> 和 <code>__call__()</code>）</p>
-<p>其原理和重载 <code>__new__()</code> 一样，因为元类的 <code>__call__()</code> 首先就是调用类的 <code>__new__()</code> 来得到类的一个实例</p>
-<p>因此我们可以在更早的时间点拦截，即在元类中提前检查是否含有单例</p>
-<p>同时该方法和装饰器一样只调用一次 <code>__init__()</code></p>
-<pre><code class="python">class Singleton(type):
-#     def __new__(cls, name, bases, dict, **kwargs):
-#         cls._instance = None
-#         return super().__new__(cls, name, bases, dict, **kwargs)
-
-    def __init__(cls, name, bases, dict, **kwargs):
-        cls._instance = None
-        super().__init__(name, bases, dict)
-
-    def __call__(cls, *args, **kwargs):
-        if cls._instance is None: # 有就直接返回该实例对象，避免进入super().__call__()中重复调用类的__init__()
-            cls._instance = super().__call__(*args, **kwargs)
-        return cls._instance
-
-class MyClass4(metaclass=Singleton): # 直接声明元类即可
-    def __init__(self):
-        print(&#39;call MyClass4.__init__&#39;)
-
-print(MyClass4() is MyClass4())
-</code></pre>
-<p>输出：</p>
-<pre><code>call MyClass4.__init__
-True
-</code></pre><h3 id="5-使用-classmethod"><a href="#5-使用-classmethod" class="headerlink" title="5. 使用 @classmethod"></a>5. 使用 @classmethod</h3><p>这种实现方式很牵强，通过实现一个类方法来返回实例</p>
+<h3 id="5-使用-classmethod"><a href="#5-使用-classmethod" class="headerlink" title="5. 使用 @classmethod"></a>5. 使用 @classmethod</h3><p>这种实现方式很牵强，通过实现一个类方法来返回实例，</p>
 <p>用户通过调用该类方法来获取唯一的那个实例，但这不能阻止用户直接调用类（调用 <code>__init__()</code>）来生成</p>
-<p>在Java等静态语言中可以通过一个私有方法来将构造方法屏蔽起来不让用户去调用，但在Python中没有私有方法这一说法</p>
+<p>在Java等静态语言中可以通过一个私有方法来将构造方法屏蔽起来不让用户去调用，但在Python中没有<strong>真正的</strong>私有方法</p>
 <p>如果用户能做到严格按照类方法来获取实例，那么 <code>__init__()</code> 只会被调用一次</p>
 <pre><code class="python">class Singleton():
     _instance = None
@@ -516,48 +580,112 @@ False
     def __call__(self):
         return self
 
+class A(Singleton):
+    def __init__(self):
+        print(&#39;call A.__init__&#39;)
+
 Singleton = Singleton() # 提前生成实例
+A = A() # # 提前生成实例
 
 # 下面才是正式调用，因此从某种程度来讲，这种实现方式属于饿汉单例
+print(&quot;* &quot; * 10)
 print(Singleton() is Singleton() is Singleton)
+print(A() is A())
+print(&quot;* &quot; * 10)
+print(type(A()))
 </code></pre>
 <p>输出：</p>
 <pre><code>call Singleton.__init__
+call A.__init__
+* * * * * * * * * * 
 True
-</code></pre><h3 id="线程安全-1"><a href="#线程安全-1" class="headerlink" title="线程安全"></a>线程安全</h3><p>以上除了使用变量名覆盖的方法实现的是饿汉单例外，其他的方法实现的都是懒汉单例</p>
-<p>但这些实现都没有考虑多线程下的线程安全问题</p>
-<p>因此这里以第一个方法：<code>重载 __new__()</code> 为例，加入Lock来实现线程安全的单例模式</p>
-<p>主要就是实现一个装饰器即可，其他实现方法都可以使用该装饰器来保证线程安全</p>
+True
+* * * * * * * * * * 
+&lt;class &#39;__main__.A&#39;&gt;
+</code></pre><p>可以看到，该方法和装饰器一样只调用一次 <code>__init__()</code>，且子类也能够继承而成为单例类，但要提前生成实例覆盖掉</p>
+<p>注意不能在单例类 Singleton 覆盖后才声明子类，否则会出现意外的错误，因为子类继承的是一个实例了！</p>
+<pre><code class="python">class Singleton:
+    def __init__(self):
+        print(&#39;call Singleton.__init__&#39;)
+
+    def __call__(self, *args):
+        print(&#39;call Singleton.__call__&#39;)
+        return self
+
+Singleton = Singleton() # 在声明子类前覆盖
+
+class A(Singleton):
+    def __init__(self):
+        print(&#39;call A.__init__&#39;)
+
+A()
+</code></pre>
+<p>输出：</p>
+<pre><code class="python">call Singleton.__init__
+---------------------------------------------------------------------------
+TypeError                                 Traceback (most recent call last)
+&lt;ipython-input-122-995c78abe87f&gt; in &lt;module&gt;()
+      9 Singleton = Singleton() # 在声明子类前覆盖
+     10 
+---&gt; 11 class A(Singleton):
+     12     def __init__(self):
+     13         print(&#39;call A.__init__&#39;)
+
+TypeError: __init__() takes 1 positional argument but 4 were given
+</code></pre>
+<h3 id="7-使用-import-的模块导入"><a href="#7-使用-import-的模块导入" class="headerlink" title="7. 使用 import 的模块导入"></a>7. 使用 import 的模块导入</h3><p>Python 的模块导入方式采用的就是天然的单例模式，通过 import，一个模块只会被导入并初始化一次，模块内的全局变量将会被绑定到模块上</p>
+<p>因此我们只需把想要的单例提前在一个模块内<strong>作为全局变量</strong>实例化，然后在别的模块中导入即可</p>
+<p>这种实现方式属于饿汉模式，是线程安全的，并且import本身的实现机制也是线程安全的</p>
+<p>其典型的例子就是标准库中的logging模块，它在被导入时会生成一个全局的 Logger.manager 单例作为 root，</p>
+<p>然后每次通过 logging.getLogger(name) 调用时总是通过 root.loggerDict 获取同一个 Logger，通过<a href="https://github.com/python/cpython/blob/3.7/Lib/logging/__init__.py" target="_blank" rel="external">查看源码</a>可以了解更多实现细节</p>
+<h3 id="线程安全-1"><a href="#线程安全-1" class="headerlink" title="线程安全"></a>线程安全</h3><p>到目前为止一共讨论了七种实现单例模式的方法，使用元类的实现方式看起来不错，但除了<code>变量名覆盖</code>和<code>import模块导入</code>，其他五种实现方式都没有考虑线程安全的问题</p>
+<p>因此这里以重载 <code>__new__()</code> 为例，加入Lock来实现线程安全的单例模式，这里实现一个装饰器 synchronized</p>
 <pre><code class="python">import threading
 
 def synchronized(func):
-    lock = threading.Lock()
+    _lock = threading.Lock()
 
     def lock_func(*args, **kwargs):
-        with lock:
+        with _lock:
             return func(*args, **kwargs)
 
     return lock_func
 
 class SyncSingleton:
-    _instance = None
+    _instances = {}
 
     @synchronized # 注意到装饰器是在载入时执行的，所以装饰器本身是线程安全的 
     def __new__(cls, *args, **kwargs):
-        if cls._instance is None:
-            cls._instance = super().__new__(cls, *args, **kwargs)
-        return cls._instance
-
-print(SyncSingleton() is SyncSingleton()) # 输出True，这里并没有真正模拟多线程环境来测试
+        if cls not in cls._instances:
+            cls._instances[cls] = super().__new__(cls, *args, **kwargs)
+        return cls._instances[cls]
 </code></pre>
-<p>通过在多线程环境测试下发现加不加锁都是线程安全的。。。</p>
-<p>这是因为 Python GIL 的存在，使得Python下的懒汉单例天生就是线程安全的</p>
+<p>把装饰器展开来就是：</p>
+<pre><code class="python">class Singleton:
+    _instances = {}
+    _lock = threading.Lock()
+
+    def __new__(cls, *args, **kwargs):
+        with cls._lock:
+            if cls not in cls._instances:
+                cls._instances[cls] = super(Singleton, cls).__new__(cls, *args, **kwargs)
+        return cls._instances[cls]
+</code></pre>
+<p>注意到线程每次都要阻塞在 <code>with cls._lock</code> ，其实在第一个实例生成时cls的实例就已经在<code>_instances</code>字典中了</p>
+<p>所以我们可以在 <code>with cls._lock</code> 外面再加一层检查判断即可，避免每次都去争取锁而进行不必要的阻塞</p>
+<pre><code class="python"># 双重检查的锁机制
+class Singleton:
+    _instances = {}
+    _lock = threading.Lock()
+
+    def __new__(cls, *args, **kwargs):
+        if cls not in cls._instances: # 外层提高性能
+            with cls._lock:
+                if cls not in cls._instances: # 内层是核心逻辑
+                    cls._instances[cls] = super(Singleton, cls).__new__(cls, *args, **kwargs)
+        return cls._instances[cls]
+</code></pre>
 <p>以上完整的代码和多线程测试代码见<a href="https://github.com/Hk4Fun/PyPatterns/blob/master/Creational/Singleton.py" target="_blank" rel="external">Github</a></p>
-<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p><strong><code>装饰器</code></strong>、<strong><code>metaclass</code></strong> 以及 <strong><code>变量名覆盖</code></strong> 的单例模式实现都能保证只调用一次 <code>__init__()</code></p>
-<p>而 <strong><code>重载 __new__()</code></strong> 和 <strong><code>@classmethod</code></strong> 的实现方式虽然返回的总是同一个实例</p>
-<p>但在每次生成实例时都会去调用 <code>__init__()</code> 重置实例属性，这有时会带来严重的BUG</p>
-<p>至于 <strong><code>共享属性</code></strong> 的实现方式则取决于用户的实际调用</p>
-<p>个人认为 <strong><code>变量名覆盖</code></strong> 是最优的，网上还有一个是关于利用Python 中模块的单例性，import 导入另一模块的类来达到单例的目的，其实质和 <strong><code>变量名覆盖</code></strong> 没什么区别，这里不展开讨论</p>
 <h3 id="总感觉还有什么没弄明白"><a href="#总感觉还有什么没弄明白" class="headerlink" title="总感觉还有什么没弄明白"></a>总感觉还有什么没弄明白</h3><p>是的，往往有时候我们看完一篇技术文章就处于“知其然而不知其所以然”的状态，看似懂了，明白如何用了，但其实背后更深层的原理我们并不了解。如果意识到该问题所在，自然就会去深挖，怕的是走马观花，不能静下心来多问自己几个为什么。</p>
 <p>为什么重载 <code>__new__()</code> 就能实现单例？</p>
 <p>如果在此之前你已经仔细阅读过我的这篇文章：<a href="https://hk4fun.github.io/2018/08/15/%E9%AD%94%E6%B3%95%E6%96%B9%E6%B3%95%E4%B9%8B-new-%E4%B8%8E-init/">魔法方法之 <code>__new__()</code> 与 <code>__init__()</code></a>就不会问这样的问题了。</p>
@@ -653,8 +781,8 @@ print(aa)
 </code></pre>
 <p>相信到这里你就会明白了：</p>
 <p>一个类的加载和运行是两个分开的阶段，先加载，再根据需要运行</p>
-<p>类中的顶层代码（方法之外的定义体）在加载时执行，而方法内的代码在调用时才执行，这就是输出中 <a href="https://github.com/Hk4Fun/PyPatterns/blob/master/Creational/Singleton.py" target="_blank" rel="external">1</a> 和 <a href="https://hk4fun.github.io/2018/08/15/%E9%AD%94%E6%B3%95%E6%96%B9%E6%B3%95%E4%B9%8B-new-%E4%B8%8E-init/">2</a> 最先出现的原因</p>
-<p>但由于元类是类的类，因此以它为元类的类在加载完后会紧接着执行它指定的元类的 <code>__new__()</code> 和 <code>__init__()</code>，这也是输出中 <a href="https://github.com/Hk4Fun/PyPatterns/blob/master/Creational/Singleton.py" target="_blank" rel="external">3</a> 和 <a href="https://hk4fun.github.io/2018/08/15/%E9%AD%94%E6%B3%95%E6%96%B9%E6%B3%95%E4%B9%8B-new-%E4%B8%8E-init/">4</a> 紧跟着出现在 <a href="https://github.com/Hk4Fun/PyPatterns/blob/master/Creational/Singleton.py" target="_blank" rel="external">1</a> 和 <a href="https://hk4fun.github.io/2018/08/15/%E9%AD%94%E6%B3%95%E6%96%B9%E6%B3%95%E4%B9%8B-new-%E4%B8%8E-init/">2</a> 后面的原因</p>
+<p>类中的顶层代码（方法之外的定义体）在加载时执行，而方法内的代码在调用时才执行，这就是输出中 <a href="https://hk4fun.github.io/2018/08/15/%E9%AD%94%E6%B3%95%E6%96%B9%E6%B3%95%E4%B9%8B-new-%E4%B8%8E-init/">1</a> 和 <a href="https://github.com/python/cpython/blob/3.7/Lib/logging/__init__.py" target="_blank" rel="external">2</a> 最先出现的原因</p>
+<p>但由于元类是类的类，因此以它为元类的类在加载完后会紧接着执行它指定的元类的 <code>__new__()</code> 和 <code>__init__()</code>，这也是输出中 <a href="https://github.com/Hk4Fun/PyPatterns/blob/master/Creational/Singleton.py" target="_blank" rel="external">3</a> 和 <a href="https://hk4fun.github.io/2018/08/15/%E9%AD%94%E6%B3%95%E6%96%B9%E6%B3%95%E4%B9%8B-new-%E4%B8%8E-init/">4</a> 紧跟着出现在 <a href="https://hk4fun.github.io/2018/08/15/%E9%AD%94%E6%B3%95%E6%96%B9%E6%B3%95%E4%B9%8B-new-%E4%B8%8E-init/">1</a> 和 <a href="https://github.com/python/cpython/blob/3.7/Lib/logging/__init__.py" target="_blank" rel="external">2</a> 后面的原因</p>
 <p>至于输出中的 5、6、7，反映的就是我们调用 a = A() 时经过的魔法方法：先是元类 Meta 的 <code>__call__()</code>，然后是类 A 的<code>__new__()</code> 和 <code>__init__()</code></p>
 <p>注意到，在类生成实例时，元类的 <code>__call__()</code> 内部会调用以它为元类的类的 <code>__new__()</code> 和 <code>__init__()</code>，这是根据<a href="https://hk4fun.github.io/2018/08/15/%E9%AD%94%E6%B3%95%E6%96%B9%E6%B3%95%E4%B9%8B-new-%E4%B8%8E-init/">魔法方法之 <code>__new__()</code> 与 <code>__init__()</code></a>中讨论的内容模仿 type 而实现的简单逻辑</p>
 <p>因此我们为了可以控制一个类生成实例的行为，我们可以既可以简单地重载该类的 <code>__new__()</code>，也可以自己实现一个元类并重载它的 <code>__init__()</code> 和 <code>__call__()</code> 或 <code>__new__()</code> 和 <code>__call__()</code>，然后该类只需指明它的元类是这个自定义的元类而不是默认的 type 即可（默认情况下就是<code>type.__call__(A)</code>）:</p>
@@ -783,7 +911,7 @@ call A.__init__() # 能自动调用A.__init__()
         <p><span>本文标题:</span><a href="/2018/08/15/设计模式之单例模式/">设计模式之单例模式</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">Hk4Fun</a></p>
         <p><span>发布时间:</span>2018-08-15, 13:11:09</p>
-        <p><span>最后更新:</span>2018-08-16, 12:29:43</p>
+        <p><span>最后更新:</span>2018-08-17, 21:28:59</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2018/08/15/设计模式之单例模式/" title="设计模式之单例模式">https://hk4fun.github.io/2018/08/15/设计模式之单例模式/</a>
             <span class="copy-path" data-clipboard-text="原文: https://hk4fun.github.io/2018/08/15/设计模式之单例模式/　　作者: Hk4Fun" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
@@ -813,7 +941,7 @@ call A.__init__() # 能自动调用A.__init__()
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#关于单例模式"><span class="toc-number">1.</span> <span class="toc-text">关于单例模式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#定义"><span class="toc-number">1.1.</span> <span class="toc-text">定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#模式角色"><span class="toc-number">1.2.</span> <span class="toc-text">模式角色</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#优点"><span class="toc-number">1.3.</span> <span class="toc-text">优点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#缺点"><span class="toc-number">1.4.</span> <span class="toc-text">缺点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#适用场景"><span class="toc-number">1.5.</span> <span class="toc-text">适用场景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分类"><span class="toc-number">1.6.</span> <span class="toc-text">分类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#线程安全"><span class="toc-number">1.7.</span> <span class="toc-text">线程安全</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#区别"><span class="toc-number">1.8.</span> <span class="toc-text">区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#扩展"><span class="toc-number">1.9.</span> <span class="toc-text">扩展</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实现方式"><span class="toc-number">2.</span> <span class="toc-text">实现方式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-重载-new"><span class="toc-number">2.1.</span> <span class="toc-text">1. 重载 __new__()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-使用装饰器"><span class="toc-number">2.2.</span> <span class="toc-text">2. 使用装饰器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-使用共享属性"><span class="toc-number">2.3.</span> <span class="toc-text">3. 使用共享属性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-使用-metaclass"><span class="toc-number">2.4.</span> <span class="toc-text">4. 使用 metaclass</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-使用-classmethod"><span class="toc-number">2.5.</span> <span class="toc-text">5. 使用 @classmethod</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-使用变量名覆盖"><span class="toc-number">2.6.</span> <span class="toc-text">6.  使用变量名覆盖</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#线程安全-1"><span class="toc-number">2.7.</span> <span class="toc-text">线程安全</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#小结"><span class="toc-number">2.8.</span> <span class="toc-text">小结</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#总感觉还有什么没弄明白"><span class="toc-number">2.9.</span> <span class="toc-text">总感觉还有什么没弄明白</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#更多探索"><span class="toc-number">3.</span> <span class="toc-text">更多探索</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-number">4.</span> <span class="toc-text">参考资料</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#关于单例模式"><span class="toc-number">1.</span> <span class="toc-text">关于单例模式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#定义"><span class="toc-number">1.1.</span> <span class="toc-text">定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#模式角色"><span class="toc-number">1.2.</span> <span class="toc-text">模式角色</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#优点"><span class="toc-number">1.3.</span> <span class="toc-text">优点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#缺点"><span class="toc-number">1.4.</span> <span class="toc-text">缺点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#适用场景"><span class="toc-number">1.5.</span> <span class="toc-text">适用场景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分类"><span class="toc-number">1.6.</span> <span class="toc-text">分类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#线程安全"><span class="toc-number">1.7.</span> <span class="toc-text">线程安全</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#区别"><span class="toc-number">1.8.</span> <span class="toc-text">区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#扩展"><span class="toc-number">1.9.</span> <span class="toc-text">扩展</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实现方式"><span class="toc-number">2.</span> <span class="toc-text">实现方式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-重载-new"><span class="toc-number">2.1.</span> <span class="toc-text">1. 重载 __new__()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-使用装饰器"><span class="toc-number">2.2.</span> <span class="toc-text">2. 使用装饰器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-使用-metaclass"><span class="toc-number">2.3.</span> <span class="toc-text">3. 使用 metaclass</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-使用共享属性"><span class="toc-number">2.4.</span> <span class="toc-text">4. 使用共享属性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-使用-classmethod"><span class="toc-number">2.5.</span> <span class="toc-text">5. 使用 @classmethod</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-使用变量名覆盖"><span class="toc-number">2.6.</span> <span class="toc-text">6.  使用变量名覆盖</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-使用-import-的模块导入"><span class="toc-number">2.7.</span> <span class="toc-text">7. 使用 import 的模块导入</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#线程安全-1"><span class="toc-number">2.8.</span> <span class="toc-text">线程安全</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#总感觉还有什么没弄明白"><span class="toc-number">2.9.</span> <span class="toc-text">总感觉还有什么没弄明白</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#更多探索"><span class="toc-number">3.</span> <span class="toc-text">更多探索</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-number">4.</span> <span class="toc-text">参考资料</span></a></li></ol>
         
     </div>
     <style>

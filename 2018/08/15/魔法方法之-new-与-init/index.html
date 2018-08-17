@@ -23,7 +23,7 @@
 <meta property="og:url" content="https://hk4fun.github.io/2018/08/15/魔法方法之-new-与-init/index.html">
 <meta property="og:site_name" content="Hk4Fun&#39;s Blog">
 <meta property="og:description" content="当我们实例化某个类时，如：a = A()， Python 先调用 __new__(cls[, ...]) 来生成实例，然后传递给 __init__(self[, ...]) 的 self，从而在 __init__(self[, ...]) 中完成初始化。 因此 __new__() 负责创建实例对象，而 __init__() 负责初始化该实例对象： class A:     def __new__(">
-<meta property="og:updated_time" content="2018-08-15T16:40:15.469Z">
+<meta property="og:updated_time" content="2018-08-17T13:28:54.534Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="魔法方法之 __new__() 与 __init__()">
 <meta name="twitter:description" content="当我们实例化某个类时，如：a = A()， Python 先调用 __new__(cls[, ...]) 来生成实例，然后传递给 __init__(self[, ...]) 的 self，从而在 __init__(self[, ...]) 中完成初始化。 因此 __new__() 负责创建实例对象，而 __init__() 负责初始化该实例对象： class A:     def __new__(">
@@ -406,58 +406,7 @@ print(type(a))
 <blockquote>
 <p>If <code>__new__()</code> does not return an instance of cls, then the new instance’s <code>__init__()</code> method will not be invoked.</p>
 </blockquote>
-<p>换句话说，如果 <code>__new__()</code> 返回的是本类的实例对象，那该实例的 <code>__init__()</code> 方法总是会被自动调用，这一点在用 <code>__new__()</code> 方法实现单例模式时要特别注意：</p>
-<pre><code class="python">class Singleton:
-    _instance = None
-
-    def __new__(cls, *args, **kw):
-        if cls._instance is None:
-            cls._instance = super().__new__(cls, *args, **kw)
-        return cls._instance
-
-    def __init__(self):
-        print(&#39;call __init__&#39;)
-
-print(Singleton() is Singleton())
-</code></pre>
-<p>输出：</p>
-<pre><code>call __init__
-call __init__
-True
-</code></pre><p>注意到 <code>__init__()</code> 方法被调用了两次，这意味着每次实例化时虽然返回的是同一个实例对象，但初始化创建的属性会被重置和改变（传入不同的初始化参数），这往往不是我们想看到的。</p>
-<p>我们的要求更高了，返回第一次创建的实例还不够，我们还要求实例内部的环境变量也不能改变和重置，这就要求单例模式下 <code>__init__()</code> 只会被调用一次，即只在第一次创建实例被调用，如何做到呢？</p>
-<p>使用装饰器实现：</p>
-<pre><code class="python">def singleton(cls):
-    instances = {}  # 使用一个字典来存放不同类对应的实例，因为一个装饰器可以用来装饰多个类
-    def wrapper(*args, **kwargs):
-        if cls not in instances:
-            instances[cls] = cls(*args, **kwargs)
-        return instances[cls]
-    return wrapper
-
-@singleton
-class A:
-    def __init__(self):
-        print(&#39;call A.__init__&#39;)
-
-@singleton
-class B:
-    def __init__(self):
-        print(&#39;call B.__init__&#39;)
-
-print(A() is B())
-print(A() is A()) 
-print(B() is B())
-</code></pre>
-<p>输出：</p>
-<pre><code>call A.__init__
-call B.__init__
-False
-True
-True
-</code></pre><p>可以看到，类 A 和 B 各自被调用了三次，但只有第一次才调用了各自的 <code>__init__()</code>，且装饰器 singleton 对不同的类生成不同的实例，对相同的类生成相同的实例。</p>
-<hr>
-<p>接着看官方文档：</p>
+<p>换句话说，如果 <code>__new__()</code> 返回的是本类的实例对象，那该实例的 <code>__init__()</code> 方法总是会被自动调用，这一点在用 <code>__new__()</code> 方法实现单例模式时要特别注意（<a href="https://hk4fun.github.io/2018/08/15/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/">设计模式之单例模式</a>）</p>
 <blockquote>
 <p><code>__new__()</code> is intended mainly to allow subclasses of immutable types (like int, str, or tuple) to customize instance creation. It is also commonly overridden in custom metaclasses in order to customize class creation.</p>
 </blockquote>
@@ -593,8 +542,7 @@ a = A()
 ----&gt; 4 a = A()
 
 TypeError: __init__() should return None, not &#39;int&#39;
-</code></pre><p>最后，关于使用 Python 实现单例模式上面只提到了两种实现方式，且没有深入讨论，可以看看我的另一篇文章：<a href="https://hk4fun.github.io/2018/08/15/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/">设计模式之单例模式</a></p>
-<h2 id="官方文档链接"><a href="#官方文档链接" class="headerlink" title="官方文档链接"></a>官方文档链接</h2><p><a href="https://docs.python.org/3/reference/datamodel.html#object.__new__" target="_blank" rel="external">https://docs.python.org/3/reference/datamodel.html#object.__new__</a></p>
+</code></pre><h2 id="官方文档链接"><a href="#官方文档链接" class="headerlink" title="官方文档链接"></a>官方文档链接</h2><p><a href="https://docs.python.org/3/reference/datamodel.html#object.__new__" target="_blank" rel="external">https://docs.python.org/3/reference/datamodel.html#object.__new__</a></p>
 <p><a href="https://docs.python.org/3/reference/datamodel.html#object.__init__" target="_blank" rel="external">https://docs.python.org/3/reference/datamodel.html#object.__init__</a></p>
 
       
@@ -607,7 +555,7 @@ TypeError: __init__() should return None, not &#39;int&#39;
         <p><span>本文标题:</span><a href="/2018/08/15/魔法方法之-new-与-init/">魔法方法之 __new__() 与 __init__()</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">Hk4Fun</a></p>
         <p><span>发布时间:</span>2018-08-15, 12:28:03</p>
-        <p><span>最后更新:</span>2018-08-16, 00:40:15</p>
+        <p><span>最后更新:</span>2018-08-17, 21:28:54</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2018/08/15/魔法方法之-new-与-init/" title="魔法方法之 __new__() 与 __init__()">https://hk4fun.github.io/2018/08/15/魔法方法之-new-与-init/</a>
             <span class="copy-path" data-clipboard-text="原文: https://hk4fun.github.io/2018/08/15/魔法方法之-new-与-init/　　作者: Hk4Fun" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
