@@ -333,7 +333,7 @@ TypeError: __init__() takes 1 positional argument but 4 were given
 <p>这种实现方式属于饿汉模式，是线程安全的，并且import本身的实现机制也是线程安全的</p>
 <p>其典型的例子就是标准库中的logging模块，它在被导入时会生成一个全局的 Logger.manager 单例作为 root，</p>
 <p>然后每次通过 logging.getLogger(name) 调用时总是通过 root.loggerDict 获取同一个 Logger，通过<a href="https://github.com/python/cpython/blob/3.7/Lib/logging/__init__.py" target="_blank" rel="external">查看源码</a>可以了解更多实现细节</p>
-<h3 id="线程安全-1"><a href="#线程安全-1" class="headerlink" title="线程安全"></a>线程安全</h3><p>到目前为止一共讨论了七种实现单例模式的方法，使用元类的实现方式看起来不错，但除了<code>变量名覆盖</code>和<code>import模块导入</code>，其他五种实现方式都没有考虑线程安全的问题</p>
+<h3 id="8-线程安全"><a href="#8-线程安全" class="headerlink" title="8. 线程安全"></a>8. 线程安全</h3><p>到目前为止一共讨论了七种实现单例模式的方法，使用元类的实现方式看起来不错，但除了<code>变量名覆盖</code>和<code>import模块导入</code>，其他五种实现方式都没有考虑线程安全的问题</p>
 <p>因此这里以重载 <code>__new__()</code> 为例，加入Lock来实现线程安全的单例模式，这里实现一个装饰器 synchronized</p>
 <pre><code class="python">import threading
 
@@ -363,7 +363,7 @@ class SyncSingleton:
     def __new__(cls, *args, **kwargs):
         with cls._lock:
             if cls not in cls._instances:
-                cls._instances[cls] = super(Singleton, cls).__new__(cls, *args, **kwargs)
+                cls._instances[cls] = super().__new__(cls, *args, **kwargs)
         return cls._instances[cls]
 </code></pre>
 <p>注意到线程每次都要阻塞在 <code>with cls._lock</code> ，其实在第一个实例生成时cls的实例就已经在<code>_instances</code>字典中了</p>
@@ -377,11 +377,11 @@ class Singleton:
         if cls not in cls._instances: # 外层提高性能
             with cls._lock:
                 if cls not in cls._instances: # 内层是核心逻辑
-                    cls._instances[cls] = super(Singleton, cls).__new__(cls, *args, **kwargs)
+                    cls._instances[cls] = super().__new__(cls, *args, **kwargs)
         return cls._instances[cls]
 </code></pre>
 <p>以上完整的代码和多线程测试代码见<a href="https://github.com/Hk4Fun/PyPatterns/blob/master/Creational/Singleton.py" target="_blank" rel="external">Github</a></p>
-<h3 id="总感觉还有什么没弄明白"><a href="#总感觉还有什么没弄明白" class="headerlink" title="总感觉还有什么没弄明白"></a>总感觉还有什么没弄明白</h3><p>是的，往往有时候我们看完一篇技术文章就处于“知其然而不知其所以然”的状态，看似懂了，明白如何用了，但其实背后更深层的原理我们并不了解。如果意识到该问题所在，自然就会去深挖，怕的是走马观花，不能静下心来多问自己几个为什么。</p>
+<h3 id="9-总感觉还有什么没弄明白"><a href="#9-总感觉还有什么没弄明白" class="headerlink" title="9. 总感觉还有什么没弄明白"></a>9. 总感觉还有什么没弄明白</h3><p>是的，往往有时候我们看完一篇技术文章就处于“知其然而不知其所以然”的状态，看似懂了，明白如何用了，但其实背后更深层的原理我们并不了解。如果意识到该问题所在，自然就会去深挖，怕的是走马观花，不能静下心来多问自己几个为什么。</p>
 <p>为什么重载 <code>__new__()</code> 就能实现单例？</p>
 <p>如果在此之前你已经仔细阅读过我的这篇文章：<a href="https://hk4fun.github.io/2018/08/15/%E9%AD%94%E6%B3%95%E6%96%B9%E6%B3%95%E4%B9%8B-new-%E4%B8%8E-init/">魔法方法之 <code>__new__()</code> 与 <code>__init__()</code></a>就不会问这样的问题了。</p>
 <p>为什么在 metaclass 中重载元类的 <code>__init__()</code> 和 <code>__call__()</code> （或 <code>__new__()</code> 和 <code>__call__()</code>）就能实现单例？</p>
