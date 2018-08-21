@@ -58,27 +58,6 @@
     </url>
 
     <url>
-        <loc>https://hk4fun.github.io/tags/%E5%89%91%E6%8C%87offer/</loc>
-        <lastmod>2018-07-19T18:51:44.726Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://hk4fun.github.io/tags/%E7%AE%97%E6%B3%95/</loc>
-        <lastmod>2018-07-19T18:51:44.726Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://hk4fun.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</loc>
-        <lastmod>2018-07-19T18:51:44.726Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>https://hk4fun.github.io/tags/corotine/</loc>
         <lastmod>2018-07-30T16:48:03.652Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -109,6 +88,27 @@
     <url>
         <loc>https://hk4fun.github.io/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</loc>
         <lastmod>2018-08-17T13:42:47.798Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://hk4fun.github.io/tags/%E5%89%91%E6%8C%87offer/</loc>
+        <lastmod>2018-08-21T11:04:12.069Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://hk4fun.github.io/tags/%E7%AE%97%E6%B3%95/</loc>
+        <lastmod>2018-08-21T11:04:12.069Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://hk4fun.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</loc>
+        <lastmod>2018-08-21T11:04:12.069Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>

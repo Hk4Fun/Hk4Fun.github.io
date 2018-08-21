@@ -26,7 +26,7 @@
 <meta property="og:image" content="http://ox186n2j0.bkt.clouddn.com/1532004575597.jpg">
 <meta property="og:image" content="http://ox186n2j0.bkt.clouddn.com/1532009666811.jpg">
 <meta property="og:image" content="http://ox186n2j0.bkt.clouddn.com/1532023500895.jpg">
-<meta property="og:updated_time" content="2018-07-19T18:51:44.726Z">
+<meta property="og:updated_time" content="2018-08-21T11:04:12.069Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="剑指offer题解（python实现）">
 <meta name="twitter:description" content="每个题目标题链接到 github，可以查看其他的解题思路、测试用例以及拓展题目，这里只贴上书中题目的最优解法和代码。另外，这里参考的是剑指offer第一版的题目顺序，补充部分添加的是剑指offer第二版多出来的几道题目。">
@@ -1546,40 +1546,23 @@ class Solution:
         return ch
 </code></pre>
 <h2 id="链表中环的入口结点"><a href="#链表中环的入口结点" class="headerlink" title="链表中环的入口结点"></a><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/56_%E9%93%BE%E8%A1%A8%E4%B8%AD%E7%8E%AF%E7%9A%84%E5%85%A5%E5%8F%A3%E7%BB%93%E7%82%B9.py" target="_blank" rel="external">链表中环的入口结点</a></h2><h3 id="题目描述-57"><a href="#题目描述-57" class="headerlink" title="题目描述"></a>题目描述</h3><p>一个链表中包含环，请找出该链表的环的入口结点。</p>
-<h3 id="最优题解-57"><a href="#最优题解-57" class="headerlink" title="最优题解"></a>最优题解</h3><p>先获取环的长度n，然后在头部设两个指针p1，p2，让p1先走n步，然后两个指针以相同速度向前移动，<br>当二者首次相遇时，相遇点即为环的入口点。那么如何获取环的长度？这在15_5中也有相应的思路：<br>在头部设两个指针，快指针fast每次走2步，慢指针slow每次走1步，则两者一定在环中相遇。<br>相遇后fast不动，让slow接着走，一边走一边计步数，则当它再次来到相遇点（fast的位置）时，<br>所走过的步数即为环的长度。记得在获取环的长度之前先判断是否含环：slow和fast能相遇说明含环</p>
+<h3 id="最优题解-57"><a href="#最优题解-57" class="headerlink" title="最优题解"></a>最优题解</h3><p>先判断是否含环，可以用快慢指针实现，慢指针一次走一步，快指针一次走两步，当两个指针相遇时说明链表含环。</p>
+<p>然后把两个指针中的一个指向链表头结点，另一个保持在相遇点，接着两个指针以相同的速度（一次一步）遍历，直到二者再次相遇，该相遇点就是入口，理论证明见：<a href="https://github.com/Hk4Fun/algorithm_offer/blob/0d2880630af2dd75213f11c852b0a0e785efeadd/target_offer/15_4_%E5%90%AB%E7%8E%AF%E9%93%BE%E8%A1%A8%E7%9A%84%E5%85%A5%E5%8F%A3%E7%82%B9.py" target="_blank" rel="external">Github</a></p>
 <h3 id="代码-57"><a href="#代码-57" class="headerlink" title="代码"></a>代码</h3><pre><code class="python">class ListNode:
     def __init__(self, x):
         self.val = x
         self.next = None
 
-class Solution:
-    def EntryNodeOfLoop(self, pHead):
-        def isLoop(head):
-            slow = fast = head
-            while fast.next and fast.next.next:
-                slow = slow.next
-                fast = fast.next.next
-                if slow is fast:
-                    return slow
-            return False
-
-        def loopLen(meetnode):
-            cur, length = meetnode, 1
-            while cur.next != meetnode:
-                cur = cur.next
-                length += 1
-            return length
-
-        if not pHead: return
-        meetnode = isLoop(pHead)
-        if not meetnode: return 
-        length = loopLen(meetnode)
-        cur1 = cur2 = pHead
-        for _ in xrange(length):
-            cur1 = cur1.next
-        while cur1 is not cur2:
-            cur1, cur2 = cur1.next, cur2.next
-        return cur1
+    def EntryNodeOfLoop(self, head):
+        slow = fast = head
+        while fast and fast.next:
+            fast, slow = fast.next.next, slow.next
+            if slow is fast:
+                fast = head
+                while fast is not slow:
+                    fast, slow = fast.next, slow.next  # 这里fast和slow的速度一样
+                return fast
+        return None  # 退出循环说明遇到了None，说明链表不含环
 </code></pre>
 <h2 id="删除链表中重复的结点"><a href="#删除链表中重复的结点" class="headerlink" title="删除链表中重复的结点"></a><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/57_%E5%88%A0%E9%99%A4%E9%93%BE%E8%A1%A8%E4%B8%AD%E9%87%8D%E5%A4%8D%E7%9A%84%E7%BB%93%E7%82%B9.py" target="_blank" rel="external">删除链表中重复的结点</a></h2><h3 id="题目描述-58"><a href="#题目描述-58" class="headerlink" title="题目描述"></a>题目描述</h3><p>在一个排序的链表中，存在重复的结点，请删除该链表中重复的结点，重复的结点不保留，返回链表头指针。<br>例如，链表1-&gt;2-&gt;3-&gt;3-&gt;4-&gt;4-&gt;5 处理后为 1-&gt;2-&gt;5</p>
 <h3 id="最优题解-58"><a href="#最优题解-58" class="headerlink" title="最优题解"></a>最优题解</h3><p>双指针。<br>pre和cur，cur负责在前面‘探路’，遇到重复结点就一直往后删除，<br>确认是唯一结点就让pre后移，这样pre其实一直指向唯一结点的尾部。<br>注意头结点可能和后面的结点重复，所以头结点可能被删除<br>为了减少代码的理解复杂度，引入伪结点dummy</p>
@@ -2018,7 +2001,7 @@ class Solution:
         <p><span>本文标题:</span><a href="/2018/07/19/剑指offer题解（python实现）/">剑指offer题解（python实现）</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">Hk4Fun</a></p>
         <p><span>发布时间:</span>2018-07-19, 16:30:29</p>
-        <p><span>最后更新:</span>2018-07-20, 02:51:44</p>
+        <p><span>最后更新:</span>2018-08-21, 19:04:12</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2018/07/19/剑指offer题解（python实现）/" title="剑指offer题解（python实现）">https://hk4fun.github.io/2018/07/19/剑指offer题解（python实现）/</a>
             <span class="copy-path" data-clipboard-text="原文: https://hk4fun.github.io/2018/07/19/剑指offer题解（python实现）/　　作者: Hk4Fun" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
