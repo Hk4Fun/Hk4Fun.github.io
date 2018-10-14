@@ -66,9 +66,12 @@ livere:
 
 更新：不蒜子的域名更新了，需要在 MyBlog\themes\yelee\layout\_partial\after-footer.ejs 
 中将不蒜子的域名由
+
 `<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
 </script>`
+
 改为
+
 `<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
 </script>`
 
