@@ -1173,7 +1173,7 @@ AttributeError: &#39;T&#39; object has no attribute &#39;__bases__&#39;
 <p><img src="http://ox186n2j0.bkt.clouddn.com/1532964433271.jpg" alt="Python 创建协程"></p>
 <p>它既不是 stackless（在同一C栈上创建新的C帧来创建新的协程栈），也没实现在C栈间转跳（创建新的C栈来创建新的协程栈）。</p>
 <p>因此其只能在同一个C栈上创建新的C帧来创建新的协程帧，这些协程帧复用了指向上一帧的指针来表示指向自己的父协程帧，因此 Python 中创建协程就相当于创建函数，但其 yield 时只消除对应的C帧而保留协程帧。</p>
-<p>因此 python 中的协程无法一次性跳回最外层的应用帧（首次发送send的帧），只能一层一层地往外（下） yield，并且也只能一层一层地往内（上）send，体现在代码上就是要多一层 for 循环来帮助内外连通（想想 for 的实现机制，for 本身在不断 send 和 捕获最后的 StopIteration，至于   yield 需要自己在 for 的代码块中写）。</p>
+<p>因此 python 中的协程无法一次性跳回最外层的应用帧（首次发送send的帧），只能一层一层地往外（下） yield，并且也只能一层一层地往内（上）send，体现在代码上就是要多一层 for 循环来帮助内外连通（想想 for 的实现机制，for 本身在不断 next 和 捕获最后的 StopIteration，至于   yield 需要自己在 for 的代码块中写）。</p>
 <p>利用 yield from 可以简写为：</p>
 <pre><code class="python">def flatten(obj):
     if isinstance(obj, list):
