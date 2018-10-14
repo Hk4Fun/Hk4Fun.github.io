@@ -1182,7 +1182,7 @@ AttributeError: &#39;T&#39; object has no attribute &#39;__bases__&#39;
     else:
         yield obj
 </code></pre>
-<p>引入 yield from 的目的就是为了屏蔽那个多出来一层的让人难以理解的for循环，同时又能实现内外连通。yield from 更加详细的实现机制见《流畅的Python》第16章。</p>
+<p>引入 yield from 的目的就是为了屏蔽那个多出来一层的让人难以理解的for循环，同时又能实现内外连通。yield from 的实现机制可参考《流畅的Python》第16章，更加详细的描述见 <a href="https://www.python.org/dev/peps/pep-0380/" target="_blank" rel="external">PEP 380 – Syntax for Delegating to a Subgenerator</a></p>
 <p>最后，可以使用 <a href="http://www.pythontutor.com/visualize.html#mode=edit" target="_blank" rel="external">http://www.pythontutor.com/visualize.html#mode=edit</a> 来可视化整个执行流</p>
 ]]></content>
       
