@@ -2,9 +2,9 @@
 
 部署平台：[GitHub Pages][1]
 
-框架：[hexo][2]
+框架：[Hexo][2]
 
-主题：[yelee][3] [使用说明][4]（fork 于 [yilia][5]）
+主题：[Yelee][3] [使用说明][4]（fork 于 [Yilia][5]）
 
 分享：[AddThis][6]
 
@@ -14,7 +14,7 @@
 
 页面统计：[不蒜子][9]
 
-评论系统：[来必力（livere）][10]
+评论系统：[来必力（Livere）][10]
 
 写作工具：[小书匠][11]
 
@@ -64,6 +64,13 @@ livere:
 
 最后向Hexo作者tommy致敬！（附上[Hexo起源之地][12]）
 
+更新：不蒜子的域名更新了，需要在 MyBlog\themes\yelee\layout\_partial\after-footer.ejs 
+中将不蒜子的域名由
+`<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>`
+改为
+`<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>`
 
   [1]: https://pages.github.com/
   [2]: https://hexo.io/
