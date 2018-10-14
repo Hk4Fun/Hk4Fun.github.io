@@ -25,7 +25,7 @@
 <meta property="og:description" content="每个题目标题链接到 github，可以查看其他的解题思路、测试用例以及拓展题目，这里只贴上书中题目的最优解法和代码。另外，这里参考的是剑指offer第一版的题目顺序，补充部分添加的是剑指offer第二版多出来的几道题目。">
 <meta property="og:image" content="http://ox186n2j0.bkt.clouddn.com/1532009666811.jpg">
 <meta property="og:image" content="http://ox186n2j0.bkt.clouddn.com/1532023500895.jpg">
-<meta property="og:updated_time" content="2018-10-10T10:01:18.631Z">
+<meta property="og:updated_time" content="2018-10-11T11:22:13.571Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="剑指offer题解（Python实现）">
 <meta name="twitter:description" content="每个题目标题链接到 github，可以查看其他的解题思路、测试用例以及拓展题目，这里只贴上书中题目的最优解法和代码。另外，这里参考的是剑指offer第一版的题目顺序，补充部分添加的是剑指offer第二版多出来的几道题目。">
@@ -159,10 +159,10 @@
                 <div class="tips-box hide">
                     <div class="tips-arrow"></div>
                     <ul class="tips-inner">
-                        <li>菜单</li>
-                        <li>标签</li>
+                        <li>菜單</li>
+                        <li>標籤</li>
                         
-                        <li>友情链接</li>
+                        <li>友情鏈接</li>
                         
                         
                     </ul>
@@ -271,7 +271,7 @@
             </nav>
         </header>                
     </div>
-    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+    <link class="menu-list" tags="標籤" friends="友情鏈接" about="關於我"/>
 </nav>
       <div class="body-wrap"><article id="post-剑指offer题解（python实现）" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -341,11 +341,11 @@
 <h3 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h3><pre><code>class Solution:
     def replaceSpace(self, s):
         if s is None: return &#39;&#39;
-        spaceCount = sum(1 for ch in s if ch == &#39; &#39;)
+        spaceCount = sum(ch == &#39; &#39; for ch in s)
         newIdx = len(s) + spaceCount * 2 - 1
         oldIdx = len(s) - 1
         newStr = list(s) + [&#39;&#39;] * (spaceCount * 2)
-        while oldIdx &gt;= 0 and oldIdx &lt; newIdx:
+        while 0 &lt;= oldIdx &lt; newIdx:
             if newStr[oldIdx] == &#39; &#39;:
                 newStr[newIdx - 2: newIdx + 1] = &#39;%20&#39;
                 newIdx -= 3
@@ -365,14 +365,14 @@
 class Solution:
     # 返回从尾部到头部的列表值序列
     def ListReverse(self, listNode):
-        def recursive(listNode):
-            if listNode:
-                recursive(listNode.next)
-                l.append(listNode.val)
+        def recursive(node):
+            if node:
+                recursive(node.next)
+                res.append(node.val)
 
-        l = []
+        res = []
         recursive(listNode)
-        return l
+        return res
 </code></pre><h2 id="重建二叉树"><a href="#重建二叉树" class="headerlink" title="重建二叉树"></a><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/6_1_%E9%87%8D%E5%BB%BA%E4%BA%8C%E5%8F%89%E6%A0%91%EF%BC%88%E5%89%8D%E5%BA%8F%E4%B8%AD%E5%BA%8F%EF%BC%89.py" target="_blank" rel="external">重建二叉树</a></h2><h3 id="题目描述-3"><a href="#题目描述-3" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入某二叉树的前序遍历和中序遍历的结果，请重建出该二叉树。<br>假设输入的前序遍历和中序遍历的结果中都不含重复的数字。</p>
 <h3 id="最优题解-3"><a href="#最优题解-3" class="headerlink" title="最优题解"></a>最优题解</h3><p>前序的第一个元素是根结点的值，在中序中找到该值，<br>中序中该值的左边的元素是根结点的左子树，右边是右子树，然后递归的处理左边和右边</p>
 <h3 id="代码-3"><a href="#代码-3" class="headerlink" title="代码"></a>代码</h3><pre><code>class TreeNode:
@@ -384,12 +384,15 @@ class Solution:
 class Solution:
     # 返回构造的TreeNode根节点
     def reConstruct(self, pre, tin):
-        if not pre or not tin: return
-        idx = tin.index(pre[0])
-        root = TreeNode(pre[0])
-        root.left = self.reConstruct(pre[1:idx+1], tin[:idx])
-        root.right = self.reConstruct(pre[idx+1:], tin[idx+1:])
-        return root
+        def build(preLeft, preRight, inLeft, inRight):
+            if preLeft &gt; preRight or inLeft &gt; inRight: return
+            idx = in_order.index(pre_order[preLeft])
+            root = TreeNode(pre_order[preLeft])
+            root.left = build(preLeft + 1, preLeft + idx - inLeft, inLeft, idx - 1)
+            root.right = build(preLeft + idx - inLeft + 1, preRight, idx + 1, inRight)
+            return root
+
+        return build(0, len(pre_order) - 1, 0, len(in_order) - 1)
 </code></pre><h3 id="举一反三"><a href="#举一反三" class="headerlink" title="举一反三"></a>举一反三</h3><ul>
 <li><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/6_2_%E9%87%8D%E5%BB%BA%E4%BA%8C%E5%8F%89%E6%A0%91%EF%BC%88%E4%B8%AD%E5%BA%8F%E5%90%8E%E5%BA%8F%EF%BC%89.py" target="_blank" rel="external">重建二叉树（中序后序）</a></li>
 </ul>
@@ -590,12 +593,11 @@ class Solution:
 <h3 id="最优题解-12"><a href="#最优题解-12" class="headerlink" title="最优题解"></a>最优题解</h3><p>双指针。<br>定义两个指针，第一个先从头开始走k步，第二个保持不动；从第k步开始，第二个指针也开始从头遍历。<br>由于两个指针的距离保持在k，所以当第一个指针遍历完整个链表时，第二个指针正好来到倒数第k个结点</p>
 <h3 id="代码-12"><a href="#代码-12" class="headerlink" title="代码"></a>代码</h3><pre><code class="python">class Solution:
     def FindKthToTail(self, head, k):
-        fast = head
+        fast = slow = head
         while fast and k:
             fast = fast.next
             k -= 1
         if not fast and k: return # k 大于链表长度
-        slow = head
         while fast:
             fast = fast.next
             slow = slow.next
@@ -758,14 +760,13 @@ class Solution:
     def IsPopOrder(self, pushV, popV):
         if not pushV or not popV or len(pushV) != len(popV):
             return False
-        stack = []
-        i = 0
+        stack, i = [], 0
         for num in pushV:
             stack.append(num)
             while stack and stack[-1] == popV[i]:
                 i += 1
                 stack.pop()
-        return i == len(popV)
+        return stack == []
 </code></pre>
 <h2 id="从上往下打印二叉树"><a href="#从上往下打印二叉树" class="headerlink" title="从上往下打印二叉树"></a><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/23_%E4%BB%8E%E4%B8%8A%E5%BE%80%E4%B8%8B%E6%89%93%E5%8D%B0%E4%BA%8C%E5%8F%89%E6%A0%91.py" target="_blank" rel="external">从上往下打印二叉树</a></h2><h3 id="题目描述-20"><a href="#题目描述-20" class="headerlink" title="题目描述"></a>题目描述</h3><p>从上往下打印出二叉树的每个节点，同层节点从左至右打印。</p>
 <h3 id="最优题解-20"><a href="#最优题解-20" class="headerlink" title="最优题解"></a>最优题解</h3><p>相当于宽度优先搜索（BFS），用队列来实现：<br>每次从头部取出一个结点时，如果该结点有子结点，<br>就把该结点的子结点从左到右依次放入队列末尾，<br>重复前面的步骤，直到队列为空</p>
@@ -805,8 +806,8 @@ class Solution:
             for j in range(i, len(seq) - 1):
                 if seq[j] &lt; seq[-1]: return False
             return verify(seq[:i]) and verify(seq[i:-1])
-        if not seq: return False
-        return verify(seq)
+        if not sequence: return False
+        return verify(sequence)
 </code></pre>
 <h3 id="举一反三-6"><a href="#举一反三-6" class="headerlink" title="举一反三"></a>举一反三</h3><p><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/24_1_%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E7%9A%84%E5%89%8D%E5%BA%8F%E9%81%8D%E5%8E%86%E5%BA%8F%E5%88%97.py" target="_blank" rel="external">二叉搜索树的前序遍历序列</a></p>
 <h2 id="二叉树中和为某一值的路径"><a href="#二叉树中和为某一值的路径" class="headerlink" title="二叉树中和为某一值的路径"></a><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/25_%E4%BA%8C%E5%8F%89%E6%A0%91%E4%B8%AD%E5%92%8C%E4%B8%BA%E6%9F%90%E4%B8%80%E5%80%BC%E7%9A%84%E8%B7%AF%E5%BE%84.py" target="_blank" rel="external">二叉树中和为某一值的路径</a></h2><h3 id="题目描述-22"><a href="#题目描述-22" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入一颗二叉树和一个整数，输出二叉树中结点值的和为输入整数的所有路径。<br>路径定义为从树的根结点开始往下一直到叶结点所经过的结点形成一条路径。</p>
@@ -846,36 +847,33 @@ class Solution:
         self.random = None
 
     def Clone(self, pHead):
-        def clone(pHead):
-            cur = pHead
-            while cur:
-                clonenode = RandomListNode(cur.label)
-                clonenode.next = cur.next
-                cur.next = clonenode
-                cur = clonenode.next
+        def clone(head):
+            while head:
+                cloneNode = RandomListNode(head.label)
+                cloneNode.next = head.next
+                head.next = cloneNode
+                head = cloneNode.next
 
-        def connect(pHead):
-            cur = pHead
-            clone = pHead.next
-            while cur:
-                clone.random = cur.random.next if cur.random else None
-                cur = clone.next
-                clone = cur.next if cur else None
+        def connect(head):
+            clone = head.next
+            while head:
+                clone.random = head.random.next if head.random else None
+                head = clone.next
+                clone = head.next if head else None
 
-        def reconnect(pHead):
-            cur = pHead
-            cloneHead = clone = pHead.next
-            while cur:
-                cur.next = clone.next
-                cur = cur.next
-                clone.next = cur.next if cur else None
+        def split(head):
+            clone = cloneHead = head.next
+            while head:
+                head.next = clone.next
+                head = head.next
+                clone.next = head.next if head else None
                 clone = clone.next
             return cloneHead
 
-        if not pHead: return 
+        if pHead is None: return
         clone(pHead)
         connect(pHead)
-        return reconnect(pHead)
+        return split(pHead)
 </code></pre>
 <h2 id="二叉搜索树与双向链表"><a href="#二叉搜索树与双向链表" class="headerlink" title="二叉搜索树与双向链表"></a><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/27_%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E4%B8%8E%E5%8F%8C%E5%90%91%E9%93%BE%E8%A1%A8.py" target="_blank" rel="external">二叉搜索树与双向链表</a></h2><h3 id="题目描述-24"><a href="#题目描述-24" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入一棵二叉搜索树，将该二叉搜索树转换成一个排序的双向链表。<br>要求不能创建任何新的结点，只能调整树中结点指针的指向。</p>
 <h3 id="最优题解-24"><a href="#最优题解-24" class="headerlink" title="最优题解"></a>最优题解</h3><p>二叉搜索树与双向链表的每个结点均含有两个指针，数据结构类似，可以实现相互转换</p>
@@ -949,15 +947,15 @@ class Solution:
 <p>基于Partition的算法, 只有当我们可以修改输入的数组时可用。<br>利用Partition找到第(k-1)小的数(从0开始)，则数组左边的k个数字就是最小的k个数字（这k个数字不一定是排序的）</p>
 <h3 id="代码-27"><a href="#代码-27" class="headerlink" title="代码"></a>代码</h3><pre><code class="python">class Solution:
     def GetLeastNumbers(self, tinput, k):
-        def partition(l, r):
-            last = l - 1 # 分界线
-            for i in range(l, r):
-                if tinput[i] &lt; tinput[r]:
-                    last += 1
-                    tinput[i], tinput[last] = tinput[last], tinput[i]
-            last += 1
-            tinput[r], tinput[last] = tinput[last], tinput[r]
-            return last
+        def partition(l, r):  # 基于快排的partition
+            pivot = tinput[l] # 首元素为枢轴标杆
+            while l &lt; r:
+                while l &lt; r and tinput[r] &gt;= pivot: r -= 1
+                tinput[l] = tinput[r]
+                while l &lt; r and tinput[l] &lt;= pivot: l += 1
+                tinput[r] = tinput[l]
+            tinput[l] = pivot
+            return l
 
         if not tinput or k &lt;= 0 or len(tinput) &lt; k: return []
         l, r = 0, len(tinput) - 1
@@ -1042,10 +1040,10 @@ class Solution:
 <h3 id="代码-32"><a href="#代码-32" class="headerlink" title="代码"></a>代码</h3><pre><code class="python">from collections import OrderedDict
 class Solution:
     def FirstNotRepeatingChar(self, s):
-        hashTable = OrderedDict()
+        table = OrderedDict()
         for ch in s:
-            hashTable[ch] = hashTable.setdefault(ch, 0) + 1
-        for ch, v in hashTable.items():
+            table[ch] = table.setdefault(ch, 0) + 1
+        for ch, v in table.items():
             if v == 1:
                 return s.index(ch)
         return -1
@@ -1076,12 +1074,11 @@ class Solution:
                     copy[copyIdx] = data[i]
                     count += j - m  # 逆序对的数目等于j之前的元素个数(包括j指向的元素)
                     i -= 1
-                    copyIdx -= 1
                 else:
                     copy[copyIdx] = data[j]
                     j -= 1
-                    copyIdx -= 1
-            # 将剩下的移到辅助数组里
+                copyIdx -= 1
+            # 将剩下复制到辅助数组里
             while i &gt;= l:
                 copy[copyIdx] = data[i]
                 i -= 1
@@ -1093,8 +1090,7 @@ class Solution:
             return left + right + count # 总逆序对个数 = 左区域 + 右区域 + 合并
 
         if not data: return 0
-        copy = data[:]
-        return merge(data, copy, 0, len(data) - 1)
+        return merge(data, data[:], 0, len(data) - 1)
 </code></pre>
 <h2 id="两个链表的第一个公共结点"><a href="#两个链表的第一个公共结点" class="headerlink" title="两个链表的第一个公共结点"></a><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/37_%E4%B8%A4%E4%B8%AA%E9%93%BE%E8%A1%A8%E7%9A%84%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%85%AC%E5%85%B1%E7%BB%93%E7%82%B9.py" target="_blank" rel="external">两个链表的第一个公共结点</a></h2><h3 id="题目描述-34"><a href="#题目描述-34" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入两个单向无环链表，找出它们的第一个公共结点。</p>
 <h3 id="最优题解-34"><a href="#最优题解-34" class="headerlink" title="最优题解"></a>最优题解</h3><p>时间复杂度O(m+n)，空间复杂度O(1)。</p>
@@ -1120,7 +1116,7 @@ class Solution:
 <h3 id="最优题解-35"><a href="#最优题解-35" class="headerlink" title="最优题解"></a>最优题解</h3><p>既然是排好序的，那么自然想到二分法了。总体思路是找到第一个k的位置，再找到最后一个k的位置，相减加一。<br>先查找第一个k的位置：<br>如果中间的数字比k大，那么k只可能出现在数组的前半段，下一轮就只在数组的前半段查找就可以了。<br>如果中间的数字比k小，那么k只可能出现在数组的后半段，下一轮就只在数组的后半段查找就可以了。<br>关键是如果中间的数字等于k呢？我们先判断该数字是不是第一个k。<br>如果中间数字前面不是k，则该中间数字刚好就是第一个k；<br>如果中间数字前面也是k，则第一个k肯定在数组前半段，下一轮我们仍然需要在数组前半段查找。O(logn)</p>
 <h3 id="代码-35"><a href="#代码-35" class="headerlink" title="代码"></a>代码</h3><pre><code class="python">class Solution:
     def GetNumberOfK(self, data, k):
-        def firstK(data, k):
+        def firstK():
             l , r = 0 , len(data) - 1
             while l &lt;= r:
                 m = l + ((r - l) &gt;&gt; 1)
@@ -1135,7 +1131,7 @@ class Solution:
                         r = m - 1
             return -1
 
-        def lastK(data, k):
+        def lastK():
             l , r = 0 , len(data) - 1
             while l &lt;= r:
                 m = l + ((r - l) &gt;&gt; 1)
@@ -1151,7 +1147,7 @@ class Solution:
             return -1
 
         if not data: return 0
-        first, last = firstK(data, k), lastK(data, k)
+        first, last = firstK(), lastK()
         return last - first + 1 if first != -1 else 0
 </code></pre>
 <h3 id="举一反三-9"><a href="#举一反三-9" class="headerlink" title="举一反三"></a>举一反三</h3><ul>
@@ -1199,7 +1195,7 @@ class Solution:
         xor_sum = a = 0
         for i in array:
             xor_sum ^= i
-        last1 = (-xor_sum) &amp; xor_sum  # 取出最右边的1
+        last1 = xor_sum &amp; -xor_sum  # 取出最右边的1
         for i in array:
             if i &amp; last1:
                 a ^= i
@@ -1506,12 +1502,12 @@ class Solution:
         self.next = None
 
     def EntryNodeOfLoop(self, head):
-        fast = slow = pHead
+        fast = slow = head
         while fast.next and fast.next.next:
             fast = fast.next.next
             slow = slow.next
             if fast is slow: # 二者相遇，说明链表含环
-                fast = pHead # fast 指向头结点
+                fast = head # fast 指向头结点
                 while fast is not slow: # 二者还没相遇之前一直走下去
                     fast, slow = fast.next, slow.next  # 这里fast和slow的速度一样
                 return fast
@@ -1548,16 +1544,16 @@ class Solution:
 
 class Solution:
     def GetNext(self, pNode):
-        if pNode is None: return
-        if pNode.right:
-            pNode = pNode.right
-            while pNode.left:
-                pNode = pNode.left
-            return pNode
-        while pNode.next:
-            if pNode.next.left is pNode:
-                return pNode.next
-            pNode = pNode.next
+        if node is None: return
+        if node.right:  # 若有右子树就找到右子树的最左结点
+            cur = node.right
+            while cur.left:
+                cur = cur.left
+            return cur
+        # 没有右子树则向上找到第一个当前结点是其父结点左孩子的结点
+        while node.next and node.next.left is not node:
+            node = node.next
+        return node.next  # 注意返回的是该结点的父结点，若node退到了根结点则返回的是None
 </code></pre>
 <h3 id="举一反三-12"><a href="#举一反三-12" class="headerlink" title="举一反三"></a>举一反三</h3><ul>
 <li><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/58_2_%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E4%B8%8A%E4%B8%80%E4%B8%AA%E7%BB%93%E7%82%B9%EF%BC%88%E4%B8%AD%E5%BA%8F%EF%BC%89.py" target="_blank" rel="external">二叉树的上一个结点（中序）</a></li>
@@ -1663,19 +1659,19 @@ class Solution:
         def deserialize(s):
             s = s.split(&#39;,&#39;)
             if s[0] == &#39;#&#39;: return
-            treeroot = TreeNode(int(s[0]))
-            queue = [treeroot]
+            root = TreeNode(int(s[0]))
+            queue = [root]
             for i in range(1, len(s), 2):  # s的长度一定为奇数
-                root = queue.pop(0)
+                node = queue.pop(0)
                 if s[i] != &#39;#&#39;:  # 连接左孩子
                     left = TreeNode(int(s[i]))
-                    root.left = left
+                    node.left = left
                     queue.append(left)
                 if s[i + 1] != &#39;#&#39;:  # 连接右孩子
                     right = TreeNode(int(s[i + 1]))
-                    root.right = right
+                    node.right = right
                     queue.append(right)
-            return treeroot
+            return root
 </code></pre>
 <h2 id="二叉搜索树中的第k个结点"><a href="#二叉搜索树中的第k个结点" class="headerlink" title="二叉搜索树中的第k个结点"></a><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/63_%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E4%B8%AD%E7%9A%84%E7%AC%ACk%E4%B8%AA%E7%BB%93%E7%82%B9.py" target="_blank" rel="external">二叉搜索树中的第k个结点</a></h2><h3 id="题目描述-62"><a href="#题目描述-62" class="headerlink" title="题目描述"></a>题目描述</h3><p>给定一棵二叉搜索树，请找出其中的第k大的结点。例如，</p>
 <p><img src="http://ox186n2j0.bkt.clouddn.com/1532023500895.jpg" alt="二叉搜索树"></p>
@@ -1736,7 +1732,7 @@ class Solution:
 class Solution:
     def maxInWindows(self, num, size):
         if not num or not size: return []
-        queue, res = deque([]), []
+        queue, res = deque(), []
         for i in range(len(num)):
             # 新增加的值从队尾开始比较，把前面所有比它小的值从队尾取出，直到遇到比它大的数就停止
             while queue and num[queue[-1]] &lt;= num[i]:
@@ -1948,17 +1944,17 @@ class Solution:
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2018/07/19/剑指offer题解（python实现）/">剑指offer题解（Python实现）</a></p>
-        <p><span>文章作者:</span><a href="/" title="回到主页">Hk4Fun</a></p>
-        <p><span>发布时间:</span>2018-07-19, 16:30:29</p>
-        <p><span>最后更新:</span>2018-10-10, 18:01:18</p>
+        <p><span>本文標題:</span><a href="/2018/07/19/剑指offer题解（python实现）/">剑指offer题解（Python实现）</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主頁">Hk4Fun</a></p>
+        <p><span>發布時間:</span>2018-07-19, 16:30:29</p>
+        <p><span>最後更新:</span>2018-10-11, 19:22:13</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2018/07/19/剑指offer题解（python实现）/" title="剑指offer题解（Python实现）">https://hk4fun.github.io/2018/07/19/剑指offer题解（python实现）/</a>
-            <span class="copy-path" data-clipboard-text="原文: https://hk4fun.github.io/2018/07/19/剑指offer题解（python实现）/　　作者: Hk4Fun" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始鏈接:</span><a class="post-url" href="/2018/07/19/剑指offer题解（python实现）/" title="剑指offer题解（Python实现）">https://hk4fun.github.io/2018/07/19/剑指offer题解（python实现）/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://hk4fun.github.io/2018/07/19/剑指offer题解（python实现）/　　作者: Hk4Fun" title="點擊複製文章鏈接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
-            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+            <span>許可協議:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"姓名標示-非商業性-相同方式分享 4.0 國際"</a> 轉載請保留原文鏈接及作者。
         </p>
     </div>
 
@@ -1968,7 +1964,7 @@ class Solution:
         
             <div id="article-nav-newer" class="article-nav-title">
                 <a href="/2018/07/31/为什么Python的corotine这么特殊/">
-                    为什么Python的corotine这么特殊
+                    为什么Python的coroutine这么特殊
                 </a>
             </div>
         
@@ -1985,7 +1981,7 @@ class Solution:
 </article>
 
     <div id="toc" class="toc-article">
-        <strong class="toc-title">文章目录</strong>
+        <strong class="toc-title">文章目錄</strong>
         
             <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#二维数组中的查找"><span class="toc-number">1.</span> <span class="toc-text"> 二维数组中的查找</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述"><span class="toc-number">1.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解"><span class="toc-number">1.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码"><span class="toc-number">1.3.</span> <span class="toc-text">代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#拓展题目"><span class="toc-number">1.4.</span> <span class="toc-text">拓展题目</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#替换空格"><span class="toc-number">2.</span> <span class="toc-text">替换空格</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-1"><span class="toc-number">2.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-1"><span class="toc-number">2.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-1"><span class="toc-number">2.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#从尾到头打印链表"><span class="toc-number">3.</span> <span class="toc-text">从尾到头打印链表</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-2"><span class="toc-number">3.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-2"><span class="toc-number">3.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-2"><span class="toc-number">3.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#重建二叉树"><span class="toc-number">4.</span> <span class="toc-text">重建二叉树</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-3"><span class="toc-number">4.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-3"><span class="toc-number">4.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-3"><span class="toc-number">4.3.</span> <span class="toc-text">代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#举一反三"><span class="toc-number">4.4.</span> <span class="toc-text">举一反三</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#用两个栈实现队列"><span class="toc-number">5.</span> <span class="toc-text">用两个栈实现队列</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-4"><span class="toc-number">5.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-4"><span class="toc-number">5.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-4"><span class="toc-number">5.3.</span> <span class="toc-text">代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#举一反三-1"><span class="toc-number">5.4.</span> <span class="toc-text">举一反三</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#旋转数组的最小数字"><span class="toc-number">6.</span> <span class="toc-text">旋转数组的最小数字</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-5"><span class="toc-number">6.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-5"><span class="toc-number">6.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-5"><span class="toc-number">6.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#斐波那契数列"><span class="toc-number">7.</span> <span class="toc-text">斐波那契数列</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-6"><span class="toc-number">7.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-6"><span class="toc-number">7.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-6"><span class="toc-number">7.3.</span> <span class="toc-text">代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#举一反三-2"><span class="toc-number">7.4.</span> <span class="toc-text">举一反三</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二进制中1的个数"><span class="toc-number">8.</span> <span class="toc-text">二进制中1的个数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-7"><span class="toc-number">8.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-7"><span class="toc-number">8.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-7"><span class="toc-number">8.3.</span> <span class="toc-text">代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#举一反三-3"><span class="toc-number">8.4.</span> <span class="toc-text">举一反三</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数值的整数次方"><span class="toc-number">9.</span> <span class="toc-text">数值的整数次方</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-8"><span class="toc-number">9.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-8"><span class="toc-number">9.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-8"><span class="toc-number">9.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#打印1到最大的n位数"><span class="toc-number">10.</span> <span class="toc-text">打印1到最大的n位数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-9"><span class="toc-number">10.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-9"><span class="toc-number">10.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-9"><span class="toc-number">10.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#在O-1-时间删除链表节点"><span class="toc-number">11.</span> <span class="toc-text">在O(1)时间删除链表节点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-10"><span class="toc-number">11.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-10"><span class="toc-number">11.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-10"><span class="toc-number">11.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使奇数位于偶数前面"><span class="toc-number">12.</span> <span class="toc-text">使奇数位于偶数前面</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-11"><span class="toc-number">12.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-11"><span class="toc-number">12.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-11"><span class="toc-number">12.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#链表倒数第k个结点"><span class="toc-number">13.</span> <span class="toc-text">链表倒数第k个结点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-12"><span class="toc-number">13.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-12"><span class="toc-number">13.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-12"><span class="toc-number">13.3.</span> <span class="toc-text">代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#举一反三-4"><span class="toc-number">13.4.</span> <span class="toc-text">举一反三</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#反转链表"><span class="toc-number">14.</span> <span class="toc-text">反转链表</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-13"><span class="toc-number">14.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-13"><span class="toc-number">14.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-13"><span class="toc-number">14.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#合并两个排序的链表"><span class="toc-number">15.</span> <span class="toc-text">合并两个排序的链表</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-14"><span class="toc-number">15.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-14"><span class="toc-number">15.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-14"><span class="toc-number">15.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#树的子结构"><span class="toc-number">16.</span> <span class="toc-text">树的子结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-15"><span class="toc-number">16.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-15"><span class="toc-number">16.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-15"><span class="toc-number">16.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二叉树的镜像"><span class="toc-number">17.</span> <span class="toc-text">二叉树的镜像</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-16"><span class="toc-number">17.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-16"><span class="toc-number">17.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-16"><span class="toc-number">17.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#顺时针打印矩阵"><span class="toc-number">18.</span> <span class="toc-text">顺时针打印矩阵</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-17"><span class="toc-number">18.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-17"><span class="toc-number">18.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-17"><span class="toc-number">18.3.</span> <span class="toc-text">代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#举一反三-5"><span class="toc-number">18.4.</span> <span class="toc-text">举一反三</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#包含min函数的栈"><span class="toc-number">19.</span> <span class="toc-text">包含min函数的栈</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-18"><span class="toc-number">19.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-18"><span class="toc-number">19.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-18"><span class="toc-number">19.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#栈的压入弹出序列"><span class="toc-number">20.</span> <span class="toc-text">栈的压入弹出序列</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-19"><span class="toc-number">20.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-19"><span class="toc-number">20.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-19"><span class="toc-number">20.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#从上往下打印二叉树"><span class="toc-number">21.</span> <span class="toc-text">从上往下打印二叉树</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-20"><span class="toc-number">21.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-20"><span class="toc-number">21.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-20"><span class="toc-number">21.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二叉搜索树的后序遍历序列"><span class="toc-number">22.</span> <span class="toc-text">二叉搜索树的后序遍历序列</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-21"><span class="toc-number">22.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-21"><span class="toc-number">22.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-21"><span class="toc-number">22.3.</span> <span class="toc-text">代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#举一反三-6"><span class="toc-number">22.4.</span> <span class="toc-text">举一反三</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二叉树中和为某一值的路径"><span class="toc-number">23.</span> <span class="toc-text">二叉树中和为某一值的路径</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-22"><span class="toc-number">23.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-22"><span class="toc-number">23.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-22"><span class="toc-number">23.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#复杂链表的复制"><span class="toc-number">24.</span> <span class="toc-text">复杂链表的复制</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-23"><span class="toc-number">24.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-23"><span class="toc-number">24.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-23"><span class="toc-number">24.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二叉搜索树与双向链表"><span class="toc-number">25.</span> <span class="toc-text">二叉搜索树与双向链表</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-24"><span class="toc-number">25.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-24"><span class="toc-number">25.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-24"><span class="toc-number">25.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#字符串的排列"><span class="toc-number">26.</span> <span class="toc-text">字符串的排列</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-25"><span class="toc-number">26.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-25"><span class="toc-number">26.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-25"><span class="toc-number">26.3.</span> <span class="toc-text">代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#举一反三-7"><span class="toc-number">26.4.</span> <span class="toc-text">举一反三</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数组中出现次数超过一半的数字"><span class="toc-number">27.</span> <span class="toc-text">数组中出现次数超过一半的数字</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-26"><span class="toc-number">27.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-26"><span class="toc-number">27.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-26"><span class="toc-number">27.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#最小的K个数"><span class="toc-number">28.</span> <span class="toc-text">最小的K个数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-27"><span class="toc-number">28.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-27"><span class="toc-number">28.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-27"><span class="toc-number">28.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#连续子数组的最大和"><span class="toc-number">29.</span> <span class="toc-text">连续子数组的最大和</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-28"><span class="toc-number">29.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-28"><span class="toc-number">29.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-28"><span class="toc-number">29.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#从1到n中1出现的次数"><span class="toc-number">30.</span> <span class="toc-text">从1到n中1出现的次数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-29"><span class="toc-number">30.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-29"><span class="toc-number">30.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-29"><span class="toc-number">30.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#把数组排成最小的数"><span class="toc-number">31.</span> <span class="toc-text">把数组排成最小的数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-30"><span class="toc-number">31.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-30"><span class="toc-number">31.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-30"><span class="toc-number">31.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#丑数"><span class="toc-number">32.</span> <span class="toc-text">丑数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-31"><span class="toc-number">32.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-31"><span class="toc-number">32.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-31"><span class="toc-number">32.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第一个只出现一次的字符"><span class="toc-number">33.</span> <span class="toc-text">第一个只出现一次的字符</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-32"><span class="toc-number">33.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-32"><span class="toc-number">33.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-32"><span class="toc-number">33.3.</span> <span class="toc-text">代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#举一反三-8"><span class="toc-number">33.4.</span> <span class="toc-text">举一反三</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数组中的逆序对"><span class="toc-number">34.</span> <span class="toc-text">数组中的逆序对</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-33"><span class="toc-number">34.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-33"><span class="toc-number">34.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-33"><span class="toc-number">34.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#两个链表的第一个公共结点"><span class="toc-number">35.</span> <span class="toc-text">两个链表的第一个公共结点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-34"><span class="toc-number">35.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-34"><span class="toc-number">35.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-34"><span class="toc-number">35.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数字在排序数组中出现的次数"><span class="toc-number">36.</span> <span class="toc-text">数字在排序数组中出现的次数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-35"><span class="toc-number">36.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-35"><span class="toc-number">36.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-35"><span class="toc-number">36.3.</span> <span class="toc-text">代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#举一反三-9"><span class="toc-number">36.4.</span> <span class="toc-text">举一反三</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二叉树的深度"><span class="toc-number">37.</span> <span class="toc-text">二叉树的深度</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-36"><span class="toc-number">37.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-36"><span class="toc-number">37.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-36"><span class="toc-number">37.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#判断平衡二叉树"><span class="toc-number">38.</span> <span class="toc-text">判断平衡二叉树</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-37"><span class="toc-number">38.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-37"><span class="toc-number">38.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-37"><span class="toc-number">38.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数组中只出现一次的两个数字"><span class="toc-number">39.</span> <span class="toc-text">数组中只出现一次的两个数字</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-38"><span class="toc-number">39.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-38"><span class="toc-number">39.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-38"><span class="toc-number">39.3.</span> <span class="toc-text">代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#举一反三-10"><span class="toc-number">39.4.</span> <span class="toc-text">举一反三</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#和为s的两个数字"><span class="toc-number">40.</span> <span class="toc-text">和为s的两个数字</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-39"><span class="toc-number">40.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-39"><span class="toc-number">40.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-39"><span class="toc-number">40.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#和为s的连续正整数序列"><span class="toc-number">41.</span> <span class="toc-text">和为s的连续正整数序列</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-40"><span class="toc-number">41.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-40"><span class="toc-number">41.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-40"><span class="toc-number">41.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#翻转单词顺序"><span class="toc-number">42.</span> <span class="toc-text">翻转单词顺序</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-41"><span class="toc-number">42.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-41"><span class="toc-number">42.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-41"><span class="toc-number">42.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#左旋转字符串"><span class="toc-number">43.</span> <span class="toc-text">左旋转字符串</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-42"><span class="toc-number">43.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-42"><span class="toc-number">43.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-42"><span class="toc-number">43.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#n个骰子的点数"><span class="toc-number">44.</span> <span class="toc-text">n个骰子的点数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-43"><span class="toc-number">44.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-43"><span class="toc-number">44.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-43"><span class="toc-number">44.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#扑克牌的顺子"><span class="toc-number">45.</span> <span class="toc-text">扑克牌的顺子</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-44"><span class="toc-number">45.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-44"><span class="toc-number">45.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-44"><span class="toc-number">45.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#圆圈中最后剩下的数字（约瑟夫环问题）"><span class="toc-number">46.</span> <span class="toc-text">圆圈中最后剩下的数字（约瑟夫环问题）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-45"><span class="toc-number">46.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-45"><span class="toc-number">46.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-45"><span class="toc-number">46.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#求前n项和（各种限制）"><span class="toc-number">47.</span> <span class="toc-text">求前n项和（各种限制）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-46"><span class="toc-number">47.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-46"><span class="toc-number">47.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-46"><span class="toc-number">47.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#不用加减乘除做加法"><span class="toc-number">48.</span> <span class="toc-text">不用加减乘除做加法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-47"><span class="toc-number">48.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-47"><span class="toc-number">48.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-47"><span class="toc-number">48.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#把字符串转换成整数"><span class="toc-number">49.</span> <span class="toc-text">把字符串转换成整数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-48"><span class="toc-number">49.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-48"><span class="toc-number">49.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-48"><span class="toc-number">49.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二叉树的最低公共祖先"><span class="toc-number">50.</span> <span class="toc-text">二叉树的最低公共祖先</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-49"><span class="toc-number">50.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-49"><span class="toc-number">50.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-49"><span class="toc-number">50.3.</span> <span class="toc-text">代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#举一反三-11"><span class="toc-number">50.4.</span> <span class="toc-text">举一反三</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数组中重复的数字"><span class="toc-number">51.</span> <span class="toc-text">数组中重复的数字</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-50"><span class="toc-number">51.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-50"><span class="toc-number">51.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-50"><span class="toc-number">51.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#构建乘积数组"><span class="toc-number">52.</span> <span class="toc-text">构建乘积数组</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-51"><span class="toc-number">52.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-51"><span class="toc-number">52.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-51"><span class="toc-number">52.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#正则表达式匹配"><span class="toc-number">53.</span> <span class="toc-text">正则表达式匹配</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-52"><span class="toc-number">53.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-52"><span class="toc-number">53.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-52"><span class="toc-number">53.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#表示数值的字符串"><span class="toc-number">54.</span> <span class="toc-text">表示数值的字符串</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-53"><span class="toc-number">54.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-53"><span class="toc-number">54.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-53"><span class="toc-number">54.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#字符流中第一个不重复的字符"><span class="toc-number">55.</span> <span class="toc-text">字符流中第一个不重复的字符</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-54"><span class="toc-number">55.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-54"><span class="toc-number">55.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-54"><span class="toc-number">55.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#链表中环的入口结点"><span class="toc-number">56.</span> <span class="toc-text">链表中环的入口结点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-55"><span class="toc-number">56.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-55"><span class="toc-number">56.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-55"><span class="toc-number">56.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#删除链表中重复的结点"><span class="toc-number">57.</span> <span class="toc-text">删除链表中重复的结点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-56"><span class="toc-number">57.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-56"><span class="toc-number">57.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-56"><span class="toc-number">57.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二叉树的下一个结点（中序）"><span class="toc-number">58.</span> <span class="toc-text">二叉树的下一个结点（中序）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-57"><span class="toc-number">58.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-57"><span class="toc-number">58.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-57"><span class="toc-number">58.3.</span> <span class="toc-text">代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#举一反三-12"><span class="toc-number">58.4.</span> <span class="toc-text">举一反三</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#对称的二叉树"><span class="toc-number">59.</span> <span class="toc-text">对称的二叉树</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-58"><span class="toc-number">59.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-58"><span class="toc-number">59.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-58"><span class="toc-number">59.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#把二叉树打印成多行"><span class="toc-number">60.</span> <span class="toc-text">把二叉树打印成多行</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-59"><span class="toc-number">60.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-59"><span class="toc-number">60.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-59"><span class="toc-number">60.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#按之字型顺序打印二叉树"><span class="toc-number">61.</span> <span class="toc-text">按之字型顺序打印二叉树</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-60"><span class="toc-number">61.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-60"><span class="toc-number">61.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-60"><span class="toc-number">61.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二叉树的序列化和反序列化"><span class="toc-number">62.</span> <span class="toc-text">二叉树的序列化和反序列化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-61"><span class="toc-number">62.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-61"><span class="toc-number">62.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-61"><span class="toc-number">62.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二叉搜索树中的第k个结点"><span class="toc-number">63.</span> <span class="toc-text">二叉搜索树中的第k个结点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-62"><span class="toc-number">63.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-62"><span class="toc-number">63.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-62"><span class="toc-number">63.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数据流的中位数"><span class="toc-number">64.</span> <span class="toc-text">数据流的中位数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-63"><span class="toc-number">64.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-63"><span class="toc-number">64.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-63"><span class="toc-number">64.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#滑动窗口的最大值"><span class="toc-number">65.</span> <span class="toc-text">滑动窗口的最大值</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-64"><span class="toc-number">65.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-64"><span class="toc-number">65.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-64"><span class="toc-number">65.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#矩阵中的路径"><span class="toc-number">66.</span> <span class="toc-text">矩阵中的路径</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-65"><span class="toc-number">66.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-65"><span class="toc-number">66.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-65"><span class="toc-number">66.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#机器人的运动范围"><span class="toc-number">67.</span> <span class="toc-text">机器人的运动范围</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-66"><span class="toc-number">67.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-66"><span class="toc-number">67.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-66"><span class="toc-number">67.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#补充-剪绳子"><span class="toc-number">68.</span> <span class="toc-text">补充_剪绳子</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-67"><span class="toc-number">68.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#主要思路"><span class="toc-number">68.2.</span> <span class="toc-text">主要思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-67"><span class="toc-number">68.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#补充-数字序列中某一位的数字"><span class="toc-number">69.</span> <span class="toc-text">补充_数字序列中某一位的数字</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-68"><span class="toc-number">69.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-67"><span class="toc-number">69.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-68"><span class="toc-number">69.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#补充-把数字翻译成字符串"><span class="toc-number">70.</span> <span class="toc-text">补充_把数字翻译成字符串</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-69"><span class="toc-number">70.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-68"><span class="toc-number">70.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-69"><span class="toc-number">70.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#补充-礼物的最大值"><span class="toc-number">71.</span> <span class="toc-text">补充_礼物的最大值</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-70"><span class="toc-number">71.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-69"><span class="toc-number">71.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-70"><span class="toc-number">71.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#补充-最长不含重复字符的字符串长度"><span class="toc-number">72.</span> <span class="toc-text">补充_最长不含重复字符的字符串长度</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-71"><span class="toc-number">72.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-70"><span class="toc-number">72.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-71"><span class="toc-number">72.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#补充-股票的最大利润"><span class="toc-number">73.</span> <span class="toc-text">补充_股票的最大利润</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-72"><span class="toc-number">73.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-71"><span class="toc-number">73.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-72"><span class="toc-number">73.3.</span> <span class="toc-text">代码</span></a></li></ol></li></ol>
         
@@ -2001,10 +1997,10 @@ class Solution:
         }
     </style>
 
-    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+    <input type="button" id="tocButton" value="隱藏目錄"  title="點擊按鈕隱藏或者顯示文章目錄">
 
     <script>
-        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+        yiliaConfig.toc = ["隱藏目錄", "顯示目錄", !!"false"];
     </script>
 
 
@@ -2050,7 +2046,7 @@ class Solution:
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2018/07/31/为什么Python的corotine这么特殊/" title="上一篇: 为什么Python的corotine这么特殊">
+            <a href="/2018/07/31/为什么Python的corotine这么特殊/" title="上一篇: 为什么Python的coroutine这么特殊">
                 <i class="fa fa-angle-left"></i>
             </a>
         
@@ -2064,7 +2060,7 @@ class Solution:
         
     </div>
 
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/08/15/设计模式之单例模式/">设计模式之单例模式</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/15/魔法方法之-new-与-init/">魔法方法之 __new__() 与 __init__()</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/05/Python-中-type-与-object-的关系/">Python 中 type 与 object 的关系</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/31/为什么Python的corotine这么特殊/">为什么Python的corotine这么特殊</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/19/剑指offer题解（python实现）/">剑指offer题解（Python实现）</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/09/廖雪峰web实战总结/">廖雪峰web实战总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/27/DO-VPS搭建SS并使用ServerSpeeder加速/">DO VPS搭建SS并使用ServerSpeeder加速</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/08/15/设计模式之单例模式/">设计模式之单例模式</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/15/魔法方法之-new-与-init/">魔法方法之 __new__() 与 __init__()</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/05/Python-中-type-与-object-的关系/">Python 中 type 与 object 的关系</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/31/为什么Python的corotine这么特殊/">为什么Python的coroutine这么特殊</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/19/剑指offer题解（python实现）/">剑指offer题解（Python实现）</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/09/廖雪峰web实战总结/">廖雪峰web实战总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/27/DO-VPS搭建SS并使用ServerSpeeder加速/">DO VPS搭建SS并使用ServerSpeeder加速</a></li></ul>
 
 
 
@@ -2081,14 +2077,14 @@ class Solution:
                 2017-2018 Hk4Fun
             </div>
             <div class="footer-right">
-                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+                <a href="http://hexo.io/" target="_blank" title="快速、簡潔且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="簡而不減 Hexo 雙欄博客主題  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
             </div>
         </div>
         
             <div class="visit">
                 
                     <span id="busuanzi_container_site_pv" style='display:none'>
-                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        <span id="site-visit" title="本站到訪數"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
                         </span>
                     </span>
                 
@@ -2097,7 +2093,7 @@ class Solution:
                 
                 
                     <span id="busuanzi_container_page_pv" style='display:none'>
-                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        <span id="page-visit"  title="本頁閱讀量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
                         </span>
                     </span>
                 
@@ -2130,9 +2126,9 @@ class Solution:
 
 
 <div class="scroll" id="scroll">
-    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
-    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
-    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+    <a href="#" title="返回頂部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看評論"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="轉到底部"><i class="fa fa-arrow-down"></i></a>
 </div>
 <script>
     // Open in New Window

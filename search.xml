@@ -1156,9 +1156,9 @@ AttributeError: &#39;T&#39; object has no attribute &#39;__bases__&#39;
     </entry>
     
     <entry>
-      <title><![CDATA[为什么Python的corotine这么特殊]]></title>
+      <title><![CDATA[为什么Python的coroutine这么特殊]]></title>
       <url>/2018/07/31/%E4%B8%BA%E4%BB%80%E4%B9%88Python%E7%9A%84corotine%E8%BF%99%E4%B9%88%E7%89%B9%E6%AE%8A/</url>
-      <content type="html"><![CDATA[<p>在论坛上看到一篇关于 Python 中 corotine 的文章，从一个简单的例子出发，对比了 Lua、Ruby、Python 在实现 corotine 上的区别和联系：</p>
+      <content type="html"><![CDATA[<p>在论坛上看到一篇关于 Python 中 coroutine 的文章，从一个简单的例子出发，对比了 Lua、Ruby、Python 在实现 coroutine 上的区别和联系：</p>
 <p><a href="https://bbs.byr.cn/#!article/Python/22439" target="_blank" rel="external">https://bbs.byr.cn/#!article/Python/22439</a></p>
 <a id="more"></a>
 <p>这里加上自己的见解：</p>
@@ -1228,11 +1228,11 @@ AttributeError: &#39;T&#39; object has no attribute &#39;__bases__&#39;
 <h3 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h3><pre><code>class Solution:
     def replaceSpace(self, s):
         if s is None: return &#39;&#39;
-        spaceCount = sum(1 for ch in s if ch == &#39; &#39;)
+        spaceCount = sum(ch == &#39; &#39; for ch in s)
         newIdx = len(s) + spaceCount * 2 - 1
         oldIdx = len(s) - 1
         newStr = list(s) + [&#39;&#39;] * (spaceCount * 2)
-        while oldIdx &gt;= 0 and oldIdx &lt; newIdx:
+        while 0 &lt;= oldIdx &lt; newIdx:
             if newStr[oldIdx] == &#39; &#39;:
                 newStr[newIdx - 2: newIdx + 1] = &#39;%20&#39;
                 newIdx -= 3
@@ -1252,14 +1252,14 @@ AttributeError: &#39;T&#39; object has no attribute &#39;__bases__&#39;
 class Solution:
     # 返回从尾部到头部的列表值序列
     def ListReverse(self, listNode):
-        def recursive(listNode):
-            if listNode:
-                recursive(listNode.next)
-                l.append(listNode.val)
+        def recursive(node):
+            if node:
+                recursive(node.next)
+                res.append(node.val)
 
-        l = []
+        res = []
         recursive(listNode)
-        return l
+        return res
 </code></pre><h2 id="重建二叉树"><a href="#重建二叉树" class="headerlink" title="重建二叉树"></a><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/6_1_%E9%87%8D%E5%BB%BA%E4%BA%8C%E5%8F%89%E6%A0%91%EF%BC%88%E5%89%8D%E5%BA%8F%E4%B8%AD%E5%BA%8F%EF%BC%89.py" target="_blank" rel="external">重建二叉树</a></h2><h3 id="题目描述-3"><a href="#题目描述-3" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入某二叉树的前序遍历和中序遍历的结果，请重建出该二叉树。<br>假设输入的前序遍历和中序遍历的结果中都不含重复的数字。</p>
 <h3 id="最优题解-3"><a href="#最优题解-3" class="headerlink" title="最优题解"></a>最优题解</h3><p>前序的第一个元素是根结点的值，在中序中找到该值，<br>中序中该值的左边的元素是根结点的左子树，右边是右子树，然后递归的处理左边和右边</p>
 <h3 id="代码-3"><a href="#代码-3" class="headerlink" title="代码"></a>代码</h3><pre><code>class TreeNode:
@@ -1271,12 +1271,15 @@ class Solution:
 class Solution:
     # 返回构造的TreeNode根节点
     def reConstruct(self, pre, tin):
-        if not pre or not tin: return
-        idx = tin.index(pre[0])
-        root = TreeNode(pre[0])
-        root.left = self.reConstruct(pre[1:idx+1], tin[:idx])
-        root.right = self.reConstruct(pre[idx+1:], tin[idx+1:])
-        return root
+        def build(preLeft, preRight, inLeft, inRight):
+            if preLeft &gt; preRight or inLeft &gt; inRight: return
+            idx = in_order.index(pre_order[preLeft])
+            root = TreeNode(pre_order[preLeft])
+            root.left = build(preLeft + 1, preLeft + idx - inLeft, inLeft, idx - 1)
+            root.right = build(preLeft + idx - inLeft + 1, preRight, idx + 1, inRight)
+            return root
+
+        return build(0, len(pre_order) - 1, 0, len(in_order) - 1)
 </code></pre><h3 id="举一反三"><a href="#举一反三" class="headerlink" title="举一反三"></a>举一反三</h3><ul>
 <li><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/6_2_%E9%87%8D%E5%BB%BA%E4%BA%8C%E5%8F%89%E6%A0%91%EF%BC%88%E4%B8%AD%E5%BA%8F%E5%90%8E%E5%BA%8F%EF%BC%89.py" target="_blank" rel="external">重建二叉树（中序后序）</a></li>
 </ul>
@@ -1477,12 +1480,11 @@ class Solution:
 <h3 id="最优题解-12"><a href="#最优题解-12" class="headerlink" title="最优题解"></a>最优题解</h3><p>双指针。<br>定义两个指针，第一个先从头开始走k步，第二个保持不动；从第k步开始，第二个指针也开始从头遍历。<br>由于两个指针的距离保持在k，所以当第一个指针遍历完整个链表时，第二个指针正好来到倒数第k个结点</p>
 <h3 id="代码-12"><a href="#代码-12" class="headerlink" title="代码"></a>代码</h3><pre><code class="python">class Solution:
     def FindKthToTail(self, head, k):
-        fast = head
+        fast = slow = head
         while fast and k:
             fast = fast.next
             k -= 1
         if not fast and k: return # k 大于链表长度
-        slow = head
         while fast:
             fast = fast.next
             slow = slow.next
@@ -1645,14 +1647,13 @@ class Solution:
     def IsPopOrder(self, pushV, popV):
         if not pushV or not popV or len(pushV) != len(popV):
             return False
-        stack = []
-        i = 0
+        stack, i = [], 0
         for num in pushV:
             stack.append(num)
             while stack and stack[-1] == popV[i]:
                 i += 1
                 stack.pop()
-        return i == len(popV)
+        return stack == []
 </code></pre>
 <h2 id="从上往下打印二叉树"><a href="#从上往下打印二叉树" class="headerlink" title="从上往下打印二叉树"></a><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/23_%E4%BB%8E%E4%B8%8A%E5%BE%80%E4%B8%8B%E6%89%93%E5%8D%B0%E4%BA%8C%E5%8F%89%E6%A0%91.py" target="_blank" rel="external">从上往下打印二叉树</a></h2><h3 id="题目描述-20"><a href="#题目描述-20" class="headerlink" title="题目描述"></a>题目描述</h3><p>从上往下打印出二叉树的每个节点，同层节点从左至右打印。</p>
 <h3 id="最优题解-20"><a href="#最优题解-20" class="headerlink" title="最优题解"></a>最优题解</h3><p>相当于宽度优先搜索（BFS），用队列来实现：<br>每次从头部取出一个结点时，如果该结点有子结点，<br>就把该结点的子结点从左到右依次放入队列末尾，<br>重复前面的步骤，直到队列为空</p>
@@ -1692,8 +1693,8 @@ class Solution:
             for j in range(i, len(seq) - 1):
                 if seq[j] &lt; seq[-1]: return False
             return verify(seq[:i]) and verify(seq[i:-1])
-        if not seq: return False
-        return verify(seq)
+        if not sequence: return False
+        return verify(sequence)
 </code></pre>
 <h3 id="举一反三-6"><a href="#举一反三-6" class="headerlink" title="举一反三"></a>举一反三</h3><p><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/24_1_%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E7%9A%84%E5%89%8D%E5%BA%8F%E9%81%8D%E5%8E%86%E5%BA%8F%E5%88%97.py" target="_blank" rel="external">二叉搜索树的前序遍历序列</a></p>
 <h2 id="二叉树中和为某一值的路径"><a href="#二叉树中和为某一值的路径" class="headerlink" title="二叉树中和为某一值的路径"></a><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/25_%E4%BA%8C%E5%8F%89%E6%A0%91%E4%B8%AD%E5%92%8C%E4%B8%BA%E6%9F%90%E4%B8%80%E5%80%BC%E7%9A%84%E8%B7%AF%E5%BE%84.py" target="_blank" rel="external">二叉树中和为某一值的路径</a></h2><h3 id="题目描述-22"><a href="#题目描述-22" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入一颗二叉树和一个整数，输出二叉树中结点值的和为输入整数的所有路径。<br>路径定义为从树的根结点开始往下一直到叶结点所经过的结点形成一条路径。</p>
@@ -1733,36 +1734,33 @@ class Solution:
         self.random = None
 
     def Clone(self, pHead):
-        def clone(pHead):
-            cur = pHead
-            while cur:
-                clonenode = RandomListNode(cur.label)
-                clonenode.next = cur.next
-                cur.next = clonenode
-                cur = clonenode.next
+        def clone(head):
+            while head:
+                cloneNode = RandomListNode(head.label)
+                cloneNode.next = head.next
+                head.next = cloneNode
+                head = cloneNode.next
 
-        def connect(pHead):
-            cur = pHead
-            clone = pHead.next
-            while cur:
-                clone.random = cur.random.next if cur.random else None
-                cur = clone.next
-                clone = cur.next if cur else None
+        def connect(head):
+            clone = head.next
+            while head:
+                clone.random = head.random.next if head.random else None
+                head = clone.next
+                clone = head.next if head else None
 
-        def reconnect(pHead):
-            cur = pHead
-            cloneHead = clone = pHead.next
-            while cur:
-                cur.next = clone.next
-                cur = cur.next
-                clone.next = cur.next if cur else None
+        def split(head):
+            clone = cloneHead = head.next
+            while head:
+                head.next = clone.next
+                head = head.next
+                clone.next = head.next if head else None
                 clone = clone.next
             return cloneHead
 
-        if not pHead: return 
+        if pHead is None: return
         clone(pHead)
         connect(pHead)
-        return reconnect(pHead)
+        return split(pHead)
 </code></pre>
 <h2 id="二叉搜索树与双向链表"><a href="#二叉搜索树与双向链表" class="headerlink" title="二叉搜索树与双向链表"></a><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/27_%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E4%B8%8E%E5%8F%8C%E5%90%91%E9%93%BE%E8%A1%A8.py" target="_blank" rel="external">二叉搜索树与双向链表</a></h2><h3 id="题目描述-24"><a href="#题目描述-24" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入一棵二叉搜索树，将该二叉搜索树转换成一个排序的双向链表。<br>要求不能创建任何新的结点，只能调整树中结点指针的指向。</p>
 <h3 id="最优题解-24"><a href="#最优题解-24" class="headerlink" title="最优题解"></a>最优题解</h3><p>二叉搜索树与双向链表的每个结点均含有两个指针，数据结构类似，可以实现相互转换</p>
@@ -1836,15 +1834,15 @@ class Solution:
 <p>基于Partition的算法, 只有当我们可以修改输入的数组时可用。<br>利用Partition找到第(k-1)小的数(从0开始)，则数组左边的k个数字就是最小的k个数字（这k个数字不一定是排序的）</p>
 <h3 id="代码-27"><a href="#代码-27" class="headerlink" title="代码"></a>代码</h3><pre><code class="python">class Solution:
     def GetLeastNumbers(self, tinput, k):
-        def partition(l, r):
-            last = l - 1 # 分界线
-            for i in range(l, r):
-                if tinput[i] &lt; tinput[r]:
-                    last += 1
-                    tinput[i], tinput[last] = tinput[last], tinput[i]
-            last += 1
-            tinput[r], tinput[last] = tinput[last], tinput[r]
-            return last
+        def partition(l, r):  # 基于快排的partition
+            pivot = tinput[l] # 首元素为枢轴标杆
+            while l &lt; r:
+                while l &lt; r and tinput[r] &gt;= pivot: r -= 1
+                tinput[l] = tinput[r]
+                while l &lt; r and tinput[l] &lt;= pivot: l += 1
+                tinput[r] = tinput[l]
+            tinput[l] = pivot
+            return l
 
         if not tinput or k &lt;= 0 or len(tinput) &lt; k: return []
         l, r = 0, len(tinput) - 1
@@ -1929,10 +1927,10 @@ class Solution:
 <h3 id="代码-32"><a href="#代码-32" class="headerlink" title="代码"></a>代码</h3><pre><code class="python">from collections import OrderedDict
 class Solution:
     def FirstNotRepeatingChar(self, s):
-        hashTable = OrderedDict()
+        table = OrderedDict()
         for ch in s:
-            hashTable[ch] = hashTable.setdefault(ch, 0) + 1
-        for ch, v in hashTable.items():
+            table[ch] = table.setdefault(ch, 0) + 1
+        for ch, v in table.items():
             if v == 1:
                 return s.index(ch)
         return -1
@@ -1963,12 +1961,11 @@ class Solution:
                     copy[copyIdx] = data[i]
                     count += j - m  # 逆序对的数目等于j之前的元素个数(包括j指向的元素)
                     i -= 1
-                    copyIdx -= 1
                 else:
                     copy[copyIdx] = data[j]
                     j -= 1
-                    copyIdx -= 1
-            # 将剩下的移到辅助数组里
+                copyIdx -= 1
+            # 将剩下复制到辅助数组里
             while i &gt;= l:
                 copy[copyIdx] = data[i]
                 i -= 1
@@ -1980,8 +1977,7 @@ class Solution:
             return left + right + count # 总逆序对个数 = 左区域 + 右区域 + 合并
 
         if not data: return 0
-        copy = data[:]
-        return merge(data, copy, 0, len(data) - 1)
+        return merge(data, data[:], 0, len(data) - 1)
 </code></pre>
 <h2 id="两个链表的第一个公共结点"><a href="#两个链表的第一个公共结点" class="headerlink" title="两个链表的第一个公共结点"></a><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/37_%E4%B8%A4%E4%B8%AA%E9%93%BE%E8%A1%A8%E7%9A%84%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%85%AC%E5%85%B1%E7%BB%93%E7%82%B9.py" target="_blank" rel="external">两个链表的第一个公共结点</a></h2><h3 id="题目描述-34"><a href="#题目描述-34" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入两个单向无环链表，找出它们的第一个公共结点。</p>
 <h3 id="最优题解-34"><a href="#最优题解-34" class="headerlink" title="最优题解"></a>最优题解</h3><p>时间复杂度O(m+n)，空间复杂度O(1)。</p>
@@ -2007,7 +2003,7 @@ class Solution:
 <h3 id="最优题解-35"><a href="#最优题解-35" class="headerlink" title="最优题解"></a>最优题解</h3><p>既然是排好序的，那么自然想到二分法了。总体思路是找到第一个k的位置，再找到最后一个k的位置，相减加一。<br>先查找第一个k的位置：<br>如果中间的数字比k大，那么k只可能出现在数组的前半段，下一轮就只在数组的前半段查找就可以了。<br>如果中间的数字比k小，那么k只可能出现在数组的后半段，下一轮就只在数组的后半段查找就可以了。<br>关键是如果中间的数字等于k呢？我们先判断该数字是不是第一个k。<br>如果中间数字前面不是k，则该中间数字刚好就是第一个k；<br>如果中间数字前面也是k，则第一个k肯定在数组前半段，下一轮我们仍然需要在数组前半段查找。O(logn)</p>
 <h3 id="代码-35"><a href="#代码-35" class="headerlink" title="代码"></a>代码</h3><pre><code class="python">class Solution:
     def GetNumberOfK(self, data, k):
-        def firstK(data, k):
+        def firstK():
             l , r = 0 , len(data) - 1
             while l &lt;= r:
                 m = l + ((r - l) &gt;&gt; 1)
@@ -2022,7 +2018,7 @@ class Solution:
                         r = m - 1
             return -1
 
-        def lastK(data, k):
+        def lastK():
             l , r = 0 , len(data) - 1
             while l &lt;= r:
                 m = l + ((r - l) &gt;&gt; 1)
@@ -2038,7 +2034,7 @@ class Solution:
             return -1
 
         if not data: return 0
-        first, last = firstK(data, k), lastK(data, k)
+        first, last = firstK(), lastK()
         return last - first + 1 if first != -1 else 0
 </code></pre>
 <h3 id="举一反三-9"><a href="#举一反三-9" class="headerlink" title="举一反三"></a>举一反三</h3><ul>
@@ -2086,7 +2082,7 @@ class Solution:
         xor_sum = a = 0
         for i in array:
             xor_sum ^= i
-        last1 = (-xor_sum) &amp; xor_sum  # 取出最右边的1
+        last1 = xor_sum &amp; -xor_sum  # 取出最右边的1
         for i in array:
             if i &amp; last1:
                 a ^= i
@@ -2393,12 +2389,12 @@ class Solution:
         self.next = None
 
     def EntryNodeOfLoop(self, head):
-        fast = slow = pHead
+        fast = slow = head
         while fast.next and fast.next.next:
             fast = fast.next.next
             slow = slow.next
             if fast is slow: # 二者相遇，说明链表含环
-                fast = pHead # fast 指向头结点
+                fast = head # fast 指向头结点
                 while fast is not slow: # 二者还没相遇之前一直走下去
                     fast, slow = fast.next, slow.next  # 这里fast和slow的速度一样
                 return fast
@@ -2435,16 +2431,16 @@ class Solution:
 
 class Solution:
     def GetNext(self, pNode):
-        if pNode is None: return
-        if pNode.right:
-            pNode = pNode.right
-            while pNode.left:
-                pNode = pNode.left
-            return pNode
-        while pNode.next:
-            if pNode.next.left is pNode:
-                return pNode.next
-            pNode = pNode.next
+        if node is None: return
+        if node.right:  # 若有右子树就找到右子树的最左结点
+            cur = node.right
+            while cur.left:
+                cur = cur.left
+            return cur
+        # 没有右子树则向上找到第一个当前结点是其父结点左孩子的结点
+        while node.next and node.next.left is not node:
+            node = node.next
+        return node.next  # 注意返回的是该结点的父结点，若node退到了根结点则返回的是None
 </code></pre>
 <h3 id="举一反三-12"><a href="#举一反三-12" class="headerlink" title="举一反三"></a>举一反三</h3><ul>
 <li><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/58_2_%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E4%B8%8A%E4%B8%80%E4%B8%AA%E7%BB%93%E7%82%B9%EF%BC%88%E4%B8%AD%E5%BA%8F%EF%BC%89.py" target="_blank" rel="external">二叉树的上一个结点（中序）</a></li>
@@ -2550,19 +2546,19 @@ class Solution:
         def deserialize(s):
             s = s.split(&#39;,&#39;)
             if s[0] == &#39;#&#39;: return
-            treeroot = TreeNode(int(s[0]))
-            queue = [treeroot]
+            root = TreeNode(int(s[0]))
+            queue = [root]
             for i in range(1, len(s), 2):  # s的长度一定为奇数
-                root = queue.pop(0)
+                node = queue.pop(0)
                 if s[i] != &#39;#&#39;:  # 连接左孩子
                     left = TreeNode(int(s[i]))
-                    root.left = left
+                    node.left = left
                     queue.append(left)
                 if s[i + 1] != &#39;#&#39;:  # 连接右孩子
                     right = TreeNode(int(s[i + 1]))
-                    root.right = right
+                    node.right = right
                     queue.append(right)
-            return treeroot
+            return root
 </code></pre>
 <h2 id="二叉搜索树中的第k个结点"><a href="#二叉搜索树中的第k个结点" class="headerlink" title="二叉搜索树中的第k个结点"></a><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/63_%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E4%B8%AD%E7%9A%84%E7%AC%ACk%E4%B8%AA%E7%BB%93%E7%82%B9.py" target="_blank" rel="external">二叉搜索树中的第k个结点</a></h2><h3 id="题目描述-62"><a href="#题目描述-62" class="headerlink" title="题目描述"></a>题目描述</h3><p>给定一棵二叉搜索树，请找出其中的第k大的结点。例如，</p>
 <p><img src="http://ox186n2j0.bkt.clouddn.com/1532023500895.jpg" alt="二叉搜索树"></p>
@@ -2623,7 +2619,7 @@ class Solution:
 class Solution:
     def maxInWindows(self, num, size):
         if not num or not size: return []
-        queue, res = deque([]), []
+        queue, res = deque(), []
         for i in range(len(num)):
             # 新增加的值从队尾开始比较，把前面所有比它小的值从队尾取出，直到遇到比它大的数就停止
             while queue and num[queue[-1]] &lt;= num[i]:
