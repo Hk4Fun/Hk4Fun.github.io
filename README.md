@@ -8,7 +8,7 @@
 
 分享：[AddThis][6]
 
-图床：[七牛云][7]
+图床：[微博图床][7]
 
 网站统计：[百度统计][8]
 
@@ -16,7 +16,7 @@
 
 评论系统：[来必力（Livere）][10]
 
-写作工具：[小书匠][11]
+写作工具：[Typora][11]
 
 由于yelee没有加入livere评论系统，需要自己添加:
 
@@ -75,15 +75,15 @@ livere:
 `<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
 </script>`
 
-  [1]: https://pages.github.com/
-  [2]: https://hexo.io/
-  [3]: https://github.com/MOxFIVE/hexo-theme-yelee
-  [4]: http://moxfive.coding.me/yelee/
-  [5]: https://github.com/litten/hexo-theme-yilia
-  [6]: https://www.addthis.com/
-  [7]: https://portal.qiniu.com
-  [8]: https://tongji.baidu.com/web/welcome/login
-  [9]: http://ibruce.info/2015/04/04/busuanzi/
-  [10]: https://livere.com/
-  [11]: http://soft.xiaoshujiang.com/
-  [12]: https://zespia.tw/blog/2012/10/11/hexo-debut/
+[1]: https://pages.github.com/
+[2]: https://hexo.io/
+[3]: https://github.com/MOxFIVE/hexo-theme-yelee
+[4]: http://moxfive.coding.me/yelee/
+[5]: https://github.com/litten/hexo-theme-yilia
+[6]: https://www.addthis.com/
+[7]: https://chrome.google.com/webstore/detail/%E6%96%B0%E6%B5%AA%E5%BE%AE%E5%8D%9A%E5%9B%BE%E5%BA%8A/fdfdnfpdplfbbnemmmoklbfjbhecpnhf
+[8]: https://tongji.baidu.com/web/welcome/login
+[9]: http://ibruce.info/2015/04/04/busuanzi/
+[10]: https://livere.com/
+[11]: https://typora.io/
+[12]: https://zespia.tw/blog/2012/10/11/hexo-debut/
