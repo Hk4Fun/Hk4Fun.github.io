@@ -23,20 +23,20 @@
 <meta property="og:url" content="https://hk4fun.github.io/2018/08/05/Python-中-type-与-object-的关系/index.html">
 <meta property="og:site_name" content="Hk4Fun&#39;s Blog">
 <meta property="og:description" content="都知道 Python 有强大的动态语言特性，得益于它“无处不对象”的语言设计思想，那么这些对象的源头来自哪里？这背后一定有它的“出发点”。相信很多人一下就想到元类（metaclass）那种复杂的东西，且慢，心急吃不了热豆腐。在深入研究元类编程之前，一些基本的但也是最重要的语言知识一定要弄清楚，否则会一头雾水。在此之前，明白 Python 中 type 与 object 的关系至关重要，它俩才是 P">
-<meta property="og:image" content="http://ox186n2j0.bkt.clouddn.com/1533408939335.jpg">
-<meta property="og:image" content="http://ox186n2j0.bkt.clouddn.com/1533409633841.jpg">
-<meta property="og:image" content="http://ox186n2j0.bkt.clouddn.com/1533410487047.jpg">
-<meta property="og:image" content="http://ox186n2j0.bkt.clouddn.com/1533418058683.jpg">
-<meta property="og:image" content="http://ox186n2j0.bkt.clouddn.com/1533418343805.jpg">
-<meta property="og:image" content="http://ox186n2j0.bkt.clouddn.com/1533418834898.jpg">
-<meta property="og:image" content="http://ox186n2j0.bkt.clouddn.com/1533436909296.jpg">
-<meta property="og:image" content="http://ox186n2j0.bkt.clouddn.com/1533437856409.jpg">
-<meta property="og:image" content="http://ox186n2j0.bkt.clouddn.com/1533441406419.jpg">
-<meta property="og:updated_time" content="2018-08-15T18:02:18.650Z">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006giLD5ly1fwx554gzz5j30an07vwef.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006giLD5ly1fwx554h1t8j30ka0d0mx5.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006giLD5ly1fwx554h620j30jd0cqjrm.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006giLD5ly1fwx554h6a1j30e008174j.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006giLD5ly1fwx554hhy8j30fg0d63z0.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006giLD5ly1fwx554h90nj30d805fglo.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006giLD5ly1fwx554iku0j30j20f2q3i.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006giLD5ly1fwx554jen3j30hr0fvdh0.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006giLD5ly1fwx554lka5j30hp0eqt9v.jpg">
+<meta property="og:updated_time" content="2018-11-05T06:00:24.136Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python 中 type 与 object 的关系">
 <meta name="twitter:description" content="都知道 Python 有强大的动态语言特性，得益于它“无处不对象”的语言设计思想，那么这些对象的源头来自哪里？这背后一定有它的“出发点”。相信很多人一下就想到元类（metaclass）那种复杂的东西，且慢，心急吃不了热豆腐。在深入研究元类编程之前，一些基本的但也是最重要的语言知识一定要弄清楚，否则会一头雾水。在此之前，明白 Python 中 type 与 object 的关系至关重要，它俩才是 P">
-<meta name="twitter:image" content="http://ox186n2j0.bkt.clouddn.com/1533408939335.jpg">
+<meta name="twitter:image" content="https://ws1.sinaimg.cn/large/006giLD5ly1fwx554gzz5j30an07vwef.jpg">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -209,7 +209,7 @@
                 
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSH/">SSH</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ServerSpeeder/">ServerSpeeder</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VPS/">VPS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/coroutine/">coroutine</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/django/">django</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mvc/">mvc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/orm/">orm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web/">web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/元类编程/">元类编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/剑指offer/">剑指offer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构/">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/翻墙/">翻墙</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/魔法方法/">魔法方法</a></li></ul>
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/coroutine/">coroutine</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/django/">django</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mvc/">mvc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/orm/">orm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web/">web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/元类编程/">元类编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/剑指offer/">剑指offer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构/">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/魔法方法/">魔法方法</a></li></ul>
                     </div>
                 </section>
                 
@@ -323,7 +323,7 @@
         <p>都知道 Python 有强大的动态语言特性，得益于它“无处不对象”的语言设计思想，那么这些对象的源头来自哪里？这背后一定有它的“出发点”。相信很多人一下就想到元类（metaclass）那种复杂的东西，且慢，心急吃不了热豆腐。在深入研究元类编程之前，一些基本的但也是最重要的语言知识一定要弄清楚，否则会一头雾水。在此之前，明白 Python 中 type 与 object 的关系至关重要，它俩才是 Python 中一切对象的“出发点”。</p>
 <a id="more"></a>
 <p>先来看看这8个输出：</p>
-<pre><code class="python">In 1]: isinstance(object, object)
+<pre><code class="python">In [1]: isinstance(object, object)
 Out[1]: True
 
 In [2]: isinstance(object, type)
@@ -357,9 +357,9 @@ Out[8]: True
 <li>类型实例关系（an instance of），即类的实例化，如 “小白是猫”，可以通过 __class__ 属性或 type() 方法查看某个实例的所属类型</li>
 </ul>
 <p>如果用实线（竖线）表示父子关系，用虚线（横线）表示类型实例关系，那么可以用下图来描述：</p>
-<p><img src="http://ox186n2j0.bkt.clouddn.com/1533408939335.jpg" alt="两种关系"></p>
+<p><img src="https://ws1.sinaimg.cn/large/006giLD5ly1fwx554gzz5j30an07vwef.jpg" alt="两种关系"></p>
 <p>假设有这么一张白板，分割成三部分，用来描述 Python 里面对象的关系：</p>
-<p><img src="http://ox186n2j0.bkt.clouddn.com/1533409633841.jpg" alt="白板"></p>
+<p><img src="https://ws1.sinaimg.cn/large/006giLD5ly1fwx554h1t8j30ka0d0mx5.jpg" alt="白板"></p>
 <p>先来看看 type 和 object。在 Python 中，object 是父子关系的顶端，所有类型都是它的子类；type 是类型实例关系的顶端，所有类型都是它的实例（注意，不是所有对象都是 type 的实例，因为类型实例关系不具有传递性），即 <strong>object 是所有类的父类，而 type 是所有类的类</strong>：</p>
 <pre><code class="python">In [1]: object.__class__
 Out[1]: type   # object 的类型是 type
@@ -374,7 +374,7 @@ In [4]: type.__bases__
 Out[4]: (object,)    # type 的父类是 object
 </code></pre>
 <p>以上关系可用下图来表示：</p>
-<p><img src="http://ox186n2j0.bkt.clouddn.com/1533410487047.jpg" alt="type 与 object 的关系"></p>
+<p><img src="https://ws1.sinaimg.cn/large/006giLD5ly1fwx554h620j30jd0cqjrm.jpg" alt="type 与 object 的关系"></p>
 <p>至此，对于文章一开头的八个输出就可以明确四个了，分别是</p>
 <pre><code class="python">In [2]: isinstance(object, type)
 Out[2]: True  # object 的类型是 type
@@ -389,7 +389,7 @@ In [8]: issubclass(type, object)
 Out[8]: True # type 的父类是 object
 </code></pre>
 <p>那么其他四个如何解释？</p>
-<pre><code class="python">In 1]: isinstance(object, object)
+<pre><code class="python">In [1]: isinstance(object, object)
 Out[1]: True
 
 In [4]: isinstance(type, object)
@@ -402,7 +402,7 @@ In [7]: issubclass(type, type)
 Out[7]: True
 </code></pre>
 <p>这就要考虑到 isinstance() 遵守的 <strong>Dashed Arrow Up Rule</strong>：</p>
-<p><strong>如果 X 是 A 的实例，且 A 是 B 的子类，那么 X 是 B 的 实例</strong></p>
+<p><strong>如果 X 是 A 的实例，且 A 是 B 的子类，那么 X 是 B 的 实例</strong><br>​<br>​    </p>
 <pre><code class="python">&gt;&gt;&gt; class B:
 ...     pass
 ...
@@ -418,7 +418,7 @@ True
 True
 </code></pre>
 <p>因此，由 isinstance(object, type) 和 issubclass(type, object)，可以得出</p>
-<pre><code class="python">In 1]: isinstance(object, object)
+<pre><code class="python">In [1]: isinstance(object, object)
 Out[1]: True
 </code></pre>
 <p>由 isinstance(type, type) 和 issubclass(type, object) 可以得出</p>
@@ -446,10 +446,9 @@ True
 True
 </code></pre>
 <p>到这里你可能会觉得 Dashed Arrow Up Rule 和 Dashed Arrow Down Rule 隐约有什么关系，其实它们的名字就已经告诉我们了，这里可用下图来描述：</p>
-<p><img src="http://ox186n2j0.bkt.clouddn.com/1533418058683.jpg" alt="Up and Down"></p>
+<p><img src="https://ws1.sinaimg.cn/large/006giLD5ly1fwx554h6a1j30e008174j.jpg" alt="Up and Down"></p>
 <p>最后还有一条很重要的Rule，<strong>Combine Solid Arrows Rule：</strong></p>
-<p><strong>如果 A 是 B 的子类，且 B 是 C 的子类，那么 A 也是 C 的子类</strong></p>
-<p>即继承关系具有传递性：</p>
+<p><strong>如果 A 是 B 的子类，且 B 是 C 的子类，那么 A 也是 C 的子类</strong><br>​<br>即继承关系具有传递性：</p>
 <pre><code class="python">&gt;&gt;&gt; class C:
 ...     pass
 ...
@@ -467,9 +466,9 @@ True
 True
 </code></pre>
 <p>总结以上三条Rule，就是：</p>
-<p><img src="http://ox186n2j0.bkt.clouddn.com/1533418343805.jpg" alt="Three Rules"></p>
+<p><img src="https://ws1.sinaimg.cn/large/006giLD5ly1fwx554hhy8j30fg0d63z0.jpg" alt="Three Rules"></p>
 <p>那有没有第四条Rule，即类型实例关系也具有传递性呢（前面有提过）？</p>
-<p><img src="http://ox186n2j0.bkt.clouddn.com/1533418834898.jpg" alt="类型实例关系具有传递性吗？"></p>
+<p><img src="https://ws1.sinaimg.cn/large/006giLD5ly1fwx554h90nj30d805fglo.jpg" alt="类型实例关系具有传递性吗？"></p>
 <p>验证一下：</p>
 <pre><code class="python">&gt;&gt;&gt; isinstance(int, type)
 True
@@ -510,7 +509,7 @@ AttributeError: &#39;list&#39; object has no attribute &#39;__bases__&#39;
 </code></pre>
 <p>实例化后的 l 对象没有 __bases__ 属性，也就是没有父类这一说法，它只是 list 的一个实例</p>
 <p>以上全部加到白板上就是：</p>
-<p><img src="http://ox186n2j0.bkt.clouddn.com/1533436909296.jpg" alt="加入内置数据类型"></p>
+<p><img src="https://ws1.sinaimg.cn/large/006giLD5ly1fwx554iku0j30j20f2q3i.jpg" alt="加入内置数据类型"></p>
 <p>注：该图没有完全按照前面三条 Rules 来画，只是按照 __bases__ 和  __class__ 的结果来画，以下同。</p>
 <p>白板上除了 type 和 object，横向虚线代表实例，纵向实线代表继承</p>
 <p>当我们自己去定个一个类并实例化它的时候，和上面的对象之间又是什么关系呢？</p>
@@ -541,7 +540,7 @@ Traceback (most recent call last):
 AttributeError: &#39;object&#39; object has no attribute &#39;__bases__&#39;
 </code></pre>
 <p>以上全部加入白板后如下：</p>
-<p><img src="http://ox186n2j0.bkt.clouddn.com/1533437856409.jpg" alt="自定义类"></p>
+<p><img src="https://ws1.sinaimg.cn/large/006giLD5ly1fwx554jen3j30hr0fvdh0.jpg" alt="自定义类"></p>
 <p>到这里就会发现 type 所在那一栏只有它一个，所以引入了 metaclass 用来扩展 type，这需要我们去继承 type，这就意味着我们可以自定义生成类的模板，达到动态生成类的目的（可见 Python 的动态特性非常完美）：</p>
 <pre><code class="python">&gt;&gt;&gt; class M(type):
 ...     pass
@@ -588,14 +587,12 @@ AttributeError: &#39;T&#39; object has no attribute &#39;__bases__&#39;
 &lt;class &#39;__main__.T&#39;&gt;
 </code></pre>
 <p>以上全部加入白板后如下：</p>
-<p><img src="http://ox186n2j0.bkt.clouddn.com/1533441406419.jpg" alt="加入 metaclass"></p>
+<p><img src="https://ws1.sinaimg.cn/large/006giLD5ly1fwx554lka5j30hp0eqt9v.jpg" alt="加入 metaclass"></p>
 <p>– end –</p>
 <p> 参考资料</p>
 <ul>
 <li><a href="https://www.zhihu.com/question/38791962?sort=created" target="_blank" rel="external">知乎回答：Python 的 type 和 object 之间是怎么一种关系？</a></li>
-</ul>
-<ul>
-<li><a href="http://pcyzg1np3.bkt.clouddn.com/15%20Python%20Types%20and%20Objects.pdf" target="_blank" rel="external">15 Python Types and Objects.pdf</a> </li>
+<li><a href="http://www.cs.utexas.edu/~cannata/cs345/Class%20Notes/15%20Python%20Types%20and%20Objects.pdf" target="_blank" rel="external">Python Types and Objects.pdf</a></li>
 </ul>
 
       
@@ -608,7 +605,7 @@ AttributeError: &#39;T&#39; object has no attribute &#39;__bases__&#39;
         <p><span>本文标题:</span><a href="/2018/08/05/Python-中-type-与-object-的关系/">Python 中 type 与 object 的关系</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">Hk4Fun</a></p>
         <p><span>发布时间:</span>2018-08-05, 01:58:08</p>
-        <p><span>最后更新:</span>2018-08-16, 02:02:18</p>
+        <p><span>最后更新:</span>2018-11-05, 14:00:24</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2018/08/05/Python-中-type-与-object-的关系/" title="Python 中 type 与 object 的关系">https://hk4fun.github.io/2018/08/05/Python-中-type-与-object-的关系/</a>
             <span class="copy-path" data-clipboard-text="原文: https://hk4fun.github.io/2018/08/05/Python-中-type-与-object-的关系/　　作者: Hk4Fun" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
@@ -721,7 +718,7 @@ AttributeError: &#39;T&#39; object has no attribute &#39;__bases__&#39;
         
     </div>
 
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/08/15/设计模式之单例模式/">设计模式之单例模式</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/15/魔法方法之-new-与-init/">魔法方法之 __new__() 与 __init__()</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/05/Python-中-type-与-object-的关系/">Python 中 type 与 object 的关系</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/31/为什么Python的corotine这么特殊/">为什么Python的coroutine这么特殊</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/19/剑指offer题解（python实现）/">剑指offer题解（Python实现）</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/09/廖雪峰web实战总结/">廖雪峰web实战总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/27/DO-VPS搭建SS并使用ServerSpeeder加速/">DO VPS搭建SS并使用ServerSpeeder加速</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/08/15/设计模式之单例模式/">设计模式之单例模式</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/15/魔法方法之-new-与-init/">魔法方法之 __new__() 与 __init__()</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/05/Python-中-type-与-object-的关系/">Python 中 type 与 object 的关系</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/31/为什么Python的corotine这么特殊/">为什么Python的coroutine这么特殊</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/19/剑指offer题解（python实现）/">剑指offer题解（Python实现）</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/09/廖雪峰web实战总结/">廖雪峰web实战总结</a></li></ul>
 
 
 

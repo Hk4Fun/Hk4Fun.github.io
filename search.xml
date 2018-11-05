@@ -5,7 +5,7 @@
     <entry>
       <title><![CDATA[设计模式之单例模式]]></title>
       <url>/2018/08/15/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/</url>
-      <content type="html"><![CDATA[<p>由于 Python 拥有灵活的动态语言特性和丰富的魔法方法，再加上它支持强大的元类编程，单例模式（Singleton）在 Python 上的实现方式五花八门。本文主要就是讨论单例模式在 Python 上的各种实现，涉及到 Python 中元类编程、魔法方法和装饰器的进阶语法知识，并在最后深入讨论和总结。</p>
+      <content type="html"><![CDATA[<p>由于 Python 拥有灵活的动态语言特性和丰富的魔法方法，再加上它强大的元类编程，单例模式（Singleton）在 Python 上的实现方式五花八门。本文主要讨论单例模式在 Python 上的各种实现，涉及到 Python 中元类编程、魔法方法和装饰器的进阶语法知识，并在最后深入讨论和总结。</p>
 <a id="more"></a>
 <h2 id="关于单例模式"><a href="#关于单例模式" class="headerlink" title="关于单例模式"></a>关于单例模式</h2><h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><blockquote>
 <p>Ensure a class has only one instance, and provide a global point of access to it.</p>
@@ -868,7 +868,7 @@ TypeError: __init__() should return None, not &#39;int&#39;
       <content type="html"><![CDATA[<p>都知道 Python 有强大的动态语言特性，得益于它“无处不对象”的语言设计思想，那么这些对象的源头来自哪里？这背后一定有它的“出发点”。相信很多人一下就想到元类（metaclass）那种复杂的东西，且慢，心急吃不了热豆腐。在深入研究元类编程之前，一些基本的但也是最重要的语言知识一定要弄清楚，否则会一头雾水。在此之前，明白 Python 中 type 与 object 的关系至关重要，它俩才是 Python 中一切对象的“出发点”。</p>
 <a id="more"></a>
 <p>先来看看这8个输出：</p>
-<pre><code class="python">In 1]: isinstance(object, object)
+<pre><code class="python">In [1]: isinstance(object, object)
 Out[1]: True
 
 In [2]: isinstance(object, type)
@@ -902,9 +902,9 @@ Out[8]: True
 <li>类型实例关系（an instance of），即类的实例化，如 “小白是猫”，可以通过 __class__ 属性或 type() 方法查看某个实例的所属类型</li>
 </ul>
 <p>如果用实线（竖线）表示父子关系，用虚线（横线）表示类型实例关系，那么可以用下图来描述：</p>
-<p><img src="http://ox186n2j0.bkt.clouddn.com/1533408939335.jpg" alt="两种关系"></p>
+<p><img src="https://ws1.sinaimg.cn/large/006giLD5ly1fwx554gzz5j30an07vwef.jpg" alt="两种关系"></p>
 <p>假设有这么一张白板，分割成三部分，用来描述 Python 里面对象的关系：</p>
-<p><img src="http://ox186n2j0.bkt.clouddn.com/1533409633841.jpg" alt="白板"></p>
+<p><img src="https://ws1.sinaimg.cn/large/006giLD5ly1fwx554h1t8j30ka0d0mx5.jpg" alt="白板"></p>
 <p>先来看看 type 和 object。在 Python 中，object 是父子关系的顶端，所有类型都是它的子类；type 是类型实例关系的顶端，所有类型都是它的实例（注意，不是所有对象都是 type 的实例，因为类型实例关系不具有传递性），即 <strong>object 是所有类的父类，而 type 是所有类的类</strong>：</p>
 <pre><code class="python">In [1]: object.__class__
 Out[1]: type   # object 的类型是 type
@@ -919,7 +919,7 @@ In [4]: type.__bases__
 Out[4]: (object,)    # type 的父类是 object
 </code></pre>
 <p>以上关系可用下图来表示：</p>
-<p><img src="http://ox186n2j0.bkt.clouddn.com/1533410487047.jpg" alt="type 与 object 的关系"></p>
+<p><img src="https://ws1.sinaimg.cn/large/006giLD5ly1fwx554h620j30jd0cqjrm.jpg" alt="type 与 object 的关系"></p>
 <p>至此，对于文章一开头的八个输出就可以明确四个了，分别是</p>
 <pre><code class="python">In [2]: isinstance(object, type)
 Out[2]: True  # object 的类型是 type
@@ -934,7 +934,7 @@ In [8]: issubclass(type, object)
 Out[8]: True # type 的父类是 object
 </code></pre>
 <p>那么其他四个如何解释？</p>
-<pre><code class="python">In 1]: isinstance(object, object)
+<pre><code class="python">In [1]: isinstance(object, object)
 Out[1]: True
 
 In [4]: isinstance(type, object)
@@ -947,7 +947,7 @@ In [7]: issubclass(type, type)
 Out[7]: True
 </code></pre>
 <p>这就要考虑到 isinstance() 遵守的 <strong>Dashed Arrow Up Rule</strong>：</p>
-<p><strong>如果 X 是 A 的实例，且 A 是 B 的子类，那么 X 是 B 的 实例</strong></p>
+<p><strong>如果 X 是 A 的实例，且 A 是 B 的子类，那么 X 是 B 的 实例</strong><br>​<br>​    </p>
 <pre><code class="python">&gt;&gt;&gt; class B:
 ...     pass
 ...
@@ -963,7 +963,7 @@ True
 True
 </code></pre>
 <p>因此，由 isinstance(object, type) 和 issubclass(type, object)，可以得出</p>
-<pre><code class="python">In 1]: isinstance(object, object)
+<pre><code class="python">In [1]: isinstance(object, object)
 Out[1]: True
 </code></pre>
 <p>由 isinstance(type, type) 和 issubclass(type, object) 可以得出</p>
@@ -991,10 +991,9 @@ True
 True
 </code></pre>
 <p>到这里你可能会觉得 Dashed Arrow Up Rule 和 Dashed Arrow Down Rule 隐约有什么关系，其实它们的名字就已经告诉我们了，这里可用下图来描述：</p>
-<p><img src="http://ox186n2j0.bkt.clouddn.com/1533418058683.jpg" alt="Up and Down"></p>
+<p><img src="https://ws1.sinaimg.cn/large/006giLD5ly1fwx554h6a1j30e008174j.jpg" alt="Up and Down"></p>
 <p>最后还有一条很重要的Rule，<strong>Combine Solid Arrows Rule：</strong></p>
-<p><strong>如果 A 是 B 的子类，且 B 是 C 的子类，那么 A 也是 C 的子类</strong></p>
-<p>即继承关系具有传递性：</p>
+<p><strong>如果 A 是 B 的子类，且 B 是 C 的子类，那么 A 也是 C 的子类</strong><br>​<br>即继承关系具有传递性：</p>
 <pre><code class="python">&gt;&gt;&gt; class C:
 ...     pass
 ...
@@ -1012,9 +1011,9 @@ True
 True
 </code></pre>
 <p>总结以上三条Rule，就是：</p>
-<p><img src="http://ox186n2j0.bkt.clouddn.com/1533418343805.jpg" alt="Three Rules"></p>
+<p><img src="https://ws1.sinaimg.cn/large/006giLD5ly1fwx554hhy8j30fg0d63z0.jpg" alt="Three Rules"></p>
 <p>那有没有第四条Rule，即类型实例关系也具有传递性呢（前面有提过）？</p>
-<p><img src="http://ox186n2j0.bkt.clouddn.com/1533418834898.jpg" alt="类型实例关系具有传递性吗？"></p>
+<p><img src="https://ws1.sinaimg.cn/large/006giLD5ly1fwx554h90nj30d805fglo.jpg" alt="类型实例关系具有传递性吗？"></p>
 <p>验证一下：</p>
 <pre><code class="python">&gt;&gt;&gt; isinstance(int, type)
 True
@@ -1055,7 +1054,7 @@ AttributeError: &#39;list&#39; object has no attribute &#39;__bases__&#39;
 </code></pre>
 <p>实例化后的 l 对象没有 __bases__ 属性，也就是没有父类这一说法，它只是 list 的一个实例</p>
 <p>以上全部加到白板上就是：</p>
-<p><img src="http://ox186n2j0.bkt.clouddn.com/1533436909296.jpg" alt="加入内置数据类型"></p>
+<p><img src="https://ws1.sinaimg.cn/large/006giLD5ly1fwx554iku0j30j20f2q3i.jpg" alt="加入内置数据类型"></p>
 <p>注：该图没有完全按照前面三条 Rules 来画，只是按照 __bases__ 和  __class__ 的结果来画，以下同。</p>
 <p>白板上除了 type 和 object，横向虚线代表实例，纵向实线代表继承</p>
 <p>当我们自己去定个一个类并实例化它的时候，和上面的对象之间又是什么关系呢？</p>
@@ -1086,7 +1085,7 @@ Traceback (most recent call last):
 AttributeError: &#39;object&#39; object has no attribute &#39;__bases__&#39;
 </code></pre>
 <p>以上全部加入白板后如下：</p>
-<p><img src="http://ox186n2j0.bkt.clouddn.com/1533437856409.jpg" alt="自定义类"></p>
+<p><img src="https://ws1.sinaimg.cn/large/006giLD5ly1fwx554jen3j30hr0fvdh0.jpg" alt="自定义类"></p>
 <p>到这里就会发现 type 所在那一栏只有它一个，所以引入了 metaclass 用来扩展 type，这需要我们去继承 type，这就意味着我们可以自定义生成类的模板，达到动态生成类的目的（可见 Python 的动态特性非常完美）：</p>
 <pre><code class="python">&gt;&gt;&gt; class M(type):
 ...     pass
@@ -1133,14 +1132,12 @@ AttributeError: &#39;T&#39; object has no attribute &#39;__bases__&#39;
 &lt;class &#39;__main__.T&#39;&gt;
 </code></pre>
 <p>以上全部加入白板后如下：</p>
-<p><img src="http://ox186n2j0.bkt.clouddn.com/1533441406419.jpg" alt="加入 metaclass"></p>
+<p><img src="https://ws1.sinaimg.cn/large/006giLD5ly1fwx554lka5j30hp0eqt9v.jpg" alt="加入 metaclass"></p>
 <p>– end –</p>
 <p> 参考资料</p>
 <ul>
 <li><a href="https://www.zhihu.com/question/38791962?sort=created" target="_blank" rel="external">知乎回答：Python 的 type 和 object 之间是怎么一种关系？</a></li>
-</ul>
-<ul>
-<li><a href="http://pcyzg1np3.bkt.clouddn.com/15%20Python%20Types%20and%20Objects.pdf" target="_blank" rel="external">15 Python Types and Objects.pdf</a> </li>
+<li><a href="http://www.cs.utexas.edu/~cannata/cs345/Class%20Notes/15%20Python%20Types%20and%20Objects.pdf" target="_blank" rel="external">Python Types and Objects.pdf</a></li>
 </ul>
 ]]></content>
       
@@ -1163,14 +1160,14 @@ AttributeError: &#39;T&#39; object has no attribute &#39;__bases__&#39;
 <a id="more"></a>
 <p>这里加上自己的见解：</p>
 <p>不管是 Lua（stackless）:</p>
-<p><img src="http://ox186n2j0.bkt.clouddn.com/1532963594760.jpg" alt="Lua协程实现"></p>
+<p><img src="https://ws1.sinaimg.cn/large/006giLD5ly1fwx5rbpc47j30x315nn17.jpg" alt="Lua协程实现"></p>
 <p>还是 Ruby（stackfull）： </p>
-<p><img src="http://ox186n2j0.bkt.clouddn.com/1532963645680.jpg" alt="Ruby协程实现"></p>
+<p><img src="https://ws1.sinaimg.cn/large/006giLD5ly1fwx5rbnm4yj30y90rnq5m.jpg" alt="Ruby协程实现"></p>
 <p>它们在首次进入 flatten 后都没有再去调用 resume，而是直接 flatten(elem)，因此 flatten 递归调用自己时并没有创建新的协程栈（应用栈），只在第一个 flatten 协程栈上增加函数帧，因此可以在最顶层的函数帧上直接跳回上一个应用栈（最外层），同时也可以在最外层的应用栈上直接跳到下一协程栈的最顶层函数帧。</p>
 <p>也就是说其始终只有两个应用栈，只不过 Lua 的两个应用栈对应的两个C帧在同一个C栈，而 Ruby 的两个协程栈对应了两个不同的C栈（可以在C栈间转跳）：</p>
-<p><img src="http://ox186n2j0.bkt.clouddn.com/1532968370016.jpg" alt="flatten 递归"></p>
+<p><img src="https://ws1.sinaimg.cn/large/006giLD5ly1fwx5rbodcmj30uq1c3n2s.jpg" alt="flatten 递归"></p>
 <p>而 Python（stackfull） 很特殊：</p>
-<p><img src="http://ox186n2j0.bkt.clouddn.com/1532964433271.jpg" alt="Python 创建协程"></p>
+<p><img src="https://ws1.sinaimg.cn/large/006giLD5ly1fwx5rbo7q8j30jr18p77o.jpg" alt="Python 创建协程"></p>
 <p>它既不是 stackless（在同一C栈上创建新的C帧来创建新的协程栈），也没实现在C栈间转跳（创建新的C栈来创建新的协程栈）。</p>
 <p>因此其只能在同一个C栈上创建新的C帧来创建新的协程帧，这些协程帧复用了指向上一帧的指针来表示指向自己的父协程帧，因此 Python 中创建协程就相当于创建函数，但其 yield 时只消除对应的C帧而保留协程帧。</p>
 <p>因此 python 中的协程无法一次性跳回最外层的应用帧（首次发送send的帧），只能一层一层地往外（下） yield，并且也只能一层一层地往内（上）send，体现在代码上就是要多一层 for 循环来帮助内外连通（想想 for 的实现机制，for 本身在不断 next 和 捕获最后的 StopIteration，至于   yield 需要自己在 for 的代码块中写）。</p>
@@ -1768,7 +1765,7 @@ class Solution:
 </code></pre>
 <h2 id="二叉搜索树与双向链表"><a href="#二叉搜索树与双向链表" class="headerlink" title="二叉搜索树与双向链表"></a><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/27_%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E4%B8%8E%E5%8F%8C%E5%90%91%E9%93%BE%E8%A1%A8.py" target="_blank" rel="external">二叉搜索树与双向链表</a></h2><h3 id="题目描述-24"><a href="#题目描述-24" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入一棵二叉搜索树，将该二叉搜索树转换成一个排序的双向链表。<br>要求不能创建任何新的结点，只能调整树中结点指针的指向。</p>
 <h3 id="最优题解-24"><a href="#最优题解-24" class="headerlink" title="最优题解"></a>最优题解</h3><p>二叉搜索树与双向链表的每个结点均含有两个指针，数据结构类似，可以实现相互转换</p>
-<p><img src="http://ox186n2j0.bkt.clouddn.com/1532009666811.jpg" alt="转换示意图"></p>
+<p><img src="https://ws1.sinaimg.cn/large/006giLD5ly1fwx65siwcwj30h103bjr8.jpg" alt="转换示意图"></p>
 <p>中序遍历，同时设置一个指针指向当前双向链表的最后一个结点，<br>每个被遍历到的结点都与当前双向链表的最后一个结点互相连接，<br>同时更新该指针为当前被遍历到的结点</p>
 <h3 id="代码-24"><a href="#代码-24" class="headerlink" title="代码"></a>代码</h3><pre><code class="python">class TreeNode:
     def __init__(self, x):
@@ -2565,7 +2562,7 @@ class Solution:
             return root
 </code></pre>
 <h2 id="二叉搜索树中的第k个结点"><a href="#二叉搜索树中的第k个结点" class="headerlink" title="二叉搜索树中的第k个结点"></a><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/63_%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E4%B8%AD%E7%9A%84%E7%AC%ACk%E4%B8%AA%E7%BB%93%E7%82%B9.py" target="_blank" rel="external">二叉搜索树中的第k个结点</a></h2><h3 id="题目描述-62"><a href="#题目描述-62" class="headerlink" title="题目描述"></a>题目描述</h3><p>给定一棵二叉搜索树，请找出其中的第k大的结点。例如，</p>
-<p><img src="http://ox186n2j0.bkt.clouddn.com/1532023500895.jpg" alt="二叉搜索树"></p>
+<p><img src="https://ws1.sinaimg.cn/large/006giLD5ly1fwx66yx85wj302s03dmwx.jpg" alt="二叉搜索树"></p>
 <p>按结点数值大小顺序第三个结点的值为4。</p>
 <h3 id="最优题解-62"><a href="#最优题解-62" class="headerlink" title="最优题解"></a>最优题解</h3><p>二叉搜索树的中序遍历序列是递增排序的，所以中序遍历二叉树，递归实现，找到就返回</p>
 <h3 id="代码-62"><a href="#代码-62" class="headerlink" title="代码"></a>代码</h3><pre><code class="python">class TreeNode:
@@ -2880,136 +2877,6 @@ class Solution:
             <tag> django </tag>
             
             <tag> web </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[DO VPS搭建SS并使用ServerSpeeder加速]]></title>
-      <url>/2017/09/27/DO-VPS%E6%90%AD%E5%BB%BASS%E5%B9%B6%E4%BD%BF%E7%94%A8ServerSpeeder%E5%8A%A0%E9%80%9F/</url>
-      <content type="html"><![CDATA[<p><strong>10$</strong> 的 <a href="&#39;https://m.do.co/c/ba18ef5fa022&#39;"><strong>邀请码</strong></a> 和 <a href="&quot;https://education.github.com/pack&quot;"><strong>github student pack</strong></a> 赠送的 <strong>50$</strong> 优惠券让我入了DO VPS的坑。想着就借此搭个SS也不错，才发现新加坡节点比旧金山稳定多了，然后开始各种折腾。do家的vps采用kvm架构且支持ipv6，可以在校外通过它连接byrbt，校内通过ipv6实现免流，且流量可以说是不限的。<br><a id="more"></a></p>
-<h2 id="配置SSH"><a href="#配置SSH" class="headerlink" title="配置SSH"></a>配置SSH</h2><p>如何生成密钥对？<br><a href="https://www.digitalocean.com/community/tutorials/how-to-use-ssh-keys-with-digitalocean-droplets" title="https://www.digitalocean.com/community/tutorials/how-to-use-ssh-keys-with-digitalocean-droplets" target="_blank" rel="external">Linux/MAC</a>      <strong>/</strong>  <a href="https://www.digitalocean.com/community/tutorials/how-to-use-ssh-keys-with-putty-on-digitalocean-droplets-windows-users" title="https://www.digitalocean.com/community/tutorials/how-to-use-ssh-keys-with-putty-on-digitalocean-droplets-windows-users" target="_blank" rel="external">Windows</a></p>
-<p>如果使用了密钥对，就可以不用每次登陆都输入密码。</p>
-<p>如果不用DO的sshkey上传，自己在客户端生成密钥对后，将公钥id_rsa.pub写进服务端的<code>/root/.ssh/authorized_keys</code>，然后到服务端<code>/etc/ssh/sshd_config</code>修改ssh配置： <strong>将”PasswordAuthentication yes”修改为”PasswordAuthentication no”</strong></p>
-<p>这样就可以不用每次登陆都输入密码，当然如果还是yes的话就可以在没有密钥对时通过密码登录。</p>
-<p>私钥保存在本地客户端就行了（windows下为.ppk文件，Linux下就是id_rsa）</p>
-<p>如果有多台终端设备，则在设备上生成密钥对后把公钥加在服务端的<code>/root/.ssh/authorized_keys</code>后面</p>
-<p>SSH其他常用配置选项：</p>
-<ul>
-<li>服务端<code>/etc/ssh/sshd_config</code>：</li>
-</ul>
-<p><strong>Port 22</strong><br>定义了SSH服务监听的断口号，SSH服务默认使用的端口号是22</p>
-<p><strong>Proctocol 2,1</strong><br>定义了SSH服务器使用SSH协议的顺序。默认识先使用SSH2协议，如果不成功则使用SSH1协议，为了安全起见，可以设置只使用SSH2协议。</p>
-<p><strong>ListenAddress 0.0.0.0</strong><br>定义SSH服务器帮定的IP地址,默认绑定服务器所有可用的IP地址.</p>
-<p><strong>PermitRootLogin yes</strong><br>定义是否允许管理员登陆</p>
-<p><strong>PermitEmptyPasswords no</strong><br>定义是否允许空密码登陆.</p>
-<p><strong>PasswordAuthentication no</strong><br>定义是否使用口令认证方式,如果准备使用公钥认证可以设置为no</p>
-<p><strong>AuthorizedKeysFile .ssh/authorized_keys</strong><br>定义默认公钥文件路径</p>
-<p>详细见官方文档<a href="https://man.openbsd.org/sshd_config" target="_blank" rel="external">https://man.openbsd.org/sshd_config</a></p>
-<ul>
-<li>客户端<code>/etc/ssh/ssh_config</code>:</li>
-</ul>
-<p>详细见官方文档<a href="https://man.openbsd.org/ssh_config" target="_blank" rel="external">https://man.openbsd.org/ssh_config</a></p>
-<h2 id="配置ServerSpeeder"><a href="#配置ServerSpeeder" class="headerlink" title="配置ServerSpeeder"></a>配置ServerSpeeder</h2><p>先安装serverspeeder（锐速），因为锐速对支持的Linux发行版本和内核版本都有要求，安装过程中可能会让更换内核并重启，目前锐速ServerSpeeder无限带宽破解版支持的内核有：</p>
-<ul>
-<li>CentOS-6.8：2.6.32-642.el7.x86_64</li>
-<li>CentOS-7.2：3.10.0-327.el7.x86_64</li>
-<li>CentOS：4.4.0-x86_64-linode63</li>
-<li>Ubuntu_14.04：4.2.0-35-generic</li>
-<li>Debian_8：3.16.0-4-amd64</li>
-</ul>
-<p>而DO官网提供的镜像都不符合，因此还是要更换内核（我在官网选择的版本为centos 7.3.1611 x64）：</p>
-<p>1、首先下载并更换内核：</p>
-<pre><code>rpm -ivh http://xz.wn789.com/CentOSkernel/kernel-3.10.0-229.1.2.el7.x86_64.rpm --force
-rpm -qa | grep kernel #查看内核是否安装成功
-</code></pre><p>2、重启VPS，查看内核是否修改成功：</p>
-<pre><code>    reboot #重启VPS
-    uname -r #当前使用内核版本
-</code></pre><p><img src="http://ox186n2j0.bkt.clouddn.com/1506760764914.jpg" alt=""></p>
-<p>3、下载脚本到服务器，然后再执行脚本安装：</p>
-<pre><code>    wget -N --no-check-certificate https://raw.githubusercontent.com/wn789/serverspeeder/master/serverspeeder.sh
-    bash serverspeeder.sh
-</code></pre><p>4、安装过程很简单，如果你的VPS内核支持安装，根本无需你手动操作，直接一键完成</p>
-<p>5、锐速serverspeeder常用命令：</p>
-<pre><code>    service serverSpeeder start #启动
-    service serverSpeeder stop #停止
-    service serverSpeeder reload #重新加载配置
-    service serverSpeeder restart #重启
-    service serverSpeeder status #状态
-    service serverSpeeder stats #统计
-    service serverSpeeder renewLic #更新许可文件
-    service serverSpeeder update #更新
-    chattr -i /serverspeeder/etc/apx* &amp;&amp; /serverspeeder/bin/serverSpeeder.sh uninstall -f #卸载
-</code></pre><h2 id="配置Shadowsocks"><a href="#配置Shadowsocks" class="headerlink" title="配置Shadowsocks"></a>配置Shadowsocks</h2><p>使用 <a href="https://teddysun.com/342.html" target="_blank" rel="external"><strong>一键安装 Python 版 Shadowsocks</strong></a> 安装</p>
-<p>安装方法：</p>
-<pre><code>    wget --no-check-certificate -O shadowsocks.sh https://raw.githubusercontent.com/teddysun/shadowsocks_install/master/shadowsocks.sh
-    chmod +x shadowsocks.sh
-    ./shadowsocks.sh 2&gt;&amp;1 | tee shadowsocks.log
-</code></pre><p>配置：</p>
-<p>服务器地址：vps主机公网ip</p>
-<p>服务器端口：如不设定，默认为 8989</p>
-<p>密码：如不设定，默认为 teddysun.com）</p>
-<p>加密方式：<strong>aes-256-cfb</strong>（如不设定，默认为 aes-256-gcm）</p>
-<p>安装完成后，脚本提示如下：</p>
-<p><img src="http://ox186n2j0.bkt.clouddn.com/1506760763636.jpg" alt=""></p>
-<p>卸载方法：</p>
-<p>./shadowsocks.sh uninstall</p>
-<p>单用户配置文件示例：<br>配置文件路径：/etc/shadowsocks.json</p>
-<pre><code>    {
-    &quot;server&quot;:&quot;0.0.0.0&quot;,
-    &quot;server_port&quot;:your_server_port,
-    &quot;local_address&quot;:&quot;127.0.0.1&quot;,
-    &quot;local_port&quot;:1080,
-    &quot;password&quot;:&quot;your_password&quot;,
-    &quot;timeout&quot;:300,
-    &quot;method&quot;:&quot;your_encryption_method&quot;,
-    &quot;fast_open&quot;: false
-    }
-</code></pre><p>多用户多端口配置文件示例：<br>配置文件路径：/etc/shadowsocks.json</p>
-<pre><code>    {
-    &quot;server&quot;:&quot;0.0.0.0&quot;,
-    &quot;local_address&quot;:&quot;127.0.0.1&quot;,
-    &quot;local_port&quot;:1080,
-    &quot;port_password&quot;:{
-         &quot;8989&quot;:&quot;password0&quot;,
-         &quot;9001&quot;:&quot;password1&quot;,
-         &quot;9002&quot;:&quot;password2&quot;,
-         &quot;9003&quot;:&quot;password3&quot;,
-         &quot;9004&quot;:&quot;password4&quot;
-    },
-    &quot;timeout&quot;:300,
-    &quot;method&quot;:&quot;your_encryption_method&quot;,
-    &quot;fast_open&quot;: false
-    }
-</code></pre><p>常用命令：</p>
-<pre><code>    启动：/etc/init.d/shadowsocks start
-    停止：/etc/init.d/shadowsocks stop
-    重启：/etc/init.d/shadowsocks restart
-    状态：/etc/init.d/shadowsocks status
-</code></pre><p><a href="https://github.com/shadowsocks/shadowsocks-windows/releases" target="_blank" rel="external">Shadowsocks for Windows 客户端下载</a></p>
-<p><a href="https://github.com/shadowsocks/shadowsocks-android/releases" target="_blank" rel="external">Shadowsocks for Android 客户端下载</a></p>
-<p>客户端配置太简单，懒，直接上图：</p>
-<p><img src="http://ox186n2j0.bkt.clouddn.com/1506760765315.jpg" alt=""></p>
-<p>最后可以到油管搜索4K视频测试</p>
-<hr>
-<h2 id="参考资料："><a href="#参考资料：" class="headerlink" title="参考资料："></a>参考资料：</h2><ol>
-<li><a href="https://teddysun.com/342.html" target="_blank" rel="external"><strong><em>Shadowsocks Python版一键安装脚本</em></strong> by <strong><em>秋水逸冰</em></strong></a></li>
-<li><a href="http://www.openssh.com/manual.html" target="_blank" rel="external"><strong><em>OpenSSH Manual Pages</em></strong></a></li>
-<li><a href="https://www.digitalocean.com/community/tutorials/how-to-use-ssh-keys-with-putty-on-digitalocean-droplets-windows-users" target="_blank" rel="external"><strong><em>How To Use SSH Keys with PuTTY on DigitalOcean Droplets (Windows users)</em></strong></a></li>
-</ol>
-]]></content>
-      
-        
-        <tags>
-            
-            <tag> VPS </tag>
-            
-            <tag> 翻墙 </tag>
-            
-            <tag> SSH </tag>
-            
-            <tag> ServerSpeeder </tag>
             
         </tags>
         

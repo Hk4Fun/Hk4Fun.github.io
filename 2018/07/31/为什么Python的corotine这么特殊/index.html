@@ -23,15 +23,15 @@
 <meta property="og:url" content="https://hk4fun.github.io/2018/07/31/为什么Python的corotine这么特殊/index.html">
 <meta property="og:site_name" content="Hk4Fun&#39;s Blog">
 <meta property="og:description" content="在论坛上看到一篇关于 Python 中 coroutine 的文章，从一个简单的例子出发，对比了 Lua、Ruby、Python 在实现 coroutine 上的区别和联系： https://bbs.byr.cn/#!article/Python/22439">
-<meta property="og:image" content="http://ox186n2j0.bkt.clouddn.com/1532963594760.jpg">
-<meta property="og:image" content="http://ox186n2j0.bkt.clouddn.com/1532963645680.jpg">
-<meta property="og:image" content="http://ox186n2j0.bkt.clouddn.com/1532968370016.jpg">
-<meta property="og:image" content="http://ox186n2j0.bkt.clouddn.com/1532964433271.jpg">
-<meta property="og:updated_time" content="2018-10-14T08:09:26.531Z">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006giLD5ly1fwx5rbpc47j30x315nn17.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006giLD5ly1fwx5rbnm4yj30y90rnq5m.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006giLD5ly1fwx5rbodcmj30uq1c3n2s.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006giLD5ly1fwx5rbo7q8j30jr18p77o.jpg">
+<meta property="og:updated_time" content="2018-11-05T06:15:59.683Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="为什么Python的coroutine这么特殊">
 <meta name="twitter:description" content="在论坛上看到一篇关于 Python 中 coroutine 的文章，从一个简单的例子出发，对比了 Lua、Ruby、Python 在实现 coroutine 上的区别和联系： https://bbs.byr.cn/#!article/Python/22439">
-<meta name="twitter:image" content="http://ox186n2j0.bkt.clouddn.com/1532963594760.jpg">
+<meta name="twitter:image" content="https://ws1.sinaimg.cn/large/006giLD5ly1fwx5rbpc47j30x315nn17.jpg">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -204,7 +204,7 @@
                 
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSH/">SSH</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ServerSpeeder/">ServerSpeeder</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VPS/">VPS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/coroutine/">coroutine</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/django/">django</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mvc/">mvc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/orm/">orm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web/">web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/元类编程/">元类编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/剑指offer/">剑指offer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构/">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/翻墙/">翻墙</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/魔法方法/">魔法方法</a></li></ul>
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/coroutine/">coroutine</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/django/">django</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mvc/">mvc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/orm/">orm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web/">web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/元类编程/">元类编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/剑指offer/">剑指offer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构/">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/魔法方法/">魔法方法</a></li></ul>
                     </div>
                 </section>
                 
@@ -320,14 +320,14 @@
 <a id="more"></a>
 <p>这里加上自己的见解：</p>
 <p>不管是 Lua（stackless）:</p>
-<p><img src="http://ox186n2j0.bkt.clouddn.com/1532963594760.jpg" alt="Lua协程实现"></p>
+<p><img src="https://ws1.sinaimg.cn/large/006giLD5ly1fwx5rbpc47j30x315nn17.jpg" alt="Lua协程实现"></p>
 <p>还是 Ruby（stackfull）： </p>
-<p><img src="http://ox186n2j0.bkt.clouddn.com/1532963645680.jpg" alt="Ruby协程实现"></p>
+<p><img src="https://ws1.sinaimg.cn/large/006giLD5ly1fwx5rbnm4yj30y90rnq5m.jpg" alt="Ruby协程实现"></p>
 <p>它们在首次进入 flatten 后都没有再去调用 resume，而是直接 flatten(elem)，因此 flatten 递归调用自己时并没有创建新的协程栈（应用栈），只在第一个 flatten 协程栈上增加函数帧，因此可以在最顶层的函数帧上直接跳回上一个应用栈（最外层），同时也可以在最外层的应用栈上直接跳到下一协程栈的最顶层函数帧。</p>
 <p>也就是说其始终只有两个应用栈，只不过 Lua 的两个应用栈对应的两个C帧在同一个C栈，而 Ruby 的两个协程栈对应了两个不同的C栈（可以在C栈间转跳）：</p>
-<p><img src="http://ox186n2j0.bkt.clouddn.com/1532968370016.jpg" alt="flatten 递归"></p>
+<p><img src="https://ws1.sinaimg.cn/large/006giLD5ly1fwx5rbodcmj30uq1c3n2s.jpg" alt="flatten 递归"></p>
 <p>而 Python（stackfull） 很特殊：</p>
-<p><img src="http://ox186n2j0.bkt.clouddn.com/1532964433271.jpg" alt="Python 创建协程"></p>
+<p><img src="https://ws1.sinaimg.cn/large/006giLD5ly1fwx5rbo7q8j30jr18p77o.jpg" alt="Python 创建协程"></p>
 <p>它既不是 stackless（在同一C栈上创建新的C帧来创建新的协程栈），也没实现在C栈间转跳（创建新的C栈来创建新的协程栈）。</p>
 <p>因此其只能在同一个C栈上创建新的C帧来创建新的协程帧，这些协程帧复用了指向上一帧的指针来表示指向自己的父协程帧，因此 Python 中创建协程就相当于创建函数，但其 yield 时只消除对应的C帧而保留协程帧。</p>
 <p>因此 python 中的协程无法一次性跳回最外层的应用帧（首次发送send的帧），只能一层一层地往外（下） yield，并且也只能一层一层地往内（上）send，体现在代码上就是要多一层 for 循环来帮助内外连通（想想 for 的实现机制，for 本身在不断 next 和 捕获最后的 StopIteration，至于   yield 需要自己在 for 的代码块中写）。</p>
@@ -352,7 +352,7 @@
         <p><span>本文标题:</span><a href="/2018/07/31/为什么Python的corotine这么特殊/">为什么Python的coroutine这么特殊</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">Hk4Fun</a></p>
         <p><span>发布时间:</span>2018-07-31, 00:39:05</p>
-        <p><span>最后更新:</span>2018-10-14, 16:09:26</p>
+        <p><span>最后更新:</span>2018-11-05, 14:15:59</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2018/07/31/为什么Python的corotine这么特殊/" title="为什么Python的coroutine这么特殊">https://hk4fun.github.io/2018/07/31/为什么Python的corotine这么特殊/</a>
             <span class="copy-path" data-clipboard-text="原文: https://hk4fun.github.io/2018/07/31/为什么Python的corotine这么特殊/　　作者: Hk4Fun" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
@@ -465,7 +465,7 @@
         
     </div>
 
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/08/15/设计模式之单例模式/">设计模式之单例模式</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/15/魔法方法之-new-与-init/">魔法方法之 __new__() 与 __init__()</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/05/Python-中-type-与-object-的关系/">Python 中 type 与 object 的关系</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/31/为什么Python的corotine这么特殊/">为什么Python的coroutine这么特殊</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/19/剑指offer题解（python实现）/">剑指offer题解（Python实现）</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/09/廖雪峰web实战总结/">廖雪峰web实战总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/27/DO-VPS搭建SS并使用ServerSpeeder加速/">DO VPS搭建SS并使用ServerSpeeder加速</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/08/15/设计模式之单例模式/">设计模式之单例模式</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/15/魔法方法之-new-与-init/">魔法方法之 __new__() 与 __init__()</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/05/Python-中-type-与-object-的关系/">Python 中 type 与 object 的关系</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/31/为什么Python的corotine这么特殊/">为什么Python的coroutine这么特殊</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/19/剑指offer题解（python实现）/">剑指offer题解（Python实现）</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/09/廖雪峰web实战总结/">廖雪峰web实战总结</a></li></ul>
 
 
 
