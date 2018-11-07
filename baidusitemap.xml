@@ -4,18 +4,35 @@
 
     
   <url>
-    <loc>https://hk4fun.github.io/2018/08/15/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/</loc>
-    <lastmod>2018-11-05T06:33:03.748Z</lastmod>
+    <loc>https://hk4fun.github.io/2018/11/07/Python%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%A9%BB%E7%95%99%E6%9C%BA%E5%88%B6/</loc>
+    <lastmod>2018-11-07T10:36:47.716Z</lastmod>
     <data>
         <display>
-        <title>设计模式之单例模式</title>
-        <pubTime>2018-08-15T05:11:09.000Z</pubTime>
+        <title>Python字符串驻留机制</title>
+        <pubTime>2018-11-07T09:53:52.000Z</pubTime>
         
-        <tag>python</tag>
+        <tag>Python</tag>
+         
+        <tag>源码剖析</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://hk4fun.github.io/2018/08/05/Python-%E4%B8%AD-type-%E4%B8%8E-object-%E7%9A%84%E5%85%B3%E7%B3%BB/</loc>
+    <lastmod>2018-11-07T09:58:52.121Z</lastmod>
+    <data>
+        <display>
+        <title>Python 中 type 与 object 的关系</title>
+        <pubTime>2018-08-04T17:58:08.000Z</pubTime>
+        
+        <tag>Python</tag>
          
         <tag>元类编程</tag>
-         
-        <tag>设计模式</tag>
          
          
            
@@ -26,13 +43,13 @@
     
   <url>
     <loc>https://hk4fun.github.io/2018/08/15/%E9%AD%94%E6%B3%95%E6%96%B9%E6%B3%95%E4%B9%8B-new-%E4%B8%8E-init/</loc>
-    <lastmod>2018-11-05T06:33:01.021Z</lastmod>
+    <lastmod>2018-11-05T14:59:49.303Z</lastmod>
     <data>
         <display>
         <title>魔法方法之 __new__() 与 __init__()</title>
         <pubTime>2018-08-15T04:28:03.000Z</pubTime>
         
-        <tag>python</tag>
+        <tag>Python</tag>
          
         <tag>元类编程</tag>
          
@@ -46,18 +63,43 @@
 
     
   <url>
-    <loc>https://hk4fun.github.io/2018/07/19/%E5%89%91%E6%8C%87offer%E9%A2%98%E8%A7%A3%EF%BC%88python%E5%AE%9E%E7%8E%B0%EF%BC%89/</loc>
-    <lastmod>2018-11-05T06:31:07.926Z</lastmod>
+    <loc>https://hk4fun.github.io/2018/08/15/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/</loc>
+    <lastmod>2018-11-05T14:59:43.987Z</lastmod>
     <data>
         <display>
-        <title>剑指offer题解（Python实现）</title>
-        <pubTime>2018-07-19T08:30:29.000Z</pubTime>
+        <title>设计模式之单例模式</title>
+        <pubTime>2018-08-15T05:11:09.000Z</pubTime>
         
-        <tag>剑指offer</tag>
+        <tag>Python</tag>
          
-        <tag>算法</tag>
+        <tag>元类编程</tag>
          
-        <tag>数据结构</tag>
+        <tag>设计模式</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://hk4fun.github.io/2017/10/09/%E5%BB%96%E9%9B%AA%E5%B3%B0web%E5%AE%9E%E6%88%98%E6%80%BB%E7%BB%93/</loc>
+    <lastmod>2018-11-05T14:58:54.581Z</lastmod>
+    <data>
+        <display>
+        <title>廖雪峰web实战总结</title>
+        <pubTime>2017-10-09T05:48:15.000Z</pubTime>
+        
+        <tag>Python</tag>
+         
+        <tag>ORM</tag>
+         
+        <tag>MVC</tag>
+         
+        <tag>Django</tag>
+         
+        <tag>Web</tag>
          
          
            
@@ -68,13 +110,13 @@
     
   <url>
     <loc>https://hk4fun.github.io/2018/07/31/%E4%B8%BA%E4%BB%80%E4%B9%88Python%E7%9A%84corotine%E8%BF%99%E4%B9%88%E7%89%B9%E6%AE%8A/</loc>
-    <lastmod>2018-11-05T06:15:59.683Z</lastmod>
+    <lastmod>2018-11-05T14:57:13.304Z</lastmod>
     <data>
         <display>
         <title>为什么Python的coroutine这么特殊</title>
         <pubTime>2018-07-30T16:39:05.000Z</pubTime>
         
-        <tag>python</tag>
+        <tag>Python</tag>
          
         <tag>coroutine</tag>
          
@@ -86,41 +128,18 @@
 
     
   <url>
-    <loc>https://hk4fun.github.io/2018/08/05/Python-%E4%B8%AD-type-%E4%B8%8E-object-%E7%9A%84%E5%85%B3%E7%B3%BB/</loc>
-    <lastmod>2018-11-05T06:10:25.889Z</lastmod>
+    <loc>https://hk4fun.github.io/2018/07/19/%E5%89%91%E6%8C%87offer%E9%A2%98%E8%A7%A3%EF%BC%88Python%E5%AE%9E%E7%8E%B0%EF%BC%89/</loc>
+    <lastmod>2018-11-05T06:31:07.926Z</lastmod>
     <data>
         <display>
-        <title>Python 中 type 与 object 的关系</title>
-        <pubTime>2018-08-04T17:58:08.000Z</pubTime>
+        <title>剑指offer题解（Python实现）</title>
+        <pubTime>2018-07-19T08:30:29.000Z</pubTime>
         
-        <tag>python</tag>
+        <tag>剑指offer</tag>
          
-        <tag>元类编程</tag>
+        <tag>算法</tag>
          
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>https://hk4fun.github.io/2017/10/09/%E5%BB%96%E9%9B%AA%E5%B3%B0web%E5%AE%9E%E6%88%98%E6%80%BB%E7%BB%93/</loc>
-    <lastmod>2018-07-19T08:18:58.572Z</lastmod>
-    <data>
-        <display>
-        <title>廖雪峰web实战总结</title>
-        <pubTime>2017-10-09T05:48:15.000Z</pubTime>
-        
-        <tag>python</tag>
-         
-        <tag>orm</tag>
-         
-        <tag>mvc</tag>
-         
-        <tag>django</tag>
-         
-        <tag>web</tag>
+        <tag>数据结构</tag>
          
          
            

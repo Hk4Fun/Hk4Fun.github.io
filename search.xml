@@ -3,6 +3,423 @@
   
     
     <entry>
+      <title><![CDATA[Python字符串驻留机制]]></title>
+      <url>/2018/11/07/Python%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%A9%BB%E7%95%99%E6%9C%BA%E5%88%B6/</url>
+      <content type="html"><![CDATA[<p>由于CPython的优化，有时会发生<strong>字符串驻留（intern）</strong></p>
+<p>即在某些情况下尝试使用现有的<strong>不可变对象</strong>而不是每次都创建一个新对象</p>
+<p>这些驻留的对象在内部使用类似字典的结构（<strong>驻留池</strong>）进行驻留</p>
+<p>在被驻留之后，许多变量可能指向内存中的相同字符串对象，从而<strong>节省内存</strong></p>
+<p>下面的代码片段中，字符串是被<strong>隐式驻留</strong>的，何时隐式驻留字符串取决于字符串本身的特点</p>
+<p>也就是说字符串是否会被隐式驻留是有条件的</p>
+<p>（至于显式驻留，后面会讲到）</p>
+<a id="more"></a>
+<h3 id="1-字符串只在编译期间被隐式驻留"><a href="#1-字符串只在编译期间被隐式驻留" class="headerlink" title="1.  字符串只在编译期间被隐式驻留"></a>1.  字符串只在编译期间被隐式驻留</h3><pre><code class="python">a = &quot;some_string&quot;
+b = &quot;some&quot; + &quot;_&quot; + &quot;string&quot;
+a is b
+&gt;&gt;&gt; True
+</code></pre>
+<p>很明显，字符串 “some_string” 被 CPython 隐式驻留了，所以 b 才会与 a 引用相同的字符串对象 </p>
+<p>而且可以注意到字符串是在<strong>编译时（compile-time）</strong>被驻留的</p>
+<p>因为这里字符串的拼接发生在编译时，我们可以反汇编验证一下：</p>
+<pre><code class="python">from dis import dis
+dis(&quot;&quot;&quot;id(&quot;some&quot; + &quot;_&quot; + &quot;string&quot;)&quot;&quot;&quot;)
+&gt;&gt;&gt;           0 LOAD_NAME                0 (id)
+              2 LOAD_CONST               4 (&#39;some_string&#39;)
+              4 CALL_FUNCTION            1
+              6 RETURN_VALUE
+</code></pre>
+<p>反汇编的结果展示的是<strong>运行时（run-time）</strong>的字节码</p>
+<p>可以看到，字符串 ‘some_string’ 在编译时就已经拼接好了</p>
+<p>再加上之前 a 变量的赋值操作在编译时已经被隐式驻留了</p>
+<p>所以在运行时可以直接引用（<code>LOAD_CONST</code>），从而指向同一个字符串对象</p>
+<p>为了对比，我们看这种情况：</p>
+<pre><code class="python">a = &quot;some_string&quot;
+b = &#39;&#39;.join([&#39;some&#39;,&#39;_&#39;,&#39;string&#39;])
+a is b
+&gt;&gt;&gt; False
+</code></pre>
+<p>join函数返回的也是 “some_string”，却不是同一个对象</p>
+<p>因为这里是调用函数来拼接字符串的，发生在‘运行时’</p>
+<p>在前面的‘编译时’CPython并不知道结果是 “some_string”</p>
+<p>CPython看到的只是 ‘some’, ‘_’, ‘string’ 这三个字符串</p>
+<p>所以最终的 “some_string” 是新创建的字符串对象而不是之前的驻留对象</p>
+<p>我们反汇编来验证一下就明白了：</p>
+<pre><code class="python">dis(&quot;&quot;&quot;&#39;&#39;.join([&#39;some&#39;,&#39;_&#39;,&#39;string&#39;])&quot;&quot;&quot;)
+&gt;&gt;&gt;           0 LOAD_CONST               0 (&#39;&#39;)
+              2 LOAD_ATTR                0 (join)
+              4 LOAD_CONST               1 (&#39;some&#39;)
+              6 LOAD_CONST               2 (&#39;_&#39;)
+              8 LOAD_CONST               3 (&#39;string&#39;)
+             10 BUILD_LIST               3
+             12 CALL_FUNCTION            1
+             14 RETURN_VALUE
+</code></pre>
+<p>运行时并没有字符串 “some<em>string”，而是 ‘some’, ‘\</em>‘, ‘string’</p>
+<p>当然，若之前已经驻留了 ‘some’, ‘_’, ‘string’，</p>
+<p>则这里的 ‘some’, ‘_’, ‘string’ 将分别引用同一个对象</p>
+<p>但对结果 “some_string” 没有任何影响，无论如何 “some_string” 将是一个新的字符串对象</p>
+<p>其实只要分清楚字符串的拼接到底发生在编译期间还是运行期间就明白了，再来看一个例子：</p>
+<pre><code class="python">a = &#39;some&#39;
+b = &quot;some_string&quot;
+a + &#39;_string&#39; is b
+&gt;&gt;&gt; False
+</code></pre>
+<p>同样的，最后发生的字符串拼接是在运行期间而不是编译期间，因为 a 变量在编译期间不会被’some’替换</p>
+<p>反汇编一下就明白了：</p>
+<pre><code class="python">dis(&quot;&quot;&quot;a + &#39;_string&#39;&quot;&quot;&quot;)
+&gt;&gt;&gt;           0 LOAD_NAME                0 (a)
+              2 LOAD_CONST               0 (&#39;_string&#39;)
+              4 BINARY_ADD
+              6 RETURN_VALUE
+
+dis(&quot;&quot;&quot;&#39;some&#39; + &#39;_string&#39;&quot;&quot;&quot;)
+&gt;&gt;&gt;           0 LOAD_CONST               2 (&#39;some_string&#39;)
+              2 RETURN_VALUE
+</code></pre>
+<h3 id="2-只有包含ASCII字母，数字或下划线的字符串才会被隐式驻留"><a href="#2-只有包含ASCII字母，数字或下划线的字符串才会被隐式驻留" class="headerlink" title="2. 只有包含ASCII字母，数字或下划线的字符串才会被隐式驻留"></a>2. 只有包含ASCII字母，数字或下划线的字符串才会被隐式驻留</h3><pre><code class="python">a = &quot;wtf&quot;
+b = &quot;wtf&quot;
+a is b
+&gt;&gt;&gt; True
+
+a = &quot;wtf!&quot;
+b = &quot;wtf!&quot;
+a is b
+&gt;&gt;&gt; False
+</code></pre>
+<p><img src="https://ws1.sinaimg.cn/large/006giLD5ly1fwyhrevoyhj30cs0cc0tp.jpg" alt=""></p>
+<p>字符串 “wtf!” 包含了非合法的字符 “!”，因此不会引用同一驻留对象</p>
+<p>因为解释器仅对看起来像 Python 标识符的字符串驻留，而 Python 标识符正是由下划线、字母和数字组成的</p>
+<p>这在CPython的 <a href="https://github.com/python/cpython/blob/3.6/Objects/codeobject.c#L19" target="_blank" rel="external">源码中 </a>可以看到具体的实现，这里只分析主要的代码片段：</p>
+<pre><code class="c">#define NAME_CHARS \
+    &quot;0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz&quot; // 只含ASCII字母，数字和下划线
+
+/* all_name_chars(s): true iff all chars in s are valid NAME_CHARS */
+
+static int
+all_name_chars(PyObject *o) // o为指向待检测字符串对象的指针，通过检测则返回1，否则返回0
+{
+    static char ok_name_char[256]; // 所有 ASCII 字符的映射表
+    static const unsigned char *name_chars = (unsigned char *)NAME_CHARS; // name_chars 指向合法字符表
+    const unsigned char *s, *e; 
+
+    if (!PyUnicode_IS_ASCII(o)) // 首先检测是否都为 ASCII 字符，避免下面检测时越界
+        return 0;
+
+    if (ok_name_char[*name_chars] == 0) {
+        const unsigned char *p;
+        for (p = name_chars; *p; p++) // 在 ASCII 字符映射表中把合法字符的位置设为1
+            ok_name_char[*p] = 1;
+    }
+    s = PyUnicode_1BYTE_DATA(o); // 指向待检测字符串首字符
+    e = s + PyUnicode_GET_LENGTH(o); // 指向待检测字符串尾字符
+    while (s != e) { // 遍历待检测字符串，看在 ASCII 字符映射表中相应的字符是否合法（值为1）
+        if (ok_name_char[*s++] == 0) // 一旦检测到非法字符（值为0）就返回0
+            return 0;
+    }
+    return 1; // 通过检测，返回1
+}
+</code></pre>
+<p>但这种检测只发生在交互式命令行中，如果我们写成一个 py 文件然后运行，即使包含非法字符也会被驻留</p>
+<p>这也许是 CPython 更进一步的优化</p>
+<h3 id="3-同一行赋值（元组拆包）时会引用同一相等的对象，但不一定会被驻留"><a href="#3-同一行赋值（元组拆包）时会引用同一相等的对象，但不一定会被驻留" class="headerlink" title="3.  同一行赋值（元组拆包）时会引用同一相等的对象，但不一定会被驻留"></a>3.  同一行赋值（元组拆包）时会引用同一相等的对象，但不一定会被驻留</h3><pre><code class="python">a, b = &quot;wtf!&quot;, &quot;wtf!&quot;
+a is b
+&gt;&gt;&gt; True
+</code></pre>
+<p>当在<strong>同一行</strong>中把 a 和 b 赋值为“wtf!”时</p>
+<p>解释器只会创建一个新对象（即使该字符串中包含非法字符），然后两个变量同时引用该对象</p>
+<p>如果你在不同的行上进行，它不会“知道”已经有了 “wtf!” 作为一个对象（因为 “wtf!” 不是上面提到合法字符串）</p>
+<p>但引用同一对象这并不意味着该对象发生了驻留：</p>
+<pre><code class="python">a, b = &quot;wtf!&quot;, &quot;wtf!&quot;
+c = &quot;wtf!&quot;
+a is b
+&gt;&gt;&gt; True
+a is c
+&gt;&gt;&gt; False
+b is c
+&gt;&gt;&gt; False
+
+a, b = &quot;wtf&quot;, &quot;wtf&quot;
+c = &quot;wtf&quot;
+a is b
+&gt;&gt;&gt; True
+a is c
+&gt;&gt;&gt; True
+b is c
+&gt;&gt;&gt; True
+</code></pre>
+<p>可以看到，“wtf!” 虽然被 a 和 b 同时引用了，但并没有被驻留，只有合法的字符串才会被驻留</p>
+<h3 id="4-长度为0和长度为1的字符串会被驻留"><a href="#4-长度为0和长度为1的字符串会被驻留" class="headerlink" title="4. 长度为0和长度为1的字符串会被驻留"></a>4. 长度为0和长度为1的字符串会被驻留</h3><pre><code class="python">a = &#39;&#39;
+b = &#39;&#39;
+a is b
+&gt;&gt;&gt; True
+
+a = &#39;_&#39;
+b = &#39;_&#39;
+a is b
+&gt;&gt;&gt; True
+
+a = &#39;&amp;&#39;
+b = &#39;&amp;&#39;
+a is b
+&gt;&gt;&gt; True
+</code></pre>
+<p>即使包含非法字符，只要长度不超过1，都会被驻留</p>
+<p>但准确来说是 <a href="https://zh.wikipedia.org/wiki/ISO/IEC_8859-1#%E5%AD%97%E7%AC%A6%E9%9B%86" target="_blank" rel="external">Latin-1 字符集</a> 的字符才会被驻留：</p>
+<pre><code class="python">a = &#39;ÿ&#39; # \xff
+b = &#39;ÿ&#39;
+a is b
+&gt;&gt;&gt; True
+
+a = &#39;我&#39;
+b = &#39;我&#39;
+a is b
+&gt;&gt;&gt; False
+
+len(&#39;我&#39;)
+&gt;&gt;&gt; 1
+</code></pre>
+<p>虽然字符串 <code>&#39;我&#39;</code> 的长度为1，但由于不是在 Latin-1 字符集的范围内，所以不会被驻留</p>
+<p>严格来讲，单字符实际上在CPython内部使用了一个数组 <code>unicode_latin1</code> 来共享而不是靠 <code>interned</code> 字典来驻留</p>
+<p>类似于小整数缓存池 [-5,256]，<code>unicode_latin1</code> 相当于一个字符缓冲池：</p>
+<pre><code class="c">/* Single character Unicode strings in the Latin-1 range are being
+   shared as well. */
+static PyObject *unicode_latin1[256] = {NULL};
+
+static PyObject*
+get_latin1_char(unsigned char ch)
+{ 
+    PyObject *unicode = unicode_latin1[ch]; // 尝试从 unicode_latin1 中获取单字符的引用
+    if (!unicode) { // 首次获取，unicode_latin1 中还没缓存
+        unicode = PyUnicode_New(1, ch); // 新建一个 PyUnicode 对象
+        if (!unicode)
+            return NULL;
+        PyUnicode_1BYTE_DATA(unicode)[0] = ch;
+        assert(_PyUnicode_CheckConsistency(unicode, 1));
+        unicode_latin1[ch] = unicode; // 存放到 unicode_latin1 中，这样下次可以直接获取该引用
+    }
+    Py_INCREF(unicode); // 记得引用计数加1
+    return unicode;
+}
+</code></pre>
+<p>无论如何，当你获取单个字符时，<code>get_latin1_char</code> 总是返回 <code>unicode_latin1</code> 中共享的引用</p>
+<p>这也就意味着在运行期间得到的单个字符也是共享的：</p>
+<pre><code class="python">a = &#39;&#39;.join([&#39;@&#39;]) # ‘@’在 latin1 字符集范围内
+b = &#39;&#39;.join([&#39;@&#39;]) 
+a is b
+&gt;&gt;&gt; True
+
+a = &#39;&#39;.join([&#39;你&#39;]) # ‘你’不在 latin1 字符集范围内
+b = &#39;&#39;.join([&#39;你&#39;])
+a is b
+&gt;&gt;&gt; False
+
+a = &#39;&#39;.join([&#39;1&#39;,&#39;1&#39;]) # 结果不是单字符时创建两个不同的字符串
+b = &#39;&#39;.join([&#39;1&#39;,&#39;1&#39;]) 
+a is b
+&gt;&gt;&gt; False
+
+a = &#39;123&#39;
+b = &#39;1&#39;
+a[0] is b # 获取的是单个字符
+&gt;&gt;&gt; True
+
+a = &#39;123&#39;
+b = &#39;12&#39;
+a[0:2] is b # 获取非单字符，a[0:2] 返回的是新的字符串对象
+&gt;&gt;&gt; False
+</code></pre>
+<h3 id="5-超过20个字符的折叠字符串不会被驻留"><a href="#5-超过20个字符的折叠字符串不会被驻留" class="headerlink" title="5. 超过20个字符的折叠字符串不会被驻留"></a>5. 超过20个字符的<code>折叠</code>字符串不会被驻留</h3><pre><code class="python">a = &#39;aaaaaaaaaaaaaaaaaaaa&#39; # 未折叠字符串，长度为20
+b = &#39;aaaaaaaaaaaaaaaaaaaa&#39;
+a is b
+&gt;&gt; True
+
+a = &#39;aaaaaaaaaaaaaaaaaaaaa&#39; # 未折叠字符串，长度为21
+b = &#39;aaaaaaaaaaaaaaaaaaaaa&#39;
+a is b
+&gt;&gt;&gt; True
+
+&#39;a&#39; * 20 is &#39;aaaaaaaaaaaaaaaaaaaa&#39; # &#39;a&#39; * 20 为折叠字符串，长度为20
+&gt;&gt;&gt; True
+
+&#39;a&#39; * 21 is &#39;aaaaaaaaaaaaaaaaaaaaa&#39; # &#39;a&#39; * 21 为折叠字符串，长度为21
+&gt;&gt;&gt; False
+
+&#39;$&#39; * 2 is &#39;$$&#39; # 只要含有非法字符就不会被驻留，与长度无关
+&gt;&gt;&gt; False
+</code></pre>
+<p>字符串折叠是<strong>常量折叠</strong>的一种，常量折叠在编译阶段会进行值替换，是<strong>窥孔优化</strong>的一种实现方式</p>
+<p>这意味着在编译期间表达式 <code>&#39;a&#39;* 20</code> 会被 <code>&#39;aaaaaaaaaaaaaaaaaaa&#39;</code> 替换，以减少运行期间的时钟周期</p>
+<p>但这种优化是有限制的，只有长度小于20的字符串才会发生常量折叠的优化</p>
+<p>这在 CPython 的 <a href="https://github.com/python/cpython/blob/3.6/Python/peephole.c#L288" target="_blank" rel="external">源码中 </a>可以找到相应的实现</p>
+<p>为什么会有这种限制？想象一下由于表达式 <code>&#39;a&#39;* 10 ** 10</code> 而生成的 .pyc 文件的大小</p>
+<p>下面我们通过反汇编来看一下就明白了：</p>
+<pre><code class="python">dis(&quot;&quot;&quot;&#39;a&#39; * 20&quot;&quot;&quot;)
+&gt;&gt;&gt;          0 LOAD_CONST               2 (&#39;aaaaaaaaaaaaaaaaaaaa&#39;)
+              2 RETURN_VALUE
+
+dis(&quot;&quot;&quot;&#39;a&#39; * 21&quot;&quot;&quot;)
+&gt;&gt;&gt;           0 LOAD_CONST               0 (&#39;a&#39;)
+              2 LOAD_CONST               1 (21)
+              4 BINARY_MULTIPLY
+              6 RETURN_VALUE
+</code></pre>
+<p>可以看到，超过20个字符的字符串将不会在编译时被替换，而是直接被解析成 <code>BINARY_MULTIPLY</code> 的乘法运算</p>
+<p>这种常量折叠不只发生在字符串上，事实上它对所有的不可变对象（字符串、元组等）都有效：</p>
+<pre><code class="python">dis(&quot;(1,)*20&quot;)
+&gt;&gt;&gt;           0 LOAD_CONST               3 ((1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1))
+              2 RETURN_VALUE
+
+dis(&quot;(1,)*21&quot;)
+&gt;&gt;&gt;           0 LOAD_CONST               2 ((1,))
+              2 LOAD_CONST               1 (21)
+              4 BINARY_MULTIPLY
+              6 RETURN_VALUE
+
+dis(&quot;[1]*2&quot;) # 对于可变对象没有这种优化
+&gt;&gt;&gt;           0 LOAD_CONST               0 (1)
+              2 BUILD_LIST               1
+              4 LOAD_CONST               1 (2)
+              6 BINARY_MULTIPLY
+              8 RETURN_VALUE
+</code></pre>
+<h3 id="6-使用-sys-intern-显式驻留"><a href="#6-使用-sys-intern-显式驻留" class="headerlink" title="6. 使用 sys.intern() 显式驻留"></a>6. 使用 <code>sys.intern()</code> 显式驻留</h3><pre><code class="python">from sys import intern
+a = intern(&quot;wtf!&quot;)
+b = intern(&quot;wtf!&quot;)
+a is b
+&gt;&gt;&gt; True
+
+a = &quot;wtf!&quot;
+b = &quot;wtf!&quot;
+a is b # 显式驻留之前
+&gt;&gt;&gt; False
+
+b = intern(a)
+a is b # 显式驻留之后
+&gt;&gt;&gt; True
+</code></pre>
+<p>注意：驻留不是缓存，缓存的对象往往有过期时间的限制，会发生淘汰，其生命周期有限</p>
+<p>而驻留的对象没有过期时间和淘汰这一说法，驻留的对象直到发生垃圾回收或程序结束才会被销毁</p>
+<p>可以把驻留池看成是一个容量为无限大且没有过期时间限制的缓存池</p>
+<p>这里补充一点：Python中字符串的 <a href="https://github.com/python/cpython/blob/d0e3105f7ca3fc54b167edc756ce545cbab0ce95/Include/unicodeobject.h#L412" target="_blank" rel="external">intern状态</a> 有三个，分别是:</p>
+<pre><code class="c">/* Interning state. */
+#define SSTATE_NOT_INTERNED 0  // 字符串没有被interned
+#define SSTATE_INTERNED_MORTAL 1 // 字符串被interned，可以被回收
+#define SSTATE_INTERNED_IMMORTAL 2 // 字符串永久interned，不会被回收
+</code></pre>
+<p>字符串的结构体中 <code>state.interned</code> 标记该值，宏 <code>PyUnicode_CHECK_INTERNED</code> 返回该值：</p>
+<pre><code class="c">/* Use only if you know it&#39;s a string */
+#define PyUnicode_CHECK_INTERNED(op) (((PyASCIIObject *)(op))-&gt;state.interned)
+</code></pre>
+<p>state.interned<code>在创建字符串对象时会被设为</code>SSTATE_NOT_INTERNED</p>
+<p>在驻留到 interned 字典后被设为 <code>SSTATE_INTERNED_MORTAL</code></p>
+<p>至于 <code>SSTATE_INTERNED_IMMORTAL</code> 需要手动调用 <code>PyUnicode_InternImmortal</code> 才会设置该值：</p>
+<pre><code class="c">void
+PyUnicode_InternImmortal(PyObject **p)
+{
+    PyUnicode_InternInPlace(p);
+    if (PyUnicode_CHECK_INTERNED(*p) != SSTATE_INTERNED_IMMORTAL) {
+        _PyUnicode_STATE(*p).interned = SSTATE_INTERNED_IMMORTAL;
+        Py_INCREF(*p);
+    }
+}
+</code></pre>
+<pre><code class="python">a = &quot;foo&quot;
+id(a)
+&gt;&gt;&gt; 89369248
+
+a = None # a 指向其他对象，字符串&quot;foo&quot;在驻留池中被销毁
+b = &quot;foo&quot; # 此时在驻留池中找不到&quot;foo&quot;便会创建新的对象
+id(b) # 地址将不再和上面相等
+&gt;&gt;&gt; 89368640
+</code></pre>
+<h3 id="7-深入源码"><a href="#7-深入源码" class="headerlink" title="7. 深入源码"></a>7. 深入源码</h3><p>字符串的intern机制由 <a href="https://github.com/python/cpython/blob/9fc57a384825530635ef5ec093a31d864ea14f7c/Objects/unicodeobject.c#L15204" target="_blank" rel="external">PyUnicode_InternInPlace</a> 函数来实现：</p>
+<pre><code class="c">/* This dictionary holds all interned unicode strings.  Note that references
+   to strings in this dictionary are *not* counted in the string&#39;s ob_refcnt.
+   When the interned string reaches a refcnt of 0 the string deallocation
+   function will delete the reference from this dictionary.
+
+   Another way to look at this is that to say that the actual reference
+   count of a string is:  s-&gt;ob_refcnt + (s-&gt;state ? 2 : 0)
+*/
+static PyObject *interned = NULL; // 字符串驻留机制的核心存储结构--interned字典
+
+void
+PyUnicode_InternInPlace(PyObject **p) // 注意这里是二级指针，因为可能需要修改指针本身
+{
+    PyObject *s = *p;
+    PyObject *t;
+#ifdef Py_DEBUG
+    assert(s != NULL);
+    assert(_PyUnicode_CHECK(s));
+#else
+    if (s == NULL || !PyUnicode_Check(s))
+        return;
+#endif
+    /* If it&#39;s a subclass, we don&#39;t really know what putting
+       it in the interned dict might do. */
+    /* 检查 s 是否为 PyUnicode 实例，如果为 PyUnicode 子类的实例则直接返回，不对子类进行驻留
+      因为不知道要把子类的什么内容驻留在 interned 字典中 */
+    if (!PyUnicode_CheckExact(s))
+        return;
+    if (PyUnicode_CHECK_INTERNED(s)) // 对驻留过的字符串不再执行多余的 internd 机制
+        return;
+    if (interned == NULL) { // 首次使用 interned 字典，需要初始化
+        interned = PyDict_New(); // interned 就是一个普通的 Python Dict
+        if (interned == NULL) { // 创建 interned 字典失败不会抛出错误而是默默退出
+            PyErr_Clear(); /* Don&#39;t leave an exception */
+            return;
+        }
+    }
+    Py_ALLOW_RECURSION
+    /* PyDict_SetDefault 就是 dict 的一个方法 setdefault 的实现
+      这里设置键值都为s，注意这里 s 为引用（指针），实际上是｛hash(s):s｝
+      值相等的字符串，即使内存地址不一样，hash值也是一样的
+      因此如果 interned 中已经含有与s值相等的字符串
+      则返回该字符串原来的引用指针t，否则返回当前的引用指针s
+    */
+    t = PyDict_SetDefault(interned, s, s);
+    Py_END_ALLOW_RECURSION
+    if (t == NULL) { // 出错直接返回
+        PyErr_Clear();
+        return;
+    }
+    if (t != s) { // 返回的引用指针 t 不等于 s，说明 interned 中已经含有该字符串
+        Py_INCREF(t); // 增加原来字符串 t 的引用计数
+        Py_SETREF(*p, t); // 修改当前字符串 p 的引用为 t，使得 p 和 t 是同一个引用，
+        return;       // 这样原来的引用 p 所指向的字符串对象会被垃圾回收
+        // 也就是说其实字符串对象总是会被创建的，但可能昙花一现
+    }
+    /* The two references in interned are not counted by refcnt.
+       The deallocator will take care of this */
+    /* 代码能执行到这里说明 t == s, 即 interned 中不存在该与 s 值相等的字符串，
+      于是在 interned 中驻留，从而返回的 t 就是 s
+      但这样 s 的引用计数会由于存入字典而被加2，因为字典中 key 和 value 都会引用该字符串
+      因此我们需要手动把 s 的引用计数减去2，这样才是 s 的真正引用计数
+     */
+    Py_REFCNT(s) -= 2;
+    _PyUnicode_STATE(s).interned = SSTATE_INTERNED_MORTAL; // 修改 intern 状态为 SSTATE_INTERNED_MORTAL
+}
+</code></pre>
+<p>更多相关源码的研究可以查看 cpython/Objects/ 下的 <a href="https://github.com/python/cpython/blob/master/Objects/unicodeobject.c" target="_blank" rel="external">unicodeobject.c</a> 和 <a href="https://github.com/python/cpython/blob/master/Objects/codeobject.c" target="_blank" rel="external">codeobject.c</a></p>
+<h3 id="8-参考资料"><a href="#8-参考资料" class="headerlink" title="8. 参考资料"></a>8. 参考资料</h3><ul>
+<li><a href="https://github.com/satwikkansal/wtfpython#-strings-can-be-tricky-sometimes-" target="_blank" rel="external">wtfpython</a></li>
+<li><a href="https://book.douban.com/subject/3117898/" target="_blank" rel="external">Python源码剖析第三章</a></li>
+<li><a href="http://guilload.com/python-string-interning/" target="_blank" rel="external">The internals of Python string interning</a></li>
+</ul>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> Python </tag>
+            
+            <tag> 源码剖析 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[设计模式之单例模式]]></title>
       <url>/2018/08/15/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/</url>
       <content type="html"><![CDATA[<p>由于 Python 拥有灵活的动态语言特性和丰富的魔法方法，再加上它强大的元类编程，单例模式（Singleton）在 Python 上的实现方式五花八门。本文主要讨论单例模式在 Python 上的各种实现，涉及到 Python 中元类编程、魔法方法和装饰器的进阶语法知识，并在最后深入讨论和总结。</p>
@@ -600,7 +1017,7 @@ call A.__init__() # 能自动调用A.__init__()
         
         <tags>
             
-            <tag> python </tag>
+            <tag> Python </tag>
             
             <tag> 元类编程 </tag>
             
@@ -852,7 +1269,7 @@ TypeError: __init__() should return None, not &#39;int&#39;
         
         <tags>
             
-            <tag> python </tag>
+            <tag> Python </tag>
             
             <tag> 元类编程 </tag>
             
@@ -865,7 +1282,11 @@ TypeError: __init__() should return None, not &#39;int&#39;
     <entry>
       <title><![CDATA[Python 中 type 与 object 的关系]]></title>
       <url>/2018/08/05/Python-%E4%B8%AD-type-%E4%B8%8E-object-%E7%9A%84%E5%85%B3%E7%B3%BB/</url>
-      <content type="html"><![CDATA[<p>都知道 Python 有强大的动态语言特性，得益于它“无处不对象”的语言设计思想，那么这些对象的源头来自哪里？这背后一定有它的“出发点”。相信很多人一下就想到元类（metaclass）那种复杂的东西，且慢，心急吃不了热豆腐。在深入研究元类编程之前，一些基本的但也是最重要的语言知识一定要弄清楚，否则会一头雾水。在此之前，明白 Python 中 type 与 object 的关系至关重要，它俩才是 Python 中一切对象的“出发点”。</p>
+      <content type="html"><![CDATA[<p>都知道 Python 有强大的动态语言特性，得益于它“无处不对象”的语言设计思想</p>
+<p>那么这些对象的源头来自哪里？这背后一定有它的<strong>出发点</strong>。</p>
+<p>相信很多人一下就想到元类（<code>metaclass</code>）那种复杂的东西，且慢，心急吃不了热豆腐</p>
+<p>在深入研究元类编程之前，一些基本的但也是最重要的语言知识一定要弄清楚，否则会一头雾水</p>
+<p>在此之前，明白 Python 中 <code>type</code> 与 <code>object</code> 的关系至关重要，它俩才是 Python 中一切对象的<strong>出发点</strong>。</p>
 <a id="more"></a>
 <p>先来看看这8个输出：</p>
 <pre><code class="python">In [1]: isinstance(object, object)
@@ -1144,7 +1565,7 @@ AttributeError: &#39;T&#39; object has no attribute &#39;__bases__&#39;
         
         <tags>
             
-            <tag> python </tag>
+            <tag> Python </tag>
             
             <tag> 元类编程 </tag>
             
@@ -1186,7 +1607,7 @@ AttributeError: &#39;T&#39; object has no attribute &#39;__bases__&#39;
         
         <tags>
             
-            <tag> python </tag>
+            <tag> Python </tag>
             
             <tag> coroutine </tag>
             
@@ -1196,7 +1617,7 @@ AttributeError: &#39;T&#39; object has no attribute &#39;__bases__&#39;
     
     <entry>
       <title><![CDATA[剑指offer题解（Python实现）]]></title>
-      <url>/2018/07/19/%E5%89%91%E6%8C%87offer%E9%A2%98%E8%A7%A3%EF%BC%88python%E5%AE%9E%E7%8E%B0%EF%BC%89/</url>
+      <url>/2018/07/19/%E5%89%91%E6%8C%87offer%E9%A2%98%E8%A7%A3%EF%BC%88Python%E5%AE%9E%E7%8E%B0%EF%BC%89/</url>
       <content type="html"><![CDATA[<p>每个题目标题链接到 <a href="https://github.com/Hk4Fun/algorithm_offer/tree/master/target_offer" target="_blank" rel="external">github</a>，可以查看其他的解题思路、测试用例以及拓展题目，这里只贴上书中题目的最优解法和代码。另外，这里参考的是剑指offer第一版的题目顺序，补充部分添加的是剑指offer第二版多出来的几道题目。</p>
 <a id="more"></a>
 <h2 id="二维数组中的查找"><a href="#二维数组中的查找" class="headerlink" title=" 二维数组中的查找"></a><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/3_1_%E4%BA%8C%E7%BB%B4%E6%95%B0%E7%BB%84%E4%B8%AD%E7%9A%84%E6%9F%A5%E6%89%BE.py" target="_blank" rel="external"> 二维数组中的查找</a></h2><h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>在一个二维数组中，每一行都按照从左到右递增的顺序排序，每一列都按照从上到下递增的顺序排序。<br>请完成一个函数，输入这样的一个二维数组和一个整数，判断数组中是否含有该整数。</p>
@@ -2868,15 +3289,15 @@ class Solution:
         
         <tags>
             
-            <tag> python </tag>
+            <tag> Python </tag>
             
-            <tag> orm </tag>
+            <tag> ORM </tag>
             
-            <tag> mvc </tag>
+            <tag> MVC </tag>
             
-            <tag> django </tag>
+            <tag> Django </tag>
             
-            <tag> web </tag>
+            <tag> Web </tag>
             
         </tags>
         

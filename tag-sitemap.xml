@@ -2,41 +2,6 @@
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
     <url>
-        <loc>https://hk4fun.github.io/tags/orm/</loc>
-        <lastmod>2018-07-19T08:18:58.572Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://hk4fun.github.io/tags/mvc/</loc>
-        <lastmod>2018-07-19T08:18:58.572Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://hk4fun.github.io/tags/django/</loc>
-        <lastmod>2018-07-19T08:18:58.572Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://hk4fun.github.io/tags/web/</loc>
-        <lastmod>2018-07-19T08:18:58.572Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://hk4fun.github.io/tags/coroutine/</loc>
-        <lastmod>2018-11-05T06:15:59.683Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>https://hk4fun.github.io/tags/%E5%89%91%E6%8C%87offer/</loc>
         <lastmod>2018-11-05T06:31:07.926Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -58,29 +23,71 @@
     </url>
 
     <url>
-        <loc>https://hk4fun.github.io/tags/%E9%AD%94%E6%B3%95%E6%96%B9%E6%B3%95/</loc>
-        <lastmod>2018-11-05T06:33:01.021Z</lastmod>
+        <loc>https://hk4fun.github.io/tags/coroutine/</loc>
+        <lastmod>2018-11-05T14:57:13.304Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
-        <loc>https://hk4fun.github.io/tags/python/</loc>
-        <lastmod>2018-11-05T06:33:03.748Z</lastmod>
+        <loc>https://hk4fun.github.io/tags/ORM/</loc>
+        <lastmod>2018-11-05T14:58:54.581Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
-        <loc>https://hk4fun.github.io/tags/%E5%85%83%E7%B1%BB%E7%BC%96%E7%A8%8B/</loc>
-        <lastmod>2018-11-05T06:33:03.748Z</lastmod>
+        <loc>https://hk4fun.github.io/tags/MVC/</loc>
+        <lastmod>2018-11-05T14:58:54.581Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://hk4fun.github.io/tags/Django/</loc>
+        <lastmod>2018-11-05T14:58:54.581Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://hk4fun.github.io/tags/Web/</loc>
+        <lastmod>2018-11-05T14:58:54.581Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>https://hk4fun.github.io/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</loc>
-        <lastmod>2018-11-05T06:33:03.748Z</lastmod>
+        <lastmod>2018-11-05T14:59:43.987Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://hk4fun.github.io/tags/%E9%AD%94%E6%B3%95%E6%96%B9%E6%B3%95/</loc>
+        <lastmod>2018-11-05T14:59:49.303Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://hk4fun.github.io/tags/%E5%85%83%E7%B1%BB%E7%BC%96%E7%A8%8B/</loc>
+        <lastmod>2018-11-07T09:58:52.121Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://hk4fun.github.io/tags/Python/</loc>
+        <lastmod>2018-11-07T10:36:47.716Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://hk4fun.github.io/tags/%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90/</loc>
+        <lastmod>2018-11-07T10:36:47.716Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
