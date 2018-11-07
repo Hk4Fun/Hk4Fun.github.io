@@ -16,21 +16,21 @@
 <link href="/plugins/prettify/prettify.css" rel="stylesheet">
 
 
-<meta name="description" content="在论坛上看到一篇关于 Python 中 coroutine 的文章，从一个简单的例子出发，对比了 Lua、Ruby、Python 在实现 coroutine 上的区别和联系： https://bbs.byr.cn/#!article/Python/22439">
+<meta name="description" content="在北邮人论坛上看到一篇关于 Python 中 coroutine 的文章 从一个简单的例子出发，对比了 Lua、Ruby、Python 在实现 coroutine 上的区别和联系： https://bbs.byr.cn/#!article/Python/22439 这里记录下自己的一些见解">
 <meta name="keywords" content="Python,coroutine">
 <meta property="og:type" content="article">
 <meta property="og:title" content="为什么Python的coroutine这么特殊">
 <meta property="og:url" content="https://hk4fun.github.io/2018/07/31/为什么Python的corotine这么特殊/index.html">
 <meta property="og:site_name" content="Hk4Fun&#39;s Blog">
-<meta property="og:description" content="在论坛上看到一篇关于 Python 中 coroutine 的文章，从一个简单的例子出发，对比了 Lua、Ruby、Python 在实现 coroutine 上的区别和联系： https://bbs.byr.cn/#!article/Python/22439">
+<meta property="og:description" content="在北邮人论坛上看到一篇关于 Python 中 coroutine 的文章 从一个简单的例子出发，对比了 Lua、Ruby、Python 在实现 coroutine 上的区别和联系： https://bbs.byr.cn/#!article/Python/22439 这里记录下自己的一些见解">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/006giLD5ly1fwx5rbpc47j30x315nn17.jpg">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/006giLD5ly1fwx5rbnm4yj30y90rnq5m.jpg">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/006giLD5ly1fwx5rbodcmj30uq1c3n2s.jpg">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/006giLD5ly1fwx5rbo7q8j30jr18p77o.jpg">
-<meta property="og:updated_time" content="2018-11-05T14:57:13.304Z">
+<meta property="og:updated_time" content="2018-11-07T11:03:47.284Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="为什么Python的coroutine这么特殊">
-<meta name="twitter:description" content="在论坛上看到一篇关于 Python 中 coroutine 的文章，从一个简单的例子出发，对比了 Lua、Ruby、Python 在实现 coroutine 上的区别和联系： https://bbs.byr.cn/#!article/Python/22439">
+<meta name="twitter:description" content="在北邮人论坛上看到一篇关于 Python 中 coroutine 的文章 从一个简单的例子出发，对比了 Lua、Ruby、Python 在实现 coroutine 上的区别和联系： https://bbs.byr.cn/#!article/Python/22439 这里记录下自己的一些见解">
 <meta name="twitter:image" content="https://ws1.sinaimg.cn/large/006giLD5ly1fwx5rbpc47j30x315nn17.jpg">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
@@ -163,10 +163,10 @@
                 <div class="tips-box hide">
                     <div class="tips-arrow"></div>
                     <ul class="tips-inner">
-                        <li>Menu</li>
-                        <li>Tags</li>
+                        <li>菜单</li>
+                        <li>标签</li>
                         
-                        <li>Friends</li>
+                        <li>友情链接</li>
                         
                         
                     </ul>
@@ -206,7 +206,7 @@
                 
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django/">Django</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MVC/">MVC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ORM/">ORM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web/">Web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/coroutine/">coroutine</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/元类编程/">元类编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/剑指offer/">剑指offer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构/">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/源码剖析/">源码剖析</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/魔法方法/">魔法方法</a></li></ul>
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django/">Django</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ORM/">ORM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web/">Web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/coroutine/">coroutine</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/元类编程/">元类编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/剑指offer/">剑指offer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构/">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/源码剖析/">源码剖析</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/魔法方法/">魔法方法</a></li></ul>
                     </div>
                 </section>
                 
@@ -273,7 +273,7 @@
             </nav>
         </header>                
     </div>
-    <link class="menu-list" tags="Tags" friends="Friends" about="About Me"/>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
       <div class="body-wrap"><article id="post-为什么Python的corotine这么特殊" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -315,22 +315,33 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>在论坛上看到一篇关于 Python 中 coroutine 的文章，从一个简单的例子出发，对比了 Lua、Ruby、Python 在实现 coroutine 上的区别和联系：</p>
+        <p>在北邮人论坛上看到一篇关于 Python 中 coroutine 的文章</p>
+<p>从一个简单的例子出发，对比了 Lua、Ruby、Python 在实现 coroutine 上的区别和联系：</p>
 <p><a href="https://bbs.byr.cn/#!article/Python/22439" target="_blank" rel="external">https://bbs.byr.cn/#!article/Python/22439</a></p>
+<p>这里记录下自己的一些见解</p>
 <a id="more"></a>
-<p>这里加上自己的见解：</p>
 <p>不管是 Lua（stackless）:</p>
 <p><img src="https://ws1.sinaimg.cn/large/006giLD5ly1fwx5rbpc47j30x315nn17.jpg" alt="Lua协程实现"></p>
 <p>还是 Ruby（stackfull）： </p>
 <p><img src="https://ws1.sinaimg.cn/large/006giLD5ly1fwx5rbnm4yj30y90rnq5m.jpg" alt="Ruby协程实现"></p>
-<p>它们在首次进入 flatten 后都没有再去调用 resume，而是直接 flatten(elem)，因此 flatten 递归调用自己时并没有创建新的协程栈（应用栈），只在第一个 flatten 协程栈上增加函数帧，因此可以在最顶层的函数帧上直接跳回上一个应用栈（最外层），同时也可以在最外层的应用栈上直接跳到下一协程栈的最顶层函数帧。</p>
-<p>也就是说其始终只有两个应用栈，只不过 Lua 的两个应用栈对应的两个C帧在同一个C栈，而 Ruby 的两个协程栈对应了两个不同的C栈（可以在C栈间转跳）：</p>
+<p>它们在首次进入 flatten 后都没有再去调用 resume，而是直接 flatten(elem)</p>
+<p>因此 flatten 递归调用自己时并没有创建新的协程栈（应用栈），只在第一个 flatten 协程栈上增加函数帧</p>
+<p>因此可以在最顶层的函数帧上直接跳回上一个应用栈（最外层）</p>
+<p>同时也可以在最外层的应用栈上直接跳到下一协程栈的最顶层函数帧。</p>
+<p>也就是说其始终只有两个应用栈，只不过 Lua 的两个应用栈对应的两个C帧在同一个C栈</p>
+<p>而 Ruby 的两个协程栈对应了两个不同的C栈（可以在C栈间转跳）：</p>
 <p><img src="https://ws1.sinaimg.cn/large/006giLD5ly1fwx5rbodcmj30uq1c3n2s.jpg" alt="flatten 递归"></p>
 <p>而 Python（stackfull） 很特殊：</p>
 <p><img src="https://ws1.sinaimg.cn/large/006giLD5ly1fwx5rbo7q8j30jr18p77o.jpg" alt="Python 创建协程"></p>
-<p>它既不是 stackless（在同一C栈上创建新的C帧来创建新的协程栈），也没实现在C栈间转跳（创建新的C栈来创建新的协程栈）。</p>
-<p>因此其只能在同一个C栈上创建新的C帧来创建新的协程帧，这些协程帧复用了指向上一帧的指针来表示指向自己的父协程帧，因此 Python 中创建协程就相当于创建函数，但其 yield 时只消除对应的C帧而保留协程帧。</p>
-<p>因此 python 中的协程无法一次性跳回最外层的应用帧（首次发送send的帧），只能一层一层地往外（下） yield，并且也只能一层一层地往内（上）send，体现在代码上就是要多一层 for 循环来帮助内外连通（想想 for 的实现机制，for 本身在不断 next 和 捕获最后的 StopIteration，至于   yield 需要自己在 for 的代码块中写）。</p>
+<p>它既不是 stackless（在同一C栈上创建新的C帧来创建新的协程栈）</p>
+<p>也没实现在C栈间转跳（创建新的C栈来创建新的协程栈）</p>
+<p>因此其只能在同一个C栈上创建新的C帧来创建新的协程帧</p>
+<p>这些协程帧复用了指向上一帧的指针来表示指向自己的父协程帧，因此 Python 中创建协程就相当于创建函数</p>
+<p>但其 yield 时只消除对应的C帧而保留协程帧</p>
+<p>因此 python 中的协程无法一次性跳回最外层的应用帧（首次发送send的帧）</p>
+<p>只能一层一层地往外（下） yield，并且也只能一层一层地往内（上）send</p>
+<p>体现在代码上就是要多一层 for 循环来帮助内外连通</p>
+<p>想想 for 的实现机制，for 本身在不断 next 和 捕获最后的 StopIteration，至于   yield 需要自己在 for 的代码块中写</p>
 <p>利用 yield from 可以简写为：</p>
 <pre><code class="python">def flatten(obj):
     if isinstance(obj, list):
@@ -339,8 +350,11 @@
     else:
         yield obj
 </code></pre>
-<p>引入 yield from 的目的就是为了屏蔽那个多出来一层的让人难以理解的for循环，同时又能实现内外连通。yield from 的实现机制可参考《流畅的Python》第16章，更加详细的描述见 <a href="https://www.python.org/dev/peps/pep-0380/" target="_blank" rel="external">PEP 380 – Syntax for Delegating to a Subgenerator</a></p>
+<p>引入 yield from 的目的就是为了屏蔽那个多出来一层的让人难以理解的for循环，同时又能实现内外连通</p>
+<p>yield from 的实现机制可参考《流畅的Python》第16章</p>
+<p>更加详细的描述见 <a href="https://www.python.org/dev/peps/pep-0380/" target="_blank" rel="external">PEP 380 – Syntax for Delegating to a Subgenerator</a></p>
 <p>最后，可以使用 <a href="http://www.pythontutor.com/visualize.html#mode=edit" target="_blank" rel="external">http://www.pythontutor.com/visualize.html#mode=edit</a> 来可视化整个执行流</p>
+<p>– end –</p>
 
       
     </div>
@@ -349,17 +363,17 @@
   
     
     <div class="copyright">
-        <p><span>Title:</span><a href="/2018/07/31/为什么Python的corotine这么特殊/">为什么Python的coroutine这么特殊</a></p>
-        <p><span>Author:</span><a href="/" title="Back to Homepage">Hk4Fun</a></p>
-        <p><span>Created:</span>2018-07-31, 00:39:05</p>
-        <p><span>Updated:</span>2018-11-05, 22:57:13</p>
+        <p><span>本文标题:</span><a href="/2018/07/31/为什么Python的corotine这么特殊/">为什么Python的coroutine这么特殊</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">Hk4Fun</a></p>
+        <p><span>发布时间:</span>2018-07-31, 00:39:05</p>
+        <p><span>最后更新:</span>2018-11-07, 19:03:47</p>
         <p>
-            <span>Full URL:</span><a class="post-url" href="/2018/07/31/为什么Python的corotine这么特殊/" title="为什么Python的coroutine这么特殊">https://hk4fun.github.io/2018/07/31/为什么Python的corotine这么特殊/</a>
-            <span class="copy-path" data-clipboard-text="From https://hk4fun.github.io/2018/07/31/为什么Python的corotine这么特殊/　　By Hk4Fun" title="Copy Article&#39;s Link &amp; Author"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2018/07/31/为什么Python的corotine这么特殊/" title="为什么Python的coroutine这么特殊">https://hk4fun.github.io/2018/07/31/为什么Python的corotine这么特殊/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://hk4fun.github.io/2018/07/31/为什么Python的corotine这么特殊/　　作者: Hk4Fun" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
-            <span>License:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"CC BY-NC-SA 4.0"</a> Keep Link &amp; Author if Distribute.
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
         </p>
     </div>
 
@@ -386,7 +400,7 @@
 </article>
 
     <div id="toc" class="toc-article">
-        <strong class="toc-title">Contents</strong>
+        <strong class="toc-title">文章目录</strong>
         
             
         
@@ -402,10 +416,10 @@
         }
     </style>
 
-    <input type="button" id="tocButton" value="Hide"  title="Show or Hide Table of Contents">
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
 
     <script>
-        yiliaConfig.toc = ["Hide", "Show", !!"false"];
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
     </script>
 
 
@@ -451,15 +465,15 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2018/08/05/Python-中-type-与-object-的关系/" title="Pre: Python 中 type 与 object 的关系">
+            <a href="/2018/08/05/Python-中-type-与-object-的关系/" title="上一篇: Python 中 type 与 object 的关系">
                 <i class="fa fa-angle-left"></i>
             </a>
         
 
-        <a title="Mini Archives"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2018/07/19/剑指offer题解（Python实现）/" title="Next: 剑指offer题解（Python实现）">
+            <a href="/2018/07/19/剑指offer题解（Python实现）/" title="下一篇: 剑指offer题解（Python实现）">
                 <i class="fa fa-angle-right"></i>
             </a>
         
@@ -482,14 +496,14 @@
                 2017-2018 Hk4Fun
             </div>
             <div class="footer-right">
-                <a href="http://hexo.io/" target="_blank" title="A fast, simple &amp; powerful blog framework">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="Another simple and elegant theme for Hexo  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
             </div>
         </div>
         
             <div class="visit">
                 
                     <span id="busuanzi_container_site_pv" style='display:none'>
-                        <span id="site-visit" title="Site Visitors"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
                         </span>
                     </span>
                 
@@ -498,7 +512,7 @@
                 
                 
                     <span id="busuanzi_container_page_pv" style='display:none'>
-                        <span id="page-visit"  title="Page Hits"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
                         </span>
                     </span>
                 
@@ -531,9 +545,9 @@
 
 
 <div class="scroll" id="scroll">
-    <a href="#" title="Back to Top"><i class="fa fa-arrow-up"></i></a>
-    <a href="#comments" onclick="load$hide();" title="Comments"><i class="fa fa-comments-o"></i></a>
-    <a href="#footer" title="Go to Bottom"><i class="fa fa-arrow-down"></i></a>
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
 </div>
 <script>
     // Open in New Window

@@ -11,7 +11,7 @@
 <p>在被驻留之后，许多变量可能指向内存中的相同字符串对象，从而<strong>节省内存</strong></p>
 <p>下面的代码片段中，字符串是被<strong>隐式驻留</strong>的，何时隐式驻留字符串取决于字符串本身的特点</p>
 <p>也就是说字符串是否会被隐式驻留是有条件的</p>
-<p>（至于显式驻留，后面会讲到）</p>
+<p>（至于<strong>显式驻留</strong>，后面会讲到，以下的 CPython 源码剖析全部基于 CPython3.6）</p>
 <a id="more"></a>
 <h3 id="1-字符串只在编译期间被隐式驻留"><a href="#1-字符串只在编译期间被隐式驻留" class="headerlink" title="1.  字符串只在编译期间被隐式驻留"></a>1.  字符串只在编译期间被隐式驻留</h3><pre><code class="python">a = &quot;some_string&quot;
 b = &quot;some&quot; + &quot;_&quot; + &quot;string&quot;
@@ -323,6 +323,7 @@ PyUnicode_InternImmortal(PyObject **p)
     }
 }
 </code></pre>
+<p>验证 <code>SSTATE_INTERNED_MORTAL</code>：</p>
 <pre><code class="python">a = &quot;foo&quot;
 id(a)
 &gt;&gt;&gt; 89369248
@@ -400,11 +401,13 @@ PyUnicode_InternInPlace(PyObject **p) // 注意这里是二级指针，因为可
     _PyUnicode_STATE(s).interned = SSTATE_INTERNED_MORTAL; // 修改 intern 状态为 SSTATE_INTERNED_MORTAL
 }
 </code></pre>
-<p>更多相关源码的研究可以查看 cpython/Objects/ 下的 <a href="https://github.com/python/cpython/blob/master/Objects/unicodeobject.c" target="_blank" rel="external">unicodeobject.c</a> 和 <a href="https://github.com/python/cpython/blob/master/Objects/codeobject.c" target="_blank" rel="external">codeobject.c</a></p>
+<p>更多相关源码的研究可以查看 cpython/Objects/ 下的 <a href="https://github.com/python/cpython/blob/3.6/Objects/unicodeobject.c" target="_blank" rel="external">unicodeobject.c</a> 和 <a href="https://github.com/python/cpython/blob/3.6/Objects/codeobject.c" target="_blank" rel="external">codeobject.c</a></p>
+<p>– end –</p>
 <h3 id="8-参考资料"><a href="#8-参考资料" class="headerlink" title="8. 参考资料"></a>8. 参考资料</h3><ul>
 <li><a href="https://github.com/satwikkansal/wtfpython#-strings-can-be-tricky-sometimes-" target="_blank" rel="external">wtfpython</a></li>
 <li><a href="https://book.douban.com/subject/3117898/" target="_blank" rel="external">Python源码剖析第三章</a></li>
 <li><a href="http://guilload.com/python-string-interning/" target="_blank" rel="external">The internals of Python string interning</a></li>
+<li><a href="https://fanchao01.github.io/blog/2016/10/18/python-string/" target="_blank" rel="external">Python源码剖析—字符串对象PyStringObject</a></li>
 </ul>
 ]]></content>
       
@@ -422,7 +425,10 @@ PyUnicode_InternInPlace(PyObject **p) // 注意这里是二级指针，因为可
     <entry>
       <title><![CDATA[设计模式之单例模式]]></title>
       <url>/2018/08/15/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/</url>
-      <content type="html"><![CDATA[<p>由于 Python 拥有灵活的动态语言特性和丰富的魔法方法，再加上它强大的元类编程，单例模式（Singleton）在 Python 上的实现方式五花八门。本文主要讨论单例模式在 Python 上的各种实现，涉及到 Python 中元类编程、魔法方法和装饰器的进阶语法知识，并在最后深入讨论和总结。</p>
+      <content type="html"><![CDATA[<p>由于 Python 拥有灵活的动态语言特性和丰富的魔法方法，</p>
+<p>再加上它强大的元类编程，单例模式（Singleton）在 Python 上的实现方式五花八门</p>
+<p>本文主要讨论单例模式在 Python 上的各种实现</p>
+<p>涉及到 Python 中元类编程、魔法方法和装饰器的进阶语法知识，并在最后深入讨论和总结。</p>
 <a id="more"></a>
 <h2 id="关于单例模式"><a href="#关于单例模式" class="headerlink" title="关于单例模式"></a>关于单例模式</h2><h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><blockquote>
 <p>Ensure a class has only one instance, and provide a global point of access to it.</p>
@@ -498,8 +504,11 @@ True
 call A.__init__()
 &lt;class &#39;__main__.A&#39;&gt;
 </code></pre>
-<p>可以看到继承单例类的子类也能成为单例类，但注意到 <code>__init__()</code> 方法被调用了多次，这意味着每次实例化时虽然返回的是同一个实例对象，但初始化创建的属性会被重置和改变（传入不同的初始化参数），这往往不是我们想看到的。</p>
-<p>我们的要求更高了，返回第一次创建的实例还不够，我们还要求实例内部的环境变量也不能改变和重置，这就要求单例模式下 <code>__init__()</code> 只会被调用一次，即只在第一次创建实例被调用，如何做到呢？</p>
+<p>可以看到继承单例类的子类也能成为单例类，但注意到 <code>__init__()</code> 方法被调用了多次</p>
+<p>这意味着每次实例化时虽然返回的是同一个实例对象</p>
+<p>但初始化创建的属性会被重置和改变（传入不同的初始化参数），这往往不是我们想看到的</p>
+<p>我们的要求更高了，返回第一次创建的实例还不够，我们还要求实例内部的环境变量也不能改变和重置</p>
+<p>这就要求单例模式下 <code>__init__()</code> 只会被调用一次，即只在第一次创建实例被调用，如何做到呢？</p>
 <h3 id="2-使用装饰器"><a href="#2-使用装饰器" class="headerlink" title="2. 使用装饰器"></a>2. 使用装饰器</h3><p>使用一个字典来存放不同类对应的实例，因为一个装饰器可以用来装饰多个类</p>
 <p>这样装饰器可以对不同的类生成不同的实例，对相同的类生成相同的实例</p>
 <p>且该方法比第一种方法更优：只有第一次实例化调用了 <code>__init__()</code></p>
@@ -533,17 +542,17 @@ False
 True
 True
 </code></pre>
-<p>可以看到，类 A 和 B 各自被调用了三次，但只有第一次才调用了各自的 <code>__init__()</code>，且装饰器 singleton 对不同的类生成不同的实例，对相同的类生成相同的实例。</p>
+<p>可以看到，类 A 和 B 各自被调用了三次，但只有第一次才调用了各自的 <code>__init__()</code></p>
+<p>且装饰器 singleton 对不同的类生成不同的实例，对相同的类生成相同的实例。</p>
 <p>但使用装饰器可能存在一个问题，即用装饰器修饰的单例类不能再有子类，否则在加载子类时会出错：</p>
 <pre><code class="python">class C(A):
     pass
 </code></pre>
 <p>输出：</p>
-<pre><code class="python">TypeError                                 Traceback (most recent call last)
+<pre><code class="python">TypeError Traceback (most recent call last)
 &lt;ipython-input-42-dcf34ebd5f77&gt; in &lt;module&gt;()
 ----&gt; 1 class C(A):
       2     pass
-
 TypeError: function() argument 1 must be code, not str
 </code></pre>
 <p>因为被装饰器装饰后的A已经不再是类了，而只是一个函数，类是无法去继承函数的</p>
@@ -588,13 +597,15 @@ call B.__init__
 True
 * * * * * * * * * * 
 &lt;class &#39;__main__.B&#39;&gt;
-</code></pre><p>可见 B 继承 A 后也为单例类，且 <code>__init__()</code> 也只调用了一次，因为 <code>__call__()</code> 保证了不会进入<code>super().__call__()</code>中重复调用类的        <code>__init__()</code></p>
+</code></pre><p>可见 B 继承 A 后也为单例类，且 <code>__init__()</code> 也只调用了一次</p>
+<p>因为 <code>__call__()</code> 保证了不会进入<code>super().__call__()</code>中重复调用类的 <code>__init__()</code></p>
 <h3 id="4-使用共享属性"><a href="#4-使用共享属性" class="headerlink" title="4. 使用共享属性"></a>4. 使用共享属性</h3><p>首先强调一点，该方式实现的并不是严格的单例模式，实际上属于为Borg模式</p>
 <p>表面上看，单例就是所有实例对象拥有相同的状态(属性)和行为(方法)</p>
 <p>同一个类的所有实例本来就拥有相同的行为(方法)</p>
 <p>只需要保证同一个类的所有实例具有相同的状态(属性)即可</p>
 <p>所有实例共享属性的最简单最直接的方法就是将 <code>__dict__</code> 属性指向(引用)同一个字典</p>
-<p>虽然这么做各个实例的id不一样，即内存地址不一样，但表现出来的行为和状态却是一样的，它们共享了同一套属性和方法，这让这些实例“看上去”像是单例的</p>
+<p>虽然这么做各个实例的id不一样，即内存地址不一样，但表现出来的行为和状态却是一样的</p>
+<p>它们共享了同一套属性和方法，这让这些实例“看上去”像是单例的</p>
 <p>注意到该方法也会在每次实例化时调用 <code>__init__</code> 重置实例属性</p>
 <pre><code class="python">class Singleton:
     _state = {}
@@ -745,12 +756,15 @@ TypeError                                 Traceback (most recent call last)
 
 TypeError: __init__() takes 1 positional argument but 4 were given
 </code></pre>
-<h3 id="7-使用-import-的模块导入"><a href="#7-使用-import-的模块导入" class="headerlink" title="7. 使用 import 的模块导入"></a>7. 使用 import 的模块导入</h3><p>Python 的模块导入方式采用的就是天然的单例模式，通过 import，一个模块只会被导入并初始化一次，模块内的全局变量将会被绑定到模块上</p>
+<h3 id="7-使用-import-的模块导入"><a href="#7-使用-import-的模块导入" class="headerlink" title="7. 使用 import 的模块导入"></a>7. 使用 import 的模块导入</h3><p>Python 的模块导入方式采用的就是天然的单例模式</p>
+<p>通过 import，一个模块只会被导入并初始化一次，模块内的全局变量将会被绑定到模块上</p>
 <p>因此我们只需把想要的单例提前在一个模块内<strong>作为全局变量</strong>实例化，然后在别的模块中导入即可</p>
 <p>这种实现方式属于饿汉模式，是线程安全的，并且import本身的实现机制也是线程安全的</p>
-<p>其典型的例子就是标准库中的logging模块，它在被导入时会生成一个全局的 Logger.manager 单例作为 root，</p>
-<p>然后每次通过 logging.getLogger(name) 调用时总是通过 root.loggerDict 获取同一个 Logger，通过<a href="https://github.com/python/cpython/blob/3.7/Lib/logging/__init__.py" target="_blank" rel="external">查看源码</a>可以了解更多实现细节</p>
-<h3 id="8-线程安全"><a href="#8-线程安全" class="headerlink" title="8. 线程安全"></a>8. 线程安全</h3><p>到目前为止一共讨论了七种实现单例模式的方法，使用元类的实现方式看起来不错，但除了<code>变量名覆盖</code>和<code>import模块导入</code>，其他五种实现方式都没有考虑线程安全的问题</p>
+<p>其典型的例子就是标准库中的logging模块，它在被导入时会生成一个全局的 Logger.manager 单例作为 root</p>
+<p>然后每次通过 logging.getLogger(name) 调用时总是通过 root.loggerDict 获取同一个 Logger</p>
+<p>通过<a href="https://github.com/python/cpython/blob/3.7/Lib/logging/__init__.py" target="_blank" rel="external">查看源码</a>可以了解更多实现细节</p>
+<h3 id="8-线程安全"><a href="#8-线程安全" class="headerlink" title="8. 线程安全"></a>8. 线程安全</h3><p>到目前为止一共讨论了七种实现单例模式的方法，使用元类的实现方式看起来不错</p>
+<p>但除了<code>变量名覆盖</code>和<code>import模块导入</code>，其他五种实现方式都没有考虑线程安全的问题</p>
 <p>因此这里以重载 <code>__new__()</code> 为例，加入Lock来实现线程安全的单例模式，这里实现一个装饰器 synchronized</p>
 <pre><code class="python">import threading
 
@@ -798,12 +812,16 @@ class Singleton:
         return cls._instances[cls]
 </code></pre>
 <p>以上完整的代码和多线程测试代码见<a href="https://github.com/Hk4Fun/PyPatterns/blob/master/Creational/Singleton.py" target="_blank" rel="external">Github</a></p>
-<h3 id="9-总感觉还有什么没弄明白"><a href="#9-总感觉还有什么没弄明白" class="headerlink" title="9. 总感觉还有什么没弄明白"></a>9. 总感觉还有什么没弄明白</h3><p>是的，往往有时候我们看完一篇技术文章就处于“知其然而不知其所以然”的状态，看似懂了，明白如何用了，但其实背后更深层的原理我们并不了解。如果意识到该问题所在，自然就会去深挖，怕的是走马观花，不能静下心来多问自己几个为什么。</p>
+<h3 id="9-总感觉还有什么没弄明白"><a href="#9-总感觉还有什么没弄明白" class="headerlink" title="9. 总感觉还有什么没弄明白"></a>9. 总感觉还有什么没弄明白</h3><p>是的，往往有时候我们看完一篇技术文章就处于“知其然而不知其所以然”的状态，看似懂了，明白如何用了</p>
+<p>但其实背后更深层的原理我们并不了解</p>
+<p>如果意识到该问题所在，自然就会去深挖，怕的是走马观花，不能静下心来多问自己几个为什么。</p>
 <p>为什么重载 <code>__new__()</code> 就能实现单例？</p>
 <p>如果在此之前你已经仔细阅读过我的这篇文章：<a href="https://hk4fun.github.io/2018/08/15/%E9%AD%94%E6%B3%95%E6%96%B9%E6%B3%95%E4%B9%8B-new-%E4%B8%8E-init/">魔法方法之 <code>__new__()</code> 与 <code>__init__()</code></a>就不会问这样的问题了。</p>
 <p>为什么在 metaclass 中重载元类的 <code>__init__()</code> 和 <code>__call__()</code> （或 <code>__new__()</code> 和 <code>__call__()</code>）就能实现单例？</p>
-<p>这就需要我们搞清楚一个问题：一个类从被加载进全局环境，到真正被调用运行并返回一个实例，这中间经历了什么？经历了哪些魔法方法？</p>
-<p>关于这个问题可以参考《流畅的Python》第21章元类编程相关的讲解，十分精彩。如果看的时候很吃力，不妨先看看我之前写过的另外一篇文章：<a href="https://hk4fun.github.io/2018/08/05/Python-%E4%B8%AD-type-%E4%B8%8E-object-%E7%9A%84%E5%85%B3%E7%B3%BB/">Python 中 type 与 object 的关系</a></p>
+<p>这就需要我们搞清楚一个问题：</p>
+<p>一个类从被加载进全局环境，到真正被调用运行并返回一个实例，这中间经历了什么？经历了哪些魔法方法？</p>
+<p>关于这个问题可以参考《流畅的Python》第21章元类编程相关的讲解，十分精彩</p>
+<p>如果看的时候很吃力，不妨先看看我之前写过的另外一篇文章：<a href="https://hk4fun.github.io/2018/08/05/Python-%E4%B8%AD-type-%E4%B8%8E-object-%E7%9A%84%E5%85%B3%E7%B3%BB/">Python 中 type 与 object 的关系</a></p>
 <p>这里我用自己的代码和注释来展现这个过程：</p>
 <pre><code class="python">class ABC:
     print(&#39;ABC&#39;) # ABC被导入时执行，而__new__和__init__是在被调用时才执行
@@ -893,11 +911,17 @@ print(aa)
 </code></pre>
 <p>相信到这里你就会明白了：</p>
 <p>一个类的加载和运行是两个分开的阶段，先加载，再根据需要运行</p>
-<p>类中的顶层代码（方法之外的定义体）在加载时执行，而方法内的代码在调用时才执行，这就是输出中 <a href="https://hk4fun.github.io/2018/08/15/%E9%AD%94%E6%B3%95%E6%96%B9%E6%B3%95%E4%B9%8B-new-%E4%B8%8E-init/">1</a> 和 <a href="https://github.com/python/cpython/blob/3.7/Lib/logging/__init__.py" target="_blank" rel="external">2</a> 最先出现的原因</p>
-<p>但由于元类是类的类，因此以它为元类的类在加载完后会紧接着执行它指定的元类的 <code>__new__()</code> 和 <code>__init__()</code>，这也是输出中 <a href="https://github.com/Hk4Fun/PyPatterns/blob/master/Creational/Singleton.py" target="_blank" rel="external">3</a> 和 <a href="https://hk4fun.github.io/2018/08/15/%E9%AD%94%E6%B3%95%E6%96%B9%E6%B3%95%E4%B9%8B-new-%E4%B8%8E-init/">4</a> 紧跟着出现在 <a href="https://hk4fun.github.io/2018/08/15/%E9%AD%94%E6%B3%95%E6%96%B9%E6%B3%95%E4%B9%8B-new-%E4%B8%8E-init/">1</a> 和 <a href="https://github.com/python/cpython/blob/3.7/Lib/logging/__init__.py" target="_blank" rel="external">2</a> 后面的原因</p>
-<p>至于输出中的 5、6、7，反映的就是我们调用 a = A() 时经过的魔法方法：先是元类 Meta 的 <code>__call__()</code>，然后是类 A 的<code>__new__()</code> 和 <code>__init__()</code></p>
-<p>注意到，在类生成实例时，元类的 <code>__call__()</code> 内部会调用以它为元类的类的 <code>__new__()</code> 和 <code>__init__()</code>，这是根据<a href="https://hk4fun.github.io/2018/08/15/%E9%AD%94%E6%B3%95%E6%96%B9%E6%B3%95%E4%B9%8B-new-%E4%B8%8E-init/">魔法方法之 <code>__new__()</code> 与 <code>__init__()</code></a>中讨论的内容模仿 type 而实现的简单逻辑</p>
-<p>因此我们为了可以控制一个类生成实例的行为，我们可以既可以简单地重载该类的 <code>__new__()</code>，也可以自己实现一个元类并重载它的 <code>__init__()</code> 和 <code>__call__()</code> 或 <code>__new__()</code> 和 <code>__call__()</code>，然后该类只需指明它的元类是这个自定义的元类而不是默认的 type 即可（默认情况下就是<code>type.__call__(A)</code>）:</p>
+<p>类中的顶层代码（方法之外的定义体）在加载时执行，而方法内的代码在调用时才执行</p>
+<p>这就是输出中 1 和 2 最先出现的原因</p>
+<p>但由于元类是类的类，因此以它为元类的类在加载完后会紧接着执行它指定的元类的 <code>__new__()</code> 和 <code>__init__()</code></p>
+<p>这也是输出中 3 和 4 紧跟着出现在 1 和 2 后面的原因</p>
+<p>至于输出中的 5、6、7，反映的就是我们调用 a = A() 时经过的魔法方法：</p>
+<p>先是元类 Meta 的 <code>__call__()</code>，然后是类 A 的<code>__new__()</code> 和 <code>__init__()</code></p>
+<p>注意到，在类生成实例时，元类的 <code>__call__()</code> 内部会调用以它为元类的类的 <code>__new__()</code> 和 <code>__init__()</code></p>
+<p>这是根据<a href="https://hk4fun.github.io/2018/08/15/%E9%AD%94%E6%B3%95%E6%96%B9%E6%B3%95%E4%B9%8B-new-%E4%B8%8E-init/">魔法方法之 <code>__new__()</code> 与 <code>__init__()</code></a>中讨论的内容模仿 type 而实现的简单逻辑</p>
+<p>因此我们为了可以控制一个类生成实例的行为，我们可以既可以简单地重载该类的 <code>__new__()</code></p>
+<p>也可以自己实现一个元类并重载它的 <code>__init__()</code> 和 <code>__call__()</code> 或 <code>__new__()</code> 和 <code>__call__()</code></p>
+<p>然后该类只需指明它的元类是这个自定义的元类而不是默认的 type 即可（默认情况下就是<code>type.__call__(A)</code>）:</p>
 <pre><code class="python">class Meta(type):
     def __call__(cls, *args, **kwargs):
         print(&#39;call Meta.__call__() &#39;)
@@ -918,14 +942,22 @@ True
 * * * * * * * * * * 
 True
 </code></pre>
-<p>最后输出中的 [8]，是为了更好地理解 <code>__call__()</code>：类的括号调用会去调用元类的<code>__call__()</code> 作为返回，那么实例的括号调用就会去调用类的<code>__call__()</code> 作为返回，其本质是一样的，<code>__call__()</code> 总是在使用括号调用时被调用，通过对它的重载我们可以自定义这个返回的对象</p>
+<p>最后输出中的 [8]，是为了更好地理解 <code>__call__()</code>：类的括号调用会去调用元类的<code>__call__()</code> 作为返回</p>
+<p>那么实例的括号调用就会去调用类的<code>__call__()</code> 作为返回</p>
+<p>其本质是一样的，<code>__call__()</code> 总是在使用括号调用时被调用，通过对它的重载我们可以自定义这个返回的对象</p>
 <h2 id="更多探索"><a href="#更多探索" class="headerlink" title="更多探索"></a>更多探索</h2><p>综合前面提到的那两篇文章和本章内容，会看到：</p>
-<p>type 其实负责对 Python 中类和元类在加载完成后的处理和调用时 <code>__new__()</code> 和 <code>__init__()</code> 的调度（当然其工作不止如此），这从上面我们模仿 <code>type.__call__</code> 的逻辑实现就可以看出</p>
-<p>我们可以编写自己的元类来自定义加载后的处理和调用时的调度过程，但由于元类本身也是type的实例，因此元类也要受 type 的处理和调度</p>
-<p>我们还注意到默认情况下在子类的 <code>__new__()</code> 中总是会去调用父类的 <code>__new__()</code>，而父类的 <code>__new__()</code> 也是这么做，最终我们的 cls 参数会一路往上传递来到 object</p>
-<p>而我们知道 object 没有父类，这从 <code>object.__bases__</code> 返回空元组可知。因此 cls 来到 object 就不会再往上传递了，这时候就由解释器（Cython） 内部来实现并生成 cls 的实例并返回</p>
-<p>所以这就解释了为什么 Python 中所有的实例都是 object 的实例，而 Dashed Arrow Up Rule 的本质其实就是 cls 在 <code>__new__()</code> 中被往上传递</p>
-<p>那我们能否自定义一个类似 object 的类，它直接生成传递上来的cls的实例并返回呢？这样做可以打断这条继承链，让 object 不再是所有实例的类。。。只能说想的美：</p>
+<p>type 其实负责对 Python 中类和元类在加载完成后的处理和调用时 <code>__new__()</code> 和 <code>__init__()</code> 的调度（当然其工作不止如此）</p>
+<p>这从上面我们模仿 <code>type.__call__</code> 的逻辑实现就可以看出</p>
+<p>我们可以编写自己的元类来自定义加载后的处理和调用时的调度过程，但由于元类本身也是type的实例</p>
+<p>因此元类也要受 type 的处理和调度</p>
+<p>我们还注意到默认情况下在子类的 <code>__new__()</code> 中总是会去调用父类的 <code>__new__()</code></p>
+<p>而父类的 <code>__new__()</code> 也是这么做，最终我们的 cls 参数会一路往上传递来到 object</p>
+<p>而我们知道 object 没有父类，这从 <code>object.__bases__</code> 返回空元组可知</p>
+<p>因此 cls 来到 object 就不会再往上传递了，这时候就由解释器（Cython） 内部来实现并生成 cls 的实例并返回</p>
+<p>所以这就解释了为什么 Python 中所有的实例都是 object 的实例</p>
+<p>而 Dashed Arrow Up Rule 的本质其实就是 cls 在 <code>__new__()</code> 中被往上传递</p>
+<p>那我们能否自定义一个类似 object 的类，它直接生成传递上来的cls的实例并返回呢？</p>
+<p>这样做可以打断这条继承链，让 object 不再是所有实例的类。。。只能说想的美：</p>
 <pre><code class="python">class obj:
     def __new__(cls):
         print(&#39;call obj.__new__()&#39;)
@@ -939,7 +971,7 @@ class A(obj):
 a = A()
 </code></pre>
 <p>输出：</p>
-<pre><code>call A.__new__()
+<pre><code class="python">call A.__new__()
 call obj.__new__()
 call A.__new__()
 call obj.__new__()
@@ -977,7 +1009,8 @@ RecursionError                            Traceback (most recent call last)
      11 a = A()
 
 RecursionError: maximum recursion depth exceeded
-</code></pre><p>Boom！直接爆炸溢出，因为父类的 return cls() 明显会再次调用子类的  <code>__new__()</code>，造成无穷递归。。。</p>
+</code></pre>
+<p>Boom！直接爆炸溢出，因为父类的 return cls() 明显会再次调用子类的  <code>__new__()</code>，造成无穷递归。。。</p>
 <p>所以，还是乖乖 <code>super().__new__(cls, *args, **kwargs )</code> 吧！</p>
 <p>在 <code>__new__()</code> 中我们可以向父类传递不是本类的cls，从而生成其他类的实例，甚至可以拐个弯：</p>
 <pre><code class="python">class A:
@@ -1006,7 +1039,8 @@ call A.__init__() # 能自动调用A.__init__()
 <p>因此最终：</p>
 <p>对于type，其主“外”，我们使用 metaclass 进行拦截，但最终还得回到type</p>
 <p>对于object，其主“内”，我们使用 <code>__new__()</code> 进行拦截，但最终还是来到object</p>
-<p>类内部生成的实例会经过外部元类的 <code>__call__()</code>，因此我们的单例模式既可以在类（内部）使用 <code>__new__()</code> 进行拦截，也可以在元类（外部）使用<code>__call__()</code>进行拦截</p>
+<p>类内部生成的实例会经过外部元类的 <code>__call__()</code></p>
+<p>因此我们的单例模式既可以在类（内部）使用 <code>__new__()</code> 进行拦截，也可以在元类（外部）使用<code>__call__()</code>进行拦截</p>
 <h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
 <li>《设计模式》刘伟著</li>
 <li>《流畅的Python》第21章：元类编程</li>
@@ -1030,8 +1064,10 @@ call A.__init__() # 能自动调用A.__init__()
     <entry>
       <title><![CDATA[魔法方法之 __new__() 与 __init__()]]></title>
       <url>/2018/08/15/%E9%AD%94%E6%B3%95%E6%96%B9%E6%B3%95%E4%B9%8B-new-%E4%B8%8E-init/</url>
-      <content type="html"><![CDATA[<p>当我们实例化某个类时，如：<code>a = A()</code>， Python 先调用 <code>__new__(cls[, ...])</code> 来生成实例，然后传递给 <code>__init__(self[, ...])</code> 的 self，从而在 <code>__init__(self[, ...])</code> 中完成初始化。</p>
+      <content type="html"><![CDATA[<p>当我们实例化某个类时，如：<code>a = A()</code>， Python 先调用 <code>__new__(cls[, ...])</code> 来生成实例</p>
+<p>然后传递给 <code>__init__(self[, ...])</code> 的 self，从而在 <code>__init__(self[, ...])</code> 中完成初始化</p>
 <p>因此 <code>__new__()</code> 负责创建实例对象，而 <code>__init__()</code> 负责初始化该实例对象：</p>
+<a id="more"></a>
 <pre><code class="python">class A:
     def __new__(cls, *args, **kwargs): # cls（即A）为第一个默认参数，剩下的就是实例化A（即A([...])）时传进来的参数
         print(&#39;call A.__new__()&#39;)
@@ -1043,26 +1079,30 @@ call A.__init__() # 能自动调用A.__init__()
 a = A()
 </code></pre>
 <p>输出：</p>
-<pre><code>call A.__new__()
+<pre><code class="python">call A.__new__()
 call A.__init__()
-</code></pre><a id="more"></a>
+</code></pre>
 <h2 id="new"><a href="#new" class="headerlink" title="__new__()"></a><code>__new__()</code></h2><p>下面先通过对官方文档的解读来看看 <code>__new__()</code> 方法背后的一些细节:</p>
 <blockquote>
 <p><code>object.__new__(cls[, ...])</code></p>
 <p>Called to create a new instance of class <code>cls. __new__()</code> is a static method (special-cased so you need not declare it as such) that takes the class of which an instance was requested as its first argument. The remaining arguments are those passed to the object constructor expression (the call to the class). The return value of <code>__new__()</code>should be the new object instance (usually an instance of cls).</p>
 </blockquote>
-<p>其实 <code>__new__()</code> 是一个类的静态方法，这里我更加认为是一个类方法，因为其第一个参数默认就是cls，而静态方法不需要cls也不需要self。</p>
-<p>但注意到这里并没有使用装饰器 @classmethod，这是 <code>__new__()</code> 的特殊之处——不用装饰器修饰就可以成为类方法。</p>
-<p><code>__new__()</code> 负责创建类的实例，因此它的返回值<strong>应该</strong>是一个新的实例，且<strong>通常</strong>是 cls 的实例。（注意体会加粗字的含义，后面会解释）</p>
+<p>其实 <code>__new__()</code> 是一个类的静态方法，这里我更加认为是一个类方法</p>
+<p>因为其第一个参数默认就是cls，而静态方法不需要cls也不需要self</p>
+<p>但注意到这里并没有使用装饰器 @classmethod，这是 <code>__new__()</code> 的特殊之处——不用装饰器修饰就可以成为类方法</p>
+<p><code>__new__()</code> 负责创建类的实例，因此它的返回值<strong>应该</strong>是一个新的实例，且<strong>通常</strong>是 cls 的实例。</p>
+<p>（注意体会加粗字的含义，后面会解释）</p>
 <p>那如何创建 cls 的实例呢？</p>
 <blockquote>
 <p>Typical implementations create a new instance of the class by invoking the superclass’s <code>__new__()</code> method using <code>super().__new__(cls[, ...])</code> with appropriate arguments and then modifying the newly-created instance as necessary before returning it.</p>
 </blockquote>
-<p>可以通过调用父类的 <code>__new__()</code> 方法来创建：<code>super().__new__(cls[, ...])</code>，然后根据需求更改新创建的实例再返回，以此达到自定义创建实例的目的。</p>
+<p>可以通过调用父类的 <code>__new__()</code> 方法来创建：<code>super().__new__(cls[, ...])</code></p>
+<p>然后根据需求更改新创建的实例再返回，以此达到自定义创建实例的目的</p>
 <blockquote>
 <p>If <code>__new__()</code> returns an instance of cls, then the new instance’s <code>__init__()</code> method will be invoked like <code>__init__(self[, ...])</code>, where self is the new instance and the remaining arguments are the same as were passed to<code>__new__()</code>.</p>
 </blockquote>
-<p><code>__new__()</code> 有个很重要的特性就是：如果它返回是参数中 cls 的实例，那么 Python 就会<strong>自动调用</strong> cls 的 <code>__init__(self[, ...])</code> 方法，其中的 self 参数就是 <code>__new__()</code> 返回的 cls 的实例。</p>
+<p><code>__new__()</code> 有个很重要的特性就是：如果它返回是参数中 cls 的实例</p>
+<p>那么 Python 就会<strong>自动调用</strong> cls 的 <code>__init__(self[, ...])</code> 方法，其中的 self 参数就是 <code>__new__()</code> 返回的 cls 的实例</p>
 <p>也就是说我们可以从两个方面去假设（分别对应前面提到的两个加粗字体）：</p>
 <ol>
 <li>假如我们不返回实例对象，比如直接返回 None，结果如何？（其实 None 也是一个实例对象，这里描述的不是很严肃）</li>
@@ -1126,7 +1166,8 @@ print(type(a))
 <blockquote>
 <p>If <code>__new__()</code> does not return an instance of cls, then the new instance’s <code>__init__()</code> method will not be invoked.</p>
 </blockquote>
-<p>换句话说，如果 <code>__new__()</code> 返回的是本类的实例对象，那该实例的 <code>__init__()</code> 方法总是会被自动调用，这一点在用 <code>__new__()</code> 方法实现单例模式时要特别注意（<a href="https://hk4fun.github.io/2018/08/15/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/">设计模式之单例模式</a>）</p>
+<p>换句话说，如果 <code>__new__()</code> 返回的是本类的实例对象，那该实例的 <code>__init__()</code> 方法总是会被自动调用</p>
+<p>这一点在用 <code>__new__()</code> 方法实现单例模式时要特别注意（<a href="https://hk4fun.github.io/2018/08/15/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/">设计模式之单例模式</a>）</p>
 <blockquote>
 <p><code>__new__()</code> is intended mainly to allow subclasses of immutable types (like int, str, or tuple) to customize instance creation. It is also commonly overridden in custom metaclasses in order to customize class creation.</p>
 </blockquote>
@@ -1136,7 +1177,8 @@ print(type(a))
 </li>
 <li><p>实现单例模式。前面已经讨论过；</p>
 </li>
-<li><p>当我们需要继承内建的不可变类型时(如 int, str 或 tuple)。这时候我们需提供自定义实例化过程，因为如果在 <code>__init__()</code> 方法中可能会无效甚至出错。例如：</p>
+<li><p>当我们需要继承内建的不可变类型时(如 int, str 或 tuple)。</p>
+<p>这时候我们需提供自定义实例化过程，因为如果在 <code>__init__()</code> 方法中可能会无效甚至出错。例如：</p>
 </li>
 </ol>
 <pre><code class="python">class CustomInt(int):
@@ -1146,7 +1188,7 @@ print(type(a))
 print(CustomInt(-1))
 </code></pre>
 <p>输出：</p>
-<pre><code>---------------------------------------------------------------------------
+<pre><code class="python">---------------------------------------------------------------------------
 
 TypeError                                 Traceback (most recent call last)
 
@@ -1165,7 +1207,9 @@ TypeError                                 Traceback (most recent call last)
 
 
 TypeError: object.__init__() takes no parameters
-</code></pre><p>在 py3 下是直接报错的，而在 py2 下是输出 -1，也就是说直接通过在子类的 <code>__init__()</code> 调用父类的 <code>__init__()</code> 有时未必能达到我们期望的效果。</p>
+</code></pre>
+<p>在 py3 下是直接报错的，而在 py2 下是输出 -1</p>
+<p>也就是说直接通过在子类的 <code>__init__()</code> 调用父类的 <code>__init__()</code> 有时未必能达到我们期望的效果</p>
 <p>但可以通过重写 <code>__new__()</code> 方法来实现：</p>
 <pre><code class="python">class CustomInt(int):
 
@@ -1185,7 +1229,9 @@ print(CustomInt(-1) + CustomInt(-2))
 <p>Called after the instance has been created (by <code>__new__()</code>), but before it is returned to the caller. The arguments are those passed to the class constructor expression. If a base class has an <code>__init__()</code> method, the derived class’s <code>__init__()</code> method, if any, must explicitly call it to ensure proper initialization of the base class part of the instance; for example: <code>super().__init__([args...])</code>.</p>
 <p>Because <code>__new__()</code> and <code>__init__()</code> work together in constructing objects (<code>__new__()</code> to create it, and <code>__init__()</code> to customize it), no non-None value may be returned by <code>__init__()</code>; doing so will cause a TypeError to be raised at runtime.</p>
 </blockquote>
-<p>可以看到，<code>__init__()</code> 在 <code>__new__()</code> 后被调用（前提是 <code>__new__()</code> 返回本类的实例对象），它的参数除了第一个 self 参数由 <code>__new__()</code> 创建，剩下的参数都是来自调用者在实例化时传入的参数，也就是 <code>object.__new__(cls[, ...])</code> 中 cls后面的参数，如果这两处的参数不一致就会产生一个 TypeError：</p>
+<p>可以看到，<code>__init__()</code> 在 <code>__new__()</code> 后被调用（前提是 <code>__new__()</code> 返回本类的实例对象）</p>
+<p>它的参数除了第一个 self 参数由 <code>__new__()</code> 创建，剩下的参数都是来自调用者在实例化时传入的参数</p>
+<p>也就是 <code>object.__new__(cls[, ...])</code> 中 cls 后面的参数，如果这两处的参数不一致就会产生一个 TypeError：</p>
 <pre><code class="python">class A:
     def __new__(cls): # 除了cls没有其他参数
         print(&#39;call __new__()&#39;)
@@ -1197,7 +1243,7 @@ print(CustomInt(-1) + CustomInt(-2))
 a = A(1) # 传进一个参数
 </code></pre>
 <p>输出：</p>
-<pre><code>---------------------------------------------------------------------------
+<pre><code class="python">---------------------------------------------------------------------------
 
 TypeError                                 Traceback (most recent call last)
 
@@ -1208,7 +1254,8 @@ TypeError                                 Traceback (most recent call last)
 
 
 TypeError: __new__() takes 1 positional argument but 2 were given
-</code></pre><p>这里在一开始的 <code>__new__()</code> 就报错了</p>
+</code></pre>
+<p>这里在一开始的 <code>__new__()</code> 就报错了</p>
 <pre><code class="python">class A:
     def __new__(cls, v1): # 有v1参数
         print(&#39;call __new__()&#39;)
@@ -1220,7 +1267,7 @@ TypeError: __new__() takes 1 positional argument but 2 were given
 a = A(1) # 传进一个参数
 </code></pre>
 <p>输出：</p>
-<pre><code>call __new__()
+<pre><code class="python">call __new__()
 ---------------------------------------------------------------------------
 
 TypeError                                 Traceback (most recent call last)
@@ -1232,7 +1279,8 @@ TypeError                                 Traceback (most recent call last)
 
 
 TypeError: __init__() takes 1 positional argument but 2 were given
-</code></pre><p>这里成功执行 <code>__new__()</code>，但到了 <code>__init__()</code> 就报错了</p>
+</code></pre>
+<p>这里成功执行 <code>__new__()</code>，但到了 <code>__init__()</code> 就报错了</p>
 <pre><code class="python">class A:
     def __new__(cls, v1): # 有v1参数
         print(&#39;call __new__()&#39;)
@@ -1262,7 +1310,7 @@ a = A()
 ----&gt; 4 a = A()
 
 TypeError: __init__() should return None, not &#39;int&#39;
-</code></pre><h2 id="官方文档链接"><a href="#官方文档链接" class="headerlink" title="官方文档链接"></a>官方文档链接</h2><p><a href="https://docs.python.org/3/reference/datamodel.html#object.__new__" target="_blank" rel="external">https://docs.python.org/3/reference/datamodel.html#object.__new__</a></p>
+</code></pre><h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://docs.python.org/3/reference/datamodel.html#object.__new__" target="_blank" rel="external">https://docs.python.org/3/reference/datamodel.html#object.__new__</a></p>
 <p><a href="https://docs.python.org/3/reference/datamodel.html#object.__init__" target="_blank" rel="external">https://docs.python.org/3/reference/datamodel.html#object.__init__</a></p>
 ]]></content>
       
@@ -1326,7 +1374,11 @@ Out[8]: True
 <p><img src="https://ws1.sinaimg.cn/large/006giLD5ly1fwx554gzz5j30an07vwef.jpg" alt="两种关系"></p>
 <p>假设有这么一张白板，分割成三部分，用来描述 Python 里面对象的关系：</p>
 <p><img src="https://ws1.sinaimg.cn/large/006giLD5ly1fwx554h1t8j30ka0d0mx5.jpg" alt="白板"></p>
-<p>先来看看 type 和 object。在 Python 中，object 是父子关系的顶端，所有类型都是它的子类；type 是类型实例关系的顶端，所有类型都是它的实例（注意，不是所有对象都是 type 的实例，因为类型实例关系不具有传递性），即 <strong>object 是所有类的父类，而 type 是所有类的类</strong>：</p>
+<p>先来看看 type 和 object</p>
+<p>在 Python 中，object 是父子关系的顶端，所有类型都是它的子类</p>
+<p>type 是类型实例关系的顶端，所有类型都是它的实例</p>
+<p>注意，不是所有对象都是 type 的实例，因为类型实例关系不具有传递性</p>
+<p>即 <strong>object 是所有类的父类，而 type 是所有类的类</strong>：</p>
 <pre><code class="python">In [1]: object.__class__
 Out[1]: type   # object 的类型是 type
 
@@ -1368,7 +1420,7 @@ In [7]: issubclass(type, type)
 Out[7]: True
 </code></pre>
 <p>这就要考虑到 isinstance() 遵守的 <strong>Dashed Arrow Up Rule</strong>：</p>
-<p><strong>如果 X 是 A 的实例，且 A 是 B 的子类，那么 X 是 B 的 实例</strong><br>​<br>​    </p>
+<p><strong>如果 X 是 A 的实例，且 A 是 B 的子类，那么 X 是 B 的 实例</strong></p>
 <pre><code class="python">&gt;&gt;&gt; class B:
 ...     pass
 ...
@@ -1398,7 +1450,7 @@ Out[5]: True
 In [7]: issubclass(type, type)
 Out[7]: True
 </code></pre>
-<p>文章到这里貌似就要结束了，但好戏还在后头。。。。。。</p>
+<p>文章到这里貌似就要结束了，但好戏还在后头</p>
 <p>既然有 Dashed Arrow Up Rule，那就有 <strong>Dashed Arrow Down Rule</strong>：</p>
 <p><strong>如果 A 是 B 的子类，且 B 是 M 的实例，那么 A 是 M 的实例</strong></p>
 <pre><code class="python">&gt;&gt;&gt; class A(object):  
@@ -1411,7 +1463,8 @@ True
 &gt;&gt;&gt; isinstance(A, type)      
 True
 </code></pre>
-<p>到这里你可能会觉得 Dashed Arrow Up Rule 和 Dashed Arrow Down Rule 隐约有什么关系，其实它们的名字就已经告诉我们了，这里可用下图来描述：</p>
+<p>到这里你可能会觉得 Dashed Arrow Up Rule 和 Dashed Arrow Down Rule 隐约有什么关系</p>
+<p>其实它们的名字就已经告诉我们了，这里可用下图来描述：</p>
 <p><img src="https://ws1.sinaimg.cn/large/006giLD5ly1fwx554h6a1j30e008174j.jpg" alt="Up and Down"></p>
 <p>最后还有一条很重要的Rule，<strong>Combine Solid Arrows Rule：</strong></p>
 <p><strong>如果 A 是 B 的子类，且 B 是 C 的子类，那么 A 也是 C 的子类</strong><br>​<br>即继承关系具有传递性：</p>
@@ -1507,7 +1560,8 @@ AttributeError: &#39;object&#39; object has no attribute &#39;__bases__&#39;
 </code></pre>
 <p>以上全部加入白板后如下：</p>
 <p><img src="https://ws1.sinaimg.cn/large/006giLD5ly1fwx554jen3j30hr0fvdh0.jpg" alt="自定义类"></p>
-<p>到这里就会发现 type 所在那一栏只有它一个，所以引入了 metaclass 用来扩展 type，这需要我们去继承 type，这就意味着我们可以自定义生成类的模板，达到动态生成类的目的（可见 Python 的动态特性非常完美）：</p>
+<p>到这里就会发现 type 所在那一栏只有它一个，所以引入了 metaclass 用来扩展 type，这需要我们去继承 type</p>
+<p>这就意味着我们可以自定义生成类的模板，达到动态生成类的目的（可见 Python 的动态特性非常完美）：</p>
 <pre><code class="python">&gt;&gt;&gt; class M(type):
 ...     pass
 ...
@@ -1576,22 +1630,33 @@ AttributeError: &#39;T&#39; object has no attribute &#39;__bases__&#39;
     <entry>
       <title><![CDATA[为什么Python的coroutine这么特殊]]></title>
       <url>/2018/07/31/%E4%B8%BA%E4%BB%80%E4%B9%88Python%E7%9A%84corotine%E8%BF%99%E4%B9%88%E7%89%B9%E6%AE%8A/</url>
-      <content type="html"><![CDATA[<p>在论坛上看到一篇关于 Python 中 coroutine 的文章，从一个简单的例子出发，对比了 Lua、Ruby、Python 在实现 coroutine 上的区别和联系：</p>
+      <content type="html"><![CDATA[<p>在北邮人论坛上看到一篇关于 Python 中 coroutine 的文章</p>
+<p>从一个简单的例子出发，对比了 Lua、Ruby、Python 在实现 coroutine 上的区别和联系：</p>
 <p><a href="https://bbs.byr.cn/#!article/Python/22439" target="_blank" rel="external">https://bbs.byr.cn/#!article/Python/22439</a></p>
+<p>这里记录下自己的一些见解</p>
 <a id="more"></a>
-<p>这里加上自己的见解：</p>
 <p>不管是 Lua（stackless）:</p>
 <p><img src="https://ws1.sinaimg.cn/large/006giLD5ly1fwx5rbpc47j30x315nn17.jpg" alt="Lua协程实现"></p>
 <p>还是 Ruby（stackfull）： </p>
 <p><img src="https://ws1.sinaimg.cn/large/006giLD5ly1fwx5rbnm4yj30y90rnq5m.jpg" alt="Ruby协程实现"></p>
-<p>它们在首次进入 flatten 后都没有再去调用 resume，而是直接 flatten(elem)，因此 flatten 递归调用自己时并没有创建新的协程栈（应用栈），只在第一个 flatten 协程栈上增加函数帧，因此可以在最顶层的函数帧上直接跳回上一个应用栈（最外层），同时也可以在最外层的应用栈上直接跳到下一协程栈的最顶层函数帧。</p>
-<p>也就是说其始终只有两个应用栈，只不过 Lua 的两个应用栈对应的两个C帧在同一个C栈，而 Ruby 的两个协程栈对应了两个不同的C栈（可以在C栈间转跳）：</p>
+<p>它们在首次进入 flatten 后都没有再去调用 resume，而是直接 flatten(elem)</p>
+<p>因此 flatten 递归调用自己时并没有创建新的协程栈（应用栈），只在第一个 flatten 协程栈上增加函数帧</p>
+<p>因此可以在最顶层的函数帧上直接跳回上一个应用栈（最外层）</p>
+<p>同时也可以在最外层的应用栈上直接跳到下一协程栈的最顶层函数帧。</p>
+<p>也就是说其始终只有两个应用栈，只不过 Lua 的两个应用栈对应的两个C帧在同一个C栈</p>
+<p>而 Ruby 的两个协程栈对应了两个不同的C栈（可以在C栈间转跳）：</p>
 <p><img src="https://ws1.sinaimg.cn/large/006giLD5ly1fwx5rbodcmj30uq1c3n2s.jpg" alt="flatten 递归"></p>
 <p>而 Python（stackfull） 很特殊：</p>
 <p><img src="https://ws1.sinaimg.cn/large/006giLD5ly1fwx5rbo7q8j30jr18p77o.jpg" alt="Python 创建协程"></p>
-<p>它既不是 stackless（在同一C栈上创建新的C帧来创建新的协程栈），也没实现在C栈间转跳（创建新的C栈来创建新的协程栈）。</p>
-<p>因此其只能在同一个C栈上创建新的C帧来创建新的协程帧，这些协程帧复用了指向上一帧的指针来表示指向自己的父协程帧，因此 Python 中创建协程就相当于创建函数，但其 yield 时只消除对应的C帧而保留协程帧。</p>
-<p>因此 python 中的协程无法一次性跳回最外层的应用帧（首次发送send的帧），只能一层一层地往外（下） yield，并且也只能一层一层地往内（上）send，体现在代码上就是要多一层 for 循环来帮助内外连通（想想 for 的实现机制，for 本身在不断 next 和 捕获最后的 StopIteration，至于   yield 需要自己在 for 的代码块中写）。</p>
+<p>它既不是 stackless（在同一C栈上创建新的C帧来创建新的协程栈）</p>
+<p>也没实现在C栈间转跳（创建新的C栈来创建新的协程栈）</p>
+<p>因此其只能在同一个C栈上创建新的C帧来创建新的协程帧</p>
+<p>这些协程帧复用了指向上一帧的指针来表示指向自己的父协程帧，因此 Python 中创建协程就相当于创建函数</p>
+<p>但其 yield 时只消除对应的C帧而保留协程帧</p>
+<p>因此 python 中的协程无法一次性跳回最外层的应用帧（首次发送send的帧）</p>
+<p>只能一层一层地往外（下） yield，并且也只能一层一层地往内（上）send</p>
+<p>体现在代码上就是要多一层 for 循环来帮助内外连通</p>
+<p>想想 for 的实现机制，for 本身在不断 next 和 捕获最后的 StopIteration，至于   yield 需要自己在 for 的代码块中写</p>
 <p>利用 yield from 可以简写为：</p>
 <pre><code class="python">def flatten(obj):
     if isinstance(obj, list):
@@ -1600,8 +1665,11 @@ AttributeError: &#39;T&#39; object has no attribute &#39;__bases__&#39;
     else:
         yield obj
 </code></pre>
-<p>引入 yield from 的目的就是为了屏蔽那个多出来一层的让人难以理解的for循环，同时又能实现内外连通。yield from 的实现机制可参考《流畅的Python》第16章，更加详细的描述见 <a href="https://www.python.org/dev/peps/pep-0380/" target="_blank" rel="external">PEP 380 – Syntax for Delegating to a Subgenerator</a></p>
+<p>引入 yield from 的目的就是为了屏蔽那个多出来一层的让人难以理解的for循环，同时又能实现内外连通</p>
+<p>yield from 的实现机制可参考《流畅的Python》第16章</p>
+<p>更加详细的描述见 <a href="https://www.python.org/dev/peps/pep-0380/" target="_blank" rel="external">PEP 380 – Syntax for Delegating to a Subgenerator</a></p>
 <p>最后，可以使用 <a href="http://www.pythontutor.com/visualize.html#mode=edit" target="_blank" rel="external">http://www.pythontutor.com/visualize.html#mode=edit</a> 来可视化整个执行流</p>
+<p>– end –</p>
 ]]></content>
       
         
@@ -1618,7 +1686,10 @@ AttributeError: &#39;T&#39; object has no attribute &#39;__bases__&#39;
     <entry>
       <title><![CDATA[剑指offer题解（Python实现）]]></title>
       <url>/2018/07/19/%E5%89%91%E6%8C%87offer%E9%A2%98%E8%A7%A3%EF%BC%88Python%E5%AE%9E%E7%8E%B0%EF%BC%89/</url>
-      <content type="html"><![CDATA[<p>每个题目标题链接到 <a href="https://github.com/Hk4Fun/algorithm_offer/tree/master/target_offer" target="_blank" rel="external">github</a>，可以查看其他的解题思路、测试用例以及拓展题目，这里只贴上书中题目的最优解法和代码。另外，这里参考的是剑指offer第一版的题目顺序，补充部分添加的是剑指offer第二版多出来的几道题目。</p>
+      <content type="html"><![CDATA[<p>每个题目标题链接到 <a href="https://github.com/Hk4Fun/algorithm_offer/tree/master/target_offer" target="_blank" rel="external">github</a>，可以查看其他的解题思路、测试用例以及拓展题目</p>
+<p>这里只贴上书中题目的最优解法和代码</p>
+<p>另外，这里参考的是剑指offer第一版的题目顺序</p>
+<p>补充部分添加的是剑指offer第二版多出来的几道题目</p>
 <a id="more"></a>
 <h2 id="二维数组中的查找"><a href="#二维数组中的查找" class="headerlink" title=" 二维数组中的查找"></a><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/3_1_%E4%BA%8C%E7%BB%B4%E6%95%B0%E7%BB%84%E4%B8%AD%E7%9A%84%E6%9F%A5%E6%89%BE.py" target="_blank" rel="external"> 二维数组中的查找</a></h2><h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>在一个二维数组中，每一行都按照从左到右递增的顺序排序，每一列都按照从上到下递增的顺序排序。<br>请完成一个函数，输入这样的一个二维数组和一个整数，判断数组中是否含有该整数。</p>
 <h3 id="最优题解"><a href="#最优题解" class="headerlink" title="最优题解"></a>最优题解</h3><p>时间（O（m+n）），空间（O（1））</p>
@@ -3252,22 +3323,61 @@ class Solution:
     <entry>
       <title><![CDATA[廖雪峰web实战总结]]></title>
       <url>/2017/10/09/%E5%BB%96%E9%9B%AA%E5%B3%B0web%E5%AE%9E%E6%88%98%E6%80%BB%E7%BB%93/</url>
-      <content type="html"><![CDATA[<p>敲完<a href="https://github.com/Hk4Fun/awesome-python3-webapp" target="_blank" rel="external">代码</a>却一直没写个总结，因为感觉火候不到，学了一段时间的Django后回来重温，更是感觉廖大大的<a href="https://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001432170937506ecfb2f6adf8e4757939732f3e32b781c000" target="_blank" rel="external">这个web实战</a>很是经典，借鉴了不少的框架设计思想：<code>orm（modle）、router（urls）、mvc（mvt）、handlers（views）</code>等</p>
+      <content type="html"><![CDATA[<p>敲完<a href="https://github.com/Hk4Fun/awesome-python3-webapp" target="_blank" rel="external"> 代码</a> 却一直没写个总结，因为感觉火候不到，学了一段时间的Django后回来重温，</p>
+<p>更是感觉廖雪峰的 <a href="https://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001432170937506ecfb2f6adf8e4757939732f3e32b781c000" target="_blank" rel="external">这个web实战</a> 很是经典，借鉴了不少的框架设计思想</p>
 <a id="more"></a>
-<h2 id="主要模块"><a href="#主要模块" class="headerlink" title="主要模块"></a>主要模块</h2><h3 id="orm-py"><a href="#orm-py" class="headerlink" title="orm.py"></a>orm.py</h3><p>建立类与数据库表的映射，对数据库进行封装。<br>把表映射成类，把行（记录）映射为实例，把字段映射为实例的属性，而每个字段实际上是每个 <code>Field</code> 的实例，这也就定义了字段的类型。<br>因为数据库中每张表的字段都不一样，所以我们需要动态的生成类，此时元类派上用场，这里推荐<a href="https://stackoverflow.com/questions/100003/what-is-a-metaclass-in-python" target="_blank" rel="external">StackOverflow上的一个高票回答</a>帮助理解元类。<br>为什么要辛辛苦苦地建立orm而不直接连接数据库操作呢？我的理解有以下几点：</p>
+<h2 id="主要模块"><a href="#主要模块" class="headerlink" title="主要模块"></a>主要模块</h2><h3 id="orm-py"><a href="#orm-py" class="headerlink" title="orm.py"></a>orm.py</h3><p>建立类与数据库表的映射，对数据库进行封装</p>
+<p>把表映射成类，把行（记录）映射为实例，把字段映射为实例的属性</p>
+<p>而每个字段实际上是每个 <code>Field</code> 的实例，这也就定义了字段的类型</p>
+<p>因为数据库中每张表的字段都不一样，所以我们需要动态的生成类</p>
+<p>此时元类派上用场，这里推荐<a href="https://stackoverflow.com/questions/100003/what-is-a-metaclass-in-python" target="_blank" rel="external">StackOverflow上的一个高票回答</a>帮助理解元类</p>
+<p>为什么要辛辛苦苦地建立orm而不直接连接数据库操作呢？我的理解有以下几点：</p>
 <ol>
-<li>安全：避免SQL语句的拼接，参数化的SQL语句可以有效防止SQL注入</li>
-<li>封装：对不懂SQL语句的程序员可直接使用orm提供的函数操作数据库，而不用专门去学习SQL语句，可应对多种数据库，无非就是 <code>migrate</code> 一下，无需关心底层的SQL语句是如何生成的</li>
-<li>插件化：从django的setting可以看出，更换数据库只需更换orm引擎，而不用更改任何的代码</li>
-<li>分层：从2、3可以看出，所以还是那句话：计算机领域没有什么问题是不能靠分层解决的</li>
+<li><p>安全：避免SQL语句的拼接，参数化的SQL语句可以有效防止SQL注入</p>
+</li>
+<li><p>封装：对不懂SQL语句的程序员可直接使用orm提供的函数操作数据库，而不用专门去学习SQL语句</p>
+<p>可应对多种数据库，无非就是 <code>migrate</code> 一下，无需关心底层的SQL语句是如何生成的</p>
+</li>
+<li><p>插件化：从django的setting可以看出，更换数据库只需更换orm引擎，而不用更改任何的代码</p>
+</li>
+<li><p>分层：从2、3可以看出，所以还是那句话：计算机领域没有什么问题是不能靠分层解决的</p>
+</li>
 </ol>
-<h3 id="models-py"><a href="#models-py" class="headerlink" title="models.py"></a>models.py</h3><p>建立数据模型。<br>与django的 <code>models.py</code> 功能一样，实现数据库的建模，也就是定义表的内容和结构。<br>由于上面的orm实现的不是很完善，我们还是需要自己收到那个在数据库中建立这张表的（借助 <code>schema.sql</code> 实现），而在django中只需migrate（迁移）一下就可以了。<br>这里我们定义了三张表： <code>User</code> 、<code>Blog</code> 、<code>Comment</code>，具体都有哪些字段及其类型看代码就清楚了</p>
-<h3 id="webframe-py"><a href="#webframe-py" class="headerlink" title="webframe.py"></a>webframe.py</h3><p>框架的核心模块。<br>在web开发中想要让时间和精力更多放在业务逻辑函数的设计上，编写更少的代码从而提高开发效率，就只能在底层框架上封装一个更高级的框架。<br>Django干的就是这件事，而本框架主要基于 <code>aiohttp</code> 异步web框架进行再次封装，主要是从URL函数中解析需要接收的参数，进而从request中获取必要的参数构造成字典以 <code>**kw</code> 传给该URL函数并调用，然后对url和静态资源进行了映射（借鉴了flask的router装饰器，即注册url函数。<br>关于装饰器的理解，还是<a href="https://stackoverflow.com/questions/739654/how-to-make-a-chain-of-function-decorators/1594484#1594484" target="_blank" rel="external">一个StackOverflow的高票回答</a>），在app.py的初始化函数init()中被调用</p>
-<h3 id="handlers-py"><a href="#handlers-py" class="headerlink" title="handlers.py"></a>handlers.py</h3><p>编写业务逻辑函数的模块。<br>所有处理业务逻辑的函数都在这里编写，也就是说需求改动时只需改动该模块即可（当然，要修改数据模型还得到 <code>modles.py</code> 中）。<br>但该模块还是有不足之处：参考django的设计，应该把该模块按照功能进行分割，一个功能一个app，便于维护和复用，因为到后面需求越来越复杂，全部堆在一个模块肯定乱手脚（我在代码中用注释分隔开了。。。）</p>
-<h3 id="app-py"><a href="#app-py" class="headerlink" title="app.py"></a>app.py</h3><p>整个web app的起点和终点。<br>实现的各个中间件（ <code>middlewares</code> , 拦截器）在请求到来时进行拦截，主要是打印相关日志信息和身份验证，而在应答数据返回时进行拦截，主要是进行模板的渲染和其他数据流类型的相关处理。<br>在 <code>init()</code> 中完成所有的初始化：连接数据库、加载中间件和jinja2模板、注册url路由、添加静态资源、异步监听请求等。</p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>从上面介绍的各个功能模块来看，该web框架借鉴了django和flask等知名web开发框架的设计思想，MVC的实现无处不在，对理解web开发框架的实现有参考价值。</p>
-<p>其他模块非主要模块，主要是进行设置的读取和markdown语法的转换以及各种异常请求的处理，这里不再详细介绍。想了解以上各个模块更多的实现细节请直接阅读代码吧，毕竟 “<strong>Talk is cheap, show me the code</strong>”，我几乎对每一行进行了注释以及相关知识的补充，非常适合小白学习。</p>
-<h2 id="数据流向"><a href="#数据流向" class="headerlink" title="数据流向"></a>数据流向</h2><p>当收到一个http请求时，首先会被 <code>logger_factory</code> （输出请求的信息）、 <code>data_factory</code> （打印post提交的数据）、 <code>auth_factory</code> （cookie解析）这三个中间件拦截。<br>然后才根据请求的url被映射到到<code>handlers.py</code>中的各个相应的url函数进行处理。<br>而在执行这些url函数之前，会被 <code>RequestHandle</code> 先处理（hook），主要是从url函数中解析需要接收的参数，进而从request中获取必要的参数构造成字典以 <code>**kw</code> 传给该url函数并调用。<br>最后在应答返回数据前会被response_factory所拦截，进行模板的渲染，将 <code>request handler</code> 的返回值根据返回的类型转换为 <code>web.Response</code> 对象，吻合aiohttp框架的需求</p>
+<h3 id="models-py"><a href="#models-py" class="headerlink" title="models.py"></a>models.py</h3><p>建立数据模型</p>
+<p>与django的 <code>models.py</code> 功能一样，实现数据库的建模，也就是定义表的内容和结构</p>
+<p>由于上面的orm实现的不是很完善，我们还是需要自己收到那个在数据库中建立这张表的（借助 <code>schema.sql</code> 实现）</p>
+<p>而在django中只需migrate（迁移）一下就可以了</p>
+<p>这里我们定义了三张表： <code>User</code> 、<code>Blog</code> 、<code>Comment</code>，具体都有哪些字段及其类型看代码就清楚了</p>
+<h3 id="webframe-py"><a href="#webframe-py" class="headerlink" title="webframe.py"></a>webframe.py</h3><p>框架的核心模块</p>
+<p>在web开发中想要让时间和精力更多放在业务逻辑函数的设计上，</p>
+<p>编写更少的代码从而提高开发效率，就只能在底层框架上封装一个更高级的框架</p>
+<p>Django干的就是这件事，而本框架主要基于 <code>aiohttp</code> 异步web框架进行再次封装</p>
+<p>主要是从URL函数中解析需要接收的参数，进而从request中获取必要的参数构造成字典以 <code>**kw</code> 传给该URL函数并调用</p>
+<p>然后对url和静态资源进行了映射（借鉴了flask的router装饰器，即注册url函数</p>
+<p>关于装饰器的理解，还是<a href="https://stackoverflow.com/questions/739654/how-to-make-a-chain-of-function-decorators/1594484#1594484" target="_blank" rel="external">一个StackOverflow的高票回答</a>），在app.py的初始化函数init()中被调用</p>
+<h3 id="handlers-py"><a href="#handlers-py" class="headerlink" title="handlers.py"></a>handlers.py</h3><p>编写业务逻辑函数的模块</p>
+<p>所有处理业务逻辑的函数都在这里编写，也就是说需求改动时只需改动该模块即可</p>
+<p>当然，要修改数据模型还得到 <code>modles.py</code> 中</p>
+<p>但该模块还是有不足之处：参考django的设计，应该把该模块按照功能进行分割，一个功能一个app，便于维护和复用</p>
+<p>因为到后面需求越来越复杂，全部堆在一个模块肯定乱手脚</p>
+<h3 id="app-py"><a href="#app-py" class="headerlink" title="app.py"></a>app.py</h3><p>整个web app的起点和终点</p>
+<p>实现的各个中间件（ <code>middlewares</code> , 拦截器）在请求到来时进行拦截，主要是打印相关日志信息和身份验证</p>
+<p>而在应答数据返回时进行拦截，主要是进行模板的渲染和其他数据流类型的相关处理</p>
+<p>在 <code>init()</code> 中完成所有的初始化：</p>
+<p>连接数据库、加载中间件和jinja2模板、注册url路由、添加静态资源、异步监听请求等</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>从上面介绍的各个功能模块来看，该web框架借鉴了 django 和 flask 等知名web开发框架的设计思想</p>
+<p>MVC的实现无处不在，对理解web开发框架的实现有参考价值。</p>
+<p>其他模块非主要模块，主要是进行设置的读取和markdown语法的转换以及各种异常请求的处理，这里不再详细介绍</p>
+<p>想了解以上各个模块更多的实现细节请直接阅读代码吧，毕竟 “<strong>Talk is cheap, show me the code</strong>”</p>
+<p>我几乎对每一行进行了注释以及相关知识的补充，非常适合入门学习</p>
+<h2 id="数据流向"><a href="#数据流向" class="headerlink" title="数据流向"></a>数据流向</h2><p>当收到一个http请求时，首先会被</p>
+<p><code>logger_factory</code> （输出请求的信息）、 <code>data_factory</code> （打印post提交的数据）、 <code>auth_factory</code> （cookie解析）</p>
+<p>这三个中间件拦截</p>
+<p>然后才根据请求的url被映射到到<code>handlers.py</code>中的各个相应的url函数进行处理</p>
+<p>而在执行这些url函数之前，会被 <code>RequestHandle</code> 先处理（hook）</p>
+<p>主要是从url函数中解析需要接收的参数，进而从request中获取必要的参数构造成字典以 <code>**kw</code> 传给该url函数并调用。</p>
+<p>最后在应答返回数据前会被response_factory所拦截，进行模板的渲染</p>
+<p>将 <code>request handler</code> 的返回值根据返回的类型转换为 <code>web.Response</code> 对象，吻合aiohttp框架的需求</p>
 <h2 id="TODO"><a href="#TODO" class="headerlink" title="TODO"></a>TODO</h2><ul>
 <li><strong>框架</strong>：其实上面已经提到了，比如 <code>handlers.py</code> 的臃肿、orm框架的不完善等。</li>
 <li><strong>功能</strong>：很多博客的小功能还未实现，如分享、标签、统计等等</li>
@@ -3275,7 +3385,7 @@ class Solution:
 <li><strong>数据库</strong>：可以学习一下hexo的文章管理，它是不需要存储在数据库的，如果发表的文章比较长，放在数据库很不方便，单独形成一个md文件然后打开读取渲染岂不是更加灵活，也就是说我们可以在blog.body存放该文章的路径即可</li>
 </ul>
 <h2 id="致谢"><a href="#致谢" class="headerlink" title="致谢"></a>致谢</h2><ul>
-<li>廖雪峰大神的<a href="https://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000" target="_blank" rel="external">python教程</a>、<a href="https://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000" target="_blank" rel="external">git教程</a>、<a href="https://www.liaoxuefeng.com/wiki/001434446689867b27157e896e74d51a89c25cc8b43bdb3000" target="_blank" rel="external">javascript教程</a>（才发现原来廖大大是我北邮学长。。。）</li>
+<li>廖雪峰学长的<a href="https://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000" target="_blank" rel="external">python教程</a>、<a href="https://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000" target="_blank" rel="external">git教程</a>、<a href="https://www.liaoxuefeng.com/wiki/001434446689867b27157e896e74d51a89c25cc8b43bdb3000" target="_blank" rel="external">javascript教程</a></li>
 <li>几位前辈优秀的代码注释和补充：<a href="https://github.com/xwlyy/awesome-python3-webapp" target="_blank" rel="external">xwlyy</a>、<a href="https://github.com/KaimingWan/PureBlog" target="_blank" rel="external">KaimingWan</a>、<a href="https://github.com/zhouxinkai/awesome-python3-webapp" target="_blank" rel="external">zhouxinkai</a>、<a href="https://github.com/Engine-Treasure/awesome-python3-webapp" target="_blank" rel="external">Engine-Treasure</a>、<a href="https://github.com/ReedSun/Preeminent" target="_blank" rel="external">Preeminent</a></li>
 </ul>
 <h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
@@ -3292,8 +3402,6 @@ class Solution:
             <tag> Python </tag>
             
             <tag> ORM </tag>
-            
-            <tag> MVC </tag>
             
             <tag> Django </tag>
             
