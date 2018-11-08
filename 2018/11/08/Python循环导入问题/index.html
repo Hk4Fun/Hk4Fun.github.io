@@ -16,18 +16,19 @@
 <link href="/plugins/prettify/prettify.css" rel="stylesheet">
 
 
-<meta name="description" content="随着 Python 项目的增大，各个模块间的依赖关系将会越来越复杂 如果不合理组织文件模块结构，规划好层级关系，很可能会发生 循环导入（A import B, B import A） 而不幸的是 Python 的包导入机制并没有帮我们检测循环导入的问题（而 Golang 在编译阶段会报错） 一方面我们可以重构（动态一时爽，重构火葬场），可以借助一些设计模式来降低模块间的耦合（最根本） 而另一方面我">
+<meta name="description" content="随着 Python 项目的增大，各个模块间的依赖关系将会越来越复杂 如果不合理组织文件模块结构，规划好层级关系，很容易就出现 循环导入（A import B, B import A） 而不幸的是 Python 的包导入机制并没有帮我们检测循环导入（而 Golang 在编译阶段会报错） 一方面我们可以重构（动态一时爽，重构火葬场），可以借助一些设计模式来降低模块间的耦合（最根本） 而另一方面我们可以">
 <meta name="keywords" content="Python">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Python循环导入问题">
 <meta property="og:url" content="https://hk4fun.github.io/2018/11/08/Python循环导入问题/index.html">
 <meta property="og:site_name" content="Hk4Fun&#39;s Blog">
-<meta property="og:description" content="随着 Python 项目的增大，各个模块间的依赖关系将会越来越复杂 如果不合理组织文件模块结构，规划好层级关系，很可能会发生 循环导入（A import B, B import A） 而不幸的是 Python 的包导入机制并没有帮我们检测循环导入的问题（而 Golang 在编译阶段会报错） 一方面我们可以重构（动态一时爽，重构火葬场），可以借助一些设计模式来降低模块间的耦合（最根本） 而另一方面我">
+<meta property="og:description" content="随着 Python 项目的增大，各个模块间的依赖关系将会越来越复杂 如果不合理组织文件模块结构，规划好层级关系，很容易就出现 循环导入（A import B, B import A） 而不幸的是 Python 的包导入机制并没有帮我们检测循环导入（而 Golang 在编译阶段会报错） 一方面我们可以重构（动态一时爽，重构火葬场），可以借助一些设计模式来降低模块间的耦合（最根本） 而另一方面我们可以">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/006giLD5ly1fx0qd95rcoj30i106lq2z.jpg">
-<meta property="og:updated_time" content="2018-11-08T11:04:47.658Z">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006giLD5ly1fx13z93ig2j30s003jmx3.jpg">
+<meta property="og:updated_time" content="2018-11-08T17:39:39.453Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python循环导入问题">
-<meta name="twitter:description" content="随着 Python 项目的增大，各个模块间的依赖关系将会越来越复杂 如果不合理组织文件模块结构，规划好层级关系，很可能会发生 循环导入（A import B, B import A） 而不幸的是 Python 的包导入机制并没有帮我们检测循环导入的问题（而 Golang 在编译阶段会报错） 一方面我们可以重构（动态一时爽，重构火葬场），可以借助一些设计模式来降低模块间的耦合（最根本） 而另一方面我">
+<meta name="twitter:description" content="随着 Python 项目的增大，各个模块间的依赖关系将会越来越复杂 如果不合理组织文件模块结构，规划好层级关系，很容易就出现 循环导入（A import B, B import A） 而不幸的是 Python 的包导入机制并没有帮我们检测循环导入（而 Golang 在编译阶段会报错） 一方面我们可以重构（动态一时爽，重构火葬场），可以借助一些设计模式来降低模块间的耦合（最根本） 而另一方面我们可以">
 <meta name="twitter:image" content="https://ws1.sinaimg.cn/large/006giLD5ly1fx0qd95rcoj30i106lq2z.jpg">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
@@ -312,12 +313,12 @@
       
           
         <p>随着 Python 项目的增大，各个模块间的依赖关系将会越来越复杂</p>
-<p>如果不合理组织文件模块结构，规划好层级关系，很可能会发生 <strong>循环导入</strong>（A import B, B import A）</p>
-<p>而不幸的是 Python 的包导入机制并没有帮我们检测循环导入的问题（而 Golang 在编译阶段会报错）</p>
+<p>如果不合理组织文件模块结构，规划好层级关系，很容易就出现 <strong>循环导入</strong>（A import B, B import A）</p>
+<p>而不幸的是 Python 的包导入机制并没有帮我们检测循环导入（而 Golang 在编译阶段会报错）</p>
 <p>一方面我们可以重构（动态一时爽，重构火葬场），可以借助一些设计模式来降低模块间的耦合（最根本）</p>
 <p>而另一方面我们可以借助一些小技巧稍微改动代码结构来避免循环导入（治标不治本）</p>
 <a id="more"></a>
-<h2 id="循环导入是如何发生的？"><a href="#循环导入是如何发生的？" class="headerlink" title="循环导入是如何发生的？"></a>循环导入是如何发生的？</h2><p>为了探究导入的整个过程，这里模拟一个循环导入的场景：</p>
+<h2 id="模拟循环导入"><a href="#模拟循环导入" class="headerlink" title="模拟循环导入"></a>模拟循环导入</h2><h3 id="文件组织结构"><a href="#文件组织结构" class="headerlink" title="文件组织结构"></a>文件组织结构</h3><p>为了探究循环导入的整个过程，这里模拟一个循环导入的场景：</p>
 <ul>
 <li><strong>fist.py</strong></li>
 </ul>
@@ -347,7 +348,7 @@ second_func()
 </code></pre>
 <p><code>fist.py</code> 与 <code>second.py</code> 互相依赖形成循环导入，而 <code>run.py</code> 依赖（导入） <code>fist.py</code> ，可用图示如下：</p>
 <p><img src="https://ws1.sinaimg.cn/large/006giLD5ly1fx0qd95rcoj30i106lq2z.jpg" alt=""></p>
-<h3 id="Case1"><a href="#Case1" class="headerlink" title="Case1"></a>Case1</h3><p>我们先以 <code>first.py</code> 为入口文件，即在命令行中运行 <code>first.py</code>：</p>
+<h3 id="Case1：first-py-作为程序入口"><a href="#Case1：first-py-作为程序入口" class="headerlink" title="Case1：first.py 作为程序入口"></a>Case1：first.py 作为程序入口</h3><p>我们先以 <code>first.py</code> 为程序入口，即在命令行中运行 <code>first.py</code>：</p>
 <pre><code class="cmd">λ python first.py
 Traceback (most recent call last):
   File &quot;first.py&quot;, line 1, in &lt;module&gt;
@@ -358,7 +359,7 @@ Traceback (most recent call last):
     from second import second_func
 ImportError: cannot import name &#39;second_func&#39;
 </code></pre>
-<h3 id="Case2"><a href="#Case2" class="headerlink" title="Case2"></a>Case2</h3><p>然后以 <code>run.py</code> 为入口：</p>
+<h3 id="Case2：first-py-作为模块"><a href="#Case2：first-py-作为模块" class="headerlink" title="Case2：first.py 作为模块"></a>Case2：first.py 作为模块</h3><p>然后以 <code>run.py</code> 为程序入口：</p>
 <pre><code class="shell">λ python run.py
 Traceback (most recent call last):
   File &quot;run.py&quot;, line 1, in &lt;module&gt;
@@ -370,7 +371,7 @@ Traceback (most recent call last):
 ImportError: cannot import name &#39;first_func&#39;
 </code></pre>
 <p>可以发现两种情况下报错位置是相反的：<code>case1</code> 在 <code>first.py</code> 中报错，而 <code>case2</code> 在 <code>second.py</code> 中报错</p>
-<h3 id="Explanation"><a href="#Explanation" class="headerlink" title="Explanation"></a>Explanation</h3><ol>
+<h3 id="逐行分析"><a href="#逐行分析" class="headerlink" title="逐行分析"></a>逐行分析</h3><ol>
 <li>Python中所有加载到内存的模块都放在 <code>sys.modules</code></li>
 <li>一个模块不会重复载入</li>
 <li>命令行中启动的脚本名（入口）实际上是 <code>__main__</code> 而不是模块名</li>
@@ -396,7 +397,7 @@ ImportError: cannot import name &#39;first_func&#39;
 <p>而 <code>sys.modules</code> 中还已经有 <code>first</code>了，因此试图从 <code>first</code> 模块导入 <code>first_func</code></p>
 <p>然而之前在导入 <code>first.py</code> 时还未解释到 <code>&quot;def first_func():&quot;</code> 这一行代码就转跳到 <code>second.py</code> 了</p>
 <p>所以 <code>first</code> 模块的命名空间中并没有 <code>first_func</code>，最终导入失败：<code>ImportError: cannot import name &#39;first_func&#39;</code></p>
-<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>那么这里要如何解决循环导入？仔细分析可以发现：对已经导入的模块，其命名空间中并没有我们想要的名称引用</p>
+<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><p>那么这里要如何解决循环导入？仔细分析可以发现：对已经导入的模块，其命名空间中并没有我们想要的名称引用</p>
 <p>因此我们可以在转跳到下一个模块之前先定义好下一个模块需要的名称引用，这就需要我们  <strong>先定义再导入</strong></p>
 <p>对于 <code>case2</code>，我们可以把 <code>first.py</code> 中第一行的导入语句 <code>&quot;from second import second_func&quot;</code> 放到函数体 <code>first_func()</code> 后面：</p>
 <ul>
@@ -442,9 +443,8 @@ from first import first_func # 再导入
 first_func()
 second_func()
 </code></pre>
-<p>运行结果如下：</p>
-<pre><code class="shell">λ python first.py
-first_func called
+<p>命令行中执行：python first.py，结果如下：</p>
+<pre><code class="shell">first_func called
 second_func called
 first_func called
 second_func called
@@ -521,11 +521,141 @@ second_func called
 
 in model: __main__, file : run.py
 </code></pre>
-<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>分析到这里可以发现 <strong>循环导入和程序入口有很大的关系</strong></p>
-<p>有时是比较危险的操作，很可能一个文件会被执行两次</p>
-<p>这对一些有状态的全局变量会重复定义，这可借鉴 flask 中 <strong>current_app</strong> 和 <strong>blueprint</strong> 的巧妙设计</p>
-<p>其实只要理解了导入机制的原理（本质就是逐行解析），分析整个导入过程，就会发现问题所在</p>
-<p>保证在需要某个对象时（Python 处处为对象），能够在 <strong>所能搜索到</strong> 的所有命名空间中找到该对象的引用即可</p>
+<h2 id="Flask-中的循环导入"><a href="#Flask-中的循环导入" class="headerlink" title="Flask 中的循环导入"></a>Flask 中的循环导入</h2><p>上面的模拟是为了更好地理解循环导入的流程，下面就实际开发过程中遇到的循环导入问题来分析</p>
+<h3 id="Bug-再现"><a href="#Bug-再现" class="headerlink" title="Bug 再现"></a>Bug 再现</h3><p>熟悉 Flask 的都知道 Flask 中的 app 实例是一个很重要的单例，初学者容易犯这么一个错误：</p>
+<p>把 <code>app.py</code> 中的视图函数抽取出来放在一个独立的模块 <code>view.py</code> 中，而视图函数在注册路由时需要引用 app 实例</p>
+<p>因此在  <code>view.py</code> 中会去导入 <code>app.py</code> 中创建好的 app 实例</p>
+<p>而为了能够完成路由的注册，<code>app.py</code> 需要导入 view，这就形成了一个循环引用：</p>
+<ul>
+<li><strong>app.py</strong></li>
+</ul>
+<pre><code class="python">from flask import Flask
+
+app = Flask(__name__) # 先定义
+
+import view # 再导入，这里导入view是为了完成view.py中路由的注册
+
+if __name__ == &#39;__main__&#39;:
+    app.run()
+</code></pre>
+<ul>
+<li><strong>view.py</strong></li>
+</ul>
+<pre><code class="python">from app import app # 为了注册路由，需要导入app.py中的app实例
+
+@app.route(&#39;/&#39;)  # 将路由注册到app.py创建好的app实例中
+def index():
+    return &#39;hello world!&#39;
+</code></pre>
+<p>命令行中执行：python app.py</p>
+<pre><code class="shell"> * Serving Flask app &quot;app&quot; (lazy loading)
+ * Environment: production
+   WARNING: Do not use the development server in a production environment.
+   Use a production WSGI server instead.
+ * Debug mode: off
+ * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+</code></pre>
+<p>程序没有报错，打开浏览器访问 <code>http://127.0.0.1:5000/</code>，却返回404错误：</p>
+<p><img src="https://ws1.sinaimg.cn/large/006giLD5ly1fx13z93ig2j30s003jmx3.jpg" alt=""></p>
+<p>也就是说路由并没有真正注册到 app 中，app 实例找不到对应的视图函数</p>
+<h3 id="逐行分析-1"><a href="#逐行分析-1" class="headerlink" title="逐行分析"></a>逐行分析</h3><p>那么路由注册到哪了？输出 app 实例的 id 来看一下就明白了：</p>
+<ul>
+<li><strong>app.py</strong></li>
+</ul>
+<pre><code class="python">from flask import Flask
+
+app = Flask(__name__)
+print(&#39;id为{}的app实例化&#39;.format(id(app)))
+
+import view
+
+if __name__ == &#39;__main__&#39;:
+    print(&#39;id为{}的app启动&#39;.format(id(app)))
+    app.run()
+</code></pre>
+<ul>
+<li><strong>view.py</strong></li>
+</ul>
+<pre><code class="python">from app import app
+
+print(&#39;id为{}的app注册路由&#39;.format(id(app)))
+
+@app.route(&#39;/&#39;)
+def index():
+    return &#39;hello world!&#39;
+</code></pre>
+<p>命令行中执行：python app.py</p>
+<pre><code class="shell">id为56217936的app实例化
+id为66627696的app实例化
+id为66627696的app注册路由
+id为56217936的app启动
+ * Serving Flask app &quot;app&quot; (lazy loading)
+ * Environment: production
+   WARNING: Do not use the development server in a production environment.
+   Use a production WSGI server instead.
+ * Debug mode: off
+ * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+</code></pre>
+<p>可以看到 app 被实例化了两次，而且注册路由的 app 和使启动的 app 不是同一个 app 实例</p>
+<p>也就是说最终启动的 app 实例并没有注册我们在 view 中写好的路由和视图函数，因此最终只能返回404</p>
+<p>为什么app会被实例化两次，而且注册路由的那个 app 不是启动的 app？</p>
+<p>相信经过前面的讨论已经不难分析了：</p>
+<p>首先执行 <code>app.py</code> 创建 id 为 56217936 的 app 实例，然后导入 <code>view</code>，进入 <code>view.py</code> 执行代码</p>
+<p><code>view.py</code> 在导入 app 时 <code>sys.modules</code> 中还没有 app</p>
+<p>因为 <code>app.py</code> 是程序的入口文件，在 <code>sys.modules</code>  中为 <code>__main__</code></p>
+<p>所以 <code>app.py</code>会再次被执行， id 为 66627696 的 app 被实例化</p>
+<p>由于这次是以模块被导入的，所以在 <code>&quot;if __name__ == &#39;__main__&#39;:&quot;</code> 处为 False （<code>__name__</code> 为 “app”）</p>
+<p>导入结束返回到 <code>view.py</code>，此时获取到的 app 实例是第二次实例化的 app 了</p>
+<p>因此接下来注册路由自然就会注册在第二个 app 实例上（id 为 66627696 的 app 注册路由）</p>
+<p><code>view.py</code> 导入结束返回到最开始的 <code>app.py</code>  </p>
+<p><code>&quot;if __name__ == &#39;__main__&#39;:&quot;</code> 为 True，启动第一个 app 实例（id为56217936的app启动）</p>
+<h3 id="深入理解"><a href="#深入理解" class="headerlink" title="深入理解"></a>深入理解</h3><p>这个 Bug 告诉我们，import 机制并不总是保证单例，它只是保证了模块的单例而已</p>
+<p>换句话说，Python 全局的 <code>sys.modules</code> 字典保证了模块的单例，但不能防止模块文件被执行两次</p>
+<p>app 是一个有状态的实例，而且要求是一个单例，实例化两次是不被允许的</p>
+<p>即使我们先定义后导入，但这仅仅是保证程序能够正常运行，而不能保证 app 单例</p>
+<h3 id="解决方法-1"><a href="#解决方法-1" class="headerlink" title="解决方法"></a>解决方法</h3><p>使用 Flask 蓝图（blueprint），分层解耦，还是那句话：</p>
+<blockquote>
+<p><em>计算机</em>科学领域的任何问题都可以通过增加一个间接的<em>中间层</em>来解决</p>
+</blockquote>
+<p>将路由注册到蓝图，然后把蓝图注册到 app 实例：</p>
+<ul>
+<li><strong>app.py</strong></li>
+</ul>
+<pre><code class="python">from flask import Flask
+
+from view import home_bp # 从view中导入蓝图实例
+
+app = Flask(__name__)
+app.register_blueprint(home_bp) # 将蓝图注册到app实例中，注意到register_blueprint是app实例的方法
+
+if __name__ == &#39;__main__&#39;:
+    app.run()
+</code></pre>
+<ul>
+<li><strong>view.py</strong></li>
+</ul>
+<pre><code class="python">from flask import Blueprint # 不再返回去导入app.py了，而是导入flask中的Blueprint，循环导入被解开
+
+home_bp = Blueprint(&#39;home&#39;, __name__) # 创建蓝图实例，被app.py导入
+
+@home_bp.route(&#39;/&#39;) # 将路由注册到home_bp实例而不是app实例中，彻底解耦了
+def index():
+    return &#39;hello world!&#39;
+</code></pre>
+<p>命令行中执行：python app.py</p>
+<pre><code class="shell">* Serving Flask app &quot;app&quot; (lazy loading)
+ * Environment: production
+   WARNING: Do not use the development server in a production environment.
+   Use a production WSGI server instead.
+ * Debug mode: off
+ * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+127.0.0.1 - - [09/Nov/2018 00:58:56] &quot;GET / HTTP/1.1&quot; 200 -
+</code></pre>
+<p>注意最后一行输出，我们成功地请求到了注册路由，执行相对应的视图函数并返回</p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>导入时如果报错找不到某个实例或变量，那么需要考虑是否可能出现了循环导入，因为<strong>循环导入和程序入口有很大的关系</strong></p>
+<p>这取决于该文件是以模块被加载还是作为程序入口（作为程序入口时在循环导入下会被执行两次）</p>
+<p>有时候循环导入默不作声，带来难以发现的 Bug</p>
+<p>最典型的就是 Flask 中的 app 实例，一不小心就会被实例化两次，然而程序能正常运行</p>
 <h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
 <li><a href="https://www.youtube.com/watch?v=NH-8oLHUyDc" target="_blank" rel="external">Flask: Circular Imports</a></li>
 </ul>
@@ -540,7 +670,7 @@ in model: __main__, file : run.py
         <p><span>本文标题:</span><a href="/2018/11/08/Python循环导入问题/">Python循环导入问题</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">Hk4Fun</a></p>
         <p><span>发布时间:</span>2018-11-08, 15:37:40</p>
-        <p><span>最后更新:</span>2018-11-08, 19:04:47</p>
+        <p><span>最后更新:</span>2018-11-09, 01:39:39</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2018/11/08/Python循环导入问题/" title="Python循环导入问题">https://hk4fun.github.io/2018/11/08/Python循环导入问题/</a>
             <span class="copy-path" data-clipboard-text="原文: https://hk4fun.github.io/2018/11/08/Python循环导入问题/　　作者: Hk4Fun" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
@@ -570,7 +700,7 @@ in model: __main__, file : run.py
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#循环导入是如何发生的？"><span class="toc-number">1.</span> <span class="toc-text">循环导入是如何发生的？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Case1"><span class="toc-number">1.1.</span> <span class="toc-text">Case1</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Case2"><span class="toc-number">1.2.</span> <span class="toc-text">Case2</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Explanation"><span class="toc-number">1.3.</span> <span class="toc-text">Explanation</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#解决方案"><span class="toc-number">2.</span> <span class="toc-text">解决方案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#小结"><span class="toc-number">3.</span> <span class="toc-text">小结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-number">4.</span> <span class="toc-text">参考资料</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#模拟循环导入"><span class="toc-number">1.</span> <span class="toc-text">模拟循环导入</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#文件组织结构"><span class="toc-number">1.1.</span> <span class="toc-text">文件组织结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Case1：first-py-作为程序入口"><span class="toc-number">1.2.</span> <span class="toc-text">Case1：first.py 作为程序入口</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Case2：first-py-作为模块"><span class="toc-number">1.3.</span> <span class="toc-text">Case2：first.py 作为模块</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#逐行分析"><span class="toc-number">1.4.</span> <span class="toc-text">逐行分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#解决方法"><span class="toc-number">1.5.</span> <span class="toc-text">解决方法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Flask-中的循环导入"><span class="toc-number">2.</span> <span class="toc-text">Flask 中的循环导入</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Bug-再现"><span class="toc-number">2.1.</span> <span class="toc-text">Bug 再现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#逐行分析-1"><span class="toc-number">2.2.</span> <span class="toc-text">逐行分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#深入理解"><span class="toc-number">2.3.</span> <span class="toc-text">深入理解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#解决方法-1"><span class="toc-number">2.4.</span> <span class="toc-text">解决方法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#小结"><span class="toc-number">3.</span> <span class="toc-text">小结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-number">4.</span> <span class="toc-text">参考资料</span></a></li></ol>
         
     </div>
     <style>
