@@ -16,18 +16,18 @@
 <link href="/plugins/prettify/prettify.css" rel="stylesheet">
 
 
-<meta name="description" content="随着 Python 项目的增大，各个模块间的依赖关系将会越来越复杂 如果不合理组织文件模块结构，规划好层级关系，很可能会发生 循环导入（A import B, B import A） 而不幸的是 Python 的包导入机制并没有帮我们检测循环导入的问题（而 Golang 在编译阶段会报错） 一方面我们可以重构（动态一时爽，重构火葬场），可以借助一些设计模式来降低模块间的耦合 而另一方面我们可以借助">
+<meta name="description" content="随着 Python 项目的增大，各个模块间的依赖关系将会越来越复杂 如果不合理组织文件模块结构，规划好层级关系，很可能会发生 循环导入（A import B, B import A） 而不幸的是 Python 的包导入机制并没有帮我们检测循环导入的问题（而 Golang 在编译阶段会报错） 一方面我们可以重构（动态一时爽，重构火葬场），可以借助一些设计模式来降低模块间的耦合（最根本） 而另一方面我">
 <meta name="keywords" content="Python">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Python循环导入问题">
 <meta property="og:url" content="https://hk4fun.github.io/2018/11/08/Python循环导入问题/index.html">
 <meta property="og:site_name" content="Hk4Fun&#39;s Blog">
-<meta property="og:description" content="随着 Python 项目的增大，各个模块间的依赖关系将会越来越复杂 如果不合理组织文件模块结构，规划好层级关系，很可能会发生 循环导入（A import B, B import A） 而不幸的是 Python 的包导入机制并没有帮我们检测循环导入的问题（而 Golang 在编译阶段会报错） 一方面我们可以重构（动态一时爽，重构火葬场），可以借助一些设计模式来降低模块间的耦合 而另一方面我们可以借助">
+<meta property="og:description" content="随着 Python 项目的增大，各个模块间的依赖关系将会越来越复杂 如果不合理组织文件模块结构，规划好层级关系，很可能会发生 循环导入（A import B, B import A） 而不幸的是 Python 的包导入机制并没有帮我们检测循环导入的问题（而 Golang 在编译阶段会报错） 一方面我们可以重构（动态一时爽，重构火葬场），可以借助一些设计模式来降低模块间的耦合（最根本） 而另一方面我">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/006giLD5ly1fx0qd95rcoj30i106lq2z.jpg">
-<meta property="og:updated_time" content="2018-11-08T11:02:56.776Z">
+<meta property="og:updated_time" content="2018-11-08T11:04:47.658Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python循环导入问题">
-<meta name="twitter:description" content="随着 Python 项目的增大，各个模块间的依赖关系将会越来越复杂 如果不合理组织文件模块结构，规划好层级关系，很可能会发生 循环导入（A import B, B import A） 而不幸的是 Python 的包导入机制并没有帮我们检测循环导入的问题（而 Golang 在编译阶段会报错） 一方面我们可以重构（动态一时爽，重构火葬场），可以借助一些设计模式来降低模块间的耦合 而另一方面我们可以借助">
+<meta name="twitter:description" content="随着 Python 项目的增大，各个模块间的依赖关系将会越来越复杂 如果不合理组织文件模块结构，规划好层级关系，很可能会发生 循环导入（A import B, B import A） 而不幸的是 Python 的包导入机制并没有帮我们检测循环导入的问题（而 Golang 在编译阶段会报错） 一方面我们可以重构（动态一时爽，重构火葬场），可以借助一些设计模式来降低模块间的耦合（最根本） 而另一方面我">
 <meta name="twitter:image" content="https://ws1.sinaimg.cn/large/006giLD5ly1fx0qd95rcoj30i106lq2z.jpg">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
@@ -314,8 +314,8 @@
         <p>随着 Python 项目的增大，各个模块间的依赖关系将会越来越复杂</p>
 <p>如果不合理组织文件模块结构，规划好层级关系，很可能会发生 <strong>循环导入</strong>（A import B, B import A）</p>
 <p>而不幸的是 Python 的包导入机制并没有帮我们检测循环导入的问题（而 Golang 在编译阶段会报错）</p>
-<p>一方面我们可以重构（动态一时爽，重构火葬场），可以借助一些设计模式来降低模块间的耦合</p>
-<p>而另一方面我们可以借助一些小技巧稍微改动代码结构来避免循环导入（但治标不治本）</p>
+<p>一方面我们可以重构（动态一时爽，重构火葬场），可以借助一些设计模式来降低模块间的耦合（最根本）</p>
+<p>而另一方面我们可以借助一些小技巧稍微改动代码结构来避免循环导入（治标不治本）</p>
 <a id="more"></a>
 <h2 id="循环导入是如何发生的？"><a href="#循环导入是如何发生的？" class="headerlink" title="循环导入是如何发生的？"></a>循环导入是如何发生的？</h2><p>为了探究导入的整个过程，这里模拟一个循环导入的场景：</p>
 <ul>
@@ -540,7 +540,7 @@ in model: __main__, file : run.py
         <p><span>本文标题:</span><a href="/2018/11/08/Python循环导入问题/">Python循环导入问题</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">Hk4Fun</a></p>
         <p><span>发布时间:</span>2018-11-08, 15:37:40</p>
-        <p><span>最后更新:</span>2018-11-08, 19:02:56</p>
+        <p><span>最后更新:</span>2018-11-08, 19:04:47</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2018/11/08/Python循环导入问题/" title="Python循环导入问题">https://hk4fun.github.io/2018/11/08/Python循环导入问题/</a>
             <span class="copy-path" data-clipboard-text="原文: https://hk4fun.github.io/2018/11/08/Python循环导入问题/　　作者: Hk4Fun" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
