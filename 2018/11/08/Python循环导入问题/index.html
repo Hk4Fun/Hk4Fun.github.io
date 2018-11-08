@@ -16,17 +16,19 @@
 <link href="/plugins/prettify/prettify.css" rel="stylesheet">
 
 
-<meta name="description" content="敲完 代码 却一直没写个总结，因为感觉火候不到，学了一段时间的Django后回来重温， 更是感觉廖雪峰的 这个web实战 很是经典，借鉴了不少的框架设计思想">
-<meta name="keywords" content="Python,ORM,Django,Web">
+<meta name="description" content="随着 Python 项目的增大，各个模块间的依赖关系将会越来越复杂 如果不合理组织文件模块结构，规划好层级关系，很可能会发生 循环导入（A import B, B import A） 而不幸的是 Python 的包导入机制并没有帮我们检测循环导入的问题（而 Golang 在编译阶段会报错） 一方面我们可以重构（动态一时爽，重构火葬场），可以借助一些设计模式来降低模块间的耦合 而另一方面我们可以借助">
+<meta name="keywords" content="Python">
 <meta property="og:type" content="article">
-<meta property="og:title" content="廖雪峰web实战总结">
-<meta property="og:url" content="https://hk4fun.github.io/2017/10/09/廖雪峰web实战总结/index.html">
+<meta property="og:title" content="Python循环导入问题">
+<meta property="og:url" content="https://hk4fun.github.io/2018/11/08/Python循环导入问题/index.html">
 <meta property="og:site_name" content="Hk4Fun&#39;s Blog">
-<meta property="og:description" content="敲完 代码 却一直没写个总结，因为感觉火候不到，学了一段时间的Django后回来重温， 更是感觉廖雪峰的 这个web实战 很是经典，借鉴了不少的框架设计思想">
-<meta property="og:updated_time" content="2018-11-07T11:11:24.977Z">
+<meta property="og:description" content="随着 Python 项目的增大，各个模块间的依赖关系将会越来越复杂 如果不合理组织文件模块结构，规划好层级关系，很可能会发生 循环导入（A import B, B import A） 而不幸的是 Python 的包导入机制并没有帮我们检测循环导入的问题（而 Golang 在编译阶段会报错） 一方面我们可以重构（动态一时爽，重构火葬场），可以借助一些设计模式来降低模块间的耦合 而另一方面我们可以借助">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006giLD5ly1fx0qd95rcoj30i106lq2z.jpg">
+<meta property="og:updated_time" content="2018-11-08T11:02:56.776Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="廖雪峰web实战总结">
-<meta name="twitter:description" content="敲完 代码 却一直没写个总结，因为感觉火候不到，学了一段时间的Django后回来重温， 更是感觉廖雪峰的 这个web实战 很是经典，借鉴了不少的框架设计思想">
+<meta name="twitter:title" content="Python循环导入问题">
+<meta name="twitter:description" content="随着 Python 项目的增大，各个模块间的依赖关系将会越来越复杂 如果不合理组织文件模块结构，规划好层级关系，很可能会发生 循环导入（A import B, B import A） 而不幸的是 Python 的包导入机制并没有帮我们检测循环导入的问题（而 Golang 在编译阶段会报错） 一方面我们可以重构（动态一时爽，重构火葬场），可以借助一些设计模式来降低模块间的耦合 而另一方面我们可以借助">
+<meta name="twitter:image" content="https://ws1.sinaimg.cn/large/006giLD5ly1fx0qd95rcoj30i106lq2z.jpg">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -58,7 +60,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>廖雪峰web实战总结 | Hk4Fun&#39;s Blog</title>
+<title>Python循环导入问题 | Hk4Fun&#39;s Blog</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -269,11 +271,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-廖雪峰web实战总结" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-Python循环导入问题" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2017/10/09/廖雪峰web实战总结/" class="article-date">
-      <time datetime="2017-10-09T05:48:15.000Z" itemprop="datePublished">2017-10-09</time>
+      <a href="/2018/11/08/Python循环导入问题/" class="article-date">
+      <time datetime="2018-11-08T07:37:40.000Z" itemprop="datePublished">2018-11-08</time>
 </a>
 
 
@@ -288,7 +290,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      廖雪峰web实战总结
+      Python循环导入问题
     </h1>
   
 
@@ -299,7 +301,7 @@
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Django/">Django</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ORM/">ORM</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web/">Web</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -309,76 +311,223 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>敲完<a href="https://github.com/Hk4Fun/awesome-python3-webapp" target="_blank" rel="external"> 代码</a> 却一直没写个总结，因为感觉火候不到，学了一段时间的Django后回来重温，</p>
-<p>更是感觉廖雪峰的 <a href="https://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001432170937506ecfb2f6adf8e4757939732f3e32b781c000" target="_blank" rel="external">这个web实战</a> 很是经典，借鉴了不少的框架设计思想</p>
+        <p>随着 Python 项目的增大，各个模块间的依赖关系将会越来越复杂</p>
+<p>如果不合理组织文件模块结构，规划好层级关系，很可能会发生 <strong>循环导入</strong>（A import B, B import A）</p>
+<p>而不幸的是 Python 的包导入机制并没有帮我们检测循环导入的问题（而 Golang 在编译阶段会报错）</p>
+<p>一方面我们可以重构（动态一时爽，重构火葬场），可以借助一些设计模式来降低模块间的耦合</p>
+<p>而另一方面我们可以借助一些小技巧稍微改动代码结构来避免循环导入（但治标不治本）</p>
 <a id="more"></a>
-<h2 id="主要模块"><a href="#主要模块" class="headerlink" title="主要模块"></a>主要模块</h2><h3 id="orm-py"><a href="#orm-py" class="headerlink" title="orm.py"></a>orm.py</h3><p>建立类与数据库表的映射，对数据库进行封装</p>
-<p>把表映射成类，把行（记录）映射为实例，把字段映射为实例的属性</p>
-<p>而每个字段实际上是每个 <code>Field</code> 的实例，这也就定义了字段的类型</p>
-<p>因为数据库中每张表的字段都不一样，所以我们需要动态的生成类</p>
-<p>此时元类派上用场，这里推荐<a href="https://stackoverflow.com/questions/100003/what-is-a-metaclass-in-python" target="_blank" rel="external">StackOverflow上的一个高票回答</a>帮助理解元类</p>
-<p>为什么要辛辛苦苦地建立orm而不直接连接数据库操作呢？我的理解有以下几点：</p>
-<ol>
-<li><p>安全：避免SQL语句的拼接，参数化的SQL语句可以有效防止SQL注入</p>
-</li>
-<li><p>封装：对不懂SQL语句的程序员可直接使用orm提供的函数操作数据库，而不用专门去学习SQL语句</p>
-<p>可应对多种数据库，无非就是 <code>migrate</code> 一下，无需关心底层的SQL语句是如何生成的</p>
-</li>
-<li><p>插件化：从django的setting可以看出，更换数据库只需更换orm引擎，而不用更改任何的代码</p>
-</li>
-<li><p>分层：从2、3可以看出，所以还是那句话：计算机领域没有什么问题是不能靠分层解决的</p>
-</li>
+<h2 id="循环导入是如何发生的？"><a href="#循环导入是如何发生的？" class="headerlink" title="循环导入是如何发生的？"></a>循环导入是如何发生的？</h2><p>为了探究导入的整个过程，这里模拟一个循环导入的场景：</p>
+<ul>
+<li><strong>fist.py</strong></li>
+</ul>
+<pre><code class="python">from second import second_func
+
+def first_func():
+    print(&#39;first_func called&#39;)
+
+first_func()
+second_func()
+</code></pre>
+<ul>
+<li><strong>second.py</strong></li>
+</ul>
+<pre><code class="python">from first import first_func
+
+def second_func():
+    print(&#39;second_func called&#39;)
+
+first_func()
+second_func()
+</code></pre>
+<ul>
+<li><strong>run.py</strong></li>
+</ul>
+<pre><code class="python">import first
+</code></pre>
+<p><code>fist.py</code> 与 <code>second.py</code> 互相依赖形成循环导入，而 <code>run.py</code> 依赖（导入） <code>fist.py</code> ，可用图示如下：</p>
+<p><img src="https://ws1.sinaimg.cn/large/006giLD5ly1fx0qd95rcoj30i106lq2z.jpg" alt=""></p>
+<h3 id="Case1"><a href="#Case1" class="headerlink" title="Case1"></a>Case1</h3><p>我们先以 <code>first.py</code> 为入口文件，即在命令行中运行 <code>first.py</code>：</p>
+<pre><code class="cmd">λ python first.py
+Traceback (most recent call last):
+  File &quot;first.py&quot;, line 1, in &lt;module&gt;
+    from second import second_func
+  File &quot;C:\Users\ChenHW\Desktop\circular\second.py&quot;, line 1, in &lt;module&gt;
+    from first import first_func
+  File &quot;C:\Users\ChenHW\Desktop\circular\first.py&quot;, line 1, in &lt;module&gt;
+    from second import second_func
+ImportError: cannot import name &#39;second_func&#39;
+</code></pre>
+<h3 id="Case2"><a href="#Case2" class="headerlink" title="Case2"></a>Case2</h3><p>然后以 <code>run.py</code> 为入口：</p>
+<pre><code class="shell">λ python run.py
+Traceback (most recent call last):
+  File &quot;run.py&quot;, line 1, in &lt;module&gt;
+    import first
+  File &quot;C:\Users\ChenHW\Desktop\circular\first.py&quot;, line 1, in &lt;module&gt;
+    from second import second_func
+  File &quot;C:\Users\ChenHW\Desktop\circular\second.py&quot;, line 1, in &lt;module&gt;
+    from first import first_func
+ImportError: cannot import name &#39;first_func&#39;
+</code></pre>
+<p>可以发现两种情况下报错位置是相反的：<code>case1</code> 在 <code>first.py</code> 中报错，而 <code>case2</code> 在 <code>second.py</code> 中报错</p>
+<h3 id="Explanation"><a href="#Explanation" class="headerlink" title="Explanation"></a>Explanation</h3><ol>
+<li>Python中所有加载到内存的模块都放在 <code>sys.modules</code></li>
+<li>一个模块不会重复载入</li>
+<li>命令行中启动的脚本名（入口）实际上是 <code>__main__</code> 而不是模块名</li>
 </ol>
-<h3 id="models-py"><a href="#models-py" class="headerlink" title="models.py"></a>models.py</h3><p>建立数据模型</p>
-<p>与django的 <code>models.py</code> 功能一样，实现数据库的建模，也就是定义表的内容和结构</p>
-<p>由于上面的orm实现的不是很完善，我们还是需要自己收到那个在数据库中建立这张表的（借助 <code>schema.sql</code> 实现）</p>
-<p>而在django中只需migrate（迁移）一下就可以了</p>
-<p>这里我们定义了三张表： <code>User</code> 、<code>Blog</code> 、<code>Comment</code>，具体都有哪些字段及其类型看代码就清楚了</p>
-<h3 id="webframe-py"><a href="#webframe-py" class="headerlink" title="webframe.py"></a>webframe.py</h3><p>框架的核心模块</p>
-<p>在web开发中想要让时间和精力更多放在业务逻辑函数的设计上，</p>
-<p>编写更少的代码从而提高开发效率，就只能在底层框架上封装一个更高级的框架</p>
-<p>Django干的就是这件事，而本框架主要基于 <code>aiohttp</code> 异步web框架进行再次封装</p>
-<p>主要是从URL函数中解析需要接收的参数，进而从request中获取必要的参数构造成字典以 <code>**kw</code> 传给该URL函数并调用</p>
-<p>然后对url和静态资源进行了映射（借鉴了flask的router装饰器，即注册url函数</p>
-<p>关于装饰器的理解，还是<a href="https://stackoverflow.com/questions/739654/how-to-make-a-chain-of-function-decorators/1594484#1594484" target="_blank" rel="external">一个StackOverflow的高票回答</a>），在app.py的初始化函数init()中被调用</p>
-<h3 id="handlers-py"><a href="#handlers-py" class="headerlink" title="handlers.py"></a>handlers.py</h3><p>编写业务逻辑函数的模块</p>
-<p>所有处理业务逻辑的函数都在这里编写，也就是说需求改动时只需改动该模块即可</p>
-<p>当然，要修改数据模型还得到 <code>modles.py</code> 中</p>
-<p>但该模块还是有不足之处：参考django的设计，应该把该模块按照功能进行分割，一个功能一个app，便于维护和复用</p>
-<p>因为到后面需求越来越复杂，全部堆在一个模块肯定乱手脚</p>
-<h3 id="app-py"><a href="#app-py" class="headerlink" title="app.py"></a>app.py</h3><p>整个web app的起点和终点</p>
-<p>实现的各个中间件（ <code>middlewares</code> , 拦截器）在请求到来时进行拦截，主要是打印相关日志信息和身份验证</p>
-<p>而在应答数据返回时进行拦截，主要是进行模板的渲染和其他数据流类型的相关处理</p>
-<p>在 <code>init()</code> 中完成所有的初始化：</p>
-<p>连接数据库、加载中间件和jinja2模板、注册url路由、添加静态资源、异步监听请求等</p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>从上面介绍的各个功能模块来看，该web框架借鉴了 django 和 flask 等知名web开发框架的设计思想</p>
-<p>MVC的实现无处不在，对理解web开发框架的实现有参考价值。</p>
-<p>其他模块非主要模块，主要是进行设置的读取和markdown语法的转换以及各种异常请求的处理，这里不再详细介绍</p>
-<p>想了解以上各个模块更多的实现细节请直接阅读代码吧，毕竟 “<strong>Talk is cheap, show me the code</strong>”</p>
-<p>我几乎对每一行进行了注释以及相关知识的补充，非常适合入门学习</p>
-<h2 id="数据流向"><a href="#数据流向" class="headerlink" title="数据流向"></a>数据流向</h2><p>当收到一个http请求时，首先会被</p>
-<p><code>logger_factory</code> （输出请求的信息）、 <code>data_factory</code> （打印post提交的数据）、 <code>auth_factory</code> （cookie解析）</p>
-<p>这三个中间件拦截</p>
-<p>然后才根据请求的url被映射到到<code>handlers.py</code>中的各个相应的url函数进行处理</p>
-<p>而在执行这些url函数之前，会被 <code>RequestHandle</code> 先处理（hook）</p>
-<p>主要是从url函数中解析需要接收的参数，进而从request中获取必要的参数构造成字典以 <code>**kw</code> 传给该url函数并调用。</p>
-<p>最后在应答返回数据前会被response_factory所拦截，进行模板的渲染</p>
-<p>将 <code>request handler</code> 的返回值根据返回的类型转换为 <code>web.Response</code> 对象，吻合aiohttp框架的需求</p>
-<h2 id="TODO"><a href="#TODO" class="headerlink" title="TODO"></a>TODO</h2><ul>
-<li><strong>框架</strong>：其实上面已经提到了，比如 <code>handlers.py</code> 的臃肿、orm框架的不完善等。</li>
-<li><strong>功能</strong>：很多博客的小功能还未实现，如分享、标签、统计等等</li>
-<li><strong>前端</strong>：前端使用的uikit这个css框架界面不是很友好，而自己的前端知识又不足，恶补了前端知识后发现前端也是个大坑，考虑使用bootstrap</li>
-<li><strong>数据库</strong>：可以学习一下hexo的文章管理，它是不需要存储在数据库的，如果发表的文章比较长，放在数据库很不方便，单独形成一个md文件然后打开读取渲染岂不是更加灵活，也就是说我们可以在blog.body存放该文章的路径即可</li>
+<p>对于 <code>case1</code>，入口为 <code>first.py</code>, 从 <code>Traceback</code> 中可以看出导入路径为：</p>
+<p><code>__main__.py</code>(<code>first.py</code>) –&gt; <code>second.py</code> –&gt; <code>first.py</code></p>
+<p>解释器最先执行 <code>first.py</code> 的第一行代码 <code>from second import second_func</code> </p>
+<p>( 注意此时  <code>sys.modules</code> 中记录的是 <code>__main__</code> 而不是 <code>first</code>)</p>
+<p>发现需要先导入 <code>second.py</code>，而 <code>sys.modules</code> 中还没有 <code>second</code></p>
+<p>这意味着 <code>second.py</code> 还未导入，于是转跳到 <code>second.py</code> 执行第一行代码</p>
+<p><code>second.py</code> 第一行代码是 <code>from first import first_func</code>，发现需要先导入 <code>first.py</code></p>
+<p>而 <code>sys.modules</code> 中还没有 <code>first</code>（只有 <code>__main__</code> 和 <code>second</code>）</p>
+<p>这意味着  <code>first.py</code> 还未导入，于是转跳回  <code>first.py</code> 执行第一行代码</p>
+<p><code>first.py</code> 第一行代码是 <code>from second import second_func</code>，发现需要导入 <code>second.py</code></p>
+<p>然而 <code>sys.modules</code> 中已经有 <code>second</code> 了，意味着 <code>second.py</code> 已经导入，于是试图从该模块中导入 <code>second_func</code></p>
+<p>而之前在导入 <code>second.py</code> 时还未解析到 <code>&quot;def second_func():&quot;</code> 这一行代码就转跳回 <code>first.py</code> 了</p>
+<p>所以 <code>second</code> 模块的命名空间中并没有 <code>second_func</code>，因此导入失败：<code>ImportError: cannot import name &#39;second_func&#39;</code></p>
+<p>这样对 <code>case2</code> 的报错也就明白了，从它的 <code>Traceback</code> 中可以看出导入路径为：</p>
+<p><code>__main__.py</code>(<code>run.py</code>) –&gt; <code>first.py</code> –&gt; <code>second.py</code></p>
+<p> <code>case2</code> 的入口为 <code>run.py</code> 而不是 <code>first.py</code>，因此在 <code>run.py</code> 中导入 <code>first.py</code>时</p>
+<p><code>first.py</code> 是以模块的身份被导入，从而 <code>sys.modules</code> 中记录的是 <code>first</code></p>
+<p>当执行到 <code>second.py</code> 第一行代码时发现需要导入 <code>first.py</code></p>
+<p>而 <code>sys.modules</code> 中还已经有 <code>first</code>了，因此试图从 <code>first</code> 模块导入 <code>first_func</code></p>
+<p>然而之前在导入 <code>first.py</code> 时还未解释到 <code>&quot;def first_func():&quot;</code> 这一行代码就转跳到 <code>second.py</code> 了</p>
+<p>所以 <code>first</code> 模块的命名空间中并没有 <code>first_func</code>，最终导入失败：<code>ImportError: cannot import name &#39;first_func&#39;</code></p>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>那么这里要如何解决循环导入？仔细分析可以发现：对已经导入的模块，其命名空间中并没有我们想要的名称引用</p>
+<p>因此我们可以在转跳到下一个模块之前先定义好下一个模块需要的名称引用，这就需要我们  <strong>先定义再导入</strong></p>
+<p>对于 <code>case2</code>，我们可以把 <code>first.py</code> 中第一行的导入语句 <code>&quot;from second import second_func&quot;</code> 放到函数体 <code>first_func()</code> 后面：</p>
+<ul>
+<li><strong>first.py</strong></li>
 </ul>
-<h2 id="致谢"><a href="#致谢" class="headerlink" title="致谢"></a>致谢</h2><ul>
-<li>廖雪峰学长的<a href="https://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000" target="_blank" rel="external">python教程</a>、<a href="https://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000" target="_blank" rel="external">git教程</a>、<a href="https://www.liaoxuefeng.com/wiki/001434446689867b27157e896e74d51a89c25cc8b43bdb3000" target="_blank" rel="external">javascript教程</a></li>
-<li>几位前辈优秀的代码注释和补充：<a href="https://github.com/xwlyy/awesome-python3-webapp" target="_blank" rel="external">xwlyy</a>、<a href="https://github.com/KaimingWan/PureBlog" target="_blank" rel="external">KaimingWan</a>、<a href="https://github.com/zhouxinkai/awesome-python3-webapp" target="_blank" rel="external">zhouxinkai</a>、<a href="https://github.com/Engine-Treasure/awesome-python3-webapp" target="_blank" rel="external">Engine-Treasure</a>、<a href="https://github.com/ReedSun/Preeminent" target="_blank" rel="external">Preeminent</a></li>
+<pre><code class="python">def first_func(): # 先定义
+    print(&#39;first_func called&#39;)
+
+from second import second_func # 再导入
+
+first_func()
+second_func()
+</code></pre>
+<p>其他两个文件不用修改，这样在 <code>second.py</code> 要导入 <code>first</code> 模块时， <code>first_func</code> 已经定义好了，运行结果如下：</p>
+<pre><code class="shell">λ python run.py
+first_func called
+second_func called
+first_func called
+second_func called
+</code></pre>
+<p>对于 <code>case1</code>，我们在之前的修改上直接运行会怎样？</p>
+<pre><code class="shell">λ python first.py
+Traceback (most recent call last):
+  File &quot;first.py&quot;, line 4, in &lt;module&gt;
+    from second import second_func
+  File &quot;C:\Users\ChenHW\Desktop\circular\second.py&quot;, line 1, in &lt;module&gt;
+    from first import first_func
+  File &quot;C:\Users\ChenHW\Desktop\circular\first.py&quot;, line 4, in &lt;module&gt;
+    from second import second_func
+ImportError: cannot import name &#39;second_func&#39;
+</code></pre>
+<p>报错和之前一样，还是因为从 <code>second.py</code> 跳回 <code>first.py</code> 时函数 <code>second_func</code> 还未定义</p>
+<p>从而导致 <code>first.py</code> 从 <code>second</code> 中导入 <code>second_func</code> 失败</p>
+<p>因此我们仿照 <code>case1</code> 的解决方式，先定义 <code>second_func</code> 再导入 <code>first</code>：</p>
+<ul>
+<li><strong>second.py</strong></li>
 </ul>
+<pre><code class="python">def second_func(): # 先定义
+    print(&#39;second_func called&#39;)
+
+from first import first_func # 再导入
+
+first_func()
+second_func()
+</code></pre>
+<p>运行结果如下：</p>
+<pre><code class="shell">λ python first.py
+first_func called
+second_func called
+first_func called
+second_func called
+first_func called
+second_func called
+</code></pre>
+<p>没有报错了，但是结果怎么多了两行？</p>
+<p>仔细分析可以明白这个输出结果符合导入栈的出栈顺序：</p>
+<p>第1、2行是 <code>first</code> 作为模块被 <code>second</code> 导入时执行的结果</p>
+<p>第3、4行是 <code>second</code> 作为模块被 <code>__main__</code>（<code>first</code>） 导入时执行的结果</p>
+<p>第5、6行是 <code>__main__</code>（<code>first</code>） 作为程序入口而执行的结果</p>
+<p>因此 <code>first.py</code> 其实被执行了两次，一次作为模块一次作为入口，而 <code>second.py</code> 只是作为模块被执行了一次</p>
+<p>最后让我们写一个完整的代码验证一下：</p>
+<ul>
+<li><strong>run.py</strong></li>
+</ul>
+<pre><code class="python">import first
+
+print(&#39;in model: {}, file : {}&#39;.format(__name__, __file__.rsplit(&#39;\\&#39;, 1)[-1]))
+</code></pre>
+<ul>
+<li><strong>first.py</strong></li>
+</ul>
+<pre><code class="python">def first_func():
+    print(&#39;first_func called&#39;)
+
+from second import second_func
+
+print(&#39;in model: {}, file : {}&#39;.format(__name__, __file__.rsplit(&#39;\\&#39;, 1)[-1]))
+first_func()
+second_func()
+print()
+</code></pre>
+<ul>
+<li><strong>second.py</strong></li>
+</ul>
+<pre><code class="python">def second_func():
+    print(&#39;second_func called&#39;)
+
+from first import first_func
+
+print(&#39;in model: {}, file : {}&#39;.format(__name__, __file__.rsplit(&#39;\\&#39;, 1)[-1]))
+first_func()
+second_func()
+print()
+</code></pre>
+<ul>
+<li><strong>Case1</strong></li>
+</ul>
+<pre><code class="shell">λ python first.py
+in model: first, file : first.py
+first_func called
+second_func called
+
+in model: second, file : second.py
+first_func called
+second_func called
+
+in model: __main__, file : first.py
+first_func called
+second_func called
+</code></pre>
+<ul>
+<li><strong>Case2</strong></li>
+</ul>
+<pre><code class="shell">λ python run.py
+in model: second, file : second.py
+first_func called
+second_func called
+
+in model: first, file : first.py
+first_func called
+second_func called
+
+in model: __main__, file : run.py
+</code></pre>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>分析到这里可以发现 <strong>循环导入和程序入口有很大的关系</strong></p>
+<p>有时是比较危险的操作，很可能一个文件会被执行两次</p>
+<p>这对一些有状态的全局变量会重复定义，这可借鉴 flask 中 <strong>current_app</strong> 和 <strong>blueprint</strong> 的巧妙设计</p>
+<p>其实只要理解了导入机制的原理（本质就是逐行解析），分析整个导入过程，就会发现问题所在</p>
+<p>保证在需要某个对象时（Python 处处为对象），能够在 <strong>所能搜索到</strong> 的所有命名空间中找到该对象的引用即可</p>
 <h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
-<li><a href="http://jinja.pocoo.org/docs/2.9/" target="_blank" rel="external">Jinja2官方文档</a></li>
-<li><a href="https://docs.python.org/3/library/asyncio.html" target="_blank" rel="external">asyncio官方文档</a></li>
-<li><a href="http://aiohttp.readthedocs.io/en/stable/web.html" target="_blank" rel="external">aiohttp官方文档</a></li>
-<li><a href="http://aiomysql.readthedocs.io/en/latest/index.html" target="_blank" rel="external">aiomysql官方文档</a></li>
+<li><a href="https://www.youtube.com/watch?v=NH-8oLHUyDc" target="_blank" rel="external">Flask: Circular Imports</a></li>
 </ul>
 
       
@@ -388,13 +537,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2017/10/09/廖雪峰web实战总结/">廖雪峰web实战总结</a></p>
+        <p><span>本文标题:</span><a href="/2018/11/08/Python循环导入问题/">Python循环导入问题</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">Hk4Fun</a></p>
-        <p><span>发布时间:</span>2017-10-09, 13:48:15</p>
-        <p><span>最后更新:</span>2018-11-07, 19:11:24</p>
+        <p><span>发布时间:</span>2018-11-08, 15:37:40</p>
+        <p><span>最后更新:</span>2018-11-08, 19:02:56</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2017/10/09/廖雪峰web实战总结/" title="廖雪峰web实战总结">https://hk4fun.github.io/2017/10/09/廖雪峰web实战总结/</a>
-            <span class="copy-path" data-clipboard-text="原文: https://hk4fun.github.io/2017/10/09/廖雪峰web实战总结/　　作者: Hk4Fun" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2018/11/08/Python循环导入问题/" title="Python循环导入问题">https://hk4fun.github.io/2018/11/08/Python循环导入问题/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://hk4fun.github.io/2018/11/08/Python循环导入问题/　　作者: Hk4Fun" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -406,12 +555,12 @@
 
     <nav id="article-nav">
         
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2018/07/19/剑指offer题解（Python实现）/">
-                    剑指offer题解（Python实现）
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2018/11/07/Python字符串驻留机制/">
+                    Python字符串驻留机制
                 </a>
             </div>
-        
         
     </nav>
 
@@ -421,7 +570,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#主要模块"><span class="toc-number">1.</span> <span class="toc-text">主要模块</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#orm-py"><span class="toc-number">1.1.</span> <span class="toc-text">orm.py</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#models-py"><span class="toc-number">1.2.</span> <span class="toc-text">models.py</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#webframe-py"><span class="toc-number">1.3.</span> <span class="toc-text">webframe.py</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#handlers-py"><span class="toc-number">1.4.</span> <span class="toc-text">handlers.py</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#app-py"><span class="toc-number">1.5.</span> <span class="toc-text">app.py</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#总结"><span class="toc-number">1.6.</span> <span class="toc-text">总结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数据流向"><span class="toc-number">2.</span> <span class="toc-text">数据流向</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TODO"><span class="toc-number">3.</span> <span class="toc-text">TODO</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#致谢"><span class="toc-number">4.</span> <span class="toc-text">致谢</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-number">5.</span> <span class="toc-text">参考资料</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#循环导入是如何发生的？"><span class="toc-number">1.</span> <span class="toc-text">循环导入是如何发生的？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Case1"><span class="toc-number">1.1.</span> <span class="toc-text">Case1</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Case2"><span class="toc-number">1.2.</span> <span class="toc-text">Case2</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Explanation"><span class="toc-number">1.3.</span> <span class="toc-text">Explanation</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#解决方案"><span class="toc-number">2.</span> <span class="toc-text">解决方案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#小结"><span class="toc-number">3.</span> <span class="toc-text">小结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-number">4.</span> <span class="toc-text">参考资料</span></a></li></ol>
         
     </div>
     <style>
@@ -484,15 +633,15 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2018/07/19/剑指offer题解（Python实现）/" title="上一篇: 剑指offer题解（Python实现）">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+            <a href="/2018/11/07/Python字符串驻留机制/" title="下一篇: Python字符串驻留机制">
+                <i class="fa fa-angle-right"></i>
+            </a>
         
     </div>
 

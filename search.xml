@@ -3,6 +3,238 @@
   
     
     <entry>
+      <title><![CDATA[Python循环导入问题]]></title>
+      <url>/2018/11/08/Python%E5%BE%AA%E7%8E%AF%E5%AF%BC%E5%85%A5%E9%97%AE%E9%A2%98/</url>
+      <content type="html"><![CDATA[<p>随着 Python 项目的增大，各个模块间的依赖关系将会越来越复杂</p>
+<p>如果不合理组织文件模块结构，规划好层级关系，很可能会发生 <strong>循环导入</strong>（A import B, B import A）</p>
+<p>而不幸的是 Python 的包导入机制并没有帮我们检测循环导入的问题（而 Golang 在编译阶段会报错）</p>
+<p>一方面我们可以重构（动态一时爽，重构火葬场），可以借助一些设计模式来降低模块间的耦合</p>
+<p>而另一方面我们可以借助一些小技巧稍微改动代码结构来避免循环导入（但治标不治本）</p>
+<a id="more"></a>
+<h2 id="循环导入是如何发生的？"><a href="#循环导入是如何发生的？" class="headerlink" title="循环导入是如何发生的？"></a>循环导入是如何发生的？</h2><p>为了探究导入的整个过程，这里模拟一个循环导入的场景：</p>
+<ul>
+<li><strong>fist.py</strong></li>
+</ul>
+<pre><code class="python">from second import second_func
+
+def first_func():
+    print(&#39;first_func called&#39;)
+
+first_func()
+second_func()
+</code></pre>
+<ul>
+<li><strong>second.py</strong></li>
+</ul>
+<pre><code class="python">from first import first_func
+
+def second_func():
+    print(&#39;second_func called&#39;)
+
+first_func()
+second_func()
+</code></pre>
+<ul>
+<li><strong>run.py</strong></li>
+</ul>
+<pre><code class="python">import first
+</code></pre>
+<p><code>fist.py</code> 与 <code>second.py</code> 互相依赖形成循环导入，而 <code>run.py</code> 依赖（导入） <code>fist.py</code> ，可用图示如下：</p>
+<p><img src="https://ws1.sinaimg.cn/large/006giLD5ly1fx0qd95rcoj30i106lq2z.jpg" alt=""></p>
+<h3 id="Case1"><a href="#Case1" class="headerlink" title="Case1"></a>Case1</h3><p>我们先以 <code>first.py</code> 为入口文件，即在命令行中运行 <code>first.py</code>：</p>
+<pre><code class="cmd">λ python first.py
+Traceback (most recent call last):
+  File &quot;first.py&quot;, line 1, in &lt;module&gt;
+    from second import second_func
+  File &quot;C:\Users\ChenHW\Desktop\circular\second.py&quot;, line 1, in &lt;module&gt;
+    from first import first_func
+  File &quot;C:\Users\ChenHW\Desktop\circular\first.py&quot;, line 1, in &lt;module&gt;
+    from second import second_func
+ImportError: cannot import name &#39;second_func&#39;
+</code></pre>
+<h3 id="Case2"><a href="#Case2" class="headerlink" title="Case2"></a>Case2</h3><p>然后以 <code>run.py</code> 为入口：</p>
+<pre><code class="shell">λ python run.py
+Traceback (most recent call last):
+  File &quot;run.py&quot;, line 1, in &lt;module&gt;
+    import first
+  File &quot;C:\Users\ChenHW\Desktop\circular\first.py&quot;, line 1, in &lt;module&gt;
+    from second import second_func
+  File &quot;C:\Users\ChenHW\Desktop\circular\second.py&quot;, line 1, in &lt;module&gt;
+    from first import first_func
+ImportError: cannot import name &#39;first_func&#39;
+</code></pre>
+<p>可以发现两种情况下报错位置是相反的：<code>case1</code> 在 <code>first.py</code> 中报错，而 <code>case2</code> 在 <code>second.py</code> 中报错</p>
+<h3 id="Explanation"><a href="#Explanation" class="headerlink" title="Explanation"></a>Explanation</h3><ol>
+<li>Python中所有加载到内存的模块都放在 <code>sys.modules</code></li>
+<li>一个模块不会重复载入</li>
+<li>命令行中启动的脚本名（入口）实际上是 <code>__main__</code> 而不是模块名</li>
+</ol>
+<p>对于 <code>case1</code>，入口为 <code>first.py</code>, 从 <code>Traceback</code> 中可以看出导入路径为：</p>
+<p><code>__main__.py</code>(<code>first.py</code>) –&gt; <code>second.py</code> –&gt; <code>first.py</code></p>
+<p>解释器最先执行 <code>first.py</code> 的第一行代码 <code>from second import second_func</code> </p>
+<p>( 注意此时  <code>sys.modules</code> 中记录的是 <code>__main__</code> 而不是 <code>first</code>)</p>
+<p>发现需要先导入 <code>second.py</code>，而 <code>sys.modules</code> 中还没有 <code>second</code></p>
+<p>这意味着 <code>second.py</code> 还未导入，于是转跳到 <code>second.py</code> 执行第一行代码</p>
+<p><code>second.py</code> 第一行代码是 <code>from first import first_func</code>，发现需要先导入 <code>first.py</code></p>
+<p>而 <code>sys.modules</code> 中还没有 <code>first</code>（只有 <code>__main__</code> 和 <code>second</code>）</p>
+<p>这意味着  <code>first.py</code> 还未导入，于是转跳回  <code>first.py</code> 执行第一行代码</p>
+<p><code>first.py</code> 第一行代码是 <code>from second import second_func</code>，发现需要导入 <code>second.py</code></p>
+<p>然而 <code>sys.modules</code> 中已经有 <code>second</code> 了，意味着 <code>second.py</code> 已经导入，于是试图从该模块中导入 <code>second_func</code></p>
+<p>而之前在导入 <code>second.py</code> 时还未解析到 <code>&quot;def second_func():&quot;</code> 这一行代码就转跳回 <code>first.py</code> 了</p>
+<p>所以 <code>second</code> 模块的命名空间中并没有 <code>second_func</code>，因此导入失败：<code>ImportError: cannot import name &#39;second_func&#39;</code></p>
+<p>这样对 <code>case2</code> 的报错也就明白了，从它的 <code>Traceback</code> 中可以看出导入路径为：</p>
+<p><code>__main__.py</code>(<code>run.py</code>) –&gt; <code>first.py</code> –&gt; <code>second.py</code></p>
+<p> <code>case2</code> 的入口为 <code>run.py</code> 而不是 <code>first.py</code>，因此在 <code>run.py</code> 中导入 <code>first.py</code>时</p>
+<p><code>first.py</code> 是以模块的身份被导入，从而 <code>sys.modules</code> 中记录的是 <code>first</code></p>
+<p>当执行到 <code>second.py</code> 第一行代码时发现需要导入 <code>first.py</code></p>
+<p>而 <code>sys.modules</code> 中还已经有 <code>first</code>了，因此试图从 <code>first</code> 模块导入 <code>first_func</code></p>
+<p>然而之前在导入 <code>first.py</code> 时还未解释到 <code>&quot;def first_func():&quot;</code> 这一行代码就转跳到 <code>second.py</code> 了</p>
+<p>所以 <code>first</code> 模块的命名空间中并没有 <code>first_func</code>，最终导入失败：<code>ImportError: cannot import name &#39;first_func&#39;</code></p>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>那么这里要如何解决循环导入？仔细分析可以发现：对已经导入的模块，其命名空间中并没有我们想要的名称引用</p>
+<p>因此我们可以在转跳到下一个模块之前先定义好下一个模块需要的名称引用，这就需要我们  <strong>先定义再导入</strong></p>
+<p>对于 <code>case2</code>，我们可以把 <code>first.py</code> 中第一行的导入语句 <code>&quot;from second import second_func&quot;</code> 放到函数体 <code>first_func()</code> 后面：</p>
+<ul>
+<li><strong>first.py</strong></li>
+</ul>
+<pre><code class="python">def first_func(): # 先定义
+    print(&#39;first_func called&#39;)
+
+from second import second_func # 再导入
+
+first_func()
+second_func()
+</code></pre>
+<p>其他两个文件不用修改，这样在 <code>second.py</code> 要导入 <code>first</code> 模块时， <code>first_func</code> 已经定义好了，运行结果如下：</p>
+<pre><code class="shell">λ python run.py
+first_func called
+second_func called
+first_func called
+second_func called
+</code></pre>
+<p>对于 <code>case1</code>，我们在之前的修改上直接运行会怎样？</p>
+<pre><code class="shell">λ python first.py
+Traceback (most recent call last):
+  File &quot;first.py&quot;, line 4, in &lt;module&gt;
+    from second import second_func
+  File &quot;C:\Users\ChenHW\Desktop\circular\second.py&quot;, line 1, in &lt;module&gt;
+    from first import first_func
+  File &quot;C:\Users\ChenHW\Desktop\circular\first.py&quot;, line 4, in &lt;module&gt;
+    from second import second_func
+ImportError: cannot import name &#39;second_func&#39;
+</code></pre>
+<p>报错和之前一样，还是因为从 <code>second.py</code> 跳回 <code>first.py</code> 时函数 <code>second_func</code> 还未定义</p>
+<p>从而导致 <code>first.py</code> 从 <code>second</code> 中导入 <code>second_func</code> 失败</p>
+<p>因此我们仿照 <code>case1</code> 的解决方式，先定义 <code>second_func</code> 再导入 <code>first</code>：</p>
+<ul>
+<li><strong>second.py</strong></li>
+</ul>
+<pre><code class="python">def second_func(): # 先定义
+    print(&#39;second_func called&#39;)
+
+from first import first_func # 再导入
+
+first_func()
+second_func()
+</code></pre>
+<p>运行结果如下：</p>
+<pre><code class="shell">λ python first.py
+first_func called
+second_func called
+first_func called
+second_func called
+first_func called
+second_func called
+</code></pre>
+<p>没有报错了，但是结果怎么多了两行？</p>
+<p>仔细分析可以明白这个输出结果符合导入栈的出栈顺序：</p>
+<p>第1、2行是 <code>first</code> 作为模块被 <code>second</code> 导入时执行的结果</p>
+<p>第3、4行是 <code>second</code> 作为模块被 <code>__main__</code>（<code>first</code>） 导入时执行的结果</p>
+<p>第5、6行是 <code>__main__</code>（<code>first</code>） 作为程序入口而执行的结果</p>
+<p>因此 <code>first.py</code> 其实被执行了两次，一次作为模块一次作为入口，而 <code>second.py</code> 只是作为模块被执行了一次</p>
+<p>最后让我们写一个完整的代码验证一下：</p>
+<ul>
+<li><strong>run.py</strong></li>
+</ul>
+<pre><code class="python">import first
+
+print(&#39;in model: {}, file : {}&#39;.format(__name__, __file__.rsplit(&#39;\\&#39;, 1)[-1]))
+</code></pre>
+<ul>
+<li><strong>first.py</strong></li>
+</ul>
+<pre><code class="python">def first_func():
+    print(&#39;first_func called&#39;)
+
+from second import second_func
+
+print(&#39;in model: {}, file : {}&#39;.format(__name__, __file__.rsplit(&#39;\\&#39;, 1)[-1]))
+first_func()
+second_func()
+print()
+</code></pre>
+<ul>
+<li><strong>second.py</strong></li>
+</ul>
+<pre><code class="python">def second_func():
+    print(&#39;second_func called&#39;)
+
+from first import first_func
+
+print(&#39;in model: {}, file : {}&#39;.format(__name__, __file__.rsplit(&#39;\\&#39;, 1)[-1]))
+first_func()
+second_func()
+print()
+</code></pre>
+<ul>
+<li><strong>Case1</strong></li>
+</ul>
+<pre><code class="shell">λ python first.py
+in model: first, file : first.py
+first_func called
+second_func called
+
+in model: second, file : second.py
+first_func called
+second_func called
+
+in model: __main__, file : first.py
+first_func called
+second_func called
+</code></pre>
+<ul>
+<li><strong>Case2</strong></li>
+</ul>
+<pre><code class="shell">λ python run.py
+in model: second, file : second.py
+first_func called
+second_func called
+
+in model: first, file : first.py
+first_func called
+second_func called
+
+in model: __main__, file : run.py
+</code></pre>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>分析到这里可以发现 <strong>循环导入和程序入口有很大的关系</strong></p>
+<p>有时是比较危险的操作，很可能一个文件会被执行两次</p>
+<p>这对一些有状态的全局变量会重复定义，这可借鉴 flask 中 <strong>current_app</strong> 和 <strong>blueprint</strong> 的巧妙设计</p>
+<p>其实只要理解了导入机制的原理（本质就是逐行解析），分析整个导入过程，就会发现问题所在</p>
+<p>保证在需要某个对象时（Python 处处为对象），能够在 <strong>所能搜索到</strong> 的所有命名空间中找到该对象的引用即可</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<li><a href="https://www.youtube.com/watch?v=NH-8oLHUyDc" target="_blank" rel="external">Flask: Circular Imports</a></li>
+</ul>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> Python </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[Python字符串驻留机制]]></title>
       <url>/2018/11/07/Python%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%A9%BB%E7%95%99%E6%9C%BA%E5%88%B6/</url>
       <content type="html"><![CDATA[<p>由于CPython的优化，有时会发生<strong>字符串驻留（intern）</strong></p>
@@ -415,6 +647,8 @@ PyUnicode_InternInPlace(PyObject **p) // 注意这里是二级指针，因为可
         <tags>
             
             <tag> Python </tag>
+            
+            <tag> wtfpython </tag>
             
             <tag> 源码剖析 </tag>
             

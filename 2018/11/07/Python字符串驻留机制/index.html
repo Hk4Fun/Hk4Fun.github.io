@@ -17,14 +17,14 @@
 
 
 <meta name="description" content="由于CPython的优化，有时会发生字符串驻留（intern） 即在某些情况下尝试使用现有的不可变对象而不是每次都创建一个新对象 这些驻留的对象在内部使用类似字典的结构（驻留池）进行驻留 在被驻留之后，许多变量可能指向内存中的相同字符串对象，从而节省内存 下面的代码片段中，字符串是被隐式驻留的，何时隐式驻留字符串取决于字符串本身的特点 也就是说字符串是否会被隐式驻留是有条件的 （至于显式驻留，后面">
-<meta name="keywords" content="Python,源码剖析">
+<meta name="keywords" content="Python,wtfpython,源码剖析">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Python字符串驻留机制">
 <meta property="og:url" content="https://hk4fun.github.io/2018/11/07/Python字符串驻留机制/index.html">
 <meta property="og:site_name" content="Hk4Fun&#39;s Blog">
 <meta property="og:description" content="由于CPython的优化，有时会发生字符串驻留（intern） 即在某些情况下尝试使用现有的不可变对象而不是每次都创建一个新对象 这些驻留的对象在内部使用类似字典的结构（驻留池）进行驻留 在被驻留之后，许多变量可能指向内存中的相同字符串对象，从而节省内存 下面的代码片段中，字符串是被隐式驻留的，何时隐式驻留字符串取决于字符串本身的特点 也就是说字符串是否会被隐式驻留是有条件的 （至于显式驻留，后面">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/006giLD5ly1fwyhrevoyhj30cs0cc0tp.jpg">
-<meta property="og:updated_time" content="2018-11-07T11:03:15.583Z">
+<meta property="og:updated_time" content="2018-11-07T13:36:22.922Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python字符串驻留机制">
 <meta name="twitter:description" content="由于CPython的优化，有时会发生字符串驻留（intern） 即在某些情况下尝试使用现有的不可变对象而不是每次都创建一个新对象 这些驻留的对象在内部使用类似字典的结构（驻留池）进行驻留 在被驻留之后，许多变量可能指向内存中的相同字符串对象，从而节省内存 下面的代码片段中，字符串是被隐式驻留的，何时隐式驻留字符串取决于字符串本身的特点 也就是说字符串是否会被隐式驻留是有条件的 （至于显式驻留，后面">
@@ -122,8 +122,7 @@
 
         
         <p class="header-subtitle">人是不能闲太久的</p>
-        <p class="header-subtitle">闲久了</p>
-        <p class="header-subtitle">努力一下就以为在拼命</p>
+        <p class="header-subtitle">闲久了，努力一下就以为在拼命</p>
         
 
         
@@ -203,7 +202,7 @@
                 
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django/">Django</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ORM/">ORM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web/">Web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/coroutine/">coroutine</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/元类编程/">元类编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/剑指offer/">剑指offer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构/">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/源码剖析/">源码剖析</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/魔法方法/">魔法方法</a></li></ul>
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django/">Django</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ORM/">ORM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web/">Web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/coroutine/">coroutine</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/wtfpython/">wtfpython</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/元类编程/">元类编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/剑指offer/">剑指offer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构/">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/源码剖析/">源码剖析</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/魔法方法/">魔法方法</a></li></ul>
                     </div>
                 </section>
                 
@@ -302,7 +301,7 @@
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/源码剖析/">源码剖析</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/wtfpython/">wtfpython</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/源码剖析/">源码剖析</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -727,7 +726,7 @@ PyUnicode_InternInPlace(PyObject **p) // 注意这里是二级指针，因为可
         <p><span>本文标题:</span><a href="/2018/11/07/Python字符串驻留机制/">Python字符串驻留机制</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">Hk4Fun</a></p>
         <p><span>发布时间:</span>2018-11-07, 17:53:52</p>
-        <p><span>最后更新:</span>2018-11-07, 19:03:15</p>
+        <p><span>最后更新:</span>2018-11-07, 21:36:22</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2018/11/07/Python字符串驻留机制/" title="Python字符串驻留机制">https://hk4fun.github.io/2018/11/07/Python字符串驻留机制/</a>
             <span class="copy-path" data-clipboard-text="原文: https://hk4fun.github.io/2018/11/07/Python字符串驻留机制/　　作者: Hk4Fun" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
@@ -741,6 +740,12 @@ PyUnicode_InternInPlace(PyObject **p) // 注意这里是二级指针，因为可
 
 
     <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2018/11/08/Python循环导入问题/">
+                    Python循环导入问题
+                </a>
+            </div>
         
         
             <div id="article-nav-older" class="article-nav-title">
@@ -820,7 +825,9 @@ PyUnicode_InternInPlace(PyObject **p) // 注意这里是二级指针，因为可
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+            <a href="/2018/11/08/Python循环导入问题/" title="上一篇: Python循环导入问题">
+                <i class="fa fa-angle-left"></i>
+            </a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
@@ -832,7 +839,7 @@ PyUnicode_InternInPlace(PyObject **p) // 注意这里是二级指针，因为可
         
     </div>
 
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/11/07/Python字符串驻留机制/">Python字符串驻留机制</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/15/设计模式之单例模式/">设计模式之单例模式</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/15/魔法方法之-new-与-init/">魔法方法之 __new__() 与 __init__()</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/05/Python-中-type-与-object-的关系/">Python 中 type 与 object 的关系</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/31/为什么Python的corotine这么特殊/">为什么Python的coroutine这么特殊</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/19/剑指offer题解（Python实现）/">剑指offer题解（Python实现）</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/09/廖雪峰web实战总结/">廖雪峰web实战总结</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/11/08/Python循环导入问题/">Python循环导入问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/07/Python字符串驻留机制/">Python字符串驻留机制</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/15/设计模式之单例模式/">设计模式之单例模式</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/15/魔法方法之-new-与-init/">魔法方法之 __new__() 与 __init__()</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/05/Python-中-type-与-object-的关系/">Python 中 type 与 object 的关系</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/31/为什么Python的corotine这么特殊/">为什么Python的coroutine这么特殊</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/19/剑指offer题解（Python实现）/">剑指offer题解（Python实现）</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/09/廖雪峰web实战总结/">廖雪峰web实战总结</a></li></ul>
 
 
 
