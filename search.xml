@@ -3,6 +3,41 @@
   
     
     <entry>
+      <title><![CDATA[使用vs2017搭建CPython3.6源码调试环境]]></title>
+      <url>/2018/11/09/%E4%BD%BF%E7%94%A8vs2017%E6%90%AD%E5%BB%BACPython3.6%E6%BA%90%E7%A0%81%E8%B0%83%E8%AF%95%E7%8E%AF%E5%A2%83/</url>
+      <content type="html"><![CDATA[<h3 id="1-获取源码"><a href="#1-获取源码" class="headerlink" title="1. 获取源码"></a>1. 获取源码</h3><p>从Github上下载 CPython3.6 的 <a href="https://github.com/python/cpython/tree/3.6" target="_blank" rel="external">源码</a> 并解压</p>
+<h3 id="2-编译源码"><a href="#2-编译源码" class="headerlink" title="2. 编译源码"></a>2. 编译源码</h3><p>我们并不调试 python 标准库的源码，所以这里直接跳过了依赖文件的下载而是直接编译</p>
+<ul>
+<li>使用 vs2017 打开 cpython-3.6\PCbuild\pcbuild.sln</li>
+<li>在解决方案资源管理器中：右键 “python” -&gt; 重定向项目 -&gt; 选择 Windows SDK 版本为 10.0.17134.0 （或其他 Win10 版本的SDK即可）</li>
+<li>对 “pythoncore” 重复上一条操作</li>
+<li>在解决方案资源管理器中：右键 “pythoncore” -&gt; 属性 -&gt; 配置属性 -&gt; C/C++ -&gt; 预处理器 -&gt; 右侧编辑“预处理器定义” -&gt; 添加 <code>“_X86_”</code></li>
+<li>点击 “本地windows调试器” 开始编译源码，方案为 Debug Win32</li>
+</ul>
+<p>等待一会，弹出交互式命令行窗口，证明编译成功，可以开始愉快地调试了，在 CPython 的源码中畅游吧！</p>
+<p>编译成功后在 cpython-3.6\PCbuild\ 目录下会多出两个目录：obj 和 win32</p>
+<p>其中 win32 目录中存放着编译好的 python 二进制可执行文件</p>
+<p>由于我们的编译模式为 Debug，所以该文件名为 python_d.exe 而不是 python.exe</p>
+<p>在 cpython-3.6\PCbuild\ 目录下还有一个文件 readme.txt，这是官方对 windows 下编译 CPython 源码的说明，可供参考</p>
+<h3 id="3-去除冗余目录"><a href="#3-去除冗余目录" class="headerlink" title="3. 去除冗余目录"></a>3. 去除冗余目录</h3><p>到这里已经搭建完成了，但我们只关心 pythoncore 目录下的源码</p>
+<p>因此可以在解决方案资源管理器中把其他目录从管理器移出，避免对后期搜索结果的影响</p>
+<p>但要保留 python 目录，因为该目录下的 python.c 是程序入口</p>
+<p>也就是说最后只保留 pythoncore 和 python 这两个目录在解决方案资源管理器中即可</p>
+<p>后期所有的调试工作都在 pythoncore 目录下进行</p>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> CPython </tag>
+            
+            <tag> 环境搭建 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[Python循环导入问题]]></title>
       <url>/2018/11/08/Python%E5%BE%AA%E7%8E%AF%E5%AF%BC%E5%85%A5%E9%97%AE%E9%A2%98/</url>
       <content type="html"><![CDATA[<p>随着 Python 项目的增大，各个模块间的依赖关系将会越来越复杂</p>

@@ -160,10 +160,10 @@
                 <div class="tips-box hide">
                     <div class="tips-arrow"></div>
                     <ul class="tips-inner">
-                        <li>菜单</li>
-                        <li>标签</li>
+                        <li>Menu</li>
+                        <li>Tags</li>
                         
-                        <li>友情链接</li>
+                        <li>Friends</li>
                         
                         
                     </ul>
@@ -203,7 +203,7 @@
                 
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django/">Django</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ORM/">ORM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web/">Web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/coroutine/">coroutine</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/wtfpython/">wtfpython</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/元类编程/">元类编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/剑指offer/">剑指offer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构/">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/源码剖析/">源码剖析</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/魔法方法/">魔法方法</a></li></ul>
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CPython/">CPython</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django/">Django</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ORM/">ORM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web/">Web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/coroutine/">coroutine</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/wtfpython/">wtfpython</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/元类编程/">元类编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/剑指offer/">剑指offer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构/">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/源码剖析/">源码剖析</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/环境搭建/">环境搭建</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/魔法方法/">魔法方法</a></li></ul>
                     </div>
                 </section>
                 
@@ -270,9 +270,87 @@
             </nav>
         </header>                
     </div>
-    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+    <link class="menu-list" tags="Tags" friends="Friends" about="About Me"/>
 </nav>
       <div class="body-wrap">
+  
+    <article id="post-使用vs2017搭建CPython3.6源码调试环境" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/11/09/使用vs2017搭建CPython3.6源码调试环境/" class="article-date">
+      <time datetime="2018-11-08T18:06:57.000Z" itemprop="datePublished">2018-11-09</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/11/09/使用vs2017搭建CPython3.6源码调试环境/">使用vs2017搭建CPython3.6源码调试环境</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h3 id="1-获取源码"><a href="#1-获取源码" class="headerlink" title="1. 获取源码"></a>1. 获取源码</h3><p>从Github上下载 CPython3.6 的 <a href="https://github.com/python/cpython/tree/3.6" target="_blank" rel="external">源码</a> 并解压</p>
+<h3 id="2-编译源码"><a href="#2-编译源码" class="headerlink" title="2. 编译源码"></a>2. 编译源码</h3><p>我们并不调试 python 标准库的源码，所以这里直接跳过了依赖文件的下载而是直接编译</p>
+<ul>
+<li>使用 vs2017 打开 cpython-3.6\PCbuild\pcbuild.sln</li>
+<li>在解决方案资源管理器中：右键 “python” -&gt; 重定向项目 -&gt; 选择 Windows SDK 版本为 10.0.17134.0 （或其他 Win10 版本的SDK即可）</li>
+<li>对 “pythoncore” 重复上一条操作</li>
+<li>在解决方案资源管理器中：右键 “pythoncore” -&gt; 属性 -&gt; 配置属性 -&gt; C/C++ -&gt; 预处理器 -&gt; 右侧编辑“预处理器定义” -&gt; 添加 <code>“_X86_”</code></li>
+<li>点击 “本地windows调试器” 开始编译源码，方案为 Debug Win32</li>
+</ul>
+<p>等待一会，弹出交互式命令行窗口，证明编译成功，可以开始愉快地调试了，在 CPython 的源码中畅游吧！</p>
+<p>编译成功后在 cpython-3.6\PCbuild\ 目录下会多出两个目录：obj 和 win32</p>
+<p>其中 win32 目录中存放着编译好的 python 二进制可执行文件</p>
+<p>由于我们的编译模式为 Debug，所以该文件名为 python_d.exe 而不是 python.exe</p>
+<p>在 cpython-3.6\PCbuild\ 目录下还有一个文件 readme.txt，这是官方对 windows 下编译 CPython 源码的说明，可供参考</p>
+<h3 id="3-去除冗余目录"><a href="#3-去除冗余目录" class="headerlink" title="3. 去除冗余目录"></a>3. 去除冗余目录</h3><p>到这里已经搭建完成了，但我们只关心 pythoncore 目录下的源码</p>
+<p>因此可以在解决方案资源管理器中把其他目录从管理器移出，避免对后期搜索结果的影响</p>
+<p>但要保留 python 目录，因为该目录下的 python.c 是程序入口</p>
+<p>也就是说最后只保留 pythoncore 和 python 这两个目录在解决方案资源管理器中即可</p>
+<p>后期所有的调试工作都在 pythoncore 目录下进行</p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CPython/">CPython</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/环境搭建/">环境搭建</a></li></ul>
+    </div>
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
   
     <article id="post-Python循环导入问题" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -323,7 +401,7 @@
 
       
         <p class="article-more-link">
-          <a href="/2018/11/08/Python循环导入问题/#more">阅读全文 >></a>
+          <a href="/2018/11/08/Python循环导入问题/#more">more >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -393,7 +471,7 @@
 
       
         <p class="article-more-link">
-          <a href="/2018/11/07/Python字符串驻留机制/#more">阅读全文 >></a>
+          <a href="/2018/11/07/Python字符串驻留机制/#more">more >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -460,7 +538,7 @@
 
       
         <p class="article-more-link">
-          <a href="/2018/08/15/设计模式之单例模式/#more">阅读全文 >></a>
+          <a href="/2018/08/15/设计模式之单例模式/#more">more >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -526,75 +604,7 @@
 
       
         <p class="article-more-link">
-          <a href="/2018/08/15/魔法方法之-new-与-init/#more">阅读全文 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-Python-中-type-与-object-的关系" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2018/08/05/Python-中-type-与-object-的关系/" class="article-date">
-      <time datetime="2018-08-04T17:58:08.000Z" itemprop="datePublished">2018-08-05</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/05/Python-中-type-与-object-的关系/">Python 中 type 与 object 的关系</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <p>都知道 Python 有强大的动态语言特性，得益于它“无处不对象”的语言设计思想</p>
-<p>那么这些对象的源头来自哪里？这背后一定有它的<strong>出发点</strong>。</p>
-<p>相信很多人一下就想到元类（<code>metaclass</code>）那种复杂的东西，且慢，心急吃不了热豆腐</p>
-<p>在深入研究元类编程之前，一些基本的但也是最重要的语言知识一定要弄清楚，否则会一头雾水</p>
-<p>在此之前，明白 Python 中 <code>type</code> 与 <code>object</code> 的关系至关重要，它俩才是 Python 中一切对象的<strong>出发点</strong>。</p>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/元类编程/">元类编程</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2018/08/05/Python-中-type-与-object-的关系/#more">阅读全文 >></a>
+          <a href="/2018/08/15/魔法方法之-new-与-init/#more">more >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -627,14 +637,14 @@
                 2017-2018 Hk4Fun
             </div>
             <div class="footer-right">
-                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+                <a href="http://hexo.io/" target="_blank" title="A fast, simple &amp; powerful blog framework">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="Another simple and elegant theme for Hexo  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
             </div>
         </div>
         
             <div class="visit">
                 
                     <span id="busuanzi_container_site_pv" style='display:none'>
-                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        <span id="site-visit" title="Site Visitors"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
                         </span>
                     </span>
                 
@@ -643,7 +653,7 @@
                 
                 
                     <span id="busuanzi_container_page_pv" style='display:none'>
-                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        <span id="page-visit"  title="Page Hits"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
                         </span>
                     </span>
                 
@@ -676,9 +686,9 @@
 
 
 <div class="scroll" id="scroll">
-    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
-    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
-    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+    <a href="#" title="Back to Top"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="Comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="Go to Bottom"><i class="fa fa-arrow-down"></i></a>
 </div>
 <script>
     // Open in New Window
