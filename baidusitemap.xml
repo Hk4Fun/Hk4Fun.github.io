@@ -4,11 +4,32 @@
 
     
   <url>
-    <loc>https://hk4fun.github.io/2018/11/09/%E4%BD%BF%E7%94%A8vs2017%E6%90%AD%E5%BB%BACPython3.6%E6%BA%90%E7%A0%81%E8%B0%83%E8%AF%95%E7%8E%AF%E5%A2%83/</loc>
-    <lastmod>2018-11-09T11:14:14.875Z</lastmod>
+    <loc>https://hk4fun.github.io/2018/11/07/Python%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%A9%BB%E7%95%99%E6%9C%BA%E5%88%B6/</loc>
+    <lastmod>2018-11-09T12:47:07.135Z</lastmod>
     <data>
         <display>
-        <title>使用vs2017搭建CPython3.6源码调试环境</title>
+        <title>Python字符串驻留机制</title>
+        <pubTime>2018-11-07T09:53:52.000Z</pubTime>
+        
+        <tag>Python</tag>
+         
+        <tag>wtfpython</tag>
+         
+        <tag>源码剖析</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://hk4fun.github.io/2018/11/09/%E4%BD%BF%E7%94%A8vs2017%E6%90%AD%E5%BB%BACPython3.6%E5%92%8CCPython2.7%E6%BA%90%E7%A0%81%E8%B0%83%E8%AF%95%E7%8E%AF%E5%A2%83/</loc>
+    <lastmod>2018-11-09T12:46:06.512Z</lastmod>
+    <data>
+        <display>
+        <title>使用vs2017搭建CPython3.6和CPython2.7源码调试环境</title>
         <pubTime>2018-11-08T18:06:57.000Z</pubTime>
         
         <tag>CPython</tag>
@@ -31,27 +52,6 @@
         <pubTime>2018-11-08T07:37:40.000Z</pubTime>
         
         <tag>Python</tag>
-         
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>https://hk4fun.github.io/2018/11/07/Python%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%A9%BB%E7%95%99%E6%9C%BA%E5%88%B6/</loc>
-    <lastmod>2018-11-07T13:36:22.922Z</lastmod>
-    <data>
-        <display>
-        <title>Python字符串驻留机制</title>
-        <pubTime>2018-11-07T09:53:52.000Z</pubTime>
-        
-        <tag>Python</tag>
-         
-        <tag>wtfpython</tag>
-         
-        <tag>源码剖析</tag>
          
          
            

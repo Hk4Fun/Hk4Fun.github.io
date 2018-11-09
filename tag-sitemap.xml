@@ -72,36 +72,36 @@
     </url>
 
     <url>
-        <loc>https://hk4fun.github.io/tags/wtfpython/</loc>
-        <lastmod>2018-11-07T13:36:22.922Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://hk4fun.github.io/tags/%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90/</loc>
-        <lastmod>2018-11-07T13:36:22.922Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://hk4fun.github.io/tags/Python/</loc>
-        <lastmod>2018-11-08T17:43:28.927Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>https://hk4fun.github.io/tags/CPython/</loc>
-        <lastmod>2018-11-09T11:14:14.875Z</lastmod>
+        <lastmod>2018-11-09T12:46:06.512Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>https://hk4fun.github.io/tags/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</loc>
-        <lastmod>2018-11-09T11:14:14.875Z</lastmod>
+        <lastmod>2018-11-09T12:46:06.512Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://hk4fun.github.io/tags/Python/</loc>
+        <lastmod>2018-11-09T12:47:07.135Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://hk4fun.github.io/tags/wtfpython/</loc>
+        <lastmod>2018-11-09T12:47:07.135Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://hk4fun.github.io/tags/%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90/</loc>
+        <lastmod>2018-11-09T12:47:07.135Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>

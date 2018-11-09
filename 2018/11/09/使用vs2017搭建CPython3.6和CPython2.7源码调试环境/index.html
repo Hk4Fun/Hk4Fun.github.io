@@ -16,17 +16,17 @@
 <link href="/plugins/prettify/prettify.css" rel="stylesheet">
 
 
-<meta name="description" content="1. 获取源码从Github上下载 CPython3.6 的 源码 并解压 2. 编译源码我们并不调试 python 标准库的源码，所以这里直接跳过了依赖文件的下载而是直接编译  使用 vs2017 打开 cpython-3.6\PCbuild\pcbuild.sln 在解决方案资源管理器中：右键 “python” -&amp;gt; 重定向项目 -&amp;gt; 选择 Windows SDK 版本为 10.0">
+<meta name="description" content="打算开始看  《Python源码剖析》, 这需要能够本地调试 CPython 的源码 虽然这本书是基于 CPython2.5 的，有点古老了，但大部分还是通用的 这里分别使用 CPython3.6 和 CPython2.7 的源码来调试 这样也能看出 Python2 与 Python3 在源码实现上的一些区别，下面是本次搭建的环境：  src：CPython 3.6， CPython2.7  os">
 <meta name="keywords" content="CPython,环境搭建">
 <meta property="og:type" content="article">
-<meta property="og:title" content="使用vs2017搭建CPython3.6源码调试环境">
-<meta property="og:url" content="https://hk4fun.github.io/2018/11/09/使用vs2017搭建CPython3.6源码调试环境/index.html">
+<meta property="og:title" content="使用vs2017搭建CPython3.6和CPython2.7源码调试环境">
+<meta property="og:url" content="https://hk4fun.github.io/2018/11/09/使用vs2017搭建CPython3.6和CPython2.7源码调试环境/index.html">
 <meta property="og:site_name" content="Hk4Fun&#39;s Blog">
-<meta property="og:description" content="1. 获取源码从Github上下载 CPython3.6 的 源码 并解压 2. 编译源码我们并不调试 python 标准库的源码，所以这里直接跳过了依赖文件的下载而是直接编译  使用 vs2017 打开 cpython-3.6\PCbuild\pcbuild.sln 在解决方案资源管理器中：右键 “python” -&amp;gt; 重定向项目 -&amp;gt; 选择 Windows SDK 版本为 10.0">
-<meta property="og:updated_time" content="2018-11-09T11:14:14.875Z">
+<meta property="og:description" content="打算开始看  《Python源码剖析》, 这需要能够本地调试 CPython 的源码 虽然这本书是基于 CPython2.5 的，有点古老了，但大部分还是通用的 这里分别使用 CPython3.6 和 CPython2.7 的源码来调试 这样也能看出 Python2 与 Python3 在源码实现上的一些区别，下面是本次搭建的环境：  src：CPython 3.6， CPython2.7  os">
+<meta property="og:updated_time" content="2018-11-09T12:46:06.512Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="使用vs2017搭建CPython3.6源码调试环境">
-<meta name="twitter:description" content="1. 获取源码从Github上下载 CPython3.6 的 源码 并解压 2. 编译源码我们并不调试 python 标准库的源码，所以这里直接跳过了依赖文件的下载而是直接编译  使用 vs2017 打开 cpython-3.6\PCbuild\pcbuild.sln 在解决方案资源管理器中：右键 “python” -&amp;gt; 重定向项目 -&amp;gt; 选择 Windows SDK 版本为 10.0">
+<meta name="twitter:title" content="使用vs2017搭建CPython3.6和CPython2.7源码调试环境">
+<meta name="twitter:description" content="打算开始看  《Python源码剖析》, 这需要能够本地调试 CPython 的源码 虽然这本书是基于 CPython2.5 的，有点古老了，但大部分还是通用的 这里分别使用 CPython3.6 和 CPython2.7 的源码来调试 这样也能看出 Python2 与 Python3 在源码实现上的一些区别，下面是本次搭建的环境：  src：CPython 3.6， CPython2.7  os">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -58,7 +58,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>使用vs2017搭建CPython3.6源码调试环境 | Hk4Fun&#39;s Blog</title>
+<title>使用vs2017搭建CPython3.6和CPython2.7源码调试环境 | Hk4Fun&#39;s Blog</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -269,10 +269,10 @@
     </div>
     <link class="menu-list" tags="Tags" friends="Friends" about="About Me"/>
 </nav>
-      <div class="body-wrap"><article id="post-使用vs2017搭建CPython3.6源码调试环境" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-使用vs2017搭建CPython3.6和CPython2.7源码调试环境" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2018/11/09/使用vs2017搭建CPython3.6源码调试环境/" class="article-date">
+      <a href="/2018/11/09/使用vs2017搭建CPython3.6和CPython2.7源码调试环境/" class="article-date">
       <time datetime="2018-11-08T18:06:57.000Z" itemprop="datePublished">2018-11-09</time>
 </a>
 
@@ -288,7 +288,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      使用vs2017搭建CPython3.6源码调试环境
+      使用vs2017搭建CPython3.6和CPython2.7源码调试环境
     </h1>
   
 
@@ -309,22 +309,58 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <h3 id="1-获取源码"><a href="#1-获取源码" class="headerlink" title="1. 获取源码"></a>1. 获取源码</h3><p>从Github上下载 CPython3.6 的 <a href="https://github.com/python/cpython/tree/3.6" target="_blank" rel="external">源码</a> 并解压</p>
-<h3 id="2-编译源码"><a href="#2-编译源码" class="headerlink" title="2. 编译源码"></a>2. 编译源码</h3><p>我们并不调试 python 标准库的源码，所以这里直接跳过了依赖文件的下载而是直接编译</p>
+        <p>打算开始看  <a href="https://book.douban.com/subject/3117898/" target="_blank" rel="external">《Python源码剖析》</a>, 这需要能够本地调试 CPython 的源码</p>
+<p>虽然这本书是基于 CPython2.5 的，有点古老了，但大部分还是通用的</p>
+<p>这里分别使用 CPython3.6 和 CPython2.7 的源码来调试</p>
+<p>这样也能看出 Python2 与 Python3 在源码实现上的一些区别，下面是本次搭建的环境：</p>
 <ul>
-<li>使用 vs2017 打开 cpython-3.6\PCbuild\pcbuild.sln</li>
-<li>在解决方案资源管理器中：右键 “python” -&gt; 重定向项目 -&gt; 选择 Windows SDK 版本为 10.0.17134.0 （或其他 Win10 版本的SDK即可）</li>
-<li>对 “pythoncore” 重复上一条操作</li>
-<li>在解决方案资源管理器中：右键 “pythoncore” -&gt; 属性 -&gt; 配置属性 -&gt; C/C++ -&gt; 预处理器 -&gt; 右侧编辑“预处理器定义” -&gt; 添加 <code>“_X86_”</code></li>
-<li>点击 “本地windows调试器” 开始编译源码，方案为 Debug Win32</li>
+<li>src：CPython 3.6， CPython2.7 </li>
+<li>os：Win10</li>
+<li>ide：VS2017</li>
 </ul>
-<p>等待一会，弹出交互式命令行窗口，证明编译成功，可以开始愉快地调试了，在 CPython 的源码中畅游吧！</p>
+<a id="more"></a>
+<h3 id="获取源码"><a href="#获取源码" class="headerlink" title="获取源码"></a>获取源码</h3><p>从Github上分别下载  <a href="https://github.com/python/cpython/tree/3.6" target="_blank" rel="external">CPython3.6 的源码</a> 和 <a href="https://github.com/python/cpython/tree/2.7" target="_blank" rel="external">CPython2.7 的源码</a> 并解压</p>
+<h3 id="编译-CPython3-6-源码"><a href="#编译-CPython3-6-源码" class="headerlink" title="编译 CPython3.6 源码"></a>编译 CPython3.6 源码</h3><p>我们并不调试 python 标准库的源码，所以这里直接跳过了依赖文件的下载而是直接编译：</p>
+<ol>
+<li><p>使用 vs2017 打开 cpython-3.6\PCbuild\pcbuild.sln</p>
+</li>
+<li><p>在解决方案资源管理器中：右键 “python” -&gt; 重定向项目 -&gt; 选择 Windows SDK 版本为 10.0.17134.0 （或其他 Win10 版本的SDK即可）</p>
+</li>
+<li><p>对 “pythoncore” 重复上一条操作</p>
+</li>
+<li><p>在解决方案资源管理器中：右键 “pythoncore” -&gt; 属性 -&gt; 配置属性 -&gt; C/C++ -&gt; 预处理器 -&gt; 右侧编辑“预处理器定义” -&gt; 添加 <code>“_X86_”</code></p>
+</li>
+<li><p>点击 “本地windows调试器” 开始编译源码，方案为 Debug Win32</p>
+</li>
+</ol>
+<p>等待一会，弹出交互式命令行窗口，证明编译成功，可以开始愉快地调试了</p>
 <p>编译成功后在 cpython-3.6\PCbuild\ 目录下会多出两个目录：obj 和 win32</p>
 <p>其中 win32 目录中存放着编译好的 python 二进制可执行文件</p>
 <p>由于我们的编译模式为 Debug，所以该文件名为 python_d.exe 而不是 python.exe</p>
 <p>在 cpython-3.6\PCbuild\ 目录下还有一个文件 readme.txt，这是官方对 windows 下编译 CPython 源码的说明，可供参考</p>
-<h3 id="3-去除冗余目录"><a href="#3-去除冗余目录" class="headerlink" title="3. 去除冗余目录"></a>3. 去除冗余目录</h3><p>到这里已经搭建完成了，但我们只关心 pythoncore 目录下的源码</p>
-<p>因此可以在解决方案资源管理器中把其他目录从管理器移出，避免对后期搜索结果的影响</p>
+<h3 id="编译-CPython2-7-源码"><a href="#编译-CPython2-7-源码" class="headerlink" title="编译 CPython2.7 源码"></a>编译 CPython2.7 源码</h3><p>步骤与 CPython3.6 差不多，但需要修改一些源码：</p>
+<ol>
+<li><p>使用 vs2017 打开 <code>cpython-2.7\PCbuild\pcbuild.sln</code>，会提示升级SDK，确定，这会帮我们自动重定向SDK</p>
+</li>
+<li><p>直接编译会报错：<code>timemodule.c</code> 下的标识符 <code>timezone</code>、<code>daylight</code> 和 <code>tzname</code> 未定义，这是升级 SDK 的缘故</p>
+</li>
+<li><p>需要修改两个文件：</p>
+<p>首先把 <code>cpython-2.7\Modules\posixmodule.c</code> 下的 <code>_PyVerify_fd</code> 函数内容<strong>替换</strong>为如下代码：</p>
+</li>
+</ol>
+<pre><code class="c">//a call to _get_osfhandle with invalid fd sets errno to EBADF
+if (_get_osfhandle(fd) == INVALID_HANDLE_VALUE)
+    return 0;
+else
+    return 1;
+</code></pre>
+<p>​    然后把 <code>cpython-2.7\Modules\timemodule.c</code> 中 <code>inittimezone</code> 函数中报错的变量 <code>timezone</code>、<code>daylight</code> 和 <code>tzname</code> 分别改为 <code>_timezone</code>、<code>_daylight</code> 和 <code>_tzname</code> ，即在原来的变量前面加单下划线，一共改动四行，分别是 811，819，822 和 824 行，记得保存所有修改</p>
+<ol>
+<li>点击 “本地windows调试器” 开始编译源码，方案为 Debug Win32</li>
+</ol>
+<p>注意：CPython2.7 编译后的二进制可执行文件就在 <code>cpython-2.7\PCbuild</code> 下，并没有 win32 这个目录</p>
+<h3 id="移除冗余目录"><a href="#移除冗余目录" class="headerlink" title="移除冗余目录"></a>移除冗余目录</h3><p>到这里已经搭建完成了，但我们只关心 pythoncore 目录下的源码</p>
+<p>因此可以 <strong>在解决方案资源管理器中</strong> 把其他目录从管理器中移出，避免对后期搜索结果的影响</p>
 <p>但要保留 python 目录，因为该目录下的 python.c 是程序入口</p>
 <p>也就是说最后只保留 pythoncore 和 python 这两个目录在解决方案资源管理器中即可</p>
 <p>后期所有的调试工作都在 pythoncore 目录下进行</p>
@@ -336,13 +372,13 @@
   
     
     <div class="copyright">
-        <p><span>Title:</span><a href="/2018/11/09/使用vs2017搭建CPython3.6源码调试环境/">使用vs2017搭建CPython3.6源码调试环境</a></p>
+        <p><span>Title:</span><a href="/2018/11/09/使用vs2017搭建CPython3.6和CPython2.7源码调试环境/">使用vs2017搭建CPython3.6和CPython2.7源码调试环境</a></p>
         <p><span>Author:</span><a href="/" title="Back to Homepage">Hk4Fun</a></p>
         <p><span>Created:</span>2018-11-09, 02:06:57</p>
-        <p><span>Updated:</span>2018-11-09, 19:14:14</p>
+        <p><span>Updated:</span>2018-11-09, 20:46:06</p>
         <p>
-            <span>Full URL:</span><a class="post-url" href="/2018/11/09/使用vs2017搭建CPython3.6源码调试环境/" title="使用vs2017搭建CPython3.6源码调试环境">https://hk4fun.github.io/2018/11/09/使用vs2017搭建CPython3.6源码调试环境/</a>
-            <span class="copy-path" data-clipboard-text="From https://hk4fun.github.io/2018/11/09/使用vs2017搭建CPython3.6源码调试环境/　　By Hk4Fun" title="Copy Article&#39;s Link &amp; Author"><i class="fa fa-clipboard"></i></span>
+            <span>Full URL:</span><a class="post-url" href="/2018/11/09/使用vs2017搭建CPython3.6和CPython2.7源码调试环境/" title="使用vs2017搭建CPython3.6和CPython2.7源码调试环境">https://hk4fun.github.io/2018/11/09/使用vs2017搭建CPython3.6和CPython2.7源码调试环境/</a>
+            <span class="copy-path" data-clipboard-text="From https://hk4fun.github.io/2018/11/09/使用vs2017搭建CPython3.6和CPython2.7源码调试环境/　　By Hk4Fun" title="Copy Article&#39;s Link &amp; Author"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -369,7 +405,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-获取源码"><span class="toc-number">1.</span> <span class="toc-text">1. 获取源码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-编译源码"><span class="toc-number">2.</span> <span class="toc-text">2. 编译源码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-去除冗余目录"><span class="toc-number">3.</span> <span class="toc-text">3. 去除冗余目录</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#获取源码"><span class="toc-number">1.</span> <span class="toc-text">获取源码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#编译-CPython3-6-源码"><span class="toc-number">2.</span> <span class="toc-text">编译 CPython3.6 源码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#编译-CPython2-7-源码"><span class="toc-number">3.</span> <span class="toc-text">编译 CPython2.7 源码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#移除冗余目录"><span class="toc-number">4.</span> <span class="toc-text">移除冗余目录</span></a></li></ol>
         
     </div>
     <style>
@@ -444,7 +480,7 @@
         
     </div>
 
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/11/09/使用vs2017搭建CPython3.6源码调试环境/">使用vs2017搭建CPython3.6源码调试环境</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/08/Python循环导入问题/">Python循环导入问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/07/Python字符串驻留机制/">Python字符串驻留机制</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/15/设计模式之单例模式/">设计模式之单例模式</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/15/魔法方法之-new-与-init/">魔法方法之 __new__() 与 __init__()</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/05/Python-中-type-与-object-的关系/">Python 中 type 与 object 的关系</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/31/为什么Python的corotine这么特殊/">为什么Python的coroutine这么特殊</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/19/剑指offer题解（Python实现）/">剑指offer题解（Python实现）</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/09/廖雪峰web实战总结/">廖雪峰web实战总结</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/11/09/使用vs2017搭建CPython3.6和CPython2.7源码调试环境/">使用vs2017搭建CPython3.6和CPython2.7源码调试环境</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/08/Python循环导入问题/">Python循环导入问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/07/Python字符串驻留机制/">Python字符串驻留机制</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/15/设计模式之单例模式/">设计模式之单例模式</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/15/魔法方法之-new-与-init/">魔法方法之 __new__() 与 __init__()</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/05/Python-中-type-与-object-的关系/">Python 中 type 与 object 的关系</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/31/为什么Python的corotine这么特殊/">为什么Python的coroutine这么特殊</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/19/剑指offer题解（Python实现）/">剑指offer题解（Python实现）</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/09/廖雪峰web实战总结/">廖雪峰web实战总结</a></li></ul>
 
 
 

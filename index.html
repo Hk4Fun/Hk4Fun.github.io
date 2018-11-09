@@ -274,10 +274,10 @@
 </nav>
       <div class="body-wrap">
   
-    <article id="post-使用vs2017搭建CPython3.6源码调试环境" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-使用vs2017搭建CPython3.6和CPython2.7源码调试环境" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2018/11/09/使用vs2017搭建CPython3.6源码调试环境/" class="article-date">
+      <a href="/2018/11/09/使用vs2017搭建CPython3.6和CPython2.7源码调试环境/" class="article-date">
       <time datetime="2018-11-08T18:06:57.000Z" itemprop="datePublished">2018-11-09</time>
 </a>
 
@@ -293,7 +293,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/11/09/使用vs2017搭建CPython3.6源码调试环境/">使用vs2017搭建CPython3.6源码调试环境</a>
+      <a class="article-title" href="/2018/11/09/使用vs2017搭建CPython3.6和CPython2.7源码调试环境/">使用vs2017搭建CPython3.6和CPython2.7源码调试环境</a>
     </h1>
   
 
@@ -303,26 +303,16 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <h3 id="1-获取源码"><a href="#1-获取源码" class="headerlink" title="1. 获取源码"></a>1. 获取源码</h3><p>从Github上下载 CPython3.6 的 <a href="https://github.com/python/cpython/tree/3.6" target="_blank" rel="external">源码</a> 并解压</p>
-<h3 id="2-编译源码"><a href="#2-编译源码" class="headerlink" title="2. 编译源码"></a>2. 编译源码</h3><p>我们并不调试 python 标准库的源码，所以这里直接跳过了依赖文件的下载而是直接编译</p>
+              <p>打算开始看  <a href="https://book.douban.com/subject/3117898/" target="_blank" rel="external">《Python源码剖析》</a>, 这需要能够本地调试 CPython 的源码</p>
+<p>虽然这本书是基于 CPython2.5 的，有点古老了，但大部分还是通用的</p>
+<p>这里分别使用 CPython3.6 和 CPython2.7 的源码来调试</p>
+<p>这样也能看出 Python2 与 Python3 在源码实现上的一些区别，下面是本次搭建的环境：</p>
 <ul>
-<li>使用 vs2017 打开 cpython-3.6\PCbuild\pcbuild.sln</li>
-<li>在解决方案资源管理器中：右键 “python” -&gt; 重定向项目 -&gt; 选择 Windows SDK 版本为 10.0.17134.0 （或其他 Win10 版本的SDK即可）</li>
-<li>对 “pythoncore” 重复上一条操作</li>
-<li>在解决方案资源管理器中：右键 “pythoncore” -&gt; 属性 -&gt; 配置属性 -&gt; C/C++ -&gt; 预处理器 -&gt; 右侧编辑“预处理器定义” -&gt; 添加 <code>“_X86_”</code></li>
-<li>点击 “本地windows调试器” 开始编译源码，方案为 Debug Win32</li>
+<li>src：CPython 3.6， CPython2.7 </li>
+<li>os：Win10</li>
+<li>ide：VS2017</li>
 </ul>
-<p>等待一会，弹出交互式命令行窗口，证明编译成功，可以开始愉快地调试了，在 CPython 的源码中畅游吧！</p>
-<p>编译成功后在 cpython-3.6\PCbuild\ 目录下会多出两个目录：obj 和 win32</p>
-<p>其中 win32 目录中存放着编译好的 python 二进制可执行文件</p>
-<p>由于我们的编译模式为 Debug，所以该文件名为 python_d.exe 而不是 python.exe</p>
-<p>在 cpython-3.6\PCbuild\ 目录下还有一个文件 readme.txt，这是官方对 windows 下编译 CPython 源码的说明，可供参考</p>
-<h3 id="3-去除冗余目录"><a href="#3-去除冗余目录" class="headerlink" title="3. 去除冗余目录"></a>3. 去除冗余目录</h3><p>到这里已经搭建完成了，但我们只关心 pythoncore 目录下的源码</p>
-<p>因此可以在解决方案资源管理器中把其他目录从管理器移出，避免对后期搜索结果的影响</p>
-<p>但要保留 python 目录，因为该目录下的 python.c 是程序入口</p>
-<p>也就是说最后只保留 pythoncore 和 python 这两个目录在解决方案资源管理器中即可</p>
-<p>后期所有的调试工作都在 pythoncore 目录下进行</p>
-
+          
       
     </div>
     
@@ -335,6 +325,10 @@
         <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CPython/">CPython</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/环境搭建/">环境搭建</a></li></ul>
     </div>
 
+      
+        <p class="article-more-link">
+          <a href="/2018/11/09/使用vs2017搭建CPython3.6和CPython2.7源码调试环境/#more">more >></a>
+        </p>
       
       <div class="clearfix"></div>
     </div>

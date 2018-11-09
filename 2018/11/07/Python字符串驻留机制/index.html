@@ -24,7 +24,7 @@
 <meta property="og:site_name" content="Hk4Fun&#39;s Blog">
 <meta property="og:description" content="由于CPython的优化，有时会发生字符串驻留（intern） 即在某些情况下尝试使用现有的不可变对象而不是每次都创建一个新对象 这些驻留的对象在内部使用类似字典的结构（驻留池）进行驻留 在被驻留之后，许多变量可能指向内存中的相同字符串对象，从而节省内存 下面的代码片段中，字符串是被隐式驻留的，何时隐式驻留字符串取决于字符串本身的特点 也就是说字符串是否会被隐式驻留是有条件的 （至于显式驻留，后面">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/006giLD5ly1fwyhrevoyhj30cs0cc0tp.jpg">
-<meta property="og:updated_time" content="2018-11-07T13:36:22.922Z">
+<meta property="og:updated_time" content="2018-11-09T12:47:07.135Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python字符串驻留机制">
 <meta name="twitter:description" content="由于CPython的优化，有时会发生字符串驻留（intern） 即在某些情况下尝试使用现有的不可变对象而不是每次都创建一个新对象 这些驻留的对象在内部使用类似字典的结构（驻留池）进行驻留 在被驻留之后，许多变量可能指向内存中的相同字符串对象，从而节省内存 下面的代码片段中，字符串是被隐式驻留的，何时隐式驻留字符串取决于字符串本身的特点 也就是说字符串是否会被隐式驻留是有条件的 （至于显式驻留，后面">
@@ -319,7 +319,7 @@
 <p>也就是说字符串是否会被隐式驻留是有条件的</p>
 <p>（至于<strong>显式驻留</strong>，后面会讲到，以下的 CPython 源码剖析全部基于 CPython3.6）</p>
 <a id="more"></a>
-<h3 id="1-字符串只在编译期间被隐式驻留"><a href="#1-字符串只在编译期间被隐式驻留" class="headerlink" title="1.  字符串只在编译期间被隐式驻留"></a>1.  字符串只在编译期间被隐式驻留</h3><pre><code class="python">a = &quot;some_string&quot;
+<h3 id="字符串只在编译期间被隐式驻留"><a href="#字符串只在编译期间被隐式驻留" class="headerlink" title="字符串只在编译期间被隐式驻留"></a>字符串只在编译期间被隐式驻留</h3><pre><code class="python">a = &quot;some_string&quot;
 b = &quot;some&quot; + &quot;_&quot; + &quot;string&quot;
 a is b
 &gt;&gt;&gt; True
@@ -382,7 +382,7 @@ dis(&quot;&quot;&quot;&#39;some&#39; + &#39;_string&#39;&quot;&quot;&quot;)
 &gt;&gt;&gt;           0 LOAD_CONST               2 (&#39;some_string&#39;)
               2 RETURN_VALUE
 </code></pre>
-<h3 id="2-只有包含ASCII字母，数字或下划线的字符串才会被隐式驻留"><a href="#2-只有包含ASCII字母，数字或下划线的字符串才会被隐式驻留" class="headerlink" title="2. 只有包含ASCII字母，数字或下划线的字符串才会被隐式驻留"></a>2. 只有包含ASCII字母，数字或下划线的字符串才会被隐式驻留</h3><pre><code class="python">a = &quot;wtf&quot;
+<h3 id="只有包含ASCII字母，数字或下划线的字符串才会被隐式驻留"><a href="#只有包含ASCII字母，数字或下划线的字符串才会被隐式驻留" class="headerlink" title="只有包含ASCII字母，数字或下划线的字符串才会被隐式驻留"></a>只有包含ASCII字母，数字或下划线的字符串才会被隐式驻留</h3><pre><code class="python">a = &quot;wtf&quot;
 b = &quot;wtf&quot;
 a is b
 &gt;&gt;&gt; True
@@ -427,7 +427,7 @@ all_name_chars(PyObject *o) // o为指向待检测字符串对象的指针，通
 </code></pre>
 <p>但这种检测只发生在交互式命令行中，如果我们写成一个 py 文件然后运行，即使包含非法字符也会被驻留</p>
 <p>这也许是 CPython 更进一步的优化</p>
-<h3 id="3-同一行赋值（元组拆包）时会引用同一相等的对象，但不一定会被驻留"><a href="#3-同一行赋值（元组拆包）时会引用同一相等的对象，但不一定会被驻留" class="headerlink" title="3.  同一行赋值（元组拆包）时会引用同一相等的对象，但不一定会被驻留"></a>3.  同一行赋值（元组拆包）时会引用同一相等的对象，但不一定会被驻留</h3><pre><code class="python">a, b = &quot;wtf!&quot;, &quot;wtf!&quot;
+<h3 id="同一行赋值（元组拆包）时会引用同一相等的对象，但不一定会被驻留"><a href="#同一行赋值（元组拆包）时会引用同一相等的对象，但不一定会被驻留" class="headerlink" title="同一行赋值（元组拆包）时会引用同一相等的对象，但不一定会被驻留"></a>同一行赋值（元组拆包）时会引用同一相等的对象，但不一定会被驻留</h3><pre><code class="python">a, b = &quot;wtf!&quot;, &quot;wtf!&quot;
 a is b
 &gt;&gt;&gt; True
 </code></pre>
@@ -454,7 +454,7 @@ b is c
 &gt;&gt;&gt; True
 </code></pre>
 <p>可以看到，“wtf!” 虽然被 a 和 b 同时引用了，但并没有被驻留，只有合法的字符串才会被驻留</p>
-<h3 id="4-长度为0和长度为1的字符串会被驻留"><a href="#4-长度为0和长度为1的字符串会被驻留" class="headerlink" title="4. 长度为0和长度为1的字符串会被驻留"></a>4. 长度为0和长度为1的字符串会被驻留</h3><pre><code class="python">a = &#39;&#39;
+<h3 id="长度为0和长度为1的字符串会被驻留"><a href="#长度为0和长度为1的字符串会被驻留" class="headerlink" title="长度为0和长度为1的字符串会被驻留"></a>长度为0和长度为1的字符串会被驻留</h3><pre><code class="python">a = &#39;&#39;
 b = &#39;&#39;
 a is b
 &gt;&gt;&gt; True
@@ -534,7 +534,7 @@ b = &#39;12&#39;
 a[0:2] is b # 获取非单字符，a[0:2] 返回的是新的字符串对象
 &gt;&gt;&gt; False
 </code></pre>
-<h3 id="5-超过20个字符的折叠字符串不会被驻留"><a href="#5-超过20个字符的折叠字符串不会被驻留" class="headerlink" title="5. 超过20个字符的折叠字符串不会被驻留"></a>5. 超过20个字符的<code>折叠</code>字符串不会被驻留</h3><pre><code class="python">a = &#39;aaaaaaaaaaaaaaaaaaaa&#39; # 未折叠字符串，长度为20
+<h3 id="超过20个字符的折叠字符串不会被驻留"><a href="#超过20个字符的折叠字符串不会被驻留" class="headerlink" title="超过20个字符的折叠字符串不会被驻留"></a>超过20个字符的<code>折叠</code>字符串不会被驻留</h3><pre><code class="python">a = &#39;aaaaaaaaaaaaaaaaaaaa&#39; # 未折叠字符串，长度为20
 b = &#39;aaaaaaaaaaaaaaaaaaaa&#39;
 a is b
 &gt;&gt; True
@@ -588,7 +588,7 @@ dis(&quot;[1]*2&quot;) # 对于可变对象没有这种优化
               6 BINARY_MULTIPLY
               8 RETURN_VALUE
 </code></pre>
-<h3 id="6-使用-sys-intern-显式驻留"><a href="#6-使用-sys-intern-显式驻留" class="headerlink" title="6. 使用 sys.intern() 显式驻留"></a>6. 使用 <code>sys.intern()</code> 显式驻留</h3><pre><code class="python">from sys import intern
+<h3 id="使用-sys-intern-显式驻留"><a href="#使用-sys-intern-显式驻留" class="headerlink" title="使用 sys.intern() 显式驻留"></a>使用 <code>sys.intern()</code> 显式驻留</h3><pre><code class="python">from sys import intern
 a = intern(&quot;wtf!&quot;)
 b = intern(&quot;wtf!&quot;)
 a is b
@@ -639,7 +639,7 @@ b = &quot;foo&quot; # 此时在驻留池中找不到&quot;foo&quot;便会创建�
 id(b) # 地址将不再和上面相等
 &gt;&gt;&gt; 89368640
 </code></pre>
-<h3 id="7-深入源码"><a href="#7-深入源码" class="headerlink" title="7. 深入源码"></a>7. 深入源码</h3><p>字符串的intern机制由 <a href="https://github.com/python/cpython/blob/9fc57a384825530635ef5ec093a31d864ea14f7c/Objects/unicodeobject.c#L15204" target="_blank" rel="external">PyUnicode_InternInPlace</a> 函数来实现：</p>
+<h3 id="深入源码"><a href="#深入源码" class="headerlink" title="深入源码"></a>深入源码</h3><p>字符串的intern机制由 <a href="https://github.com/python/cpython/blob/9fc57a384825530635ef5ec093a31d864ea14f7c/Objects/unicodeobject.c#L15204" target="_blank" rel="external">PyUnicode_InternInPlace</a> 函数来实现：</p>
 <pre><code class="c">/* This dictionary holds all interned unicode strings.  Note that references
    to strings in this dictionary are *not* counted in the string&#39;s ob_refcnt.
    When the interned string reaches a refcnt of 0 the string deallocation
@@ -708,8 +708,7 @@ PyUnicode_InternInPlace(PyObject **p) // 注意这里是二级指针，因为可
 }
 </code></pre>
 <p>更多相关源码的研究可以查看 cpython/Objects/ 下的 <a href="https://github.com/python/cpython/blob/3.6/Objects/unicodeobject.c" target="_blank" rel="external">unicodeobject.c</a> 和 <a href="https://github.com/python/cpython/blob/3.6/Objects/codeobject.c" target="_blank" rel="external">codeobject.c</a></p>
-<p>– end –</p>
-<h3 id="8-参考资料"><a href="#8-参考资料" class="headerlink" title="8. 参考资料"></a>8. 参考资料</h3><ul>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
 <li><a href="https://github.com/satwikkansal/wtfpython#-strings-can-be-tricky-sometimes-" target="_blank" rel="external">wtfpython</a></li>
 <li><a href="https://book.douban.com/subject/3117898/" target="_blank" rel="external">Python源码剖析第三章</a></li>
 <li><a href="http://guilload.com/python-string-interning/" target="_blank" rel="external">The internals of Python string interning</a></li>
@@ -726,7 +725,7 @@ PyUnicode_InternInPlace(PyObject **p) // 注意这里是二级指针，因为可
         <p><span>Title:</span><a href="/2018/11/07/Python字符串驻留机制/">Python字符串驻留机制</a></p>
         <p><span>Author:</span><a href="/" title="Back to Homepage">Hk4Fun</a></p>
         <p><span>Created:</span>2018-11-07, 17:53:52</p>
-        <p><span>Updated:</span>2018-11-07, 21:36:22</p>
+        <p><span>Updated:</span>2018-11-09, 20:47:07</p>
         <p>
             <span>Full URL:</span><a class="post-url" href="/2018/11/07/Python字符串驻留机制/" title="Python字符串驻留机制">https://hk4fun.github.io/2018/11/07/Python字符串驻留机制/</a>
             <span class="copy-path" data-clipboard-text="From https://hk4fun.github.io/2018/11/07/Python字符串驻留机制/　　By Hk4Fun" title="Copy Article&#39;s Link &amp; Author"><i class="fa fa-clipboard"></i></span>
@@ -762,7 +761,7 @@ PyUnicode_InternInPlace(PyObject **p) // 注意这里是二级指针，因为可
     <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-字符串只在编译期间被隐式驻留"><span class="toc-number">1.</span> <span class="toc-text">1.  字符串只在编译期间被隐式驻留</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-只有包含ASCII字母，数字或下划线的字符串才会被隐式驻留"><span class="toc-number">2.</span> <span class="toc-text">2. 只有包含ASCII字母，数字或下划线的字符串才会被隐式驻留</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-同一行赋值（元组拆包）时会引用同一相等的对象，但不一定会被驻留"><span class="toc-number">3.</span> <span class="toc-text">3.  同一行赋值（元组拆包）时会引用同一相等的对象，但不一定会被驻留</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-长度为0和长度为1的字符串会被驻留"><span class="toc-number">4.</span> <span class="toc-text">4. 长度为0和长度为1的字符串会被驻留</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-超过20个字符的折叠字符串不会被驻留"><span class="toc-number">5.</span> <span class="toc-text">5. 超过20个字符的折叠字符串不会被驻留</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-使用-sys-intern-显式驻留"><span class="toc-number">6.</span> <span class="toc-text">6. 使用 sys.intern() 显式驻留</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-深入源码"><span class="toc-number">7.</span> <span class="toc-text">7. 深入源码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-参考资料"><span class="toc-number">8.</span> <span class="toc-text">8. 参考资料</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#字符串只在编译期间被隐式驻留"><span class="toc-number">1.</span> <span class="toc-text">字符串只在编译期间被隐式驻留</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#只有包含ASCII字母，数字或下划线的字符串才会被隐式驻留"><span class="toc-number">2.</span> <span class="toc-text">只有包含ASCII字母，数字或下划线的字符串才会被隐式驻留</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#同一行赋值（元组拆包）时会引用同一相等的对象，但不一定会被驻留"><span class="toc-number">3.</span> <span class="toc-text">同一行赋值（元组拆包）时会引用同一相等的对象，但不一定会被驻留</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#长度为0和长度为1的字符串会被驻留"><span class="toc-number">4.</span> <span class="toc-text">长度为0和长度为1的字符串会被驻留</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#超过20个字符的折叠字符串不会被驻留"><span class="toc-number">5.</span> <span class="toc-text">超过20个字符的折叠字符串不会被驻留</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用-sys-intern-显式驻留"><span class="toc-number">6.</span> <span class="toc-text">使用 sys.intern() 显式驻留</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#深入源码"><span class="toc-number">7.</span> <span class="toc-text">深入源码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#参考资料"><span class="toc-number">8.</span> <span class="toc-text">参考资料</span></a></li></ol>
         
     </div>
     <style>
@@ -839,7 +838,7 @@ PyUnicode_InternInPlace(PyObject **p) // 注意这里是二级指针，因为可
         
     </div>
 
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/11/09/使用vs2017搭建CPython3.6源码调试环境/">使用vs2017搭建CPython3.6源码调试环境</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/08/Python循环导入问题/">Python循环导入问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/07/Python字符串驻留机制/">Python字符串驻留机制</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/15/设计模式之单例模式/">设计模式之单例模式</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/15/魔法方法之-new-与-init/">魔法方法之 __new__() 与 __init__()</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/05/Python-中-type-与-object-的关系/">Python 中 type 与 object 的关系</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/31/为什么Python的corotine这么特殊/">为什么Python的coroutine这么特殊</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/19/剑指offer题解（Python实现）/">剑指offer题解（Python实现）</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/09/廖雪峰web实战总结/">廖雪峰web实战总结</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/11/09/使用vs2017搭建CPython3.6和CPython2.7源码调试环境/">使用vs2017搭建CPython3.6和CPython2.7源码调试环境</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/08/Python循环导入问题/">Python循环导入问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/07/Python字符串驻留机制/">Python字符串驻留机制</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/15/设计模式之单例模式/">设计模式之单例模式</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/15/魔法方法之-new-与-init/">魔法方法之 __new__() 与 __init__()</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/05/Python-中-type-与-object-的关系/">Python 中 type 与 object 的关系</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/31/为什么Python的corotine这么特殊/">为什么Python的coroutine这么特殊</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/19/剑指offer题解（Python实现）/">剑指offer题解（Python实现）</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/09/廖雪峰web实战总结/">廖雪峰web实战总结</a></li></ul>
 
 
 
