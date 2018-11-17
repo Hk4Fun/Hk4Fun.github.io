@@ -3191,18 +3191,19 @@ class Solution:
 <p>由于长度为n的数组里的所有数字都在0到n-1的范围内，所以如果没有重复数字的话，<br>那么从小到大排序后的数组每个数和它的下标应该是相等的。所以我们只需从头遍历数组，<br>看每个数字和它下标是否相等，相等就遍历下一个，<br>不相等就和它应该在的位置上（下标和它相等）的数字交换，<br>交换前先检查一下如果那个数字和它相等那么就找到了重复数字了，并且没有必要交换，遍历下一个。</p>
 <h3 id="代码-50"><a href="#代码-50" class="headerlink" title="代码"></a>代码</h3><pre><code class="python">class Solution:
     # 返回重复数字的列表
-    def duplicate(self, numbers):
-        res = []
-        for i in range(len(numbers)):
-            # 当再次遍历到那个重复数字时该重复数字是在正确位置上的，所以不会进入while循环
-            while numbers[i] != i:  # 这里用while而不是if是因为交换过来的数字还没被检查过
-                if numbers[i] == numbers[numbers[i]]:
-                    res.append(numbers[i])
-                    break  # 找到了就跳到下一个，因为没有发生交换
-                else:
-                    idx = numbers[i]  # 这里必须把numbers[i]抽出来而不能直接带入下面的表达式中
-                    numbers[i], numbers[idx] = numbers[idx], numbers[i]
-        return res
+    def duplicate(self, nums):
+        if not nums: return -1
+        i, res = 0, []
+        while i &lt; len(nums):
+            idx = nums[i]
+            if i == idx:
+                i += 1
+            elif nums[i] == nums[idx]:
+                res.append(nums[i])
+                i += 1
+            else:  # 只是交换，i不移动，因为交换过来的数还未检测
+                nums[i], nums[idx] = nums[idx], nums[i]
+        return res if res else -1
 </code></pre>
 <h2 id="构建乘积数组"><a href="#构建乘积数组" class="headerlink" title="构建乘积数组"></a><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/52_%E6%9E%84%E5%BB%BA%E4%B9%98%E7%A7%AF%E6%95%B0%E7%BB%84.py" target="_blank" rel="external">构建乘积数组</a></h2><h3 id="题目描述-51"><a href="#题目描述-51" class="headerlink" title="题目描述"></a>题目描述</h3><p>给定一个数组A[0,1,…,n-1],请构建一个数组B[0,1,…,n-1]<br>使得B中的元素B[i]=A[0]*A<a href="https://github.com/Hk4Fun/algorithm_offer/tree/master/target_offer" target="_blank" rel="external">1</a>*…*A[i-1]*A[i+1]*…*A[n-1]，不能使用除法。</p>
 <h3 id="最优题解-51"><a href="#最优题解-51" class="headerlink" title="最优题解"></a>最优题解</h3><p>时间O(n)，空间O(1)</p>
