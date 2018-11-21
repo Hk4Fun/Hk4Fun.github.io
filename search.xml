@@ -3,6 +3,347 @@
   
     
     <entry>
+      <title><![CDATA[不要在列表（集合、字典）推导式或生成器表达式中使用 yield]]></title>
+      <url>/2018/11/21/%E4%B8%8D%E8%A6%81%E5%9C%A8%E5%88%97%E8%A1%A8%EF%BC%88%E9%9B%86%E5%90%88%E3%80%81%E5%AD%97%E5%85%B8%EF%BC%89%E6%8E%A8%E5%AF%BC%E5%BC%8F%E6%88%96%E7%94%9F%E6%88%90%E5%99%A8%E8%A1%A8%E8%BE%BE%E5%BC%8F%E4%B8%AD%E4%BD%BF%E7%94%A8-yield/</url>
+      <content type="html"><![CDATA[<h3 id="发现问题"><a href="#发现问题" class="headerlink" title="发现问题"></a>发现问题</h3><p>首先来看看在列表推导式中使用 yield 会发生什么：</p>
+<pre><code class="python">[(yield x) for x in [1,2,3]] # 在列表推导式中使用 yield
+&gt;&gt;&gt; &lt;generator object &lt;listcomp&gt; at 0x00C21510&gt;
+</code></pre>
+<p>相当奇怪，返回一个 <strong><code>&lt;listcomp&gt;</code></strong> 类型的生成器而不是一个包含生成器的列表</p>
+<a id="more"></a>
+<p>既然是生成器，那我们就用 <code>list()</code> 展开看一下：</p>
+<pre><code class="python">list([(yield x) for x in [1,2,3]])
+&gt;&gt;&gt; [1, 2, 3]
+</code></pre>
+<p>虽然打印出了预期的结果，但还是感觉很奇怪：</p>
+<p>列表推导式本身并不需要用 <code>list()</code> 展开的，这里却需要加上才行</p>
+<p>那我们来看看如果是生成器表达式会如何：</p>
+<pre><code class="python">((yield x) for x in [1,2,3]) # 在生成器表达式中使用 yield
+&gt;&gt;&gt; &lt;generator object &lt;genexpr&gt; at 0x00C21C30&gt;
+</code></pre>
+<p>嗯，的确是返回一个 <strong><code>&lt;genexpr&gt;</code></strong> 类型的生成器，这很正常，那我们用 <code>list()</code> 展开看一下：</p>
+<pre><code class="python">list((yield x) for x in [1,2,3])
+&gt;&gt;&gt; [1, None, 2, None, 3, None]
+</code></pre>
+<p>这下就懵逼了，怎么会多出几个 <code>None</code>？这几个 <code>None</code>从哪里来的？</p>
+<h3 id="深入分析"><a href="#深入分析" class="headerlink" title="深入分析"></a>深入分析</h3><p>先来看看不含 yield 的列表推导式的 bytecode：</p>
+<pre><code class="python">from dis import dis
+dis(&quot;&quot;&quot;[x for x in [1,2,3]]&quot;&quot;&quot;)
+&gt;&gt;&gt;   1       0 LOAD_CONST               0 (&lt;code object &lt;listcomp&gt; at 0x054E0548, file &quot;&lt;dis&gt;&quot;, line 1&gt;)
+              2 LOAD_CONST               1 (&#39;&lt;listcomp&gt;&#39;)
+              4 MAKE_FUNCTION            0
+              6 LOAD_CONST               5 ((1, 2, 3))
+              8 GET_ITER
+             10 CALL_FUNCTION            1
+             12 RETURN_VALUE
+</code></pre>
+<p>可以看到，列表推导式实际上被转换（MAKE_FUNCTION）成了一个函数并调用(CALL_FUNCTION)</p>
+<p>同时把 <code>[1,2,3]</code> 和 <code>[1,2,3]</code>的迭代器作为参数传给该函数</p>
+<p>注意该函数的代码作为一个 code object 传给 MAKE_FUNCTION</p>
+<p> <code>&lt;listcomp&gt;</code> 告诉 MAKE_FUNCTION 该函数的类型</p>
+<p>注意到该函数被包裹在列表推导式中，是一个<strong>嵌套的函数</strong></p>
+<p>我们来看看该函数实际的 bytecode：</p>
+<pre><code class="python">dis(compile(&quot;&quot;&quot;[x for x in [1,2,3]]&quot;&quot;&quot;, &#39;&#39;, &#39;exec&#39;).co_consts[0])
+&gt;&gt;&gt; 1         0 BUILD_LIST               0
+              2 LOAD_FAST                0 (.0)
+        &gt;&gt;    4 FOR_ITER                 8 (to 14)
+              6 STORE_FAST               1 (x)
+              8 LOAD_FAST                1 (x)
+             10 LIST_APPEND              2
+             12 JUMP_ABSOLUTE            4
+        &gt;&gt;   14 RETURN_VALUE
+</code></pre>
+<p>翻译成 Python 的伪代码，该函数相当于：</p>
+<pre><code class="python">def listcomp(some_iterable):
+    res = []
+    for x in some_iterable:
+        res.append(x)
+    return res
+</code></pre>
+<p>使用该列表推导式相当于调用该函数：</p>
+<pre><code class="python">listcomp([1,2,3])
+&gt;&gt;&gt; [1, 2, 3]
+</code></pre>
+<p>下面看看含有 yield 的列表推导式的 bytecode：</p>
+<pre><code class="python">dis(&quot;&quot;&quot;[(yield x) for x in [1,2,3]]&quot;&quot;&quot;)
+&gt;&gt;&gt;   1       0 LOAD_CONST               0 (&lt;code object &lt;listcomp&gt; at 0x054E0A18, file &quot;&lt;dis&gt;&quot;, line 1&gt;)
+              2 LOAD_CONST               1 (&#39;&lt;listcomp&gt;&#39;)
+              4 MAKE_FUNCTION            0
+              6 LOAD_CONST               5 ((1, 2, 3))
+              8 GET_ITER
+             10 CALL_FUNCTION            1
+             12 RETURN_VALUE
+</code></pre>
+<p>与之前无异，但我们来看看其内部函数的 bytecode：</p>
+<pre><code class="python">dis(compile(&quot;&quot;&quot;[(yield x) for x in [1,2,3]]&quot;&quot;&quot;, &#39;&#39;, &#39;exec&#39;).co_consts[0])
+&gt;&gt;&gt;   1       0 BUILD_LIST               0
+              2 LOAD_FAST                0 (.0)
+        &gt;&gt;    4 FOR_ITER                10 (to 16)
+              6 STORE_FAST               1 (x)
+              8 LOAD_FAST                1 (x)
+             10 YIELD_VALUE
+             12 LIST_APPEND              2
+             14 JUMP_ABSOLUTE            4
+        &gt;&gt;   16 RETURN_VALUE
+</code></pre>
+<p>对比不含 yield 的 bytecode，发现只是多出了 YIELD_VALUE 这一行</p>
+<p>但却把该函数转化成了一个生成器函数，相当于：</p>
+<pre><code class="python">def listcomp(some_iterable):
+    res = []
+    for x in some_iterable:
+        v = yield x # 关键的一行
+        res.append(v)
+    return res
+</code></pre>
+<p>我们试着像之前那样调用 <code>listcomp</code>：</p>
+<pre><code class="python">listcomp([1,2,3])
+&gt;&gt;&gt; &lt;generator object listcomp at 0x052AFD50&gt;
+</code></pre>
+<p>果然得到一个类型为 <code>listcomp</code> 的生成器，用 <code>list()</code> 展开：</p>
+<pre><code class="python">list(listcomp([1,2,3]))
+&gt;&gt;&gt; [1, 2, 3]
+</code></pre>
+<p>现在知道为什么含有 yield 的列表推导式只是返回一个类型为 <code>listcomp</code> 生成器了吧</p>
+<p>因为使用含有 yeild 的列表推导式相当于调用上面 <code>listcomp</code> 这个函数</p>
+<p>而该函数是一个生成器函数，只会返回一个生成器</p>
+<p>需要我们自己使用 <code>list()</code> 去迭代来把它展开</p>
+<p><code>list()</code> 拿到的值正是 <code>yield x</code> 传出来的</p>
+<p>而内部的 res 实际上收集的是外界（这里是 list）迭代 send 进去的值</p>
+<p>那这个 res 最终哪里去了？别忘了生成器迭代的结尾：return 的返回值作为 <code>StopIteration</code> 的值</p>
+<pre><code class="python">from itertools import islice
+gen = listcomp([1,2,3])
+list(islice(gen, 3))  # 使用 islice 控制调用 next 的次数，避免直接调用 list 到达迭代的末尾而触发 StopIteration
+&gt;&gt;&gt; [1, 2, 3]
+
+try:
+    next(gen) # 手动触发 StopIteration
+except StopIteration as e:
+    print(e.value)
+&gt;&gt;&gt; [None, None, None]
+</code></pre>
+<p>三个 None，这就是内部函数的 res 收集外部 list 迭代展开时传进去的值</p>
+<p>list 在迭代时就是调用 next，而 next(gen) 相等于 gen.send(None)</p>
+<p>那为什么含有 yield 的生成器表达式在迭代展开时会把 None 也传递出来呢？</p>
+<p>聪明的你应该会马上想到：该不会 yield 下面还有一个 yield 吧？这样就能把外界传递进来的 None 再传递出去</p>
+<p>的确如此，但为什么会有两个yield？要想弄明白这个问题，想来看看不含 yield 的生成器表达式的 bytecode：</p>
+<pre><code class="python">dis(&quot;&quot;&quot;(x for x in [1,2,3])&quot;&quot;&quot;)
+&gt;&gt;&gt;   1       0 LOAD_CONST               0 (&lt;code object &lt;genexpr&gt; at 0x054F13E8, file &quot;&lt;dis&gt;&quot;, line 1&gt;)
+              2 LOAD_CONST               1 (&#39;&lt;genexpr&gt;&#39;)
+              4 MAKE_FUNCTION            0
+              6 LOAD_CONST               5 ((1, 2, 3))
+              8 GET_ITER
+             10 CALL_FUNCTION            1
+             12 RETURN_VALUE
+</code></pre>
+<p>与之前列表推导式的 bytecode 没什么大的区别，只是函数的类型是 <code>&lt;genexpr&gt;</code> 而不是 <code>listcomp</code></p>
+<p>那我们看看内部函数的 bytecode：</p>
+<pre><code class="python">dis(compile(&quot;&quot;&quot;(x for x in [1,2,3])&quot;&quot;&quot;, &#39;&#39;, &#39;exec&#39;).co_consts[0])
+&gt;&gt;&gt;   1       0 LOAD_FAST                0 (.0)
+        &gt;&gt;    2 FOR_ITER                10 (to 14)
+              4 STORE_FAST               1 (x)
+              6 LOAD_FAST                1 (x)
+              8 YIELD_VALUE
+             10 POP_TOP
+             12 JUMP_ABSOLUTE            2
+        &gt;&gt;   14 LOAD_CONST               0 (None)
+             16 RETURN_VALUE
+</code></pre>
+<p>由于本身就是一个生成器表达式，所以不再需要一个内部的 list（没有 BUILD_LIST）来存放每个值</p>
+<p>而是直接把值 yield 到外部（YIELD_VALUE，yield 的返回值会覆盖 <strong>运行时栈</strong> 的栈顶（被 yield 出去的值））</p>
+<p>该函数相当于：</p>
+<pre><code class="python">def genexpr(some_iterable):
+    for x in some_iterable:
+        yield x # 外界传进来的值不用保存了，POP_TOP
+
+genexpr([1,2,3])
+&gt;&gt;&gt; &lt;generator object genexpr at 0x054EE420&gt;
+list(genexpr([1,2,3]))
+&gt;&gt;&gt; [1, 2, 3]
+</code></pre>
+<p>一切都很正常，那我们来看看含 yield 的生成器表达式的 bytecode：</p>
+<pre><code class="python">dis(&quot;&quot;&quot;((yield x) for x in [1,2,3])&quot;&quot;&quot;)
+&gt;&gt;&gt;   1       0 LOAD_CONST               0 (&lt;code object &lt;genexpr&gt; at 0x054F1338, file &quot;&lt;dis&gt;&quot;, line 1&gt;)
+              2 LOAD_CONST               1 (&#39;&lt;genexpr&gt;&#39;)
+              4 MAKE_FUNCTION            0
+              6 LOAD_CONST               5 ((1, 2, 3))
+              8 GET_ITER
+             10 CALL_FUNCTION            1
+             12 RETURN_VALUE
+</code></pre>
+<p>与不含 yield 的生成器表达式的 bytecode 一样，关键是内部函数的 bytecode：</p>
+<pre><code class="python">dis(compile(&quot;&quot;&quot;((yield x) for x in [1,2,3])&quot;&quot;&quot;, &#39;&#39;, &#39;exec&#39;).co_consts[0])
+&gt;&gt;&gt;   1       0 LOAD_FAST                0 (.0)
+        &gt;&gt;    2 FOR_ITER                12 (to 16)
+              4 STORE_FAST               1 (x)
+              6 LOAD_FAST                1 (x)
+              8 YIELD_VALUE
+             10 YIELD_VALUE
+             12 POP_TOP
+             14 JUMP_ABSOLUTE            2
+        &gt;&gt;   16 LOAD_CONST               0 (None)
+             18 RETURN_VALUE
+</code></pre>
+<p>的确有两个 YIELD_VALUE！对比不含 yield 的生成器表达式内部函数的 bytecode，</p>
+<p>发现就只是多了一行 YIELD_VALUE（第一个 YIELD_VALUE）</p>
+<p>没错，正是 <code>(yield x)</code> 造成的，这使得内部函数有两个连续的 YIELD_VALUE</p>
+<p>外界传进来的值（这里是None）来不及 POP_TOP 就被 YIELD_VALUE 传递出去了！</p>
+<p>最终外界的 list 会拿到自己传进去的None，这样相当于：</p>
+<pre><code class="python">def genexpr(some_iterable):
+    for x in some_iterable:
+        v = yield x 
+        yield v
+
+list(genexpr([1,2,3]))
+&gt;&gt;&gt; [1, None, 2, None, 3, None]
+</code></pre>
+<p>含有 yield 的集合推导式和字典推导式也会像列表推导式那样：</p>
+<pre><code class="python">{(yield i) for i in range(3)} # 内部函数的类型是 &lt;setcomp&gt;
+&gt;&gt;&gt; &lt;generator object &lt;setcomp&gt; at 0x054F8D80&gt;
+set({(yield i) for i in range(3)})
+&gt;&gt;&gt; {0, 1, 2}
+
+{(yield k): (yield v) for k, v in {&#39;foo&#39;: &#39;bar&#39;, &#39;spam&#39;: &#39;eggs&#39;}.items()} # 内部函数的类型是 &lt;dictcomp&gt;
+&gt;&gt;&gt; &lt;generator object &lt;dictcomp&gt; at 0x052AF720&gt;
+list({(yield k): (yield v) for k, v in {&#39;foo&#39;: &#39;bar&#39;, &#39;spam&#39;: &#39;eggs&#39;}.items()})
+&gt;&gt;&gt; [&#39;bar&#39;, &#39;foo&#39;, &#39;eggs&#39;, &#39;spam&#39;]
+</code></pre>
+<h3 id="举一反三"><a href="#举一反三" class="headerlink" title="举一反三"></a>举一反三</h3><p>明白是怎么回事后，我们可以改变外界传进去值，以此改变内部的 list：</p>
+<pre><code class="python">def listcomp(some_iterable):
+    res = [] # 内部list
+    for x in some_iterable:
+        v = yield x
+        res.append(v)
+    return res
+
+gen = listcomp([1,2,3])
+next(gen)
+&gt;&gt;&gt; 1
+gen.send(&#39;bar&#39;)
+&gt;&gt;&gt; 2
+gen.send(&#39;bar&#39;)
+&gt;&gt;&gt; 3
+gen.send(&#39;bar&#39;)
+&gt;&gt;&gt; StopIteration Traceback (most recent call last)
+&lt;ipython-input-50-ca4a3b892529&gt; in &lt;module&gt;()
+----&gt; 1 gen.send(&#39;bar&#39;)
+StopIteration: [&#39;bar&#39;, &#39;bar&#39;, &#39;bar&#39;]
+</code></pre>
+<p>注意到内部 list 在 StopIteration 中即为我们传递进去的3个 ‘bar’</p>
+<p>生成器表达式也可以这么玩：</p>
+<pre><code class="python">def genexpr(some_iterable):
+    for x in some_iterable:
+        v = yield x 
+        yield v
+
+gen = genexpr([1,2,3])
+next(gen)
+&gt;&gt;&gt; 1
+gen.send(&#39;bar&#39;) # 返回&#39;bar&#39;而不是2
+&gt;&gt;&gt; &#39;bar&#39;
+gen.send(&#39;bar&#39;) # 第二次传进去的值并不会被存起来(POP_TOP)
+&gt;&gt;&gt; 2
+gen.send(&#39;foo&#39;) 
+&gt;&gt;&gt; &#39;foo&#39;
+gen.send(&#39;foo&#39;)
+&gt;&gt;&gt; 3
+gen.send(&#39;root&#39;)
+&gt;&gt;&gt; &#39;root&#39;
+gen.send(&#39;root&#39;)
+&gt;&gt;&gt; StopIteration Traceback (most recent call last)
+&lt;ipython-input-58-38d221a6c3cc&gt; in &lt;module&gt;()
+----&gt; 1 gen.send(&#39;root&#39;)
+StopIteration:
+</code></pre>
+<p>注意最后 StopIteration 的值其实为 None</p>
+<p>因为内部函数 genexpr 最终返回的就是 None 而不像 listcomp 那样返回一个 list</p>
+<p>上面都是在自己模拟的函数实现的，如何在真正的列表推导式和生成器表达式上向内部传递值呢？</p>
+<p><code>list()</code> 迭代展开只是调用 next，我们无法 send 自己的值进去，所以我们可以在推导式或表达式本身动手脚： </p>
+<pre><code class="python">def bar(x):
+    return &#39;bar&#39;
+
+gen = [bar((yield x)) for x in [1,2,3]]
+list(islice(gen , 3))
+&gt;&gt;&gt; [1, 2, 3]
+
+try:
+    next(gen)
+except StopIteration as e:
+    print(e.value)
+&gt;&gt;&gt; [&#39;bar&#39;, &#39;bar&#39;, &#39;bar&#39;]
+</code></pre>
+<p>使用一个自定义的函数”传”进去就可以了</p>
+<p>这里并不是真正的 send，只是利用自定义的函数“偷梁换柱”罢了（相当于装饰器）</p>
+<pre><code class="python">dis(compile(&quot;&quot;&quot;[(lambda v:&#39;bar&#39;)((yield x)) for x in [1,2,3]]&quot;&quot;&quot;,&#39;&#39;,&#39;exec&#39;).co_consts[0])
+&gt;&gt;&gt;   1       0 BUILD_LIST               0
+              2 LOAD_FAST                0 (.0)
+        &gt;&gt;    4 FOR_ITER                18 (to 24)
+              6 STORE_FAST               1 (x)
+              8 LOAD_CONST               0 (&lt;code object &lt;lambda&gt; at 0x00C76498, file &quot;&quot;, line 1&gt;)
+             10 LOAD_CONST               1 (&#39;&lt;listcomp&gt;.&lt;lambda&gt;&#39;)
+             12 MAKE_FUNCTION            0
+             14 LOAD_FAST                1 (x)
+             16 YIELD_VALUE
+             18 CALL_FUNCTION            1
+             20 LIST_APPEND              2
+             22 JUMP_ABSOLUTE            4
+        &gt;&gt;   24 RETURN_VALUE
+</code></pre>
+<p><code>(yield x)</code> 的返回值（这里是None）作为参数传递给该函数</p>
+<p>而该函数执行返回的结果才是真正 append 到内部 list 的值（这里是‘bar’）</p>
+<p>我们可以在自定义的函数中打印出外界传进来的值：</p>
+<pre><code class="python">def bar(x):
+    print(x)
+    return &#39;bar&#39;
+
+gen = [bar((yield x)) for x in [1,2,3]]
+next(gen)
+&gt;&gt;&gt; 1
+next(gen)
+&gt;&gt;&gt; None
+&gt;&gt;&gt; 2
+next(gen)
+&gt;&gt;&gt; None
+&gt;&gt;&gt; 3
+next(gen)
+&gt;&gt;&gt; None
+&gt;&gt;&gt; StopIteration Traceback (most recent call last)
+&lt;ipython-input-71-8a6233884a6c&gt; in &lt;module&gt;()
+----&gt; 1 next(gen)
+StopIteration: [&#39;bar&#39;, &#39;bar&#39;, &#39;bar&#39;]
+</code></pre>
+<p>下面对生成器表达式也使用自定义的函数 “传递” 值：</p>
+<pre><code class="python">def bar(x):
+    print(x)
+    return &#39;bar&#39;
+
+list(bar((yield x)) for x in [1,2,3])
+&gt;&gt;&gt; None
+&gt;&gt;&gt; None
+&gt;&gt;&gt; None
+&gt;&gt;&gt; [1, &#39;bar&#39;, 2, &#39;bar&#39;, 3, &#39;bar&#39;]
+</code></pre>
+<p>到这里我想说的是，我们不应该在列表（集合、字典）推导式或生成器表达式中使用 yield，有时会带来意想不到的结果</p>
+<p>这其实是 Python 本身的一个 Bug，见 <a href="https://bugs.python.org/issue10544" target="_blank" rel="external">https://bugs.python.org/issue10544</a></p>
+<p>该 Bug 在 Python3.7 中会提示一个 DeprecationWarning，在 Python3.8 中则是 SyntaxError</p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
+<li><a href="https://stackoverflow.com/questions/32139885/yield-in-list-comprehensions-and-generator-expressions" target="_blank" rel="external">yield-in-list-comprehensions-and-generator-expressions</a></li>
+<li><a href="https://bugs.python.org/issue10544" target="_blank" rel="external">issue10544</a></li>
+<li><a href="https://github.com/satwikkansal/wtfpython#-yielding-none" target="_blank" rel="external">wtfpython-yielding None</a></li>
+</ol>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> Python </tag>
+            
+            <tag> wtfpython </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[使用vs2017搭建CPython3.6和CPython2.7源码调试环境]]></title>
       <url>/2018/11/09/%E4%BD%BF%E7%94%A8vs2017%E6%90%AD%E5%BB%BACPython3.6%E5%92%8CCPython2.7%E6%BA%90%E7%A0%81%E8%B0%83%E8%AF%95%E7%8E%AF%E5%A2%83/</url>
       <content type="html"><![CDATA[<p>打算开始看  <a href="https://book.douban.com/subject/3117898/" target="_blank" rel="external">《Python源码剖析》</a>, 这需要能够本地调试 CPython 的源码</p>
