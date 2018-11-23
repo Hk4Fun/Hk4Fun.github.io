@@ -5,7 +5,7 @@
     
   <url>
     <loc>https://hk4fun.github.io/2018/11/23/Python%E4%B8%AD%E5%AD%90%E7%B1%BB%E5%85%B3%E7%B3%BB%E7%9A%84%E4%BC%A0%E9%80%92%E6%80%A7/</loc>
-    <lastmod>2018-11-23T08:53:53.283Z</lastmod>
+    <lastmod>2018-11-23T08:57:16.309Z</lastmod>
     <data>
         <display>
         <title>Python中子类关系的传递性</title>
@@ -16,6 +16,8 @@
         <tag>元类编程</tag>
          
         <tag>魔法方法</tag>
+         
+        <tag>wtfpython</tag>
          
          
            
