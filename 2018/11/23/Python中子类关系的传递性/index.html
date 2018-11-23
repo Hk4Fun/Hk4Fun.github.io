@@ -16,15 +16,17 @@
 <link href="/plugins/prettify/prettify.css" rel="stylesheet">
 
 
-<meta name="description" content="个人技术博客">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Hk4Fun&#39;s Blog">
-<meta property="og:url" content="https://hk4fun.github.io/archives/page/2/index.html">
+<meta name="description" content="在 Python 中 type 与 object 的关系 这篇文章中，我提到了 Combine Solid Arrows Rule，即：  如果 A 是 B 的子类，且 B 是 C 的子类，那么 A 也是 C 的子类  也就是说子类关系（继承关系）具有传递性：">
+<meta name="keywords" content="Python,元类编程,魔法方法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python中子类关系的传递性">
+<meta property="og:url" content="https://hk4fun.github.io/2018/11/23/Python中子类关系的传递性/index.html">
 <meta property="og:site_name" content="Hk4Fun&#39;s Blog">
-<meta property="og:description" content="个人技术博客">
+<meta property="og:description" content="在 Python 中 type 与 object 的关系 这篇文章中，我提到了 Combine Solid Arrows Rule，即：  如果 A 是 B 的子类，且 B 是 C 的子类，那么 A 也是 C 的子类  也就是说子类关系（继承关系）具有传递性：">
+<meta property="og:updated_time" content="2018-11-23T08:53:53.283Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hk4Fun&#39;s Blog">
-<meta name="twitter:description" content="个人技术博客">
+<meta name="twitter:title" content="Python中子类关系的传递性">
+<meta name="twitter:description" content="在 Python 中 type 与 object 的关系 这篇文章中，我提到了 Combine Solid Arrows Rule，即：  如果 A 是 B 的子类，且 B 是 C 的子类，那么 A 也是 C 的子类  也就是说子类关系（继承关系）具有传递性：">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -56,7 +58,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>Archives | Hk4Fun&#39;s Blog</title>
+<title>Python中子类关系的传递性 | Hk4Fun&#39;s Blog</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -66,8 +68,8 @@
         fancybox: true,
         animate: true,
         isHome: false,
-        isPost: false,
-        isArchive: true,
+        isPost: true,
+        isArchive: false,
         isTag: false,
         isCategory: false,
         fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
@@ -267,192 +269,331 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap">
+      <div class="body-wrap"><article id="post-Python中子类关系的传递性" class="article article-type-post" itemscope itemprop="blogPost">
   
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-          <div class="article-meta">
-              <a href="/2018/08/15/设计模式之单例模式/" class="archive-article-date">
-      <time datetime="2018-08-15T05:11:09.000Z" itemprop="datePublished">08-15</time>
+    <div class="article-meta">
+      <a href="/2018/11/23/Python中子类关系的传递性/" class="article-date">
+      <time datetime="2018-11-23T08:35:39.000Z" itemprop="datePublished">2018-11-23</time>
 </a>
 
 
-        </div>
-         
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/08/15/设计模式之单例模式/">设计模式之单例模式</a>
-    </h1>
-  
-
-        <div class="article-info info-on-archive">
-          
-
-          
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/元类编程/">元类编程</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/设计模式/">设计模式</a></li></ul>
     </div>
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
     
     
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-          <div class="article-meta">
-              <a href="/2018/08/15/魔法方法之-new-与-init/" class="archive-article-date">
-      <time datetime="2018-08-15T04:28:03.000Z" itemprop="datePublished">08-15</time>
-</a>
-
-
-        </div>
-         
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/08/15/魔法方法之-new-与-init/">魔法方法之 __new__() 与 __init__()</a>
+    <h1 class="article-title" itemprop="name">
+      Python中子类关系的传递性
     </h1>
   
 
-        <div class="article-info info-on-archive">
-          
+      </header>
+      
+      <div class="article-info article-info-post">
+        
 
-          
+        
     <div class="article-tag tagcloud">
         <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/元类编程/">元类编程</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/魔法方法/">魔法方法</a></li></ul>
     </div>
 
-        </div>
         <div class="clearfix"></div>
-    </header>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>在 <a href="https://hk4fun.github.io/2018/08/05/Python-%E4%B8%AD-type-%E4%B8%8E-object-%E7%9A%84%E5%85%B3%E7%B3%BB/">Python 中 type 与 object 的关系</a> 这篇文章中，我提到了 <strong>Combine Solid Arrows Rule</strong>，即：</p>
+<blockquote>
+<p>如果 A 是 B 的子类，且 B 是 C 的子类，那么 A 也是 C 的子类</p>
+</blockquote>
+<p>也就是说子类关系（继承关系）具有传递性：</p>
+<a id="more"></a>
+<pre><code class="python">class C:
+    pass
+
+class B(C):
+    pass
+
+class A(B):
+    pass
+
+issubclass(A, B)
+&gt;&gt;&gt; True
+
+issubclass(B, C)
+&gt;&gt;&gt; True
+
+issubclass(A, C)
+&gt;&gt;&gt; True
+
+A.__mro__
+&gt;&gt;&gt; (__main__.A, __main__.B, __main__.C, object)
+</code></pre>
+<p>但我们来看看下面的代码：</p>
+<pre><code class="python">from collections import Hashable
+issubclass(list, object)
+&gt;&gt;&gt; True
+
+issubclass(object, Hashable)
+&gt;&gt;&gt; True
+
+issubclass(list, Hashable)
+&gt;&gt;&gt; False
+</code></pre>
+<p>很明显，list 是不可哈希的</p>
+<p>上面的代码貌似说明了子类关系并不一定具有传递性</p>
+<p>但仔细观察会发现一个很不对劲的地方：<code>issubclass(object, Hashable)</code> 的结果为 True</p>
+<p>难道 object 是 Hashable 的子类？当然不是了</p>
+<p>我们知道在 Python 中 object 已经是”最原始”的父类了，它不继承任何类，它是所有类的父类：</p>
+<pre><code class="python">print(object.__base__)
+&gt;&gt;&gt; None
+
+object.__mro__
+&gt;&gt;&gt; (object,)
+</code></pre>
+<p>难道子类关系不一定具有传递性吗？我们来看看 Hashable 这个类的源码：</p>
+<pre><code class="python">class Hashable(metaclass=ABCMeta): 
+
+    __slots__ = ()
+
+    @abstractmethod
+    def __hash__(self):
+        return 0
+
+    @classmethod
+    def __subclasshook__(cls, C):
+        if cls is Hashable:
+            return _check_methods(C, &quot;__hash__&quot;)
+        return NotImplemented
+</code></pre>
+<p>注意到它的元类并不是 type，而是 ABCMeta，且定义了一个魔法方法 <code>__subclasshook__</code></p>
+<p><code>__subclasshook__</code> 实际上被元类 ABCMeta 的 <code>__subclasscheck__</code> 调用：</p>
+<pre><code class="python">class ABCMeta(type):
+    def __subclasscheck__(cls, subclass):
+        &quot;&quot;&quot;Override for issubclass(subclass, cls).&quot;&quot;&quot;
+        # Check cache
+        # 省略部分代码
+        # Check the subclass hook
+        ok = cls.__subclasshook__(subclass) # 调用 __subclasshook__
+        # 省略部分代码
+</code></pre>
+<p>这个方法有点长，这里省去了部分代码</p>
+<p>它的注释（Override for issubclass(subclass, cls)）告诉我们</p>
+<p><code>__subclasscheck__</code> 其实就是 <code>issubclass()</code> 的魔法方法</p>
+<p>当我们调用 <code>issubclass(subclass, cls)</code> 时，如果 cls 定义了 <code>__subclasscheck__</code> （一般是其元类定义的）</p>
+<p>那么 Python 就会调用 <code>__subclasscheck__</code></p>
+<p>而 <code>__subclasscheck__</code> 会去调用 cls 的 <code>__subclasshook__</code>（一般由cls自己定义）</p>
+<p>并把参数 subclass 传给 cls 的 <code>__subclasshook__</code></p>
+<p>这样就可以由 cls 自己来决定 subclass 是否为其子类</p>
+<p>而这里的 Hashable 在它的 <code>__subclasshook__</code> 中只是检查 subclass 是否定义了 <code>__hash__</code> </p>
+<pre><code class="python">def _check_methods(C, *methods): 
+    # 这里 methods 为 (__hash__,)，C 为 __subclasscheck__ 传进来的 subclass
+    mro = C.__mro__
+    for method in methods:
+        for B in mro: # 检查 C 及其所有父类是否含有该方法
+            if method in B.__dict__: 
+                if B.__dict__[method] is None: # 子类可以通过 __hash__ = None 成为不可哈希的
+                    return NotImplemented
+                break
+        else:
+            return NotImplemented
+    return True
+</code></pre>
+<p>Hashable 认为只要 subclass 定义了 <code>__hash__</code> 且不为 None，那么它就认为 subclass 是其子类</p>
+<p>我个人认为这种检测方式是不合理的，其主要还是因为 Python 中并没有 <strong>接口</strong> 这种对象</p>
+<p>有关 <code>__subclasscheck__</code> 及 Python 中抽象基类的的引入可见 <a href="https://legacy.python.org/dev/peps/pep-3119/" target="_blank" rel="external">PEP319</a></p>
+<pre><code class="python">class C:
+    @classmethod
+    def __subclasshook__(cls, C):
+        return True
+
+issubclass(object, C)
+&gt;&gt;&gt; False
+</code></pre>
+<p>C 并没声明元类，默认就是 type，而 type 并没有定义 <code>__subclasscheck__</code></p>
+<p>因此 <code>__subclasshook__</code> 永远不会被调用</p>
+<pre><code class="python">class MyMetaClass(type): # 自定义元类
+    def __subclasscheck__(cls, subclass): # 直接就返回 True，并没有去调用 __subclasshook__
+        return True
+
+class C(metaclass=MyMetaClass): # 声明元类为自定义的元类 MyMetaClass
+    @classmethod
+    def __subclasshook__(cls, C): # 它只能在其元类的 __subclasscheck__ 中被调用
+        return False
+
+issubclass(object, C)
+&gt;&gt;&gt; True
+</code></pre>
+<p>可以看到真正起决定性的函数是 <code>__subclasscheck__</code>，而不是 <code>__subclasshook__</code></p>
+<p>所以按照协议，我们应该在 <code>__subclasscheck__</code> 中调用 cls 的 <code>__subclasshook__</code>，这样就会把决定权交给 cls</p>
+<p>这就是为什么一般我们会去使用 Python 给我们写好的 ABCMeta 而不是自定义元类:</p>
+<pre><code class="python">from abc import ABCMeta
+class C(metaclass=ABCMeta): # 声明元类为 ABCMeta
+    @classmethod
+    def __subclasshook__(cls, C):
+        return True
+
+issubclass(object, C)
+&gt;&gt;&gt; True
+
+class C(metaclass=ABCMeta): # 声明元类为 ABCMeta
+    @classmethod
+    def __subclasshook__(cls, subclass): # 这里的 cls 就是 C 自己，而 subclass 是待检测的类
+        if cls in subclass.__mro__:
+            return True
+        else:
+            return False
+
+issubclass(object, C) # 会去调用 C 的 __subclasshook__，object 作为参数 subclass
+&gt;&gt;&gt; False
+
+class B(C):
+    pass
+
+issubclass(B, C)
+&gt;&gt;&gt; True
+</code></pre>
+<p>因此，我们可以看到，原本 Python 中的子类关系就是传递的</p>
+<p>但自从引入 <code>__subclasscheck__</code> 之后，这种子类关系的决定权就对用户开放了</p>
+<p>这使得传递性可以被用户的代码所打破，这种自由在某种程度上来讲是一种缺陷和妥协</p>
+<p>参考资料：</p>
+<ol>
+<li><p><a href="https://www.naftaliharris.com/blog/python-subclass-intransitivity/" target="_blank" rel="external">Python Subclass Relationships Aren’t Transitive</a></p>
+</li>
+<li><p><a href="https://legacy.python.org/dev/peps/pep-3119/" target="_blank" rel="external">PEP319</a></p>
+</li>
+</ol>
+
+      
+    </div>
+    
   </div>
-</article>
   
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-          <div class="article-meta">
-              <a href="/2018/08/05/Python-中-type-与-object-的关系/" class="archive-article-date">
-      <time datetime="2018-08-04T17:58:08.000Z" itemprop="datePublished">08-05</time>
-</a>
-
-
-        </div>
-         
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/08/05/Python-中-type-与-object-的关系/">Python 中 type 与 object 的关系</a>
-    </h1>
-  
-
-        <div class="article-info info-on-archive">
-          
-
-          
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/元类编程/">元类编程</a></li></ul>
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2018/11/23/Python中子类关系的传递性/">Python中子类关系的传递性</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">Hk4Fun</a></p>
+        <p><span>发布时间:</span>2018-11-23, 16:35:39</p>
+        <p><span>最后更新:</span>2018-11-23, 16:53:53</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2018/11/23/Python中子类关系的传递性/" title="Python中子类关系的传递性">https://hk4fun.github.io/2018/11/23/Python中子类关系的传递性/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://hk4fun.github.io/2018/11/23/Python中子类关系的传递性/　　作者: Hk4Fun" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
     </div>
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-          <div class="article-meta">
-              <a href="/2018/07/31/为什么Python的corotine这么特殊/" class="archive-article-date">
-      <time datetime="2018-07-30T16:39:05.000Z" itemprop="datePublished">07-31</time>
-</a>
 
 
-        </div>
-         
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/07/31/为什么Python的corotine这么特殊/">为什么Python的coroutine这么特殊</a>
-    </h1>
-  
-
-        <div class="article-info info-on-archive">
-          
-
-          
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/coroutine/">coroutine</a></li></ul>
-    </div>
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-          <div class="article-meta">
-              <a href="/2018/07/19/剑指offer题解（Python实现）/" class="archive-article-date">
-      <time datetime="2018-07-19T08:30:29.000Z" itemprop="datePublished">07-19</time>
-</a>
-
-
-        </div>
-         
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/07/19/剑指offer题解（Python实现）/">剑指offer题解（Python实现）</a>
-    </h1>
-  
-
-        <div class="article-info info-on-archive">
-          
-
-          
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/剑指offer/">剑指offer</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据结构/">数据结构</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法/">算法</a></li></ul>
-    </div>
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/archives/">&laquo; Prev</a><a class="page-number" href="/archives/">1</a><span class="page-number current">2</span><a class="page-number" href="/archives/page/3/">3</a><a class="extend next" rel="next" href="/archives/page/3/">Next &raquo;</a>
+    <nav id="article-nav">
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2018/11/21/不要在列表（集合、字典）推导式或生成器表达式中使用-yield/">
+                    不要在列表（集合、字典）推导式或生成器表达式中使用 yield
+                </a>
+            </div>
+        
     </nav>
-  
 
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+
+    
+        <div class="addthis_sharing_toolbox"></div>
+    
+</div>
+
+
+
+
+
+
+
+    
+    <!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zMTA4Ni83NjM0" style="margin-left:30px;margin-right:30px">
+<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+</script>
+<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2018/11/21/不要在列表（集合、字典）推导式或生成器表达式中使用-yield/" title="下一篇: 不要在列表（集合、字典）推导式或生成器表达式中使用 yield">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/11/23/Python中子类关系的传递性/">Python中子类关系的传递性</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/21/不要在列表（集合、字典）推导式或生成器表达式中使用-yield/">不要在列表（集合、字典）推导式或生成器表达式中使用 yield</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/09/使用vs2017搭建CPython3.6和CPython2.7源码调试环境/">使用vs2017搭建CPython3.6和CPython2.7源码调试环境</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/08/Python循环导入问题/">Python循环导入问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/07/Python字符串驻留机制/">Python字符串驻留机制</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/15/设计模式之单例模式/">设计模式之单例模式</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/15/魔法方法之-new-与-init/">魔法方法之 __new__() 与 __init__()</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/05/Python-中-type-与-object-的关系/">Python 中 type 与 object 的关系</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/31/为什么Python的corotine这么特殊/">为什么Python的coroutine这么特殊</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/19/剑指offer题解（Python实现）/">剑指offer题解（Python实现）</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/09/廖雪峰web实战总结/">廖雪峰web实战总结</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
 </div>
       <footer id="footer">
     <div class="outer">

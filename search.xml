@@ -3,6 +3,185 @@
   
     
     <entry>
+      <title><![CDATA[Python中子类关系的传递性]]></title>
+      <url>/2018/11/23/Python%E4%B8%AD%E5%AD%90%E7%B1%BB%E5%85%B3%E7%B3%BB%E7%9A%84%E4%BC%A0%E9%80%92%E6%80%A7/</url>
+      <content type="html"><![CDATA[<p>在 <a href="https://hk4fun.github.io/2018/08/05/Python-%E4%B8%AD-type-%E4%B8%8E-object-%E7%9A%84%E5%85%B3%E7%B3%BB/">Python 中 type 与 object 的关系</a> 这篇文章中，我提到了 <strong>Combine Solid Arrows Rule</strong>，即：</p>
+<blockquote>
+<p>如果 A 是 B 的子类，且 B 是 C 的子类，那么 A 也是 C 的子类</p>
+</blockquote>
+<p>也就是说子类关系（继承关系）具有传递性：</p>
+<a id="more"></a>
+<pre><code class="python">class C:
+    pass
+
+class B(C):
+    pass
+
+class A(B):
+    pass
+
+issubclass(A, B)
+&gt;&gt;&gt; True
+
+issubclass(B, C)
+&gt;&gt;&gt; True
+
+issubclass(A, C)
+&gt;&gt;&gt; True
+
+A.__mro__
+&gt;&gt;&gt; (__main__.A, __main__.B, __main__.C, object)
+</code></pre>
+<p>但我们来看看下面的代码：</p>
+<pre><code class="python">from collections import Hashable
+issubclass(list, object)
+&gt;&gt;&gt; True
+
+issubclass(object, Hashable)
+&gt;&gt;&gt; True
+
+issubclass(list, Hashable)
+&gt;&gt;&gt; False
+</code></pre>
+<p>很明显，list 是不可哈希的</p>
+<p>上面的代码貌似说明了子类关系并不一定具有传递性</p>
+<p>但仔细观察会发现一个很不对劲的地方：<code>issubclass(object, Hashable)</code> 的结果为 True</p>
+<p>难道 object 是 Hashable 的子类？当然不是了</p>
+<p>我们知道在 Python 中 object 已经是”最原始”的父类了，它不继承任何类，它是所有类的父类：</p>
+<pre><code class="python">print(object.__base__)
+&gt;&gt;&gt; None
+
+object.__mro__
+&gt;&gt;&gt; (object,)
+</code></pre>
+<p>难道子类关系不一定具有传递性吗？我们来看看 Hashable 这个类的源码：</p>
+<pre><code class="python">class Hashable(metaclass=ABCMeta): 
+
+    __slots__ = ()
+
+    @abstractmethod
+    def __hash__(self):
+        return 0
+
+    @classmethod
+    def __subclasshook__(cls, C):
+        if cls is Hashable:
+            return _check_methods(C, &quot;__hash__&quot;)
+        return NotImplemented
+</code></pre>
+<p>注意到它的元类并不是 type，而是 ABCMeta，且定义了一个魔法方法 <code>__subclasshook__</code></p>
+<p><code>__subclasshook__</code> 实际上被元类 ABCMeta 的 <code>__subclasscheck__</code> 调用：</p>
+<pre><code class="python">class ABCMeta(type):
+    def __subclasscheck__(cls, subclass):
+        &quot;&quot;&quot;Override for issubclass(subclass, cls).&quot;&quot;&quot;
+        # Check cache
+        # 省略部分代码
+        # Check the subclass hook
+        ok = cls.__subclasshook__(subclass) # 调用 __subclasshook__
+        # 省略部分代码
+</code></pre>
+<p>这个方法有点长，这里省去了部分代码</p>
+<p>它的注释（Override for issubclass(subclass, cls)）告诉我们</p>
+<p><code>__subclasscheck__</code> 其实就是 <code>issubclass()</code> 的魔法方法</p>
+<p>当我们调用 <code>issubclass(subclass, cls)</code> 时，如果 cls 定义了 <code>__subclasscheck__</code> （一般是其元类定义的）</p>
+<p>那么 Python 就会调用 <code>__subclasscheck__</code></p>
+<p>而 <code>__subclasscheck__</code> 会去调用 cls 的 <code>__subclasshook__</code>（一般由cls自己定义）</p>
+<p>并把参数 subclass 传给 cls 的 <code>__subclasshook__</code></p>
+<p>这样就可以由 cls 自己来决定 subclass 是否为其子类</p>
+<p>而这里的 Hashable 在它的 <code>__subclasshook__</code> 中只是检查 subclass 是否定义了 <code>__hash__</code> </p>
+<pre><code class="python">def _check_methods(C, *methods): 
+    # 这里 methods 为 (__hash__,)，C 为 __subclasscheck__ 传进来的 subclass
+    mro = C.__mro__
+    for method in methods:
+        for B in mro: # 检查 C 及其所有父类是否含有该方法
+            if method in B.__dict__: 
+                if B.__dict__[method] is None: # 子类可以通过 __hash__ = None 成为不可哈希的
+                    return NotImplemented
+                break
+        else:
+            return NotImplemented
+    return True
+</code></pre>
+<p>Hashable 认为只要 subclass 定义了 <code>__hash__</code> 且不为 None，那么它就认为 subclass 是其子类</p>
+<p>我个人认为这种检测方式是不合理的，其主要还是因为 Python 中并没有 <strong>接口</strong> 这种对象</p>
+<p>有关 <code>__subclasscheck__</code> 及 Python 中抽象基类的的引入可见 <a href="https://legacy.python.org/dev/peps/pep-3119/" target="_blank" rel="external">PEP319</a></p>
+<pre><code class="python">class C:
+    @classmethod
+    def __subclasshook__(cls, C):
+        return True
+
+issubclass(object, C)
+&gt;&gt;&gt; False
+</code></pre>
+<p>C 并没声明元类，默认就是 type，而 type 并没有定义 <code>__subclasscheck__</code></p>
+<p>因此 <code>__subclasshook__</code> 永远不会被调用</p>
+<pre><code class="python">class MyMetaClass(type): # 自定义元类
+    def __subclasscheck__(cls, subclass): # 直接就返回 True，并没有去调用 __subclasshook__
+        return True
+
+class C(metaclass=MyMetaClass): # 声明元类为自定义的元类 MyMetaClass
+    @classmethod
+    def __subclasshook__(cls, C): # 它只能在其元类的 __subclasscheck__ 中被调用
+        return False
+
+issubclass(object, C)
+&gt;&gt;&gt; True
+</code></pre>
+<p>可以看到真正起决定性的函数是 <code>__subclasscheck__</code>，而不是 <code>__subclasshook__</code></p>
+<p>所以按照协议，我们应该在 <code>__subclasscheck__</code> 中调用 cls 的 <code>__subclasshook__</code>，这样就会把决定权交给 cls</p>
+<p>这就是为什么一般我们会去使用 Python 给我们写好的 ABCMeta 而不是自定义元类:</p>
+<pre><code class="python">from abc import ABCMeta
+class C(metaclass=ABCMeta): # 声明元类为 ABCMeta
+    @classmethod
+    def __subclasshook__(cls, C):
+        return True
+
+issubclass(object, C)
+&gt;&gt;&gt; True
+
+class C(metaclass=ABCMeta): # 声明元类为 ABCMeta
+    @classmethod
+    def __subclasshook__(cls, subclass): # 这里的 cls 就是 C 自己，而 subclass 是待检测的类
+        if cls in subclass.__mro__:
+            return True
+        else:
+            return False
+
+issubclass(object, C) # 会去调用 C 的 __subclasshook__，object 作为参数 subclass
+&gt;&gt;&gt; False
+
+class B(C):
+    pass
+
+issubclass(B, C)
+&gt;&gt;&gt; True
+</code></pre>
+<p>因此，我们可以看到，原本 Python 中的子类关系就是传递的</p>
+<p>但自从引入 <code>__subclasscheck__</code> 之后，这种子类关系的决定权就对用户开放了</p>
+<p>这使得传递性可以被用户的代码所打破，这种自由在某种程度上来讲是一种缺陷和妥协</p>
+<p>参考资料：</p>
+<ol>
+<li><p><a href="https://www.naftaliharris.com/blog/python-subclass-intransitivity/" target="_blank" rel="external">Python Subclass Relationships Aren’t Transitive</a></p>
+</li>
+<li><p><a href="https://legacy.python.org/dev/peps/pep-3119/" target="_blank" rel="external">PEP319</a></p>
+</li>
+</ol>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> Python </tag>
+            
+            <tag> 元类编程 </tag>
+            
+            <tag> 魔法方法 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[不要在列表（集合、字典）推导式或生成器表达式中使用 yield]]></title>
       <url>/2018/11/21/%E4%B8%8D%E8%A6%81%E5%9C%A8%E5%88%97%E8%A1%A8%EF%BC%88%E9%9B%86%E5%90%88%E3%80%81%E5%AD%97%E5%85%B8%EF%BC%89%E6%8E%A8%E5%AF%BC%E5%BC%8F%E6%88%96%E7%94%9F%E6%88%90%E5%99%A8%E8%A1%A8%E8%BE%BE%E5%BC%8F%E4%B8%AD%E4%BD%BF%E7%94%A8-yield/</url>
       <content type="html"><![CDATA[<h3 id="发现问题"><a href="#发现问题" class="headerlink" title="发现问题"></a>发现问题</h3><p>首先来看看在列表推导式中使用 yield 会发生什么：</p>
@@ -1628,8 +1807,8 @@ init
     print(&#39;[1]Meta start&#39;)
 
     def __new__(cls, name, bases, dict, **kwargs): # 在加载时调用，且在类加载完后调用
-        # 这里的cls是Meat本身
-        print(&#39;[3]Meat new&#39;)
+        # 这里的cls是Meta本身
+        print(&#39;[3]Meta new&#39;)
         return super().__new__(cls, name, bases, dict, **kwargs)
 
     def __init__(cls, name, bases, dict): # 在加载时调用，且在上面的__new__()后调用

@@ -23,7 +23,7 @@
 <meta property="og:url" content="https://hk4fun.github.io/2018/08/15/设计模式之单例模式/index.html">
 <meta property="og:site_name" content="Hk4Fun&#39;s Blog">
 <meta property="og:description" content="由于 Python 拥有灵活的动态语言特性和丰富的魔法方法， 再加上它强大的元类编程，单例模式（Singleton）在 Python 上的实现方式五花八门 本文主要讨论单例模式在 Python 上的各种实现 涉及到 Python 中元类编程、魔法方法和装饰器的进阶语法知识，并在最后深入讨论和总结。">
-<meta property="og:updated_time" content="2018-11-07T11:17:50.950Z">
+<meta property="og:updated_time" content="2018-11-21T18:12:53.583Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="设计模式之单例模式">
 <meta name="twitter:description" content="由于 Python 拥有灵活的动态语言特性和丰富的魔法方法， 再加上它强大的元类编程，单例模式（Singleton）在 Python 上的实现方式五花八门 本文主要讨论单例模式在 Python 上的各种实现 涉及到 Python 中元类编程、魔法方法和装饰器的进阶语法知识，并在最后深入讨论和总结。">
@@ -738,8 +738,8 @@ init
     print(&#39;[1]Meta start&#39;)
 
     def __new__(cls, name, bases, dict, **kwargs): # 在加载时调用，且在类加载完后调用
-        # 这里的cls是Meat本身
-        print(&#39;[3]Meat new&#39;)
+        # 这里的cls是Meta本身
+        print(&#39;[3]Meta new&#39;)
         return super().__new__(cls, name, bases, dict, **kwargs)
 
     def __init__(cls, name, bases, dict): # 在加载时调用，且在上面的__new__()后调用
@@ -941,7 +941,7 @@ call A.__init__() # 能自动调用A.__init__()
         <p><span>本文标题:</span><a href="/2018/08/15/设计模式之单例模式/">设计模式之单例模式</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">Hk4Fun</a></p>
         <p><span>发布时间:</span>2018-08-15, 13:11:09</p>
-        <p><span>最后更新:</span>2018-11-07, 19:17:50</p>
+        <p><span>最后更新:</span>2018-11-22, 02:12:53</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2018/08/15/设计模式之单例模式/" title="设计模式之单例模式">https://hk4fun.github.io/2018/08/15/设计模式之单例模式/</a>
             <span class="copy-path" data-clipboard-text="原文: https://hk4fun.github.io/2018/08/15/设计模式之单例模式/　　作者: Hk4Fun" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
@@ -1054,7 +1054,7 @@ call A.__init__() # 能自动调用A.__init__()
         
     </div>
 
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/11/21/不要在列表（集合、字典）推导式或生成器表达式中使用-yield/">不要在列表（集合、字典）推导式或生成器表达式中使用 yield</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/09/使用vs2017搭建CPython3.6和CPython2.7源码调试环境/">使用vs2017搭建CPython3.6和CPython2.7源码调试环境</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/08/Python循环导入问题/">Python循环导入问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/07/Python字符串驻留机制/">Python字符串驻留机制</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/15/设计模式之单例模式/">设计模式之单例模式</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/15/魔法方法之-new-与-init/">魔法方法之 __new__() 与 __init__()</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/05/Python-中-type-与-object-的关系/">Python 中 type 与 object 的关系</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/31/为什么Python的corotine这么特殊/">为什么Python的coroutine这么特殊</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/19/剑指offer题解（Python实现）/">剑指offer题解（Python实现）</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/09/廖雪峰web实战总结/">廖雪峰web实战总结</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/11/23/Python中子类关系的传递性/">Python中子类关系的传递性</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/21/不要在列表（集合、字典）推导式或生成器表达式中使用-yield/">不要在列表（集合、字典）推导式或生成器表达式中使用 yield</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/09/使用vs2017搭建CPython3.6和CPython2.7源码调试环境/">使用vs2017搭建CPython3.6和CPython2.7源码调试环境</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/08/Python循环导入问题/">Python循环导入问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/07/Python字符串驻留机制/">Python字符串驻留机制</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/15/设计模式之单例模式/">设计模式之单例模式</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/15/魔法方法之-new-与-init/">魔法方法之 __new__() 与 __init__()</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/05/Python-中-type-与-object-的关系/">Python 中 type 与 object 的关系</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/31/为什么Python的corotine这么特殊/">为什么Python的coroutine这么特殊</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/19/剑指offer题解（Python实现）/">剑指offer题解（Python实现）</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/09/廖雪峰web实战总结/">廖雪峰web实战总结</a></li></ul>
 
 
 
