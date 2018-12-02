@@ -683,6 +683,9 @@ ImportError: cannot import name &#39;first_func&#39;
 <p>而 <code>sys.modules</code> 中还已经有 <code>first</code>了，因此试图从 <code>first</code> 模块导入 <code>first_func</code></p>
 <p>然而之前在导入 <code>first.py</code> 时还未解释到 <code>&quot;def first_func():&quot;</code> 这一行代码就转跳到 <code>second.py</code> 了</p>
 <p>所以 <code>first</code> 模块的命名空间中并没有 <code>first_func</code>，最终导入失败：<code>ImportError: cannot import name &#39;first_func&#39;</code></p>
+<blockquote>
+<p>Circular imports are fine where both modules use the “import <module>” form of import. They fail when the 2nd module wants to grab a name out of the first (“from module import name”) and the import is at the top level. That’s because names in the 1st are not yet available, because the first module is busy importing the 2nd.</module></p>
+</blockquote>
 <h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><p>那么这里要如何解决循环导入？仔细分析可以发现：对已经导入的模块，其命名空间中并没有我们想要的名称引用</p>
 <p>因此我们可以在转跳到下一个模块之前先定义好下一个模块需要的名称引用，这就需要我们  <strong>先定义再导入</strong></p>
 <p>对于 <code>case2</code>，我们可以把 <code>first.py</code> 中第一行的导入语句 <code>&quot;from second import second_func&quot;</code> 放到函数体 <code>first_func()</code> 后面：</p>

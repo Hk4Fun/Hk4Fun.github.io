@@ -25,7 +25,7 @@
 <meta property="og:description" content="随着 Python 项目的增大，各个模块间的依赖关系将会越来越复杂 如果不合理组织文件模块结构，规划好层级关系，很容易就出现 循环导入（A import B, B import A） 而不幸的是 Python 的包导入机制并没有帮我们检测循环导入（而 Golang 在编译阶段会报错） 一方面我们可以重构（动态一时爽，重构火葬场），借助优秀的设计模式来降低模块间的耦合（最根本） 而另一方面我们可以借">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/006giLD5ly1fx0qd95rcoj30i106lq2z.jpg">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/006giLD5ly1fx13z93ig2j30s003jmx3.jpg">
-<meta property="og:updated_time" content="2018-11-08T17:43:28.927Z">
+<meta property="og:updated_time" content="2018-12-02T06:59:27.109Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python循环导入问题">
 <meta name="twitter:description" content="随着 Python 项目的增大，各个模块间的依赖关系将会越来越复杂 如果不合理组织文件模块结构，规划好层级关系，很容易就出现 循环导入（A import B, B import A） 而不幸的是 Python 的包导入机制并没有帮我们检测循环导入（而 Golang 在编译阶段会报错） 一方面我们可以重构（动态一时爽，重构火葬场），借助优秀的设计模式来降低模块间的耦合（最根本） 而另一方面我们可以借">
@@ -397,6 +397,9 @@ ImportError: cannot import name &#39;first_func&#39;
 <p>而 <code>sys.modules</code> 中还已经有 <code>first</code>了，因此试图从 <code>first</code> 模块导入 <code>first_func</code></p>
 <p>然而之前在导入 <code>first.py</code> 时还未解释到 <code>&quot;def first_func():&quot;</code> 这一行代码就转跳到 <code>second.py</code> 了</p>
 <p>所以 <code>first</code> 模块的命名空间中并没有 <code>first_func</code>，最终导入失败：<code>ImportError: cannot import name &#39;first_func&#39;</code></p>
+<blockquote>
+<p>Circular imports are fine where both modules use the “import <module>” form of import. They fail when the 2nd module wants to grab a name out of the first (“from module import name”) and the import is at the top level. That’s because names in the 1st are not yet available, because the first module is busy importing the 2nd.</module></p>
+</blockquote>
 <h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><p>那么这里要如何解决循环导入？仔细分析可以发现：对已经导入的模块，其命名空间中并没有我们想要的名称引用</p>
 <p>因此我们可以在转跳到下一个模块之前先定义好下一个模块需要的名称引用，这就需要我们  <strong>先定义再导入</strong></p>
 <p>对于 <code>case2</code>，我们可以把 <code>first.py</code> 中第一行的导入语句 <code>&quot;from second import second_func&quot;</code> 放到函数体 <code>first_func()</code> 后面：</p>
@@ -670,7 +673,7 @@ def index():
         <p><span>本文标题:</span><a href="/2018/11/08/Python循环导入问题/">Python循环导入问题</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">Hk4Fun</a></p>
         <p><span>发布时间:</span>2018-11-08, 15:37:40</p>
-        <p><span>最后更新:</span>2018-11-09, 01:43:28</p>
+        <p><span>最后更新:</span>2018-12-02, 14:59:27</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2018/11/08/Python循环导入问题/" title="Python循环导入问题">https://hk4fun.github.io/2018/11/08/Python循环导入问题/</a>
             <span class="copy-path" data-clipboard-text="原文: https://hk4fun.github.io/2018/11/08/Python循环导入问题/　　作者: Hk4Fun" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
