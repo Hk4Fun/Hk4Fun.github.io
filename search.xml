@@ -3,6 +3,104 @@
   
     
     <entry>
+      <title><![CDATA[那些值得阅读的PEP]]></title>
+      <url>/2018/12/06/%E9%82%A3%E4%BA%9B%E5%80%BC%E5%BE%97%E9%98%85%E8%AF%BB%E7%9A%84PEP/</url>
+      <content type="html"><![CDATA[<p>虽然 PEP（Python Enhancement Proposals） 读起来晦涩难懂（英语是硬伤）</p>
+<p>但它是深入了解 Python 这门语言不可或缺的参考资料</p>
+<p>浏览整个 <a href="https://www.python.org/dev/peps" target="_blank" rel="external">PEP 索引</a>，你会看到 Python 从 2 到 3 的设计和演变过程，体会到 Python 社区的活跃对这门语言的影响</p>
+<p>在这中众多的 PEP 中，有哪些是值得阅读的？这个问题在知乎上已经有了很好的 <a href="https://www.zhihu.com/question/23484654" target="_blank" rel="external">回答</a></p>
+<p>还有一篇很不错的文章比较全面地介绍了PEP：<a href="https://mp.weixin.qq.com/s/oRoBxZ2-IyuPOf_MWyKZyw" target="_blank" rel="external">学习Python，怎能不懂点PEP呢？</a>  </p>
+<p>虽然网上有一些零散的 PEP 翻译版本，但我个人还是推荐看英文的，原汁原味</p>
+<p>况且我们还有 <a href="https://translate.google.com/?hl=zh-CN&amp;tab=wT" target="_blank" rel="external">谷歌翻译</a> 不是吗？再不行来一个插件 <a href="https://chrome.google.com/webstore/detail/%E6%B2%99%E6%8B%89%E6%9F%A5%E8%AF%8D-%E8%81%9A%E5%90%88%E8%AF%8D%E5%85%B8%E4%B8%93%E4%B8%9A%E5%88%92%E8%AF%8D%E7%BF%BB%E8%AF%91/cdonnmffkdaoajfknoeeecmchibpmkmg?hl=zh-CN" target="_blank" rel="external">沙拉查词</a>，提高你的阅读效率</p>
+<p>这里根据我 <strong>个人的观点</strong> ，挑选出一些不错的 PEP， 分为 <strong>必读</strong> 和 <strong>选读</strong> 两部分</p>
+<a id="more"></a>
+<h3 id="必读（50-个，大部分来自-Finished-PEPs-done-with-a-stable-interface-）"><a href="#必读（50-个，大部分来自-Finished-PEPs-done-with-a-stable-interface-）" class="headerlink" title="必读（50 个，大部分来自 Finished PEPs (done, with a stable interface) ）"></a>必读（50 个，大部分来自 <a href="https://www.python.org/dev/peps/#finished-peps-done-with-a-stable-interface" target="_blank" rel="external">Finished PEPs (done, with a stable interface)</a> ）</h3><p><a href="https://www.python.org/dev/peps" target="_blank" rel="external">PEP 0 – Index of Python Enhancement Proposals (PEPs)</a>  PEP官网地址，所有PEP的索引</p>
+<p><a href="https://www.python.org/dev/peps/pep-0008/" target="_blank" rel="external">PEP 8 – Style Guide for Python Code</a> Python 编码规范</p>
+<p><a href="https://www.python.org/dev/peps/pep-0202/" target="_blank" rel="external">PEP 202 – List Comprehensions</a>  列表解析式</p>
+<p><a href="https://www.python.org/dev/peps/pep-0205/" target="_blank" rel="external">PEP 205 – Weak References</a>   关于弱引用，引入 weakref 模块</p>
+<p><a href="https://www.python.org/dev/peps/pep-0234/" target="_blank" rel="external">PEP 234 – Iterators</a>  迭代器</p>
+<p><a href="https://www.python.org/dev/peps/pep-0255/" target="_blank" rel="external">PEP 255 – Simple Generators</a>  生成器</p>
+<p><a href="https://www.python.org/dev/peps/pep-0257/" target="_blank" rel="external">PEP 257 – Docstring Conventions</a> 文档注释规范</p>
+<p><a href="https://www.python.org/dev/peps/pep-0274/" target="_blank" rel="external">PEP 274 – Dict Comprehensions</a>   字典解析式</p>
+<p><a href="https://www.python.org/dev/peps/pep-0289/" target="_blank" rel="external">PEP 289 – Generator Expressions</a>   生成器表达式</p>
+<p><a href="https://www.python.org/dev/peps/pep-0279/" target="_blank" rel="external">PEP 279 – The enumerate() built-in function</a>    enumerate() 函数</p>
+<p><a href="https://www.python.org/dev/peps/pep-0282/" target="_blank" rel="external">PEP 282 – A Logging System</a>    logging 模块</p>
+<p><a href="https://www.python.org/dev/peps/pep-0285/" target="_blank" rel="external">PEP 285 – Adding a bool type</a>   布尔类型</p>
+<p><a href="https://www.python.org/dev/peps/pep-0309" target="_blank" rel="external">PEP 309 – Partial Function Application</a>    偏函数的实现和应用，functools.partial()</p>
+<p><a href="https://www.python.org/dev/peps/pep-0318/" target="_blank" rel="external">PEP 318 – Decorators for Functions and Methods</a>   装饰器</p>
+<p><a href="https://www.python.org/dev/peps/pep-0324/" target="_blank" rel="external">PEP 324 – subprocess - New process module</a>   子进程模块，subprocess</p>
+<p><a href="https://www.python.org/dev/peps/pep-0328/" target="_blank" rel="external">PEP 328 – Imports: Multi-Line and Absolute/Relative</a>   相对导入和绝对导入</p>
+<p><a href="https://www.python.org/dev/peps/pep-0342/" target="_blank" rel="external">PEP 342 – Coroutines via Enhanced Generators</a>    协程</p>
+<p><a href="https://www.python.org/dev/peps/pep-0343/" target="_blank" rel="external">PEP 343 – The “with” Statement</a>  with 语句</p>
+<p><a href="https://www.python.org/dev/peps/pep-0371/" target="_blank" rel="external">PEP 371 – Addition of the multiprocessing package to the standard library</a>  多进程模块，multiprocess</p>
+<p><a href="https://www.python.org/dev/peps/pep-0372/" target="_blank" rel="external">PEP 372 – Adding an ordered dictionary to collections</a>   有序字典，collections.OrderedDict</p>
+<p><a href="https://www.python.org/dev/peps/pep-0380/" target="_blank" rel="external">PEP 380 – Syntax for Delegating to a Subgenerator</a>   yield from 语法</p>
+<p><a href="https://www.python.org/dev/peps/pep-0405/" target="_blank" rel="external">PEP 405 – Python Virtual Environments</a>  虚拟环境</p>
+<p><a href="https://www.python.org/dev/peps/pep-0428/" target="_blank" rel="external">PEP 428 – The pathlib module – object-oriented filesystem paths</a>   面向对象的文件系统路径模块，pathlib</p>
+<p><a href="https://www.python.org/dev/peps/pep-0443/" target="_blank" rel="external">PEP 443 – Single-dispatch generic functions</a>     装饰器 functools.singledispatch</p>
+<p><a href="https://www.python.org/dev/peps/pep-0484/" target="_blank" rel="external">PEP 484 – Type Hints</a>   类型约束</p>
+<p><a href="https://www.python.org/dev/peps/pep-0498/" target="_blank" rel="external">PEP 498 – Literal String Interpolation</a>  字符串插值（ 格式化字符串字面量），f’string{name}’</p>
+<p><a href="https://www.python.org/dev/peps/pep-0492/" target="_blank" rel="external">PEP 492 – Coroutines with async and await syntax</a>   async/await 语法</p>
+<p><a href="https://www.python.org/dev/peps/pep-0525/" target="_blank" rel="external">PEP 525 – Asynchronous Generators</a>  异步生成器，引入  __aiter__ 和 __anext__</p>
+<p><a href="https://www.python.org/dev/peps/pep-3101/" target="_blank" rel="external">PEP 101 – Advanced String Formatting</a>    字符串格式化 format()</p>
+<p><a href="https://www.python.org/dev/peps/pep-3102/" target="_blank" rel="external">PEP 3102 – Keyword-Only Arguments</a>   关键字参数</p>
+<p><a href="https://www.python.org/dev/peps/pep-3104/" target="_blank" rel="external">PEP 3104 – Access to Names in Outer Scopes</a>   nonlocal 关键字的引入</p>
+<p><a href="https://www.python.org/dev/peps/pep-3105/" target="_blank" rel="external">PEP 3105 – Make print a function</a>  将 print 语句改为 print() 函数</p>
+<p><a href="https://www.python.org/dev/peps/pep-3106/" target="_blank" rel="external">PEP 3106 – Revamping dict.keys(), .values() and .items()</a>   关于字典的 keys()， values() 和 items()</p>
+<p><a href="https://www.python.org/dev/peps/pep-3107/" target="_blank" rel="external">PEP 3107 – Function Annotations</a>   函数注解</p>
+<p><a href="https://www.python.org/dev/peps/pep-3109/" target="_blank" rel="external">PEP 3109 – Raising Exceptions in Python 3000 </a>   Python3 中的异常 raise</p>
+<p><a href="https://www.python.org/dev/peps/pep-3110/" target="_blank" rel="external">PEP 3110 – Catching Exceptions in Python 3000 </a>  Python3 中的异常 except</p>
+<p><a href="https://www.python.org/dev/peps/pep-3114/" target="_blank" rel="external">PEP 3114 – Renaming iterator.next() to iterator.__next__()</a>  将迭代协议的 next() 方法改为 .__next__() </p>
+<p><a href="https://www.python.org/dev/peps/pep-3115/" target="_blank" rel="external">PEP 3115 – Metaclasses in Python 3000</a>   Python3 中的元类</p>
+<p><a href="https://www.python.org/dev/peps/pep-3116/" target="_blank" rel="external">PEP 3116 – New I/O</a>   Python中的IO</p>
+<p><a href="https://www.python.org/dev/peps/pep-3119/" target="_blank" rel="external">PEP 3119 – Introducing Abstract Base Classes</a>    引入抽象基类 ABC</p>
+<p><a href="https://www.python.org/dev/peps/pep-3120/" target="_blank" rel="external">PEP 3120 – Using UTF-8 as the default source encoding</a>   将 UTF-8 作为 Python 源码的默认编码格式</p>
+<p><a href="https://www.python.org/dev/peps/pep-3129/" target="_blank" rel="external">PEP 3129 – Class Decorators</a>  类装饰器</p>
+<p><a href="https://www.python.org/dev/peps/pep-3132/" target="_blank" rel="external">PEP 3132 – Extended Iterable Unpacking</a>  迭代解包的拓展  </p>
+<p><a href="https://www.python.org/dev/peps/pep-3134/" target="_blank" rel="external">PEP 3134 – Exception Chaining and Embedded Tracebacks</a>   Python3 中的异常链和内嵌回溯  </p>
+<p><a href="https://www.python.org/dev/peps/pep-3135/" target="_blank" rel="external">PEP 3135 – New Super</a>   Python3 中的 super() 函数  </p>
+<p><a href="https://www.python.org/dev/peps/pep-3137/" target="_blank" rel="external">PEP 3137 – Immutable Bytes and Mutable Buffe</a>   不可变的 Bytes 和可变的 Buffer </p>
+<p><a href="https://www.python.org/dev/peps/pep-3148/" target="_blank" rel="external">PEP 3148 – futures - execute computations asynchronously</a>    并发模块，concurrent.futures</p>
+<p><a href="https://www.python.org/dev/peps/pep-3155/" target="_blank" rel="external">PEP 3155 – Qualified name for classes and functions</a>    引入  __qualname__   属性  </p>
+<p><a href="https://www.python.org/dev/peps/pep-3156/" target="_blank" rel="external">PEP 3156 – Asynchronous IO Support Rebooted: the “asyncio” Module</a>  老爹的 asyncio  </p>
+<p><a href="https://www.python.org/dev/peps/pep-3333/#preface-for-readers-of-pep-333" target="_blank" rel="external">PEP 3333 – Python Web Server Gateway Interface v1.0.1</a> WSGI 协议</p>
+<h3 id="选读（23-个）"><a href="#选读（23-个）" class="headerlink" title="选读（23 个）"></a>选读（23 个）</h3><p><a href="https://www.python.org/dev/peps/pep-0001/" target="_blank" rel="external">PEP 1 – PEP Purpose and Guidelines</a>   关于PEP的指南</p>
+<p><a href="https://www.python.org/dev/peps/pep-0007/" target="_blank" rel="external">PEP 7 – Style Guide for C Code</a>  C扩展编码规范</p>
+<p><a href="https://www.python.org/dev/peps/pep-0020" target="_blank" rel="external">PEP 20 – The Zen of Python</a>  Python之禅</p>
+<p><a href="https://www.python.org/dev/peps/pep-0227/" target="_blank" rel="external">PEP 227 – Statically Nested Scopes</a>  静态作用域，LEGB中的E</p>
+<p><a href="https://www.python.org/dev/peps/pep-0237/" target="_blank" rel="external">PEP 237 – Unifying Long Integers and Integers</a>   将 py2.x 中的整型和长整型统一</p>
+<p><a href="https://www.python.org/dev/peps/pep-0238/" target="_blank" rel="external">PEP 238 – Changing the Division Operator</a>   修改了除号 ‘/‘ 的计算意义</p>
+<p><a href="https://www.python.org/dev/peps/pep-0263/" target="_blank" rel="external">PEP 263 – Defining Python Source Code Encodings</a>   定义 Python 源代码的编码格式</p>
+<p><a href="https://www.python.org/dev/peps/pep-0308/" target="_blank" rel="external">PEP 308 – Conditional Expressions</a>  条件表达式</p>
+<p><a href="https://www.python.org/dev/peps/pep-0352/" target="_blank" rel="external">PEP 352 – Required Superclass for Exceptions</a>  引入异常基类 BaseException</p>
+<p><a href="https://www.python.org/dev/peps/pep-0389/" target="_blank" rel="external">PEP 389 – argparse - New Command Line Parsing Module</a>  命令行参数解析模块</p>
+<p><a href="https://www.python.org/dev/peps/pep-0409/" target="_blank" rel="external">PEP 409 – Suppressing exception context</a>   引入 raise … from …</p>
+<p><a href="https://www.python.org/dev/peps/pep-0435/" target="_blank" rel="external">PEP 435 – Adding an Enum type to the Python standard library</a>   枚举类型</p>
+<p><a href="https://www.python.org/dev/peps/pep-0448/" target="_blank" rel="external">PEP 448 – Additional Unpacking Generalizations</a>   解包操作的扩展</p>
+<p><a href="https://www.python.org/dev/peps/pep-0454/" target="_blank" rel="external">PEP 454 – Add a new tracemalloc module to trace Python memory allocations</a>   tracemalloc  模块</p>
+<p><a href="https://www.python.org/dev/peps/pep-0471/" target="_blank" rel="external">PEP 471 – o.scandir() function – a better and faster directory iterator</a>     目录遍历</p>
+<p><a href="https://www.python.org/dev/peps/pep-0479/" target="_blank" rel="external">PEP 479 – Change StopIteration handling inside generators</a>   关于生成器的 StopIteration 异常</p>
+<p><a href="https://www.python.org/dev/peps/pep-0530/" target="_blank" rel="external">PEP 530 – Asynchronous Comprehensions</a>  异步解析式</p>
+<p><a href="https://www.python.org/dev/peps/pep-0557/" target="_blank" rel="external">PEP 557 – Data Classes</a>  Python3.7 才引入的数据类</p>
+<p><a href="https://www.python.org/dev/peps/pep-0566/" target="_blank" rel="external">PEP 566 – Metadata for Python Software Packages 2.1</a>  Python 第三方包的元数据</p>
+<p><a href="https://www.python.org/dev/peps/pep-0572/" target="_blank" rel="external">PEP 572 – Assignment Expressions</a>   表达式内赋值，最具争议的提案，老爹不容易啊</p>
+<p><a href="https://www.python.org/dev/peps/pep-3141/" target="_blank" rel="external">PEP 3141 – A Type Hierarchy for Numbers  </a>   数字类（Numeric Classes）的继承链</p>
+<p><a href="https://www.python.org/dev/peps/pep-3144/" target="_blank" rel="external">PEP 3144 – IP Address Manipulation Library for the Python Standard Library</a>  ipaddress 模块</p>
+<p><a href="https://www.python.org/dev/peps/pep-3154/" target="_blank" rel="external">PEP 3154 – Pickle protocol version 4</a>   pickle 协议</p>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> Python </tag>
+            
+            <tag> PEP </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[Python中子类关系的传递性]]></title>
       <url>/2018/11/23/Python%E4%B8%AD%E5%AD%90%E7%B1%BB%E5%85%B3%E7%B3%BB%E7%9A%84%E4%BC%A0%E9%80%92%E6%80%A7/</url>
       <content type="html"><![CDATA[<p>在 <a href="https://hk4fun.github.io/2018/08/05/Python-%E4%B8%AD-type-%E4%B8%8E-object-%E7%9A%84%E5%85%B3%E7%B3%BB/">Python 中 type 与 object 的关系</a> 这篇文章中，我提到了 <strong>Combine Solid Arrows Rule</strong>，即：</p>

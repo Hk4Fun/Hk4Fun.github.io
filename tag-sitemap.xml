@@ -101,7 +101,14 @@
 
     <url>
         <loc>https://hk4fun.github.io/tags/Python/</loc>
-        <lastmod>2018-12-02T06:59:27.109Z</lastmod>
+        <lastmod>2018-12-06T06:11:46.955Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://hk4fun.github.io/tags/PEP/</loc>
+        <lastmod>2018-12-06T06:11:46.955Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
