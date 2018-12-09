@@ -5,7 +5,7 @@
     
   <url>
     <loc>https://hk4fun.github.io/2018/12/06/%E9%82%A3%E4%BA%9B%E5%80%BC%E5%BE%97%E9%98%85%E8%AF%BB%E7%9A%84PEP/</loc>
-    <lastmod>2018-12-06T06:11:46.955Z</lastmod>
+    <lastmod>2018-12-09T18:22:24.780Z</lastmod>
     <data>
         <display>
         <title>那些值得阅读的PEP</title>
@@ -51,9 +51,9 @@
          
         <tag>元类编程</tag>
          
-        <tag>魔法方法</tag>
-         
         <tag>wtfpython</tag>
+         
+        <tag>魔法方法</tag>
          
          
            
