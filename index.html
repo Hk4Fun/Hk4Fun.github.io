@@ -274,6 +274,73 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="post-剑指offer题解（Python实现）" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2019/01/31/剑指offer题解（Python实现）/" class="article-date">
+      <time datetime="2019-01-31T10:11:06.000Z" itemprop="datePublished">2019-01-31</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/31/剑指offer题解（Python实现）/">剑指offer题解（Python实现）</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <p>每个题目标题链接到 <a href="https://github.com/Hk4Fun/algorithm_offer/tree/master/target_offer" target="_blank" rel="external">github</a>，可以查看其他的解题思路、测试用例以及拓展题目</p>
+<p>这里只贴上书中题目的最优解法和代码</p>
+<p>另外，这里参考的是剑指offer第一版的题目顺序</p>
+<p>补充部分添加的是剑指offer第二版多出来的几道题目</p>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/剑指offer/">剑指offer</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据结构/">数据结构</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法/">算法</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2019/01/31/剑指offer题解（Python实现）/#more">阅读全文 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-那些值得阅读的PEP" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -326,7 +393,7 @@
 
       
         <p class="article-more-link">
-          <a href="/2018/12/06/那些值得阅读的PEP/#more">more >></a>
+          <a href="/2018/12/06/那些值得阅读的PEP/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -394,7 +461,7 @@
 
       
         <p class="article-more-link">
-          <a href="/2018/11/23/Python中子类关系的传递性/#more">more >></a>
+          <a href="/2018/11/23/Python中子类关系的传递性/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -462,7 +529,7 @@
 
       
         <p class="article-more-link">
-          <a href="/2018/11/21/不要在列表（集合、字典）推导式或生成器表达式中使用-yield/#more">more >></a>
+          <a href="/2018/11/21/不要在列表（集合、字典）推导式或生成器表达式中使用-yield/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -534,75 +601,7 @@
 
       
         <p class="article-more-link">
-          <a href="/2018/11/09/使用vs2017搭建CPython3.6和CPython2.7源码调试环境/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-Python循环导入问题" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2018/11/08/Python循环导入问题/" class="article-date">
-      <time datetime="2018-11-08T07:37:40.000Z" itemprop="datePublished">2018-11-08</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/11/08/Python循环导入问题/">Python循环导入问题</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <p>随着 Python 项目的增大，各个模块间的依赖关系将会越来越复杂</p>
-<p>如果不合理组织文件模块结构，规划好层级关系，很容易就出现 <strong>循环导入</strong>（A import B, B import A）</p>
-<p>而不幸的是 Python 的包导入机制并没有帮我们检测循环导入（而 Golang 在编译阶段会报错）</p>
-<p>一方面我们可以重构（动态一时爽，重构火葬场），借助优秀的设计模式来降低模块间的耦合（最根本）</p>
-<p>而另一方面我们可以借助一些小技巧稍微改动代码结构来避免循环导入（治标不治本）</p>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2018/11/08/Python循环导入问题/#more">more >></a>
+          <a href="/2018/11/09/使用vs2017搭建CPython3.6和CPython2.7源码调试环境/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>

@@ -274,6 +274,74 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="post-Python循环导入问题" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/11/08/Python循环导入问题/" class="article-date">
+      <time datetime="2018-11-08T07:37:40.000Z" itemprop="datePublished">2018-11-08</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/11/08/Python循环导入问题/">Python循环导入问题</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <p>随着 Python 项目的增大，各个模块间的依赖关系将会越来越复杂</p>
+<p>如果不合理组织文件模块结构，规划好层级关系，很容易就出现 <strong>循环导入</strong>（A import B, B import A）</p>
+<p>而不幸的是 Python 的包导入机制并没有帮我们检测循环导入（而 Golang 在编译阶段会报错）</p>
+<p>一方面我们可以重构（动态一时爽，重构火葬场），借助优秀的设计模式来降低模块间的耦合（最根本）</p>
+<p>而另一方面我们可以借助一些小技巧稍微改动代码结构来避免循环导入（治标不治本）</p>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2018/11/08/Python循环导入问题/#more">阅读全文 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-Python字符串驻留机制" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -325,7 +393,7 @@
 
       
         <p class="article-more-link">
-          <a href="/2018/11/07/Python字符串驻留机制/#more">more >></a>
+          <a href="/2018/11/07/Python字符串驻留机制/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -392,7 +460,7 @@
 
       
         <p class="article-more-link">
-          <a href="/2018/08/15/设计模式之单例模式/#more">more >></a>
+          <a href="/2018/08/15/设计模式之单例模式/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -458,7 +526,7 @@
 
       
         <p class="article-more-link">
-          <a href="/2018/08/15/魔法方法之-new-与-init/#more">more >></a>
+          <a href="/2018/08/15/魔法方法之-new-与-init/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -526,74 +594,7 @@
 
       
         <p class="article-more-link">
-          <a href="/2018/08/05/Python-中-type-与-object-的关系/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-为什么Python的corotine这么特殊" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2018/07/31/为什么Python的corotine这么特殊/" class="article-date">
-      <time datetime="2018-07-30T16:39:05.000Z" itemprop="datePublished">2018-07-31</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/07/31/为什么Python的corotine这么特殊/">为什么Python的coroutine这么特殊</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <p>在北邮人论坛上看到一篇关于 Python 中 coroutine 的文章</p>
-<p>从一个简单的例子出发，对比了 Lua、Ruby、Python 在实现 coroutine 上的区别和联系：</p>
-<p><a href="https://bbs.byr.cn/#!article/Python/22439" target="_blank" rel="external">https://bbs.byr.cn/#!article/Python/22439</a></p>
-<p>这里记录下自己的一些见解</p>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/coroutine/">coroutine</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2018/07/31/为什么Python的corotine这么特殊/#more">more >></a>
+          <a href="/2018/08/05/Python-中-type-与-object-的关系/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>

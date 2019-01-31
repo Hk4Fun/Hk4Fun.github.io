@@ -1,11 +1,318 @@
-<?xml version="1.0" encoding="utf-8"?>
-<search> 
+<!DOCTYPE html>
+<html >
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="Hk4Fun" />
+<!--prettify代码高亮主题css引入-->
+<link href="/plugins/prettify/prettify.css" rel="stylesheet">
+
+
+<meta name="description" content="每个题目标题链接到 github，可以查看其他的解题思路、测试用例以及拓展题目 这里只贴上书中题目的最优解法和代码 另外，这里参考的是剑指offer第一版的题目顺序 补充部分添加的是剑指offer第二版多出来的几道题目">
+<meta name="keywords" content="剑指offer,算法,数据结构">
+<meta property="og:type" content="article">
+<meta property="og:title" content="剑指offer题解（Python实现）">
+<meta property="og:url" content="https://hk4fun.github.io/2019/01/31/剑指offer题解（Python实现）/index.html">
+<meta property="og:site_name" content="Hk4Fun&#39;s Blog">
+<meta property="og:description" content="每个题目标题链接到 github，可以查看其他的解题思路、测试用例以及拓展题目 这里只贴上书中题目的最优解法和代码 另外，这里参考的是剑指offer第一版的题目顺序 补充部分添加的是剑指offer第二版多出来的几道题目">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006giLD5ly1fwx65siwcwj30h103bjr8.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006giLD5ly1fwx66yx85wj302s03dmwx.jpg">
+<meta property="og:updated_time" content="2019-01-31T10:12:11.746Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="剑指offer题解（Python实现）">
+<meta name="twitter:description" content="每个题目标题链接到 github，可以查看其他的解题思路、测试用例以及拓展题目 这里只贴上书中题目的最优解法和代码 另外，这里参考的是剑指offer第一版的题目顺序 补充部分添加的是剑指offer第二版多出来的几道题目">
+<meta name="twitter:image" content="https://ws1.sinaimg.cn/large/006giLD5ly1fwx65siwcwj30h103bjr8.jpg">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="Hk4Fun&#39;s Blog" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/img/blog.jpg">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>剑指offer题解（Python实现） | Hk4Fun&#39;s Blog</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: true
+    }
+</script>
+
+
+    <script>
+        yiliaConfig.jquery_ui = [true, "//cdn.bootcss.com/jqueryui/1.10.4/jquery-ui.min.js", "//cdn.bootcss.com/jqueryui/1.10.4/css/jquery-ui.min.css"];
+    </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+    <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-59ce63134e828feb"></script>
+
+
+
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?7e01cbfd0c4fd52d389e022356692311";
+            var s = document.getElementsByTagName("script")[0]; 
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/blog.jpg" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">Hk4Fun</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">人是不能闲太久的</p>
+        <p class="header-subtitle">闲久了，努力一下就以为在拼命</p>
+        
+
+        
+            <form id="search-form">
+            <input type="text" id="local-search-input" name="q" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="true" />
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="local-search-result"></div>
+            <p class='no-result'>No results found <i class='fa fa-spinner fa-pulse'></i></p>
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">ABOUT ME</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa GitHub" href="https://github.com/Hk4Fun" title="GitHub"></a>
+                            
+                                <a class="fa 知乎" href="https://www.zhihu.com/people/Hk4Fun/activities" title="知乎"></a>
+                            
+                                <a class="fa 微信" href="http://ox186n2j0.bkt.clouddn.com/wexinhaoyou.jpg" title="微信"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CPython/">CPython</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django/">Django</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ORM/">ORM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PEP/">PEP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web/">Web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/coroutine/">coroutine</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/wtfpython/">wtfpython</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/元类编程/">元类编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/剑指offer/">剑指offer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构/">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/源码剖析/">源码剖析</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/环境搭建/">环境搭建</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/魔法方法/">魔法方法</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://moxfive.xyz/">MOxFIVE</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">Hk4Fun</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/blog.jpg" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">Hk4Fun</a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">ABOUT ME</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa GitHub" target="_blank" href="https://github.com/Hk4Fun" title="GitHub"></a>
+                            
+                                <a class="fa 知乎" target="_blank" href="https://www.zhihu.com/people/Hk4Fun/activities" title="知乎"></a>
+                            
+                                <a class="fa 微信" target="_blank" href="http://ox186n2j0.bkt.clouddn.com/wexinhaoyou.jpg" title="微信"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-剑指offer题解（Python实现）" class="article article-type-post" itemscope itemprop="blogPost">
   
+    <div class="article-meta">
+      <a href="/2019/01/31/剑指offer题解（Python实现）/" class="article-date">
+      <time datetime="2019-01-31T10:11:06.000Z" itemprop="datePublished">2019-01-31</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
     
-    <entry>
-      <title><![CDATA[剑指offer题解（Python实现）]]></title>
-      <url>/2019/01/31/%E5%89%91%E6%8C%87offer%E9%A2%98%E8%A7%A3%EF%BC%88Python%E5%AE%9E%E7%8E%B0%EF%BC%89/</url>
-      <content type="html"><![CDATA[<p>每个题目标题链接到 <a href="https://github.com/Hk4Fun/algorithm_offer/tree/master/target_offer" target="_blank" rel="external">github</a>，可以查看其他的解题思路、测试用例以及拓展题目</p>
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      剑指offer题解（Python实现）
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/剑指offer/">剑指offer</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据结构/">数据结构</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法/">算法</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>每个题目标题链接到 <a href="https://github.com/Hk4Fun/algorithm_offer/tree/master/target_offer" target="_blank" rel="external">github</a>，可以查看其他的解题思路、测试用例以及拓展题目</p>
 <p>这里只贴上书中题目的最优解法和代码</p>
 <p>另外，这里参考的是剑指offer第一版的题目顺序</p>
 <p>补充部分添加的是剑指offer第二版多出来的几道题目</p>
@@ -1625,2849 +1932,241 @@ class Solution:
             maxProfit = max(maxProfit, profit)  # 记录下最大利润，以便后面作参考比较
         return maxProfit
 </code></pre>
-]]></content>
+
       
-        
-        <tags>
-            
-            <tag> 剑指offer </tag>
-            
-            <tag> 算法 </tag>
-            
-            <tag> 数据结构 </tag>
-            
-        </tags>
-        
-    </entry>
+    </div>
     
-    <entry>
-      <title><![CDATA[那些值得阅读的PEP]]></title>
-      <url>/2018/12/06/%E9%82%A3%E4%BA%9B%E5%80%BC%E5%BE%97%E9%98%85%E8%AF%BB%E7%9A%84PEP/</url>
-      <content type="html"><![CDATA[<p>虽然 PEP（Python Enhancement Proposals） 读起来晦涩难懂（英语是硬伤）</p>
-<p>但它是深入了解 Python 这门语言不可或缺的参考资料</p>
-<p>浏览整个 <a href="https://www.python.org/dev/peps" target="_blank" rel="external">PEP 索引</a>，你会看到 Python 从 2 到 3 的设计和演变过程，体会到 Python 社区的活跃对这门语言的影响</p>
-<p>在这中众多的 PEP 中，有哪些是值得阅读的？这个问题在知乎上已经有了很好的 <a href="https://www.zhihu.com/question/23484654" target="_blank" rel="external">回答</a></p>
-<p>还有一篇很不错的文章比较全面地介绍了PEP：<a href="https://mp.weixin.qq.com/s/oRoBxZ2-IyuPOf_MWyKZyw" target="_blank" rel="external">学习Python，怎能不懂点PEP呢？</a>  </p>
-<p>虽然网上有一些零散的 PEP 翻译版本，但我个人还是推荐看英文的，原汁原味</p>
-<p>况且我们还有 <a href="https://translate.google.com/?hl=zh-CN&amp;tab=wT" target="_blank" rel="external">谷歌翻译</a> 不是吗？再不行来一个插件 <a href="https://chrome.google.com/webstore/detail/%E6%B2%99%E6%8B%89%E6%9F%A5%E8%AF%8D-%E8%81%9A%E5%90%88%E8%AF%8D%E5%85%B8%E4%B8%93%E4%B8%9A%E5%88%92%E8%AF%8D%E7%BF%BB%E8%AF%91/cdonnmffkdaoajfknoeeecmchibpmkmg?hl=zh-CN" target="_blank" rel="external">沙拉查词</a>，提高你的阅读效率</p>
-<p>这里根据我 <strong>个人的观点</strong> ，挑选出一些不错的 PEP， 分为 <strong>必读</strong> 和 <strong>选读</strong> 两部分</p>
-<a id="more"></a>
-<h3 id="必读（50-个，大部分来自-Finished-PEPs-done-with-a-stable-interface-）"><a href="#必读（50-个，大部分来自-Finished-PEPs-done-with-a-stable-interface-）" class="headerlink" title="必读（50 个，大部分来自 Finished PEPs (done, with a stable interface) ）"></a>必读（50 个，大部分来自 <a href="https://www.python.org/dev/peps/#finished-peps-done-with-a-stable-interface" target="_blank" rel="external">Finished PEPs (done, with a stable interface)</a> ）</h3><p><a href="https://www.python.org/dev/peps" target="_blank" rel="external">PEP 0 – Index of Python Enhancement Proposals (PEPs)</a>  PEP官网地址，所有PEP的索引</p>
-<p><a href="https://www.python.org/dev/peps/pep-0008/" target="_blank" rel="external">PEP 8 – Style Guide for Python Code</a> Python 编码规范</p>
-<p><a href="https://www.python.org/dev/peps/pep-0202/" target="_blank" rel="external">PEP 202 – List Comprehensions</a>  列表解析式</p>
-<p><a href="https://www.python.org/dev/peps/pep-0205/" target="_blank" rel="external">PEP 205 – Weak References</a>   关于弱引用，引入 weakref 模块</p>
-<p><a href="https://www.python.org/dev/peps/pep-0234/" target="_blank" rel="external">PEP 234 – Iterators</a>  迭代器</p>
-<p><a href="https://www.python.org/dev/peps/pep-0255/" target="_blank" rel="external">PEP 255 – Simple Generators</a>  生成器</p>
-<p><a href="https://www.python.org/dev/peps/pep-0257/" target="_blank" rel="external">PEP 257 – Docstring Conventions</a> 文档注释规范</p>
-<p><a href="https://www.python.org/dev/peps/pep-0274/" target="_blank" rel="external">PEP 274 – Dict Comprehensions</a>   字典解析式</p>
-<p><a href="https://www.python.org/dev/peps/pep-0289/" target="_blank" rel="external">PEP 289 – Generator Expressions</a>   生成器表达式</p>
-<p><a href="https://www.python.org/dev/peps/pep-0279/" target="_blank" rel="external">PEP 279 – The enumerate() built-in function</a>    enumerate() 函数</p>
-<p><a href="https://www.python.org/dev/peps/pep-0282/" target="_blank" rel="external">PEP 282 – A Logging System</a>    logging 模块</p>
-<p><a href="https://www.python.org/dev/peps/pep-0285/" target="_blank" rel="external">PEP 285 – Adding a bool type</a>   布尔类型</p>
-<p><a href="https://www.python.org/dev/peps/pep-0309" target="_blank" rel="external">PEP 309 – Partial Function Application</a>    偏函数的实现和应用，functools.partial()</p>
-<p><a href="https://www.python.org/dev/peps/pep-0318/" target="_blank" rel="external">PEP 318 – Decorators for Functions and Methods</a>   装饰器</p>
-<p><a href="https://www.python.org/dev/peps/pep-0324/" target="_blank" rel="external">PEP 324 – subprocess - New process module</a>   子进程模块，subprocess</p>
-<p><a href="https://www.python.org/dev/peps/pep-0328/" target="_blank" rel="external">PEP 328 – Imports: Multi-Line and Absolute/Relative</a>   相对导入和绝对导入</p>
-<p><a href="https://www.python.org/dev/peps/pep-0342/" target="_blank" rel="external">PEP 342 – Coroutines via Enhanced Generators</a>    协程</p>
-<p><a href="https://www.python.org/dev/peps/pep-0343/" target="_blank" rel="external">PEP 343 – The “with” Statement</a>  with 语句</p>
-<p><a href="https://www.python.org/dev/peps/pep-0371/" target="_blank" rel="external">PEP 371 – Addition of the multiprocessing package to the standard library</a>  多进程模块，multiprocess</p>
-<p><a href="https://www.python.org/dev/peps/pep-0372/" target="_blank" rel="external">PEP 372 – Adding an ordered dictionary to collections</a>   有序字典，collections.OrderedDict</p>
-<p><a href="https://www.python.org/dev/peps/pep-0380/" target="_blank" rel="external">PEP 380 – Syntax for Delegating to a Subgenerator</a>   yield from 语法</p>
-<p><a href="https://www.python.org/dev/peps/pep-0405/" target="_blank" rel="external">PEP 405 – Python Virtual Environments</a>  虚拟环境</p>
-<p><a href="https://www.python.org/dev/peps/pep-0428/" target="_blank" rel="external">PEP 428 – The pathlib module – object-oriented filesystem paths</a>   面向对象的文件系统路径模块，pathlib</p>
-<p><a href="https://www.python.org/dev/peps/pep-0435/" target="_blank" rel="external">PEP 435 – Adding an Enum type to the Python standard library</a>   枚举类型</p>
-<p><a href="https://www.python.org/dev/peps/pep-0443/" target="_blank" rel="external">PEP 443 – Single-dispatch generic functions</a>     装饰器 functools.singledispatch</p>
-<p><a href="https://www.python.org/dev/peps/pep-0484/" target="_blank" rel="external">PEP 484 – Type Hints</a>   类型约束</p>
-<p><a href="https://www.python.org/dev/peps/pep-0498/" target="_blank" rel="external">PEP 498 – Literal String Interpolation</a>  字符串插值（ 格式化字符串字面量），f’string{name}’</p>
-<p><a href="https://www.python.org/dev/peps/pep-0492/" target="_blank" rel="external">PEP 492 – Coroutines with async and await syntax</a>   async/await 语法</p>
-<p><a href="https://www.python.org/dev/peps/pep-3101/" target="_blank" rel="external">PEP 101 – Advanced String Formatting</a>    字符串格式化 format()</p>
-<p><a href="https://www.python.org/dev/peps/pep-3102/" target="_blank" rel="external">PEP 3102 – Keyword-Only Arguments</a>   关键字参数</p>
-<p><a href="https://www.python.org/dev/peps/pep-3104/" target="_blank" rel="external">PEP 3104 – Access to Names in Outer Scopes</a>   nonlocal 关键字的引入</p>
-<p><a href="https://www.python.org/dev/peps/pep-3105/" target="_blank" rel="external">PEP 3105 – Make print a function</a>  将 print 语句改为 print() 函数</p>
-<p><a href="https://www.python.org/dev/peps/pep-3106/" target="_blank" rel="external">PEP 3106 – Revamping dict.keys(), .values() and .items()</a>   关于字典的 keys()， values() 和 items()</p>
-<p><a href="https://www.python.org/dev/peps/pep-3107/" target="_blank" rel="external">PEP 3107 – Function Annotations</a>   函数注解</p>
-<p><a href="https://www.python.org/dev/peps/pep-3109/" target="_blank" rel="external">PEP 3109 – Raising Exceptions in Python 3000 </a>   Python3 中的异常 raise</p>
-<p><a href="https://www.python.org/dev/peps/pep-3110/" target="_blank" rel="external">PEP 3110 – Catching Exceptions in Python 3000 </a>  Python3 中的异常 except</p>
-<p><a href="https://www.python.org/dev/peps/pep-3114/" target="_blank" rel="external">PEP 3114 – Renaming iterator.next() to iterator.__next__()</a>  将迭代协议的 next() 方法改为 .__next__() </p>
-<p><a href="https://www.python.org/dev/peps/pep-3115/" target="_blank" rel="external">PEP 3115 – Metaclasses in Python 3000</a>   Python3 中的元类</p>
-<p><a href="https://www.python.org/dev/peps/pep-3116/" target="_blank" rel="external">PEP 3116 – New I/O</a>   Python中的IO</p>
-<p><a href="https://www.python.org/dev/peps/pep-3119/" target="_blank" rel="external">PEP 3119 – Introducing Abstract Base Classes</a>    引入抽象基类 ABC</p>
-<p><a href="https://www.python.org/dev/peps/pep-3120/" target="_blank" rel="external">PEP 3120 – Using UTF-8 as the default source encoding</a>   将 UTF-8 作为 Python 源码的默认编码格式</p>
-<p><a href="https://www.python.org/dev/peps/pep-3129/" target="_blank" rel="external">PEP 3129 – Class Decorators</a>  类装饰器</p>
-<p><a href="https://www.python.org/dev/peps/pep-3132/" target="_blank" rel="external">PEP 3132 – Extended Iterable Unpacking</a>  迭代解包的拓展  </p>
-<p><a href="https://www.python.org/dev/peps/pep-3134/" target="_blank" rel="external">PEP 3134 – Exception Chaining and Embedded Tracebacks</a>   Python3 中的异常链和内嵌回溯  </p>
-<p><a href="https://www.python.org/dev/peps/pep-3135/" target="_blank" rel="external">PEP 3135 – New Super</a>   Python3 中的 super() 函数  </p>
-<p><a href="https://www.python.org/dev/peps/pep-3137/" target="_blank" rel="external">PEP 3137 – Immutable Bytes and Mutable Buffe</a>   不可变的 Bytes 和可变的 Buffer </p>
-<p><a href="https://www.python.org/dev/peps/pep-3148/" target="_blank" rel="external">PEP 3148 – futures - execute computations asynchronously</a>    并发模块，concurrent.futures</p>
-<p><a href="https://www.python.org/dev/peps/pep-3155/" target="_blank" rel="external">PEP 3155 – Qualified name for classes and functions</a>    引入  __qualname__   属性  </p>
-<p><a href="https://www.python.org/dev/peps/pep-3156/" target="_blank" rel="external">PEP 3156 – Asynchronous IO Support Rebooted: the “asyncio” Module</a>  老爹的 asyncio  </p>
-<p><a href="https://www.python.org/dev/peps/pep-3333/#preface-for-readers-of-pep-333" target="_blank" rel="external">PEP 3333 – Python Web Server Gateway Interface v1.0.1</a> WSGI 协议</p>
-<h3 id="选读（23-个）"><a href="#选读（23-个）" class="headerlink" title="选读（23 个）"></a>选读（23 个）</h3><p><a href="https://www.python.org/dev/peps/pep-0001/" target="_blank" rel="external">PEP 1 – PEP Purpose and Guidelines</a>   关于PEP的指南</p>
-<p><a href="https://www.python.org/dev/peps/pep-0007/" target="_blank" rel="external">PEP 7 – Style Guide for C Code</a>  C扩展编码规范</p>
-<p><a href="https://www.python.org/dev/peps/pep-0020" target="_blank" rel="external">PEP 20 – The Zen of Python</a>  Python之禅</p>
-<p><a href="https://www.python.org/dev/peps/pep-0227/" target="_blank" rel="external">PEP 227 – Statically Nested Scopes</a>  静态作用域，LEGB中的E</p>
-<p><a href="https://www.python.org/dev/peps/pep-0237/" target="_blank" rel="external">PEP 237 – Unifying Long Integers and Integers</a>   将 py2.x 中的整型和长整型统一</p>
-<p><a href="https://www.python.org/dev/peps/pep-0238/" target="_blank" rel="external">PEP 238 – Changing the Division Operator</a>   修改了除号 ‘/‘ 的计算意义</p>
-<p><a href="https://www.python.org/dev/peps/pep-0263/" target="_blank" rel="external">PEP 263 – Defining Python Source Code Encodings</a>   定义 Python 源代码的编码格式</p>
-<p><a href="https://www.python.org/dev/peps/pep-0308/" target="_blank" rel="external">PEP 308 – Conditional Expressions</a>  条件表达式</p>
-<p><a href="https://www.python.org/dev/peps/pep-0352/" target="_blank" rel="external">PEP 352 – Required Superclass for Exceptions</a>  引入异常基类 BaseException</p>
-<p><a href="https://www.python.org/dev/peps/pep-0389/" target="_blank" rel="external">PEP 389 – argparse - New Command Line Parsing Module</a>  命令行参数解析模块</p>
-<p><a href="https://www.python.org/dev/peps/pep-0409/" target="_blank" rel="external">PEP 409 – Suppressing exception context</a>   引入 raise … from …</p>
-<p><a href="https://www.python.org/dev/peps/pep-0448/" target="_blank" rel="external">PEP 448 – Additional Unpacking Generalizations</a>   解包操作的扩展</p>
-<p><a href="https://www.python.org/dev/peps/pep-0454/" target="_blank" rel="external">PEP 454 – Add a new tracemalloc module to trace Python memory allocations</a>   tracemalloc  模块</p>
-<p><a href="https://www.python.org/dev/peps/pep-0471/" target="_blank" rel="external">PEP 471 – o.scandir() function – a better and faster directory iterator</a>     目录遍历</p>
-<p><a href="https://www.python.org/dev/peps/pep-0479/" target="_blank" rel="external">PEP 479 – Change StopIteration handling inside generators</a>   关于生成器的 StopIteration 异常</p>
-<p><a href="https://www.python.org/dev/peps/pep-0525/" target="_blank" rel="external">PEP 525 – Asynchronous Generators</a>  异步生成器，引入  __aiter__ 和 __anext__</p>
-<p><a href="https://www.python.org/dev/peps/pep-0530/" target="_blank" rel="external">PEP 530 – Asynchronous Comprehensions</a>  异步解析式</p>
-<p><a href="https://www.python.org/dev/peps/pep-0557/" target="_blank" rel="external">PEP 557 – Data Classes</a>  Python3.7 才引入的数据类</p>
-<p><a href="https://www.python.org/dev/peps/pep-0566/" target="_blank" rel="external">PEP 566 – Metadata for Python Software Packages 2.1</a>  Python 第三方包的元数据</p>
-<p><a href="https://www.python.org/dev/peps/pep-0572/" target="_blank" rel="external">PEP 572 – Assignment Expressions</a>   表达式内赋值，最具争议的提案，老爹不容易啊</p>
-<p><a href="https://www.python.org/dev/peps/pep-3141/" target="_blank" rel="external">PEP 3141 – A Type Hierarchy for Numbers  </a>   数字类（Numeric Classes）的继承链</p>
-<p><a href="https://www.python.org/dev/peps/pep-3144/" target="_blank" rel="external">PEP 3144 – IP Address Manipulation Library for the Python Standard Library</a>  ipaddress 模块</p>
-<p><a href="https://www.python.org/dev/peps/pep-3154/" target="_blank" rel="external">PEP 3154 – Pickle protocol version 4</a>   pickle 协议</p>
-]]></content>
-      
-        
-        <tags>
-            
-            <tag> Python </tag>
-            
-            <tag> PEP </tag>
-            
-        </tags>
-        
-    </entry>
+  </div>
+  
     
-    <entry>
-      <title><![CDATA[Python中子类关系的传递性]]></title>
-      <url>/2018/11/23/Python%E4%B8%AD%E5%AD%90%E7%B1%BB%E5%85%B3%E7%B3%BB%E7%9A%84%E4%BC%A0%E9%80%92%E6%80%A7/</url>
-      <content type="html"><![CDATA[<p>在 <a href="https://hk4fun.github.io/2018/08/05/Python-%E4%B8%AD-type-%E4%B8%8E-object-%E7%9A%84%E5%85%B3%E7%B3%BB/">Python 中 type 与 object 的关系</a> 这篇文章中，我提到了 <strong>Combine Solid Arrows Rule</strong>，即：</p>
-<blockquote>
-<p>如果 A 是 B 的子类，且 B 是 C 的子类，那么 A 也是 C 的子类</p>
-</blockquote>
-<p>也就是说子类关系（继承关系）具有传递性：</p>
-<a id="more"></a>
-<pre><code class="python">class C:
-    pass
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2019/01/31/剑指offer题解（Python实现）/">剑指offer题解（Python实现）</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">Hk4Fun</a></p>
+        <p><span>发布时间:</span>2019-01-31, 18:11:06</p>
+        <p><span>最后更新:</span>2019-01-31, 18:12:11</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2019/01/31/剑指offer题解（Python实现）/" title="剑指offer题解（Python实现）">https://hk4fun.github.io/2019/01/31/剑指offer题解（Python实现）/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://hk4fun.github.io/2019/01/31/剑指offer题解（Python实现）/　　作者: Hk4Fun" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
 
-class B(C):
-    pass
 
-class A(B):
-    pass
 
-issubclass(A, B)
-&gt;&gt;&gt; True
-
-issubclass(B, C)
-&gt;&gt;&gt; True
-
-issubclass(A, C)
-&gt;&gt;&gt; True
-
-A.__mro__
-&gt;&gt;&gt; (__main__.A, __main__.B, __main__.C, object)
-</code></pre>
-<p>但我们来看看下面的代码：</p>
-<pre><code class="python">from collections import Hashable
-issubclass(list, object)
-&gt;&gt;&gt; True
-
-issubclass(object, Hashable)
-&gt;&gt;&gt; True
-
-issubclass(list, Hashable)
-&gt;&gt;&gt; False
-</code></pre>
-<p>很明显，list 是不可哈希的</p>
-<p>上面的代码貌似说明了子类关系并不一定具有传递性</p>
-<p>但仔细观察会发现一个很不对劲的地方：<code>issubclass(object, Hashable)</code> 的结果为 True</p>
-<p>难道 object 是 Hashable 的子类？当然不是了</p>
-<p>我们知道在 Python 中 object 已经是”最原始”的父类了，它不继承任何类，它是所有类的父类：</p>
-<pre><code class="python">print(object.__base__)
-&gt;&gt;&gt; None
-
-object.__mro__
-&gt;&gt;&gt; (object,)
-</code></pre>
-<p>难道子类关系不一定具有传递性吗？我们来看看 Hashable 这个类的源码：</p>
-<pre><code class="python">class Hashable(metaclass=ABCMeta): 
-
-    __slots__ = ()
-
-    @abstractmethod
-    def __hash__(self):
-        return 0
-
-    @classmethod
-    def __subclasshook__(cls, C):
-        if cls is Hashable:
-            return _check_methods(C, &quot;__hash__&quot;)
-        return NotImplemented
-</code></pre>
-<p>注意到它的元类并不是 type，而是 ABCMeta，且定义了一个魔法方法 <code>__subclasshook__</code></p>
-<p><code>__subclasshook__</code> 实际上被元类 ABCMeta 的 <code>__subclasscheck__</code> 调用：</p>
-<pre><code class="python">class ABCMeta(type):
-    def __subclasscheck__(cls, subclass):
-        &quot;&quot;&quot;Override for issubclass(subclass, cls).&quot;&quot;&quot;
-        # Check cache
-        # 省略部分代码
-        # Check the subclass hook
-        ok = cls.__subclasshook__(subclass) # 调用 __subclasshook__
-        # 省略部分代码
-</code></pre>
-<p>这个方法有点长，这里省去了部分代码</p>
-<p>它的注释（Override for issubclass(subclass, cls)）告诉我们</p>
-<p><code>__subclasscheck__</code> 其实就是 <code>issubclass()</code> 的魔法方法</p>
-<p>当我们调用 <code>issubclass(subclass, cls)</code> 时，如果 cls 定义了 <code>__subclasscheck__</code> （一般是其元类定义的）</p>
-<p>那么 Python 就会调用 <code>__subclasscheck__</code></p>
-<p>而 <code>__subclasscheck__</code> 会去调用 cls 的 <code>__subclasshook__</code>（一般由cls自己定义）</p>
-<p>并把参数 subclass 传给 cls 的 <code>__subclasshook__</code></p>
-<p>这样就可以由 cls 自己来决定 subclass 是否为其子类</p>
-<p>而这里的 Hashable 在它的 <code>__subclasshook__</code> 中只是检查 subclass 是否定义了 <code>__hash__</code> </p>
-<pre><code class="python">def _check_methods(C, *methods): 
-    # 这里 methods 为 (__hash__,)，C 为 __subclasscheck__ 传进来的 subclass
-    mro = C.__mro__
-    for method in methods:
-        for B in mro: # 检查 C 及其所有父类是否含有该方法
-            if method in B.__dict__: 
-                if B.__dict__[method] is None: # 子类可以通过 __hash__ = None 成为不可哈希的
-                    return NotImplemented
-                break
-        else:
-            return NotImplemented
-    return True
-</code></pre>
-<p>Hashable 认为只要 subclass 定义了 <code>__hash__</code> 且不为 None，那么它就认为 subclass 是其子类</p>
-<p>我个人认为这种检测方式是不合理的，其主要还是因为 Python 中并没有 <strong>接口</strong> 这种对象</p>
-<p>有关 <code>__subclasscheck__</code> 及 Python 中抽象基类的的引入可见 <a href="https://legacy.python.org/dev/peps/pep-3119/" target="_blank" rel="external">PEP319</a></p>
-<pre><code class="python">class C:
-    @classmethod
-    def __subclasshook__(cls, C):
-        return True
-
-issubclass(object, C)
-&gt;&gt;&gt; False
-</code></pre>
-<p>C 并没声明元类，默认就是 type，而 type 并没有定义 <code>__subclasscheck__</code></p>
-<p>因此 <code>__subclasshook__</code> 永远不会被调用</p>
-<pre><code class="python">class MyMetaClass(type): # 自定义元类
-    def __subclasscheck__(cls, subclass): # 直接就返回 True，并没有去调用 __subclasshook__
-        return True
-
-class C(metaclass=MyMetaClass): # 声明元类为自定义的元类 MyMetaClass
-    @classmethod
-    def __subclasshook__(cls, C): # 它只能在其元类的 __subclasscheck__ 中被调用
-        return False
-
-issubclass(object, C)
-&gt;&gt;&gt; True
-</code></pre>
-<p>可以看到真正起决定性的函数是 <code>__subclasscheck__</code>，而不是 <code>__subclasshook__</code></p>
-<p>所以按照协议，我们应该在 <code>__subclasscheck__</code> 中调用 cls 的 <code>__subclasshook__</code>，这样就会把决定权交给 cls</p>
-<p>这就是为什么一般我们会去使用 Python 给我们写好的 ABCMeta 而不是自定义元类:</p>
-<pre><code class="python">from abc import ABCMeta
-class C(metaclass=ABCMeta): # 声明元类为 ABCMeta
-    @classmethod
-    def __subclasshook__(cls, C):
-        return True
-
-issubclass(object, C)
-&gt;&gt;&gt; True
-
-class C(metaclass=ABCMeta): # 声明元类为 ABCMeta
-    @classmethod
-    def __subclasshook__(cls, subclass): # 这里的 cls 就是 C 自己，而 subclass 是待检测的类
-        if cls in subclass.__mro__:
-            return True
-        else:
-            return False
-
-issubclass(object, C) # 会去调用 C 的 __subclasshook__，object 作为参数 subclass
-&gt;&gt;&gt; False
-
-class B(C):
-    pass
-
-issubclass(B, C)
-&gt;&gt;&gt; True
-</code></pre>
-<p>因此，我们可以看到，原本 Python 中的子类关系就是传递的</p>
-<p>但自从引入 <code>__subclasscheck__</code> 之后，这种子类关系的决定权就对用户开放了</p>
-<p>这使得传递性可以被用户的代码所打破，这种自由在某种程度上来讲是一种缺陷和妥协</p>
-<p>参考资料：</p>
-<ol>
-<li><p><a href="https://www.naftaliharris.com/blog/python-subclass-intransitivity/" target="_blank" rel="external">Python Subclass Relationships Aren’t Transitive</a></p>
-</li>
-<li><p><a href="https://legacy.python.org/dev/peps/pep-3119/" target="_blank" rel="external">PEP319</a></p>
-</li>
-</ol>
-]]></content>
-      
+    <nav id="article-nav">
         
-        <tags>
-            
-            <tag> Python </tag>
-            
-            <tag> 元类编程 </tag>
-            
-            <tag> 魔法方法 </tag>
-            
-            <tag> wtfpython </tag>
-            
-        </tags>
         
-    </entry>
-    
-    <entry>
-      <title><![CDATA[不要在列表（集合、字典）推导式或生成器表达式中使用 yield]]></title>
-      <url>/2018/11/21/%E4%B8%8D%E8%A6%81%E5%9C%A8%E5%88%97%E8%A1%A8%EF%BC%88%E9%9B%86%E5%90%88%E3%80%81%E5%AD%97%E5%85%B8%EF%BC%89%E6%8E%A8%E5%AF%BC%E5%BC%8F%E6%88%96%E7%94%9F%E6%88%90%E5%99%A8%E8%A1%A8%E8%BE%BE%E5%BC%8F%E4%B8%AD%E4%BD%BF%E7%94%A8-yield/</url>
-      <content type="html"><![CDATA[<h3 id="发现问题"><a href="#发现问题" class="headerlink" title="发现问题"></a>发现问题</h3><p>首先来看看在列表推导式中使用 yield 会发生什么：</p>
-<pre><code class="python">[(yield x) for x in [1,2,3]] # 在列表推导式中使用 yield
-&gt;&gt;&gt; &lt;generator object &lt;listcomp&gt; at 0x00C21510&gt;
-</code></pre>
-<p>相当奇怪，返回一个 <strong><code>&lt;listcomp&gt;</code></strong> 类型的生成器而不是一个包含生成器的列表</p>
-<a id="more"></a>
-<p>既然是生成器，那我们就用 <code>list()</code> 展开看一下：</p>
-<pre><code class="python">list([(yield x) for x in [1,2,3]])
-&gt;&gt;&gt; [1, 2, 3]
-</code></pre>
-<p>虽然打印出了预期的结果，但还是感觉很奇怪：</p>
-<p>列表推导式本身并不需要用 <code>list()</code> 展开的，这里却需要加上才行</p>
-<p>那我们来看看如果是生成器表达式会如何：</p>
-<pre><code class="python">((yield x) for x in [1,2,3]) # 在生成器表达式中使用 yield
-&gt;&gt;&gt; &lt;generator object &lt;genexpr&gt; at 0x00C21C30&gt;
-</code></pre>
-<p>嗯，的确是返回一个 <strong><code>&lt;genexpr&gt;</code></strong> 类型的生成器，这很正常，那我们用 <code>list()</code> 展开看一下：</p>
-<pre><code class="python">list((yield x) for x in [1,2,3])
-&gt;&gt;&gt; [1, None, 2, None, 3, None]
-</code></pre>
-<p>这下就懵逼了，怎么会多出几个 <code>None</code>？这几个 <code>None</code>从哪里来的？</p>
-<h3 id="深入分析"><a href="#深入分析" class="headerlink" title="深入分析"></a>深入分析</h3><p>先来看看不含 yield 的列表推导式的 bytecode：</p>
-<pre><code class="python">from dis import dis
-dis(&quot;&quot;&quot;[x for x in [1,2,3]]&quot;&quot;&quot;)
-&gt;&gt;&gt;   1       0 LOAD_CONST               0 (&lt;code object &lt;listcomp&gt; at 0x054E0548, file &quot;&lt;dis&gt;&quot;, line 1&gt;)
-              2 LOAD_CONST               1 (&#39;&lt;listcomp&gt;&#39;)
-              4 MAKE_FUNCTION            0
-              6 LOAD_CONST               5 ((1, 2, 3))
-              8 GET_ITER
-             10 CALL_FUNCTION            1
-             12 RETURN_VALUE
-</code></pre>
-<p>可以看到，列表推导式实际上被转换（MAKE_FUNCTION）成了一个函数并调用(CALL_FUNCTION)</p>
-<p>同时把 <code>[1,2,3]</code> 和 <code>[1,2,3]</code>的迭代器作为参数传给该函数</p>
-<p>注意该函数的代码作为一个 code object 传给 MAKE_FUNCTION</p>
-<p> <code>&lt;listcomp&gt;</code> 告诉 MAKE_FUNCTION 该函数的类型</p>
-<p>注意到该函数被包裹在列表推导式中，是一个<strong>嵌套的函数</strong></p>
-<p>我们来看看该函数实际的 bytecode：</p>
-<pre><code class="python">dis(compile(&quot;&quot;&quot;[x for x in [1,2,3]]&quot;&quot;&quot;, &#39;&#39;, &#39;exec&#39;).co_consts[0])
-&gt;&gt;&gt; 1         0 BUILD_LIST               0
-              2 LOAD_FAST                0 (.0)
-        &gt;&gt;    4 FOR_ITER                 8 (to 14)
-              6 STORE_FAST               1 (x)
-              8 LOAD_FAST                1 (x)
-             10 LIST_APPEND              2
-             12 JUMP_ABSOLUTE            4
-        &gt;&gt;   14 RETURN_VALUE
-</code></pre>
-<p>翻译成 Python 的伪代码，该函数相当于：</p>
-<pre><code class="python">def listcomp(some_iterable):
-    res = []
-    for x in some_iterable:
-        res.append(x)
-    return res
-</code></pre>
-<p>使用该列表推导式相当于调用该函数：</p>
-<pre><code class="python">listcomp([1,2,3])
-&gt;&gt;&gt; [1, 2, 3]
-</code></pre>
-<p>下面看看含有 yield 的列表推导式的 bytecode：</p>
-<pre><code class="python">dis(&quot;&quot;&quot;[(yield x) for x in [1,2,3]]&quot;&quot;&quot;)
-&gt;&gt;&gt;   1       0 LOAD_CONST               0 (&lt;code object &lt;listcomp&gt; at 0x054E0A18, file &quot;&lt;dis&gt;&quot;, line 1&gt;)
-              2 LOAD_CONST               1 (&#39;&lt;listcomp&gt;&#39;)
-              4 MAKE_FUNCTION            0
-              6 LOAD_CONST               5 ((1, 2, 3))
-              8 GET_ITER
-             10 CALL_FUNCTION            1
-             12 RETURN_VALUE
-</code></pre>
-<p>与之前无异，但我们来看看其内部函数的 bytecode：</p>
-<pre><code class="python">dis(compile(&quot;&quot;&quot;[(yield x) for x in [1,2,3]]&quot;&quot;&quot;, &#39;&#39;, &#39;exec&#39;).co_consts[0])
-&gt;&gt;&gt;   1       0 BUILD_LIST               0
-              2 LOAD_FAST                0 (.0)
-        &gt;&gt;    4 FOR_ITER                10 (to 16)
-              6 STORE_FAST               1 (x)
-              8 LOAD_FAST                1 (x)
-             10 YIELD_VALUE
-             12 LIST_APPEND              2
-             14 JUMP_ABSOLUTE            4
-        &gt;&gt;   16 RETURN_VALUE
-</code></pre>
-<p>对比不含 yield 的 bytecode，发现只是多出了 YIELD_VALUE 这一行</p>
-<p>但却把该函数转化成了一个生成器函数，相当于：</p>
-<pre><code class="python">def listcomp(some_iterable):
-    res = []
-    for x in some_iterable:
-        v = yield x # 关键的一行
-        res.append(v)
-    return res
-</code></pre>
-<p>我们试着像之前那样调用 <code>listcomp</code>：</p>
-<pre><code class="python">listcomp([1,2,3])
-&gt;&gt;&gt; &lt;generator object listcomp at 0x052AFD50&gt;
-</code></pre>
-<p>果然得到一个类型为 <code>listcomp</code> 的生成器，用 <code>list()</code> 展开：</p>
-<pre><code class="python">list(listcomp([1,2,3]))
-&gt;&gt;&gt; [1, 2, 3]
-</code></pre>
-<p>现在知道为什么含有 yield 的列表推导式只是返回一个类型为 <code>listcomp</code> 生成器了吧</p>
-<p>因为使用含有 yeild 的列表推导式相当于调用上面 <code>listcomp</code> 这个函数</p>
-<p>而该函数是一个生成器函数，只会返回一个生成器</p>
-<p>需要我们自己使用 <code>list()</code> 去迭代来把它展开</p>
-<p><code>list()</code> 拿到的值正是 <code>yield x</code> 传出来的</p>
-<p>而内部的 res 实际上收集的是外界（这里是 list）迭代 send 进去的值</p>
-<p>那这个 res 最终哪里去了？别忘了生成器迭代的结尾：return 的返回值作为 <code>StopIteration</code> 的值</p>
-<pre><code class="python">from itertools import islice
-gen = listcomp([1,2,3])
-list(islice(gen, 3))  # 使用 islice 控制调用 next 的次数，避免直接调用 list 到达迭代的末尾而触发 StopIteration
-&gt;&gt;&gt; [1, 2, 3]
-
-try:
-    next(gen) # 手动触发 StopIteration
-except StopIteration as e:
-    print(e.value)
-&gt;&gt;&gt; [None, None, None]
-</code></pre>
-<p>三个 None，这就是内部函数的 res 收集外部 list 迭代展开时传进去的值</p>
-<p>list 在迭代时就是调用 next，而 next(gen) 相等于 gen.send(None)</p>
-<p>那为什么含有 yield 的生成器表达式在迭代展开时会把 None 也传递出来呢？</p>
-<p>聪明的你应该会马上想到：该不会 yield 下面还有一个 yield 吧？这样就能把外界传递进来的 None 再传递出去</p>
-<p>的确如此，但为什么会有两个yield？要想弄明白这个问题，想来看看不含 yield 的生成器表达式的 bytecode：</p>
-<pre><code class="python">dis(&quot;&quot;&quot;(x for x in [1,2,3])&quot;&quot;&quot;)
-&gt;&gt;&gt;   1       0 LOAD_CONST               0 (&lt;code object &lt;genexpr&gt; at 0x054F13E8, file &quot;&lt;dis&gt;&quot;, line 1&gt;)
-              2 LOAD_CONST               1 (&#39;&lt;genexpr&gt;&#39;)
-              4 MAKE_FUNCTION            0
-              6 LOAD_CONST               5 ((1, 2, 3))
-              8 GET_ITER
-             10 CALL_FUNCTION            1
-             12 RETURN_VALUE
-</code></pre>
-<p>与之前列表推导式的 bytecode 没什么大的区别，只是函数的类型是 <code>&lt;genexpr&gt;</code> 而不是 <code>listcomp</code></p>
-<p>那我们看看内部函数的 bytecode：</p>
-<pre><code class="python">dis(compile(&quot;&quot;&quot;(x for x in [1,2,3])&quot;&quot;&quot;, &#39;&#39;, &#39;exec&#39;).co_consts[0])
-&gt;&gt;&gt;   1       0 LOAD_FAST                0 (.0)
-        &gt;&gt;    2 FOR_ITER                10 (to 14)
-              4 STORE_FAST               1 (x)
-              6 LOAD_FAST                1 (x)
-              8 YIELD_VALUE
-             10 POP_TOP
-             12 JUMP_ABSOLUTE            2
-        &gt;&gt;   14 LOAD_CONST               0 (None)
-             16 RETURN_VALUE
-</code></pre>
-<p>由于本身就是一个生成器表达式，所以不再需要一个内部的 list（没有 BUILD_LIST）来存放每个值</p>
-<p>而是直接把值 yield 到外部（YIELD_VALUE，yield 的返回值会覆盖 <strong>运行时栈</strong> 的栈顶（被 yield 出去的值））</p>
-<p>该函数相当于：</p>
-<pre><code class="python">def genexpr(some_iterable):
-    for x in some_iterable:
-        yield x # 外界传进来的值不用保存了，POP_TOP
-
-genexpr([1,2,3])
-&gt;&gt;&gt; &lt;generator object genexpr at 0x054EE420&gt;
-list(genexpr([1,2,3]))
-&gt;&gt;&gt; [1, 2, 3]
-</code></pre>
-<p>一切都很正常，那我们来看看含 yield 的生成器表达式的 bytecode：</p>
-<pre><code class="python">dis(&quot;&quot;&quot;((yield x) for x in [1,2,3])&quot;&quot;&quot;)
-&gt;&gt;&gt;   1       0 LOAD_CONST               0 (&lt;code object &lt;genexpr&gt; at 0x054F1338, file &quot;&lt;dis&gt;&quot;, line 1&gt;)
-              2 LOAD_CONST               1 (&#39;&lt;genexpr&gt;&#39;)
-              4 MAKE_FUNCTION            0
-              6 LOAD_CONST               5 ((1, 2, 3))
-              8 GET_ITER
-             10 CALL_FUNCTION            1
-             12 RETURN_VALUE
-</code></pre>
-<p>与不含 yield 的生成器表达式的 bytecode 一样，关键是内部函数的 bytecode：</p>
-<pre><code class="python">dis(compile(&quot;&quot;&quot;((yield x) for x in [1,2,3])&quot;&quot;&quot;, &#39;&#39;, &#39;exec&#39;).co_consts[0])
-&gt;&gt;&gt;   1       0 LOAD_FAST                0 (.0)
-        &gt;&gt;    2 FOR_ITER                12 (to 16)
-              4 STORE_FAST               1 (x)
-              6 LOAD_FAST                1 (x)
-              8 YIELD_VALUE
-             10 YIELD_VALUE
-             12 POP_TOP
-             14 JUMP_ABSOLUTE            2
-        &gt;&gt;   16 LOAD_CONST               0 (None)
-             18 RETURN_VALUE
-</code></pre>
-<p>的确有两个 YIELD_VALUE！对比不含 yield 的生成器表达式内部函数的 bytecode，</p>
-<p>发现就只是多了一行 YIELD_VALUE（第一个 YIELD_VALUE）</p>
-<p>没错，正是 <code>(yield x)</code> 造成的，这使得内部函数有两个连续的 YIELD_VALUE</p>
-<p>外界传进来的值（这里是None）来不及 POP_TOP 就被 YIELD_VALUE 传递出去了！</p>
-<p>最终外界的 list 会拿到自己传进去的None，这样相当于：</p>
-<pre><code class="python">def genexpr(some_iterable):
-    for x in some_iterable:
-        v = yield x 
-        yield v
-
-list(genexpr([1,2,3]))
-&gt;&gt;&gt; [1, None, 2, None, 3, None]
-</code></pre>
-<p>含有 yield 的集合推导式和字典推导式也会像列表推导式那样：</p>
-<pre><code class="python">{(yield i) for i in range(3)} # 内部函数的类型是 &lt;setcomp&gt;
-&gt;&gt;&gt; &lt;generator object &lt;setcomp&gt; at 0x054F8D80&gt;
-set({(yield i) for i in range(3)})
-&gt;&gt;&gt; {0, 1, 2}
-
-{(yield k): (yield v) for k, v in {&#39;foo&#39;: &#39;bar&#39;, &#39;spam&#39;: &#39;eggs&#39;}.items()} # 内部函数的类型是 &lt;dictcomp&gt;
-&gt;&gt;&gt; &lt;generator object &lt;dictcomp&gt; at 0x052AF720&gt;
-list({(yield k): (yield v) for k, v in {&#39;foo&#39;: &#39;bar&#39;, &#39;spam&#39;: &#39;eggs&#39;}.items()})
-&gt;&gt;&gt; [&#39;bar&#39;, &#39;foo&#39;, &#39;eggs&#39;, &#39;spam&#39;]
-</code></pre>
-<h3 id="举一反三"><a href="#举一反三" class="headerlink" title="举一反三"></a>举一反三</h3><p>明白是怎么回事后，我们可以改变外界传进去值，以此改变内部的 list：</p>
-<pre><code class="python">def listcomp(some_iterable):
-    res = [] # 内部list
-    for x in some_iterable:
-        v = yield x
-        res.append(v)
-    return res
-
-gen = listcomp([1,2,3])
-next(gen)
-&gt;&gt;&gt; 1
-gen.send(&#39;bar&#39;)
-&gt;&gt;&gt; 2
-gen.send(&#39;bar&#39;)
-&gt;&gt;&gt; 3
-gen.send(&#39;bar&#39;)
-&gt;&gt;&gt; StopIteration Traceback (most recent call last)
-&lt;ipython-input-50-ca4a3b892529&gt; in &lt;module&gt;()
-----&gt; 1 gen.send(&#39;bar&#39;)
-StopIteration: [&#39;bar&#39;, &#39;bar&#39;, &#39;bar&#39;]
-</code></pre>
-<p>注意到内部 list 在 StopIteration 中即为我们传递进去的3个 ‘bar’</p>
-<p>生成器表达式也可以这么玩：</p>
-<pre><code class="python">def genexpr(some_iterable):
-    for x in some_iterable:
-        v = yield x 
-        yield v
-
-gen = genexpr([1,2,3])
-next(gen)
-&gt;&gt;&gt; 1
-gen.send(&#39;bar&#39;) # 返回&#39;bar&#39;而不是2
-&gt;&gt;&gt; &#39;bar&#39;
-gen.send(&#39;bar&#39;) # 第二次传进去的值并不会被存起来(POP_TOP)
-&gt;&gt;&gt; 2
-gen.send(&#39;foo&#39;) 
-&gt;&gt;&gt; &#39;foo&#39;
-gen.send(&#39;foo&#39;)
-&gt;&gt;&gt; 3
-gen.send(&#39;root&#39;)
-&gt;&gt;&gt; &#39;root&#39;
-gen.send(&#39;root&#39;)
-&gt;&gt;&gt; StopIteration Traceback (most recent call last)
-&lt;ipython-input-58-38d221a6c3cc&gt; in &lt;module&gt;()
-----&gt; 1 gen.send(&#39;root&#39;)
-StopIteration:
-</code></pre>
-<p>注意最后 StopIteration 的值其实为 None</p>
-<p>因为内部函数 genexpr 最终返回的就是 None 而不像 listcomp 那样返回一个 list</p>
-<p>上面都是在自己模拟的函数实现的，如何在真正的列表推导式和生成器表达式上向内部传递值呢？</p>
-<p><code>list()</code> 迭代展开只是调用 next，我们无法 send 自己的值进去，所以我们可以在推导式或表达式本身动手脚： </p>
-<pre><code class="python">def bar(x):
-    return &#39;bar&#39;
-
-gen = [bar((yield x)) for x in [1,2,3]]
-list(islice(gen , 3))
-&gt;&gt;&gt; [1, 2, 3]
-
-try:
-    next(gen)
-except StopIteration as e:
-    print(e.value)
-&gt;&gt;&gt; [&#39;bar&#39;, &#39;bar&#39;, &#39;bar&#39;]
-</code></pre>
-<p>使用一个自定义的函数”传”进去就可以了</p>
-<p>这里并不是真正的 send，只是利用自定义的函数“偷梁换柱”罢了（相当于装饰器）</p>
-<pre><code class="python">dis(compile(&quot;&quot;&quot;[(lambda v:&#39;bar&#39;)((yield x)) for x in [1,2,3]]&quot;&quot;&quot;,&#39;&#39;,&#39;exec&#39;).co_consts[0])
-&gt;&gt;&gt;   1       0 BUILD_LIST               0
-              2 LOAD_FAST                0 (.0)
-        &gt;&gt;    4 FOR_ITER                18 (to 24)
-              6 STORE_FAST               1 (x)
-              8 LOAD_CONST               0 (&lt;code object &lt;lambda&gt; at 0x00C76498, file &quot;&quot;, line 1&gt;)
-             10 LOAD_CONST               1 (&#39;&lt;listcomp&gt;.&lt;lambda&gt;&#39;)
-             12 MAKE_FUNCTION            0
-             14 LOAD_FAST                1 (x)
-             16 YIELD_VALUE
-             18 CALL_FUNCTION            1
-             20 LIST_APPEND              2
-             22 JUMP_ABSOLUTE            4
-        &gt;&gt;   24 RETURN_VALUE
-</code></pre>
-<p><code>(yield x)</code> 的返回值（这里是None）作为参数传递给该函数</p>
-<p>而该函数执行返回的结果才是真正 append 到内部 list 的值（这里是‘bar’）</p>
-<p>我们可以在自定义的函数中打印出外界传进来的值：</p>
-<pre><code class="python">def bar(x):
-    print(x)
-    return &#39;bar&#39;
-
-gen = [bar((yield x)) for x in [1,2,3]]
-next(gen)
-&gt;&gt;&gt; 1
-next(gen)
-&gt;&gt;&gt; None
-&gt;&gt;&gt; 2
-next(gen)
-&gt;&gt;&gt; None
-&gt;&gt;&gt; 3
-next(gen)
-&gt;&gt;&gt; None
-&gt;&gt;&gt; StopIteration Traceback (most recent call last)
-&lt;ipython-input-71-8a6233884a6c&gt; in &lt;module&gt;()
-----&gt; 1 next(gen)
-StopIteration: [&#39;bar&#39;, &#39;bar&#39;, &#39;bar&#39;]
-</code></pre>
-<p>下面对生成器表达式也使用自定义的函数 “传递” 值：</p>
-<pre><code class="python">def bar(x):
-    print(x)
-    return &#39;bar&#39;
-
-list(bar((yield x)) for x in [1,2,3])
-&gt;&gt;&gt; None
-&gt;&gt;&gt; None
-&gt;&gt;&gt; None
-&gt;&gt;&gt; [1, &#39;bar&#39;, 2, &#39;bar&#39;, 3, &#39;bar&#39;]
-</code></pre>
-<p>到这里我想说的是，我们不应该在列表（集合、字典）推导式或生成器表达式中使用 yield，有时会带来意想不到的结果</p>
-<p>这其实是 Python 本身的一个 Bug，见 <a href="https://bugs.python.org/issue10544" target="_blank" rel="external">https://bugs.python.org/issue10544</a></p>
-<p>该 Bug 在 Python3.7 中会提示一个 DeprecationWarning，在 Python3.8 中则是 SyntaxError</p>
-<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
-<li><a href="https://stackoverflow.com/questions/32139885/yield-in-list-comprehensions-and-generator-expressions" target="_blank" rel="external">yield-in-list-comprehensions-and-generator-expressions</a></li>
-<li><a href="https://bugs.python.org/issue10544" target="_blank" rel="external">issue10544</a></li>
-<li><a href="https://github.com/satwikkansal/wtfpython#-yielding-none" target="_blank" rel="external">wtfpython-yielding None</a></li>
-</ol>
-]]></content>
-      
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2018/12/06/那些值得阅读的PEP/">
+                    那些值得阅读的PEP
+                </a>
+            </div>
         
-        <tags>
-            
-            <tag> Python </tag>
-            
-            <tag> wtfpython </tag>
-            
-        </tags>
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
         
-    </entry>
-    
-    <entry>
-      <title><![CDATA[使用vs2017搭建CPython3.6和CPython2.7源码调试环境]]></title>
-      <url>/2018/11/09/%E4%BD%BF%E7%94%A8vs2017%E6%90%AD%E5%BB%BACPython3.6%E5%92%8CCPython2.7%E6%BA%90%E7%A0%81%E8%B0%83%E8%AF%95%E7%8E%AF%E5%A2%83/</url>
-      <content type="html"><![CDATA[<p>打算开始看  <a href="https://book.douban.com/subject/3117898/" target="_blank" rel="external">《Python源码剖析》</a>, 这需要能够本地调试 CPython 的源码</p>
-<p>虽然这本书是基于 CPython2.5 的，有点古老了，但大部分还是通用的</p>
-<p>这里分别使用 CPython3.6 和 CPython2.7 的源码来调试</p>
-<p>这样也能看出 Python2 与 Python3 在源码实现上的一些区别，下面是本次搭建的环境：</p>
-<ul>
-<li>src：CPython 3.6， CPython2.7 </li>
-<li>os：Win10</li>
-<li>ide：VS2017</li>
-</ul>
-<a id="more"></a>
-<h3 id="获取源码"><a href="#获取源码" class="headerlink" title="获取源码"></a>获取源码</h3><p>从Github上分别下载  <a href="https://github.com/python/cpython/tree/3.6" target="_blank" rel="external">CPython3.6 的源码</a> 和 <a href="https://github.com/python/cpython/tree/2.7" target="_blank" rel="external">CPython2.7 的源码</a> 并解压</p>
-<h3 id="编译-CPython3-6-源码"><a href="#编译-CPython3-6-源码" class="headerlink" title="编译 CPython3.6 源码"></a>编译 CPython3.6 源码</h3><p>我们并不调试 python 标准库的源码，所以这里直接跳过了依赖文件的下载而是直接编译：</p>
-<ol>
-<li><p>使用 vs2017 打开 cpython-3.6\PCbuild\pcbuild.sln</p>
-</li>
-<li><p>在解决方案资源管理器中：右键 “python” -&gt; 重定向项目 -&gt; 选择 Windows SDK 版本为 10.0.17134.0 （或其他 Win10 版本的SDK即可）</p>
-</li>
-<li><p>对 “pythoncore” 重复上一条操作</p>
-</li>
-<li><p>在解决方案资源管理器中：右键 “pythoncore” -&gt; 属性 -&gt; 配置属性 -&gt; C/C++ -&gt; 预处理器 -&gt; 右侧编辑“预处理器定义” -&gt; 添加 <code>“_X86_”</code></p>
-</li>
-<li><p>点击 “本地windows调试器” 开始编译源码，方案为 Debug Win32</p>
-</li>
-</ol>
-<p>等待一会，弹出交互式命令行窗口，证明编译成功，可以开始愉快地调试了</p>
-<p>编译成功后在 cpython-3.6\PCbuild\ 目录下会多出两个目录：obj 和 win32</p>
-<p>其中 win32 目录中存放着编译好的 python 二进制可执行文件</p>
-<p>由于我们的编译模式为 Debug，所以该文件名为 python_d.exe 而不是 python.exe</p>
-<p>在 cpython-3.6\PCbuild\ 目录下还有一个文件 readme.txt，这是官方对 windows 下编译 CPython 源码的说明，可供参考</p>
-<h3 id="编译-CPython2-7-源码"><a href="#编译-CPython2-7-源码" class="headerlink" title="编译 CPython2.7 源码"></a>编译 CPython2.7 源码</h3><p>步骤与 CPython3.6 差不多，但需要修改一些源码：</p>
-<ol>
-<li><p>使用 vs2017 打开 <code>cpython-2.7\PCbuild\pcbuild.sln</code>，会提示升级SDK，确定，这会帮我们自动重定向SDK</p>
-</li>
-<li><p>直接编译会报错：<code>timemodule.c</code> 下的标识符 <code>timezone</code>、<code>daylight</code> 和 <code>tzname</code> 未定义，这是升级 SDK 的缘故</p>
-</li>
-<li><p>需要修改两个文件：</p>
-<p>首先把 <code>cpython-2.7\Modules\posixmodule.c</code> 下的 <code>_PyVerify_fd</code> 函数内容<strong>替换</strong>为如下代码：</p>
-</li>
-</ol>
-<pre><code class="c">//a call to _get_osfhandle with invalid fd sets errno to EBADF
-if (_get_osfhandle(fd) == INVALID_HANDLE_VALUE)
-    return 0;
-else
-    return 1;
-</code></pre>
-<p>​    然后把 <code>cpython-2.7\Modules\timemodule.c</code> 中 <code>inittimezone</code> 函数中报错的变量 <code>timezone</code>、<code>daylight</code> 和 <code>tzname</code> 分别改为 <code>_timezone</code>、<code>_daylight</code> 和 <code>_tzname</code> ，即在原来的变量前面加单下划线，一共改动四行，分别是 811，819，822 和 824 行，记得保存所有修改</p>
-<ol>
-<li>点击 “本地windows调试器” 开始编译源码，方案为 Debug Win32</li>
-</ol>
-<p>注意：CPython2.7 编译后的二进制可执行文件就在 <code>cpython-2.7\PCbuild</code> 下，并没有 win32 这个目录</p>
-<h3 id="移除冗余目录"><a href="#移除冗余目录" class="headerlink" title="移除冗余目录"></a>移除冗余目录</h3><p>到这里已经搭建完成了，但我们只关心 pythoncore 目录下的源码</p>
-<p>因此可以 <strong>在解决方案资源管理器中</strong> 把其他目录从管理器中移出，避免对后期搜索结果的影响</p>
-<p>但要保留 python 目录，因为该目录下的 python.c 是程序入口</p>
-<p>也就是说最后只保留 pythoncore 和 python 这两个目录在解决方案资源管理器中即可</p>
-<p>后期所有的调试工作都在 pythoncore 目录下进行</p>
-]]></content>
-      
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#二维数组中的查找"><span class="toc-number">1.</span> <span class="toc-text"> 二维数组中的查找</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述"><span class="toc-number">1.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解"><span class="toc-number">1.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码"><span class="toc-number">1.3.</span> <span class="toc-text">代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#拓展题目"><span class="toc-number">1.4.</span> <span class="toc-text">拓展题目</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#替换空格"><span class="toc-number">2.</span> <span class="toc-text">替换空格</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-1"><span class="toc-number">2.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-1"><span class="toc-number">2.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-1"><span class="toc-number">2.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#从尾到头打印链表"><span class="toc-number">3.</span> <span class="toc-text">从尾到头打印链表</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-2"><span class="toc-number">3.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-2"><span class="toc-number">3.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-2"><span class="toc-number">3.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#重建二叉树"><span class="toc-number">4.</span> <span class="toc-text">重建二叉树</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-3"><span class="toc-number">4.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-3"><span class="toc-number">4.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-3"><span class="toc-number">4.3.</span> <span class="toc-text">代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#举一反三"><span class="toc-number">4.4.</span> <span class="toc-text">举一反三</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#用两个栈实现队列"><span class="toc-number">5.</span> <span class="toc-text">用两个栈实现队列</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-4"><span class="toc-number">5.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-4"><span class="toc-number">5.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-4"><span class="toc-number">5.3.</span> <span class="toc-text">代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#举一反三-1"><span class="toc-number">5.4.</span> <span class="toc-text">举一反三</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#旋转数组的最小数字"><span class="toc-number">6.</span> <span class="toc-text">旋转数组的最小数字</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-5"><span class="toc-number">6.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-5"><span class="toc-number">6.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-5"><span class="toc-number">6.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#斐波那契数列"><span class="toc-number">7.</span> <span class="toc-text">斐波那契数列</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-6"><span class="toc-number">7.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-6"><span class="toc-number">7.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-6"><span class="toc-number">7.3.</span> <span class="toc-text">代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#举一反三-2"><span class="toc-number">7.4.</span> <span class="toc-text">举一反三</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二进制中1的个数"><span class="toc-number">8.</span> <span class="toc-text">二进制中1的个数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-7"><span class="toc-number">8.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-7"><span class="toc-number">8.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-7"><span class="toc-number">8.3.</span> <span class="toc-text">代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#举一反三-3"><span class="toc-number">8.4.</span> <span class="toc-text">举一反三</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数值的整数次方"><span class="toc-number">9.</span> <span class="toc-text">数值的整数次方</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-8"><span class="toc-number">9.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-8"><span class="toc-number">9.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-8"><span class="toc-number">9.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#打印1到最大的n位数"><span class="toc-number">10.</span> <span class="toc-text">打印1到最大的n位数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-9"><span class="toc-number">10.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-9"><span class="toc-number">10.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-9"><span class="toc-number">10.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#在O-1-时间删除链表节点"><span class="toc-number">11.</span> <span class="toc-text">在O(1)时间删除链表节点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-10"><span class="toc-number">11.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-10"><span class="toc-number">11.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-10"><span class="toc-number">11.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使奇数位于偶数前面"><span class="toc-number">12.</span> <span class="toc-text">使奇数位于偶数前面</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-11"><span class="toc-number">12.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-11"><span class="toc-number">12.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-11"><span class="toc-number">12.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#链表倒数第k个结点"><span class="toc-number">13.</span> <span class="toc-text">链表倒数第k个结点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-12"><span class="toc-number">13.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-12"><span class="toc-number">13.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-12"><span class="toc-number">13.3.</span> <span class="toc-text">代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#举一反三-4"><span class="toc-number">13.4.</span> <span class="toc-text">举一反三</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#反转链表"><span class="toc-number">14.</span> <span class="toc-text">反转链表</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-13"><span class="toc-number">14.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-13"><span class="toc-number">14.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-13"><span class="toc-number">14.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#合并两个排序的链表"><span class="toc-number">15.</span> <span class="toc-text">合并两个排序的链表</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-14"><span class="toc-number">15.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-14"><span class="toc-number">15.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-14"><span class="toc-number">15.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#树的子结构"><span class="toc-number">16.</span> <span class="toc-text">树的子结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-15"><span class="toc-number">16.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-15"><span class="toc-number">16.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-15"><span class="toc-number">16.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二叉树的镜像"><span class="toc-number">17.</span> <span class="toc-text">二叉树的镜像</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-16"><span class="toc-number">17.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-16"><span class="toc-number">17.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-16"><span class="toc-number">17.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#顺时针打印矩阵"><span class="toc-number">18.</span> <span class="toc-text">顺时针打印矩阵</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-17"><span class="toc-number">18.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-17"><span class="toc-number">18.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-17"><span class="toc-number">18.3.</span> <span class="toc-text">代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#举一反三-5"><span class="toc-number">18.4.</span> <span class="toc-text">举一反三</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#包含min函数的栈"><span class="toc-number">19.</span> <span class="toc-text">包含min函数的栈</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-18"><span class="toc-number">19.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-18"><span class="toc-number">19.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-18"><span class="toc-number">19.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#栈的压入弹出序列"><span class="toc-number">20.</span> <span class="toc-text">栈的压入弹出序列</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-19"><span class="toc-number">20.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-19"><span class="toc-number">20.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-19"><span class="toc-number">20.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#从上往下打印二叉树"><span class="toc-number">21.</span> <span class="toc-text">从上往下打印二叉树</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-20"><span class="toc-number">21.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-20"><span class="toc-number">21.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-20"><span class="toc-number">21.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二叉搜索树的后序遍历序列"><span class="toc-number">22.</span> <span class="toc-text">二叉搜索树的后序遍历序列</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-21"><span class="toc-number">22.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-21"><span class="toc-number">22.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-21"><span class="toc-number">22.3.</span> <span class="toc-text">代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#举一反三-6"><span class="toc-number">22.4.</span> <span class="toc-text">举一反三</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二叉树中和为某一值的路径"><span class="toc-number">23.</span> <span class="toc-text">二叉树中和为某一值的路径</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-22"><span class="toc-number">23.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-22"><span class="toc-number">23.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-22"><span class="toc-number">23.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#复杂链表的复制"><span class="toc-number">24.</span> <span class="toc-text">复杂链表的复制</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-23"><span class="toc-number">24.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-23"><span class="toc-number">24.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-23"><span class="toc-number">24.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二叉搜索树与双向链表"><span class="toc-number">25.</span> <span class="toc-text">二叉搜索树与双向链表</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-24"><span class="toc-number">25.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-24"><span class="toc-number">25.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-24"><span class="toc-number">25.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#字符串的排列"><span class="toc-number">26.</span> <span class="toc-text">字符串的排列</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-25"><span class="toc-number">26.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-25"><span class="toc-number">26.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-25"><span class="toc-number">26.3.</span> <span class="toc-text">代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#举一反三-7"><span class="toc-number">26.4.</span> <span class="toc-text">举一反三</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数组中出现次数超过一半的数字"><span class="toc-number">27.</span> <span class="toc-text">数组中出现次数超过一半的数字</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-26"><span class="toc-number">27.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-26"><span class="toc-number">27.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-26"><span class="toc-number">27.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#最小的K个数"><span class="toc-number">28.</span> <span class="toc-text">最小的K个数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-27"><span class="toc-number">28.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-27"><span class="toc-number">28.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-27"><span class="toc-number">28.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#连续子数组的最大和"><span class="toc-number">29.</span> <span class="toc-text">连续子数组的最大和</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-28"><span class="toc-number">29.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-28"><span class="toc-number">29.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-28"><span class="toc-number">29.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#从1到n中1出现的次数"><span class="toc-number">30.</span> <span class="toc-text">从1到n中1出现的次数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-29"><span class="toc-number">30.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-29"><span class="toc-number">30.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-29"><span class="toc-number">30.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#把数组排成最小的数"><span class="toc-number">31.</span> <span class="toc-text">把数组排成最小的数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-30"><span class="toc-number">31.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-30"><span class="toc-number">31.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-30"><span class="toc-number">31.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#丑数"><span class="toc-number">32.</span> <span class="toc-text">丑数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-31"><span class="toc-number">32.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-31"><span class="toc-number">32.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-31"><span class="toc-number">32.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第一个只出现一次的字符"><span class="toc-number">33.</span> <span class="toc-text">第一个只出现一次的字符</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-32"><span class="toc-number">33.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-32"><span class="toc-number">33.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-32"><span class="toc-number">33.3.</span> <span class="toc-text">代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#举一反三-8"><span class="toc-number">33.4.</span> <span class="toc-text">举一反三</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数组中的逆序对"><span class="toc-number">34.</span> <span class="toc-text">数组中的逆序对</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-33"><span class="toc-number">34.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-33"><span class="toc-number">34.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-33"><span class="toc-number">34.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#两个链表的第一个公共结点"><span class="toc-number">35.</span> <span class="toc-text">两个链表的第一个公共结点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-34"><span class="toc-number">35.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-34"><span class="toc-number">35.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-34"><span class="toc-number">35.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数字在排序数组中出现的次数"><span class="toc-number">36.</span> <span class="toc-text">数字在排序数组中出现的次数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-35"><span class="toc-number">36.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-35"><span class="toc-number">36.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-35"><span class="toc-number">36.3.</span> <span class="toc-text">代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#举一反三-9"><span class="toc-number">36.4.</span> <span class="toc-text">举一反三</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二叉树的深度"><span class="toc-number">37.</span> <span class="toc-text">二叉树的深度</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-36"><span class="toc-number">37.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-36"><span class="toc-number">37.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-36"><span class="toc-number">37.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#判断平衡二叉树"><span class="toc-number">38.</span> <span class="toc-text">判断平衡二叉树</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-37"><span class="toc-number">38.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-37"><span class="toc-number">38.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-37"><span class="toc-number">38.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数组中只出现一次的两个数字"><span class="toc-number">39.</span> <span class="toc-text">数组中只出现一次的两个数字</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-38"><span class="toc-number">39.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-38"><span class="toc-number">39.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-38"><span class="toc-number">39.3.</span> <span class="toc-text">代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#举一反三-10"><span class="toc-number">39.4.</span> <span class="toc-text">举一反三</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#和为s的两个数字"><span class="toc-number">40.</span> <span class="toc-text">和为s的两个数字</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-39"><span class="toc-number">40.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-39"><span class="toc-number">40.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-39"><span class="toc-number">40.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#和为s的连续正整数序列"><span class="toc-number">41.</span> <span class="toc-text">和为s的连续正整数序列</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-40"><span class="toc-number">41.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-40"><span class="toc-number">41.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-40"><span class="toc-number">41.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#翻转单词顺序"><span class="toc-number">42.</span> <span class="toc-text">翻转单词顺序</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-41"><span class="toc-number">42.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-41"><span class="toc-number">42.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-41"><span class="toc-number">42.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#左旋转字符串"><span class="toc-number">43.</span> <span class="toc-text">左旋转字符串</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-42"><span class="toc-number">43.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-42"><span class="toc-number">43.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-42"><span class="toc-number">43.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#n个骰子的点数"><span class="toc-number">44.</span> <span class="toc-text">n个骰子的点数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-43"><span class="toc-number">44.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-43"><span class="toc-number">44.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-43"><span class="toc-number">44.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#扑克牌的顺子"><span class="toc-number">45.</span> <span class="toc-text">扑克牌的顺子</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-44"><span class="toc-number">45.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-44"><span class="toc-number">45.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-44"><span class="toc-number">45.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#圆圈中最后剩下的数字（约瑟夫环问题）"><span class="toc-number">46.</span> <span class="toc-text">圆圈中最后剩下的数字（约瑟夫环问题）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-45"><span class="toc-number">46.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-45"><span class="toc-number">46.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-45"><span class="toc-number">46.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#求前n项和（各种限制）"><span class="toc-number">47.</span> <span class="toc-text">求前n项和（各种限制）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-46"><span class="toc-number">47.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-46"><span class="toc-number">47.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-46"><span class="toc-number">47.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#不用加减乘除做加法"><span class="toc-number">48.</span> <span class="toc-text">不用加减乘除做加法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-47"><span class="toc-number">48.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-47"><span class="toc-number">48.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-47"><span class="toc-number">48.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#把字符串转换成整数"><span class="toc-number">49.</span> <span class="toc-text">把字符串转换成整数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-48"><span class="toc-number">49.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-48"><span class="toc-number">49.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-48"><span class="toc-number">49.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二叉树的最低公共祖先"><span class="toc-number">50.</span> <span class="toc-text">二叉树的最低公共祖先</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-49"><span class="toc-number">50.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-49"><span class="toc-number">50.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-49"><span class="toc-number">50.3.</span> <span class="toc-text">代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#举一反三-11"><span class="toc-number">50.4.</span> <span class="toc-text">举一反三</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数组中重复的数字"><span class="toc-number">51.</span> <span class="toc-text">数组中重复的数字</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-50"><span class="toc-number">51.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-50"><span class="toc-number">51.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-50"><span class="toc-number">51.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#构建乘积数组"><span class="toc-number">52.</span> <span class="toc-text">构建乘积数组</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-51"><span class="toc-number">52.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-51"><span class="toc-number">52.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-51"><span class="toc-number">52.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#正则表达式匹配"><span class="toc-number">53.</span> <span class="toc-text">正则表达式匹配</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-52"><span class="toc-number">53.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-52"><span class="toc-number">53.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-52"><span class="toc-number">53.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#表示数值的字符串"><span class="toc-number">54.</span> <span class="toc-text">表示数值的字符串</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-53"><span class="toc-number">54.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-53"><span class="toc-number">54.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-53"><span class="toc-number">54.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#字符流中第一个不重复的字符"><span class="toc-number">55.</span> <span class="toc-text">字符流中第一个不重复的字符</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-54"><span class="toc-number">55.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-54"><span class="toc-number">55.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-54"><span class="toc-number">55.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#链表中环的入口结点"><span class="toc-number">56.</span> <span class="toc-text">链表中环的入口结点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-55"><span class="toc-number">56.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-55"><span class="toc-number">56.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-55"><span class="toc-number">56.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#删除链表中重复的结点"><span class="toc-number">57.</span> <span class="toc-text">删除链表中重复的结点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-56"><span class="toc-number">57.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-56"><span class="toc-number">57.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-56"><span class="toc-number">57.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二叉树的下一个结点（中序）"><span class="toc-number">58.</span> <span class="toc-text">二叉树的下一个结点（中序）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-57"><span class="toc-number">58.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-57"><span class="toc-number">58.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-57"><span class="toc-number">58.3.</span> <span class="toc-text">代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#举一反三-12"><span class="toc-number">58.4.</span> <span class="toc-text">举一反三</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#对称的二叉树"><span class="toc-number">59.</span> <span class="toc-text">对称的二叉树</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-58"><span class="toc-number">59.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-58"><span class="toc-number">59.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-58"><span class="toc-number">59.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#把二叉树打印成多行"><span class="toc-number">60.</span> <span class="toc-text">把二叉树打印成多行</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-59"><span class="toc-number">60.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-59"><span class="toc-number">60.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-59"><span class="toc-number">60.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#按之字型顺序打印二叉树"><span class="toc-number">61.</span> <span class="toc-text">按之字型顺序打印二叉树</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-60"><span class="toc-number">61.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-60"><span class="toc-number">61.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-60"><span class="toc-number">61.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二叉树的序列化和反序列化"><span class="toc-number">62.</span> <span class="toc-text">二叉树的序列化和反序列化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-61"><span class="toc-number">62.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-61"><span class="toc-number">62.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-61"><span class="toc-number">62.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二叉搜索树中的第k个结点"><span class="toc-number">63.</span> <span class="toc-text">二叉搜索树中的第k个结点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-62"><span class="toc-number">63.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-62"><span class="toc-number">63.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-62"><span class="toc-number">63.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数据流的中位数"><span class="toc-number">64.</span> <span class="toc-text">数据流的中位数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-63"><span class="toc-number">64.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-63"><span class="toc-number">64.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-63"><span class="toc-number">64.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#滑动窗口的最大值"><span class="toc-number">65.</span> <span class="toc-text">滑动窗口的最大值</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-64"><span class="toc-number">65.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-64"><span class="toc-number">65.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-64"><span class="toc-number">65.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#矩阵中的路径"><span class="toc-number">66.</span> <span class="toc-text">矩阵中的路径</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-65"><span class="toc-number">66.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-65"><span class="toc-number">66.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-65"><span class="toc-number">66.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#机器人的运动范围"><span class="toc-number">67.</span> <span class="toc-text">机器人的运动范围</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-66"><span class="toc-number">67.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-66"><span class="toc-number">67.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-66"><span class="toc-number">67.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#补充-剪绳子"><span class="toc-number">68.</span> <span class="toc-text">补充_剪绳子</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-67"><span class="toc-number">68.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#主要思路"><span class="toc-number">68.2.</span> <span class="toc-text">主要思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-67"><span class="toc-number">68.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#补充-数字序列中某一位的数字"><span class="toc-number">69.</span> <span class="toc-text">补充_数字序列中某一位的数字</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-68"><span class="toc-number">69.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-67"><span class="toc-number">69.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-68"><span class="toc-number">69.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#补充-把数字翻译成字符串"><span class="toc-number">70.</span> <span class="toc-text">补充_把数字翻译成字符串</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-69"><span class="toc-number">70.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-68"><span class="toc-number">70.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-69"><span class="toc-number">70.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#补充-礼物的最大值"><span class="toc-number">71.</span> <span class="toc-text">补充_礼物的最大值</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-70"><span class="toc-number">71.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-69"><span class="toc-number">71.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-70"><span class="toc-number">71.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#补充-最长不含重复字符的字符串长度"><span class="toc-number">72.</span> <span class="toc-text">补充_最长不含重复字符的字符串长度</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-71"><span class="toc-number">72.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-70"><span class="toc-number">72.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-71"><span class="toc-number">72.3.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#补充-股票的最大利润"><span class="toc-number">73.</span> <span class="toc-text">补充_股票的最大利润</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-72"><span class="toc-number">73.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最优题解-71"><span class="toc-number">73.2.</span> <span class="toc-text">最优题解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码-72"><span class="toc-number">73.3.</span> <span class="toc-text">代码</span></a></li></ol></li></ol>
         
-        <tags>
-            
-            <tag> CPython </tag>
-            
-            <tag> 环境搭建 </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[Python循环导入问题]]></title>
-      <url>/2018/11/08/Python%E5%BE%AA%E7%8E%AF%E5%AF%BC%E5%85%A5%E9%97%AE%E9%A2%98/</url>
-      <content type="html"><![CDATA[<p>随着 Python 项目的增大，各个模块间的依赖关系将会越来越复杂</p>
-<p>如果不合理组织文件模块结构，规划好层级关系，很容易就出现 <strong>循环导入</strong>（A import B, B import A）</p>
-<p>而不幸的是 Python 的包导入机制并没有帮我们检测循环导入（而 Golang 在编译阶段会报错）</p>
-<p>一方面我们可以重构（动态一时爽，重构火葬场），借助优秀的设计模式来降低模块间的耦合（最根本）</p>
-<p>而另一方面我们可以借助一些小技巧稍微改动代码结构来避免循环导入（治标不治本）</p>
-<a id="more"></a>
-<h2 id="模拟循环导入"><a href="#模拟循环导入" class="headerlink" title="模拟循环导入"></a>模拟循环导入</h2><h3 id="文件组织结构"><a href="#文件组织结构" class="headerlink" title="文件组织结构"></a>文件组织结构</h3><p>为了探究循环导入的整个过程，这里模拟一个循环导入的场景：</p>
-<ul>
-<li><strong>fist.py</strong></li>
-</ul>
-<pre><code class="python">from second import second_func
-
-def first_func():
-    print(&#39;first_func called&#39;)
-
-first_func()
-second_func()
-</code></pre>
-<ul>
-<li><strong>second.py</strong></li>
-</ul>
-<pre><code class="python">from first import first_func
-
-def second_func():
-    print(&#39;second_func called&#39;)
-
-first_func()
-second_func()
-</code></pre>
-<ul>
-<li><strong>run.py</strong></li>
-</ul>
-<pre><code class="python">import first
-</code></pre>
-<p><code>fist.py</code> 与 <code>second.py</code> 互相依赖形成循环导入，而 <code>run.py</code> 依赖（导入） <code>fist.py</code> ，可用图示如下：</p>
-<p><img src="https://ws1.sinaimg.cn/large/006giLD5ly1fx0qd95rcoj30i106lq2z.jpg" alt=""></p>
-<h3 id="Case1：first-py-作为程序入口"><a href="#Case1：first-py-作为程序入口" class="headerlink" title="Case1：first.py 作为程序入口"></a>Case1：first.py 作为程序入口</h3><p>我们先以 <code>first.py</code> 为程序入口，即在命令行中运行 <code>first.py</code>：</p>
-<pre><code class="cmd">λ python first.py
-Traceback (most recent call last):
-  File &quot;first.py&quot;, line 1, in &lt;module&gt;
-    from second import second_func
-  File &quot;C:\Users\ChenHW\Desktop\circular\second.py&quot;, line 1, in &lt;module&gt;
-    from first import first_func
-  File &quot;C:\Users\ChenHW\Desktop\circular\first.py&quot;, line 1, in &lt;module&gt;
-    from second import second_func
-ImportError: cannot import name &#39;second_func&#39;
-</code></pre>
-<h3 id="Case2：first-py-作为模块"><a href="#Case2：first-py-作为模块" class="headerlink" title="Case2：first.py 作为模块"></a>Case2：first.py 作为模块</h3><p>然后以 <code>run.py</code> 为程序入口：</p>
-<pre><code class="shell">λ python run.py
-Traceback (most recent call last):
-  File &quot;run.py&quot;, line 1, in &lt;module&gt;
-    import first
-  File &quot;C:\Users\ChenHW\Desktop\circular\first.py&quot;, line 1, in &lt;module&gt;
-    from second import second_func
-  File &quot;C:\Users\ChenHW\Desktop\circular\second.py&quot;, line 1, in &lt;module&gt;
-    from first import first_func
-ImportError: cannot import name &#39;first_func&#39;
-</code></pre>
-<p>可以发现两种情况下报错位置是相反的：<code>case1</code> 在 <code>first.py</code> 中报错，而 <code>case2</code> 在 <code>second.py</code> 中报错</p>
-<h3 id="逐行分析"><a href="#逐行分析" class="headerlink" title="逐行分析"></a>逐行分析</h3><ol>
-<li>Python中所有加载到内存的模块都放在 <code>sys.modules</code></li>
-<li>一个模块不会重复载入</li>
-<li>命令行中启动的脚本名（入口）实际上是 <code>__main__</code> 而不是模块名</li>
-</ol>
-<p>对于 <code>case1</code>，入口为 <code>first.py</code>, 从 <code>Traceback</code> 中可以看出导入路径为：</p>
-<p><code>__main__.py</code>(<code>first.py</code>) –&gt; <code>second.py</code> –&gt; <code>first.py</code></p>
-<p>解释器最先执行 <code>first.py</code> 的第一行代码 <code>from second import second_func</code> </p>
-<p>( 注意此时  <code>sys.modules</code> 中记录的是 <code>__main__</code> 而不是 <code>first</code>)</p>
-<p>发现需要先导入 <code>second.py</code>，而 <code>sys.modules</code> 中还没有 <code>second</code></p>
-<p>这意味着 <code>second.py</code> 还未导入，于是转跳到 <code>second.py</code> 执行第一行代码</p>
-<p><code>second.py</code> 第一行代码是 <code>from first import first_func</code>，发现需要先导入 <code>first.py</code></p>
-<p>而 <code>sys.modules</code> 中还没有 <code>first</code>（只有 <code>__main__</code> 和 <code>second</code>）</p>
-<p>这意味着  <code>first.py</code> 还未导入，于是转跳回  <code>first.py</code> 执行第一行代码</p>
-<p><code>first.py</code> 第一行代码是 <code>from second import second_func</code>，发现需要导入 <code>second.py</code></p>
-<p>然而 <code>sys.modules</code> 中已经有 <code>second</code> 了，意味着 <code>second.py</code> 已经导入，于是试图从该模块中导入 <code>second_func</code></p>
-<p>而之前在导入 <code>second.py</code> 时还未解析到 <code>&quot;def second_func():&quot;</code> 这一行代码就转跳回 <code>first.py</code> 了</p>
-<p>所以 <code>second</code> 模块的命名空间中并没有 <code>second_func</code>，因此导入失败：<code>ImportError: cannot import name &#39;second_func&#39;</code></p>
-<p>这样对 <code>case2</code> 的报错也就明白了，从它的 <code>Traceback</code> 中可以看出导入路径为：</p>
-<p><code>__main__.py</code>(<code>run.py</code>) –&gt; <code>first.py</code> –&gt; <code>second.py</code></p>
-<p> <code>case2</code> 的入口为 <code>run.py</code> 而不是 <code>first.py</code>，因此在 <code>run.py</code> 中导入 <code>first.py</code>时</p>
-<p><code>first.py</code> 是以模块的身份被导入，从而 <code>sys.modules</code> 中记录的是 <code>first</code></p>
-<p>当执行到 <code>second.py</code> 第一行代码时发现需要导入 <code>first.py</code></p>
-<p>而 <code>sys.modules</code> 中还已经有 <code>first</code>了，因此试图从 <code>first</code> 模块导入 <code>first_func</code></p>
-<p>然而之前在导入 <code>first.py</code> 时还未解释到 <code>&quot;def first_func():&quot;</code> 这一行代码就转跳到 <code>second.py</code> 了</p>
-<p>所以 <code>first</code> 模块的命名空间中并没有 <code>first_func</code>，最终导入失败：<code>ImportError: cannot import name &#39;first_func&#39;</code></p>
-<blockquote>
-<p>Circular imports are fine where both modules use the “import <module>” form of import. They fail when the 2nd module wants to grab a name out of the first (“from module import name”) and the import is at the top level. That’s because names in the 1st are not yet available, because the first module is busy importing the 2nd.</module></p>
-</blockquote>
-<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><p>那么这里要如何解决循环导入？仔细分析可以发现：对已经导入的模块，其命名空间中并没有我们想要的名称引用</p>
-<p>因此我们可以在转跳到下一个模块之前先定义好下一个模块需要的名称引用，这就需要我们  <strong>先定义再导入</strong></p>
-<p>对于 <code>case2</code>，我们可以把 <code>first.py</code> 中第一行的导入语句 <code>&quot;from second import second_func&quot;</code> 放到函数体 <code>first_func()</code> 后面：</p>
-<ul>
-<li><strong>first.py</strong></li>
-</ul>
-<pre><code class="python">def first_func(): # 先定义
-    print(&#39;first_func called&#39;)
-
-from second import second_func # 再导入
-
-first_func()
-second_func()
-</code></pre>
-<p>其他两个文件不用修改，这样在 <code>second.py</code> 要导入 <code>first</code> 模块时， <code>first_func</code> 已经定义好了，运行结果如下：</p>
-<pre><code class="shell">λ python run.py
-first_func called
-second_func called
-first_func called
-second_func called
-</code></pre>
-<p>对于 <code>case1</code>，我们在之前的修改上直接运行会怎样？</p>
-<pre><code class="shell">λ python first.py
-Traceback (most recent call last):
-  File &quot;first.py&quot;, line 4, in &lt;module&gt;
-    from second import second_func
-  File &quot;C:\Users\ChenHW\Desktop\circular\second.py&quot;, line 1, in &lt;module&gt;
-    from first import first_func
-  File &quot;C:\Users\ChenHW\Desktop\circular\first.py&quot;, line 4, in &lt;module&gt;
-    from second import second_func
-ImportError: cannot import name &#39;second_func&#39;
-</code></pre>
-<p>报错和之前一样，还是因为从 <code>second.py</code> 跳回 <code>first.py</code> 时函数 <code>second_func</code> 还未定义</p>
-<p>从而导致 <code>first.py</code> 从 <code>second</code> 中导入 <code>second_func</code> 失败</p>
-<p>因此我们仿照 <code>case1</code> 的解决方式，先定义 <code>second_func</code> 再导入 <code>first</code>：</p>
-<ul>
-<li><strong>second.py</strong></li>
-</ul>
-<pre><code class="python">def second_func(): # 先定义
-    print(&#39;second_func called&#39;)
-
-from first import first_func # 再导入
-
-first_func()
-second_func()
-</code></pre>
-<p>命令行中执行：python first.py，结果如下：</p>
-<pre><code class="shell">first_func called
-second_func called
-first_func called
-second_func called
-first_func called
-second_func called
-</code></pre>
-<p>没有报错了，但是结果怎么多了两行？</p>
-<p>仔细分析可以明白这个输出结果符合导入栈的出栈顺序：</p>
-<p>第1、2行是 <code>first</code> 作为模块被 <code>second</code> 导入时执行的结果</p>
-<p>第3、4行是 <code>second</code> 作为模块被 <code>__main__</code>（<code>first</code>） 导入时执行的结果</p>
-<p>第5、6行是 <code>__main__</code>（<code>first</code>） 作为程序入口而执行的结果</p>
-<p>因此 <code>first.py</code> 其实被执行了两次，一次作为模块一次作为入口，而 <code>second.py</code> 只是作为模块被执行了一次</p>
-<p>最后让我们写一个完整的代码验证一下：</p>
-<ul>
-<li><strong>run.py</strong></li>
-</ul>
-<pre><code class="python">import first
-
-print(&#39;in model: {}, file : {}&#39;.format(__name__, __file__.rsplit(&#39;\\&#39;, 1)[-1]))
-</code></pre>
-<ul>
-<li><strong>first.py</strong></li>
-</ul>
-<pre><code class="python">def first_func():
-    print(&#39;first_func called&#39;)
-
-from second import second_func
-
-print(&#39;in model: {}, file : {}&#39;.format(__name__, __file__.rsplit(&#39;\\&#39;, 1)[-1]))
-first_func()
-second_func()
-print()
-</code></pre>
-<ul>
-<li><strong>second.py</strong></li>
-</ul>
-<pre><code class="python">def second_func():
-    print(&#39;second_func called&#39;)
-
-from first import first_func
-
-print(&#39;in model: {}, file : {}&#39;.format(__name__, __file__.rsplit(&#39;\\&#39;, 1)[-1]))
-first_func()
-second_func()
-print()
-</code></pre>
-<ul>
-<li><strong>Case1</strong></li>
-</ul>
-<pre><code class="shell">λ python first.py
-in model: first, file : first.py
-first_func called
-second_func called
-
-in model: second, file : second.py
-first_func called
-second_func called
-
-in model: __main__, file : first.py
-first_func called
-second_func called
-</code></pre>
-<ul>
-<li><strong>Case2</strong></li>
-</ul>
-<pre><code class="shell">λ python run.py
-in model: second, file : second.py
-first_func called
-second_func called
-
-in model: first, file : first.py
-first_func called
-second_func called
-
-in model: __main__, file : run.py
-</code></pre>
-<h2 id="Flask-中的循环导入"><a href="#Flask-中的循环导入" class="headerlink" title="Flask 中的循环导入"></a>Flask 中的循环导入</h2><p>上面的模拟是为了更好地理解循环导入的流程，下面就实际开发过程中遇到的循环导入问题来分析</p>
-<h3 id="Bug-再现"><a href="#Bug-再现" class="headerlink" title="Bug 再现"></a>Bug 再现</h3><p>熟悉 Flask 的都知道 Flask 中的 app 实例是一个很重要的单例，初学者容易犯这么一个错误：</p>
-<p>把 <code>app.py</code> 中的视图函数抽取出来放在一个独立的模块 <code>view.py</code> 中，而视图函数在注册路由时需要引用 app 实例</p>
-<p>因此在  <code>view.py</code> 中会去导入 <code>app.py</code> 中创建好的 app 实例</p>
-<p>而为了能够完成路由的注册，<code>app.py</code> 需要导入 view，这就形成了一个循环引用：</p>
-<ul>
-<li><strong>app.py</strong></li>
-</ul>
-<pre><code class="python">from flask import Flask
-
-app = Flask(__name__) # 先定义
-
-import view # 再导入，这里导入view是为了完成view.py中路由的注册
-
-if __name__ == &#39;__main__&#39;:
-    app.run()
-</code></pre>
-<ul>
-<li><strong>view.py</strong></li>
-</ul>
-<pre><code class="python">from app import app # 为了注册路由，需要导入app.py中的app实例
-
-@app.route(&#39;/&#39;)  # 将路由注册到app.py创建好的app实例中
-def index():
-    return &#39;hello world!&#39;
-</code></pre>
-<p>命令行中执行：python app.py</p>
-<pre><code class="shell"> * Serving Flask app &quot;app&quot; (lazy loading)
- * Environment: production
-   WARNING: Do not use the development server in a production environment.
-   Use a production WSGI server instead.
- * Debug mode: off
- * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
-</code></pre>
-<p>程序没有报错，打开浏览器访问 <code>http://127.0.0.1:5000/</code>，却返回404错误：</p>
-<p><img src="https://ws1.sinaimg.cn/large/006giLD5ly1fx13z93ig2j30s003jmx3.jpg" alt=""></p>
-<p>也就是说路由并没有真正注册到 app 中，app 实例找不到对应的视图函数</p>
-<h3 id="逐行分析-1"><a href="#逐行分析-1" class="headerlink" title="逐行分析"></a>逐行分析</h3><p>那么路由注册到哪了？输出 app 实例的 id 来看一下就明白了：</p>
-<ul>
-<li><strong>app.py</strong></li>
-</ul>
-<pre><code class="python">from flask import Flask
-
-app = Flask(__name__)
-print(&#39;id为{}的app实例化&#39;.format(id(app)))
-
-import view
-
-if __name__ == &#39;__main__&#39;:
-    print(&#39;id为{}的app启动&#39;.format(id(app)))
-    app.run()
-</code></pre>
-<ul>
-<li><strong>view.py</strong></li>
-</ul>
-<pre><code class="python">from app import app
-
-print(&#39;id为{}的app注册路由&#39;.format(id(app)))
-
-@app.route(&#39;/&#39;)
-def index():
-    return &#39;hello world!&#39;
-</code></pre>
-<p>命令行中执行：python app.py</p>
-<pre><code class="shell">id为56217936的app实例化
-id为66627696的app实例化
-id为66627696的app注册路由
-id为56217936的app启动
- * Serving Flask app &quot;app&quot; (lazy loading)
- * Environment: production
-   WARNING: Do not use the development server in a production environment.
-   Use a production WSGI server instead.
- * Debug mode: off
- * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
-</code></pre>
-<p>可以看到 app 被实例化了两次，而且注册路由的 app 和最终启动的 app 不是同一个 app 实例</p>
-<p>也就是说最终启动的 app 实例并没有注册我们在 view 中写好的路由和视图函数，因此最终只能返回404</p>
-<p>为什么app会被实例化两次，而且注册路由的那个 app 不是启动的 app？</p>
-<p>相信经过前面的讨论已经不难分析了：</p>
-<p>首先执行 <code>app.py</code> 创建 id 为 56217936 的 app 实例，然后导入 <code>view</code>，进入 <code>view.py</code> 执行代码</p>
-<p><code>view.py</code> 在导入 app 时 <code>sys.modules</code> 中还没有 app</p>
-<p>因为 <code>app.py</code> 是程序的入口文件，在 <code>sys.modules</code>  中为 <code>__main__</code></p>
-<p>所以 <code>app.py</code>会再次被执行， id 为 66627696 的 app 被实例化</p>
-<p>由于这次是以模块被导入的，所以在 <code>&quot;if __name__ == &#39;__main__&#39;:&quot;</code> 处为 False （<code>__name__</code> 为 “app”）</p>
-<p>导入结束返回到 <code>view.py</code>，此时获取到的 app 实例是第二次实例化的 app 了</p>
-<p>因此接下来注册路由自然就会注册在第二个 app 实例上（id 为 66627696 的 app 注册路由）</p>
-<p><code>view.py</code> 导入结束返回到最开始的 <code>app.py</code>  </p>
-<p><code>&quot;if __name__ == &#39;__main__&#39;:&quot;</code> 为 True，启动第一个 app 实例（id为56217936的app启动）</p>
-<h3 id="深入理解"><a href="#深入理解" class="headerlink" title="深入理解"></a>深入理解</h3><p>这个 Bug 告诉我们，import 机制并不总是保证单例，它只是保证了模块的单例而已</p>
-<p>换句话说，Python 全局的 <code>sys.modules</code> 字典保证了模块的单例，但不能防止模块文件被执行两次</p>
-<p>app 是一个有状态的实例，而且要求是一个单例，实例化两次是不被允许的</p>
-<p>即使我们先定义后导入，但这仅仅是保证程序能够正常运行，而不能保证 app 单例</p>
-<h3 id="解决方法-1"><a href="#解决方法-1" class="headerlink" title="解决方法"></a>解决方法</h3><p>使用 Flask 蓝图（blueprint），分层解耦，还是那句话：</p>
-<blockquote>
-<p><em>计算机</em>科学领域的任何问题都可以通过增加一个间接的<em>中间层</em>来解决</p>
-</blockquote>
-<p>将路由注册到蓝图，然后把蓝图注册到 app 实例：</p>
-<ul>
-<li><strong>app.py</strong></li>
-</ul>
-<pre><code class="python">from flask import Flask
-
-from view import home_bp # 从view中导入蓝图实例
-
-app = Flask(__name__)
-app.register_blueprint(home_bp) # 将蓝图注册到app实例中，注意到register_blueprint是app实例的方法
-
-if __name__ == &#39;__main__&#39;:
-    app.run()
-</code></pre>
-<ul>
-<li><strong>view.py</strong></li>
-</ul>
-<pre><code class="python">from flask import Blueprint # 不再返回去导入app.py了，而是导入flask中的Blueprint，循环导入被解开
-
-home_bp = Blueprint(&#39;home&#39;, __name__) # 创建蓝图实例，被app.py导入
-
-@home_bp.route(&#39;/&#39;) # 将路由注册到home_bp实例而不是app实例中，彻底解耦了
-def index():
-    return &#39;hello world!&#39;
-</code></pre>
-<p>命令行中执行：python app.py</p>
-<pre><code class="shell">* Serving Flask app &quot;app&quot; (lazy loading)
- * Environment: production
-   WARNING: Do not use the development server in a production environment.
-   Use a production WSGI server instead.
- * Debug mode: off
- * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
-127.0.0.1 - - [09/Nov/2018 00:58:56] &quot;GET / HTTP/1.1&quot; 200 -
-</code></pre>
-<p>注意最后一行输出，我们成功地请求到了注册路由，执行相对应的视图函数并返回</p>
-<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>导入时如果报错找不到某个实例或变量，那么需要考虑是否可能出现了循环导入，因为<strong>循环导入和程序入口有很大的关系</strong></p>
-<p>这取决于该文件是以模块被加载还是作为程序入口（作为程序入口时在循环导入下会被执行两次）</p>
-<p>有时候循环导入默不作声，带来难以发现的 Bug</p>
-<p>最典型的就是 Flask 中的 app 实例，一不小心就会被实例化两次，然而程序能正常运行</p>
-<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
-<li><a href="https://www.youtube.com/watch?v=NH-8oLHUyDc" target="_blank" rel="external">Flask: Circular Imports</a></li>
-</ul>
-]]></content>
-      
-        
-        <tags>
-            
-            <tag> Python </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[Python字符串驻留机制]]></title>
-      <url>/2018/11/07/Python%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%A9%BB%E7%95%99%E6%9C%BA%E5%88%B6/</url>
-      <content type="html"><![CDATA[<p>由于CPython的优化，有时会发生<strong>字符串驻留（intern）</strong></p>
-<p>即在某些情况下尝试使用现有的<strong>不可变对象</strong>而不是每次都创建一个新对象</p>
-<p>这些驻留的对象在内部使用类似字典的结构（<strong>驻留池</strong>）进行驻留</p>
-<p>在被驻留之后，许多变量可能指向内存中的相同字符串对象，从而<strong>节省内存</strong></p>
-<p>下面的代码片段中，字符串是被<strong>隐式驻留</strong>的，何时隐式驻留字符串取决于字符串本身的特点</p>
-<p>也就是说字符串是否会被隐式驻留是有条件的</p>
-<p>（至于<strong>显式驻留</strong>，后面会讲到，以下的 CPython 源码剖析全部基于 CPython3.6）</p>
-<a id="more"></a>
-<h3 id="字符串只在编译期间被隐式驻留"><a href="#字符串只在编译期间被隐式驻留" class="headerlink" title="字符串只在编译期间被隐式驻留"></a>字符串只在编译期间被隐式驻留</h3><pre><code class="python">a = &quot;some_string&quot;
-b = &quot;some&quot; + &quot;_&quot; + &quot;string&quot;
-a is b
-&gt;&gt;&gt; True
-</code></pre>
-<p>很明显，字符串 “some_string” 被 CPython 隐式驻留了，所以 b 才会与 a 引用相同的字符串对象 </p>
-<p>而且可以注意到字符串是在<strong>编译时（compile-time）</strong>被驻留的</p>
-<p>因为这里字符串的拼接发生在编译时，我们可以反汇编验证一下：</p>
-<pre><code class="python">from dis import dis
-dis(&quot;&quot;&quot;id(&quot;some&quot; + &quot;_&quot; + &quot;string&quot;)&quot;&quot;&quot;)
-&gt;&gt;&gt;           0 LOAD_NAME                0 (id)
-              2 LOAD_CONST               4 (&#39;some_string&#39;)
-              4 CALL_FUNCTION            1
-              6 RETURN_VALUE
-</code></pre>
-<p>反汇编的结果展示的是<strong>运行时（run-time）</strong>的字节码</p>
-<p>可以看到，字符串 ‘some_string’ 在编译时就已经拼接好了</p>
-<p>再加上之前 a 变量的赋值操作在编译时已经被隐式驻留了</p>
-<p>所以在运行时可以直接引用（<code>LOAD_CONST</code>），从而指向同一个字符串对象</p>
-<p>为了对比，我们看这种情况：</p>
-<pre><code class="python">a = &quot;some_string&quot;
-b = &#39;&#39;.join([&#39;some&#39;,&#39;_&#39;,&#39;string&#39;])
-a is b
-&gt;&gt;&gt; False
-</code></pre>
-<p>join函数返回的也是 “some_string”，却不是同一个对象</p>
-<p>因为这里是调用函数来拼接字符串的，发生在‘运行时’</p>
-<p>在前面的‘编译时’CPython并不知道结果是 “some_string”</p>
-<p>CPython看到的只是 ‘some’, ‘_’, ‘string’ 这三个字符串</p>
-<p>所以最终的 “some_string” 是新创建的字符串对象而不是之前的驻留对象</p>
-<p>我们反汇编来验证一下就明白了：</p>
-<pre><code class="python">dis(&quot;&quot;&quot;&#39;&#39;.join([&#39;some&#39;,&#39;_&#39;,&#39;string&#39;])&quot;&quot;&quot;)
-&gt;&gt;&gt;           0 LOAD_CONST               0 (&#39;&#39;)
-              2 LOAD_ATTR                0 (join)
-              4 LOAD_CONST               1 (&#39;some&#39;)
-              6 LOAD_CONST               2 (&#39;_&#39;)
-              8 LOAD_CONST               3 (&#39;string&#39;)
-             10 BUILD_LIST               3
-             12 CALL_FUNCTION            1
-             14 RETURN_VALUE
-</code></pre>
-<p>运行时并没有字符串 “some<em>string”，而是 ‘some’, ‘\</em>‘, ‘string’</p>
-<p>当然，若之前已经驻留了 ‘some’, ‘_’, ‘string’，</p>
-<p>则这里的 ‘some’, ‘_’, ‘string’ 将分别引用同一个对象</p>
-<p>但对结果 “some_string” 没有任何影响，无论如何 “some_string” 将是一个新的字符串对象</p>
-<p>其实只要分清楚字符串的拼接到底发生在编译期间还是运行期间就明白了，再来看一个例子：</p>
-<pre><code class="python">a = &#39;some&#39;
-b = &quot;some_string&quot;
-a + &#39;_string&#39; is b
-&gt;&gt;&gt; False
-</code></pre>
-<p>同样的，最后发生的字符串拼接是在运行期间而不是编译期间，因为 a 变量在编译期间不会被’some’替换</p>
-<p>反汇编一下就明白了：</p>
-<pre><code class="python">dis(&quot;&quot;&quot;a + &#39;_string&#39;&quot;&quot;&quot;)
-&gt;&gt;&gt;           0 LOAD_NAME                0 (a)
-              2 LOAD_CONST               0 (&#39;_string&#39;)
-              4 BINARY_ADD
-              6 RETURN_VALUE
-
-dis(&quot;&quot;&quot;&#39;some&#39; + &#39;_string&#39;&quot;&quot;&quot;)
-&gt;&gt;&gt;           0 LOAD_CONST               2 (&#39;some_string&#39;)
-              2 RETURN_VALUE
-</code></pre>
-<h3 id="只有包含ASCII字母，数字或下划线的字符串才会被隐式驻留"><a href="#只有包含ASCII字母，数字或下划线的字符串才会被隐式驻留" class="headerlink" title="只有包含ASCII字母，数字或下划线的字符串才会被隐式驻留"></a>只有包含ASCII字母，数字或下划线的字符串才会被隐式驻留</h3><pre><code class="python">a = &quot;wtf&quot;
-b = &quot;wtf&quot;
-a is b
-&gt;&gt;&gt; True
-
-a = &quot;wtf!&quot;
-b = &quot;wtf!&quot;
-a is b
-&gt;&gt;&gt; False
-</code></pre>
-<p><img src="https://ws1.sinaimg.cn/large/006giLD5ly1fwyhrevoyhj30cs0cc0tp.jpg" alt=""></p>
-<p>字符串 “wtf!” 包含了非合法的字符 “!”，因此不会引用同一驻留对象</p>
-<p>因为解释器仅对看起来像 Python 标识符的字符串驻留，而 Python 标识符正是由下划线、字母和数字组成的</p>
-<p>这在CPython的 <a href="https://github.com/python/cpython/blob/3.6/Objects/codeobject.c#L19" target="_blank" rel="external">源码中 </a>可以看到具体的实现，这里只分析主要的代码片段：</p>
-<pre><code class="c">#define NAME_CHARS \
-    &quot;0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz&quot; // 只含ASCII字母，数字和下划线
-
-/* all_name_chars(s): true iff all chars in s are valid NAME_CHARS */
-
-static int
-all_name_chars(PyObject *o) // o为指向待检测字符串对象的指针，通过检测则返回1，否则返回0
-{
-    static char ok_name_char[256]; // 所有 ASCII 字符的映射表
-    static const unsigned char *name_chars = (unsigned char *)NAME_CHARS; // name_chars 指向合法字符表
-    const unsigned char *s, *e; 
-
-    if (!PyUnicode_IS_ASCII(o)) // 首先检测是否都为 ASCII 字符，避免下面检测时越界
-        return 0;
-
-    if (ok_name_char[*name_chars] == 0) {
-        const unsigned char *p;
-        for (p = name_chars; *p; p++) // 在 ASCII 字符映射表中把合法字符的位置设为1
-            ok_name_char[*p] = 1;
-    }
-    s = PyUnicode_1BYTE_DATA(o); // 指向待检测字符串首字符
-    e = s + PyUnicode_GET_LENGTH(o); // 指向待检测字符串尾字符
-    while (s != e) { // 遍历待检测字符串，看在 ASCII 字符映射表中相应的字符是否合法（值为1）
-        if (ok_name_char[*s++] == 0) // 一旦检测到非法字符（值为0）就返回0
-            return 0;
-    }
-    return 1; // 通过检测，返回1
-}
-</code></pre>
-<p>但这种检测只发生在交互式命令行中，如果我们写成一个 py 文件然后运行，即使包含非法字符也会被驻留</p>
-<p>这也许是 CPython 更进一步的优化</p>
-<h3 id="同一行赋值（元组拆包）时会引用同一相等的对象，但不一定会被驻留"><a href="#同一行赋值（元组拆包）时会引用同一相等的对象，但不一定会被驻留" class="headerlink" title="同一行赋值（元组拆包）时会引用同一相等的对象，但不一定会被驻留"></a>同一行赋值（元组拆包）时会引用同一相等的对象，但不一定会被驻留</h3><pre><code class="python">a, b = &quot;wtf!&quot;, &quot;wtf!&quot;
-a is b
-&gt;&gt;&gt; True
-</code></pre>
-<p>当在<strong>同一行</strong>中把 a 和 b 赋值为“wtf!”时</p>
-<p>解释器只会创建一个新对象（即使该字符串中包含非法字符），然后两个变量同时引用该对象</p>
-<p>如果你在不同的行上进行，它不会“知道”已经有了 “wtf!” 作为一个对象（因为 “wtf!” 不是上面提到合法字符串）</p>
-<p>但引用同一对象这并不意味着该对象发生了驻留：</p>
-<pre><code class="python">a, b = &quot;wtf!&quot;, &quot;wtf!&quot;
-c = &quot;wtf!&quot;
-a is b
-&gt;&gt;&gt; True
-a is c
-&gt;&gt;&gt; False
-b is c
-&gt;&gt;&gt; False
-
-a, b = &quot;wtf&quot;, &quot;wtf&quot;
-c = &quot;wtf&quot;
-a is b
-&gt;&gt;&gt; True
-a is c
-&gt;&gt;&gt; True
-b is c
-&gt;&gt;&gt; True
-</code></pre>
-<p>可以看到，“wtf!” 虽然被 a 和 b 同时引用了，但并没有被驻留，只有合法的字符串才会被驻留</p>
-<h3 id="长度为0和长度为1的字符串会被驻留"><a href="#长度为0和长度为1的字符串会被驻留" class="headerlink" title="长度为0和长度为1的字符串会被驻留"></a>长度为0和长度为1的字符串会被驻留</h3><pre><code class="python">a = &#39;&#39;
-b = &#39;&#39;
-a is b
-&gt;&gt;&gt; True
-
-a = &#39;_&#39;
-b = &#39;_&#39;
-a is b
-&gt;&gt;&gt; True
-
-a = &#39;&amp;&#39;
-b = &#39;&amp;&#39;
-a is b
-&gt;&gt;&gt; True
-</code></pre>
-<p>即使包含非法字符，只要长度不超过1，都会被驻留</p>
-<p>但准确来说是 <a href="https://zh.wikipedia.org/wiki/ISO/IEC_8859-1#%E5%AD%97%E7%AC%A6%E9%9B%86" target="_blank" rel="external">Latin-1 字符集</a> 的字符才会被驻留：</p>
-<pre><code class="python">a = &#39;ÿ&#39; # \xff
-b = &#39;ÿ&#39;
-a is b
-&gt;&gt;&gt; True
-
-a = &#39;我&#39;
-b = &#39;我&#39;
-a is b
-&gt;&gt;&gt; False
-
-len(&#39;我&#39;)
-&gt;&gt;&gt; 1
-</code></pre>
-<p>虽然字符串 <code>&#39;我&#39;</code> 的长度为1，但由于不是在 Latin-1 字符集的范围内，所以不会被驻留</p>
-<p>严格来讲，单字符实际上在CPython内部使用了一个数组 <code>unicode_latin1</code> 来共享而不是靠 <code>interned</code> 字典来驻留</p>
-<p>类似于小整数缓存池 [-5,256]，<code>unicode_latin1</code> 相当于一个字符缓冲池：</p>
-<pre><code class="c">/* Single character Unicode strings in the Latin-1 range are being
-   shared as well. */
-static PyObject *unicode_latin1[256] = {NULL};
-
-static PyObject*
-get_latin1_char(unsigned char ch)
-{ 
-    PyObject *unicode = unicode_latin1[ch]; // 尝试从 unicode_latin1 中获取单字符的引用
-    if (!unicode) { // 首次获取，unicode_latin1 中还没缓存
-        unicode = PyUnicode_New(1, ch); // 新建一个 PyUnicode 对象
-        if (!unicode)
-            return NULL;
-        PyUnicode_1BYTE_DATA(unicode)[0] = ch;
-        assert(_PyUnicode_CheckConsistency(unicode, 1));
-        unicode_latin1[ch] = unicode; // 存放到 unicode_latin1 中，这样下次可以直接获取该引用
-    }
-    Py_INCREF(unicode); // 记得引用计数加1
-    return unicode;
-}
-</code></pre>
-<p>无论如何，当你获取单个字符时，<code>get_latin1_char</code> 总是返回 <code>unicode_latin1</code> 中共享的引用</p>
-<p>这也就意味着在运行期间得到的单个字符也是共享的：</p>
-<pre><code class="python">a = &#39;&#39;.join([&#39;@&#39;]) # ‘@’在 latin1 字符集范围内
-b = &#39;&#39;.join([&#39;@&#39;]) 
-a is b
-&gt;&gt;&gt; True
-
-a = &#39;&#39;.join([&#39;你&#39;]) # ‘你’不在 latin1 字符集范围内
-b = &#39;&#39;.join([&#39;你&#39;])
-a is b
-&gt;&gt;&gt; False
-
-a = &#39;&#39;.join([&#39;1&#39;,&#39;1&#39;]) # 结果不是单字符时创建两个不同的字符串
-b = &#39;&#39;.join([&#39;1&#39;,&#39;1&#39;]) 
-a is b
-&gt;&gt;&gt; False
-
-a = &#39;123&#39;
-b = &#39;1&#39;
-a[0] is b # 获取的是单个字符
-&gt;&gt;&gt; True
-
-a = &#39;123&#39;
-b = &#39;12&#39;
-a[0:2] is b # 获取非单字符，a[0:2] 返回的是新的字符串对象
-&gt;&gt;&gt; False
-</code></pre>
-<h3 id="超过20个字符的折叠字符串不会被驻留"><a href="#超过20个字符的折叠字符串不会被驻留" class="headerlink" title="超过20个字符的折叠字符串不会被驻留"></a>超过20个字符的<code>折叠</code>字符串不会被驻留</h3><pre><code class="python">a = &#39;aaaaaaaaaaaaaaaaaaaa&#39; # 未折叠字符串，长度为20
-b = &#39;aaaaaaaaaaaaaaaaaaaa&#39;
-a is b
-&gt;&gt; True
-
-a = &#39;aaaaaaaaaaaaaaaaaaaaa&#39; # 未折叠字符串，长度为21
-b = &#39;aaaaaaaaaaaaaaaaaaaaa&#39;
-a is b
-&gt;&gt;&gt; True
-
-&#39;a&#39; * 20 is &#39;aaaaaaaaaaaaaaaaaaaa&#39; # &#39;a&#39; * 20 为折叠字符串，长度为20
-&gt;&gt;&gt; True
-
-&#39;a&#39; * 21 is &#39;aaaaaaaaaaaaaaaaaaaaa&#39; # &#39;a&#39; * 21 为折叠字符串，长度为21
-&gt;&gt;&gt; False
-
-&#39;$&#39; * 2 is &#39;$$&#39; # 只要含有非法字符就不会被驻留，与长度无关
-&gt;&gt;&gt; False
-</code></pre>
-<p>字符串折叠是<strong>常量折叠</strong>的一种，常量折叠在编译阶段会进行值替换，是<strong>窥孔优化</strong>的一种实现方式</p>
-<p>这意味着在编译期间表达式 <code>&#39;a&#39;* 20</code> 会被 <code>&#39;aaaaaaaaaaaaaaaaaaa&#39;</code> 替换，以减少运行期间的时钟周期</p>
-<p>但这种优化是有限制的，只有长度小于20的字符串才会发生常量折叠的优化</p>
-<p>这在 CPython 的 <a href="https://github.com/python/cpython/blob/3.6/Python/peephole.c#L288" target="_blank" rel="external">源码中 </a>可以找到相应的实现</p>
-<p>为什么会有这种限制？想象一下由于表达式 <code>&#39;a&#39;* 10 ** 10</code> 而生成的 .pyc 文件的大小</p>
-<p>下面我们通过反汇编来看一下就明白了：</p>
-<pre><code class="python">dis(&quot;&quot;&quot;&#39;a&#39; * 20&quot;&quot;&quot;)
-&gt;&gt;&gt;          0 LOAD_CONST               2 (&#39;aaaaaaaaaaaaaaaaaaaa&#39;)
-              2 RETURN_VALUE
-
-dis(&quot;&quot;&quot;&#39;a&#39; * 21&quot;&quot;&quot;)
-&gt;&gt;&gt;           0 LOAD_CONST               0 (&#39;a&#39;)
-              2 LOAD_CONST               1 (21)
-              4 BINARY_MULTIPLY
-              6 RETURN_VALUE
-</code></pre>
-<p>可以看到，超过20个字符的字符串将不会在编译时被替换，而是直接被解析成 <code>BINARY_MULTIPLY</code> 的乘法运算</p>
-<p>这种常量折叠不只发生在字符串上，事实上它对所有的不可变对象（字符串、元组等）都有效：</p>
-<pre><code class="python">dis(&quot;(1,)*20&quot;)
-&gt;&gt;&gt;           0 LOAD_CONST               3 ((1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1))
-              2 RETURN_VALUE
-
-dis(&quot;(1,)*21&quot;)
-&gt;&gt;&gt;           0 LOAD_CONST               2 ((1,))
-              2 LOAD_CONST               1 (21)
-              4 BINARY_MULTIPLY
-              6 RETURN_VALUE
-
-dis(&quot;[1]*2&quot;) # 对于可变对象没有这种优化
-&gt;&gt;&gt;           0 LOAD_CONST               0 (1)
-              2 BUILD_LIST               1
-              4 LOAD_CONST               1 (2)
-              6 BINARY_MULTIPLY
-              8 RETURN_VALUE
-</code></pre>
-<h3 id="使用-sys-intern-显式驻留"><a href="#使用-sys-intern-显式驻留" class="headerlink" title="使用 sys.intern() 显式驻留"></a>使用 <code>sys.intern()</code> 显式驻留</h3><pre><code class="python">from sys import intern
-a = intern(&quot;wtf!&quot;)
-b = intern(&quot;wtf!&quot;)
-a is b
-&gt;&gt;&gt; True
-
-a = &quot;wtf!&quot;
-b = &quot;wtf!&quot;
-a is b # 显式驻留之前
-&gt;&gt;&gt; False
-
-b = intern(a)
-a is b # 显式驻留之后
-&gt;&gt;&gt; True
-</code></pre>
-<p>注意：驻留不是缓存，缓存的对象往往有过期时间的限制，会发生淘汰，其生命周期有限</p>
-<p>而驻留的对象没有过期时间和淘汰这一说法，驻留的对象直到发生垃圾回收或程序结束才会被销毁</p>
-<p>可以把驻留池看成是一个容量为无限大且没有过期时间限制的缓存池</p>
-<p>这里补充一点：Python中字符串的 <a href="https://github.com/python/cpython/blob/d0e3105f7ca3fc54b167edc756ce545cbab0ce95/Include/unicodeobject.h#L412" target="_blank" rel="external">intern状态</a> 有三个，分别是:</p>
-<pre><code class="c">/* Interning state. */
-#define SSTATE_NOT_INTERNED 0  // 字符串没有被interned
-#define SSTATE_INTERNED_MORTAL 1 // 字符串被interned，可以被回收
-#define SSTATE_INTERNED_IMMORTAL 2 // 字符串永久interned，不会被回收
-</code></pre>
-<p>字符串的结构体中 <code>state.interned</code> 标记该值，宏 <code>PyUnicode_CHECK_INTERNED</code> 返回该值：</p>
-<pre><code class="c">/* Use only if you know it&#39;s a string */
-#define PyUnicode_CHECK_INTERNED(op) (((PyASCIIObject *)(op))-&gt;state.interned)
-</code></pre>
-<p>state.interned<code>在创建字符串对象时会被设为</code>SSTATE_NOT_INTERNED</p>
-<p>在驻留到 interned 字典后被设为 <code>SSTATE_INTERNED_MORTAL</code></p>
-<p>至于 <code>SSTATE_INTERNED_IMMORTAL</code> 需要手动调用 <code>PyUnicode_InternImmortal</code> 才会设置该值：</p>
-<pre><code class="c">void
-PyUnicode_InternImmortal(PyObject **p)
-{
-    PyUnicode_InternInPlace(p);
-    if (PyUnicode_CHECK_INTERNED(*p) != SSTATE_INTERNED_IMMORTAL) {
-        _PyUnicode_STATE(*p).interned = SSTATE_INTERNED_IMMORTAL;
-        Py_INCREF(*p);
-    }
-}
-</code></pre>
-<p>验证 <code>SSTATE_INTERNED_MORTAL</code>：</p>
-<pre><code class="python">a = &quot;foo&quot;
-id(a)
-&gt;&gt;&gt; 89369248
-
-a = None # a 指向其他对象，字符串&quot;foo&quot;在驻留池中被销毁
-b = &quot;foo&quot; # 此时在驻留池中找不到&quot;foo&quot;便会创建新的对象
-id(b) # 地址将不再和上面相等
-&gt;&gt;&gt; 89368640
-</code></pre>
-<h3 id="深入源码"><a href="#深入源码" class="headerlink" title="深入源码"></a>深入源码</h3><p>字符串的intern机制由 <a href="https://github.com/python/cpython/blob/9fc57a384825530635ef5ec093a31d864ea14f7c/Objects/unicodeobject.c#L15204" target="_blank" rel="external">PyUnicode_InternInPlace</a> 函数来实现：</p>
-<pre><code class="c">/* This dictionary holds all interned unicode strings.  Note that references
-   to strings in this dictionary are *not* counted in the string&#39;s ob_refcnt.
-   When the interned string reaches a refcnt of 0 the string deallocation
-   function will delete the reference from this dictionary.
-
-   Another way to look at this is that to say that the actual reference
-   count of a string is:  s-&gt;ob_refcnt + (s-&gt;state ? 2 : 0)
-*/
-static PyObject *interned = NULL; // 字符串驻留机制的核心存储结构--interned字典
-
-void
-PyUnicode_InternInPlace(PyObject **p) // 注意这里是二级指针，因为可能需要修改指针本身
-{
-    PyObject *s = *p;
-    PyObject *t;
-#ifdef Py_DEBUG
-    assert(s != NULL);
-    assert(_PyUnicode_CHECK(s));
-#else
-    if (s == NULL || !PyUnicode_Check(s))
-        return;
-#endif
-    /* If it&#39;s a subclass, we don&#39;t really know what putting
-       it in the interned dict might do. */
-    /* 检查 s 是否为 PyUnicode 实例，如果为 PyUnicode 子类的实例则直接返回，不对子类进行驻留
-      因为不知道要把子类的什么内容驻留在 interned 字典中 */
-    if (!PyUnicode_CheckExact(s))
-        return;
-    if (PyUnicode_CHECK_INTERNED(s)) // 对驻留过的字符串不再执行多余的 internd 机制
-        return;
-    if (interned == NULL) { // 首次使用 interned 字典，需要初始化
-        interned = PyDict_New(); // interned 就是一个普通的 Python Dict
-        if (interned == NULL) { // 创建 interned 字典失败不会抛出错误而是默默退出
-            PyErr_Clear(); /* Don&#39;t leave an exception */
-            return;
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
         }
-    }
-    Py_ALLOW_RECURSION
-    /* PyDict_SetDefault 就是 dict 的一个方法 setdefault 的实现
-      这里设置键值都为s，注意这里 s 为引用（指针），实际上是｛hash(s):s｝
-      值相等的字符串，即使内存地址不一样，hash值也是一样的
-      因此如果 interned 中已经含有与s值相等的字符串
-      则返回该字符串原来的引用指针t，否则返回当前的引用指针s
-    */
-    t = PyDict_SetDefault(interned, s, s);
-    Py_END_ALLOW_RECURSION
-    if (t == NULL) { // 出错直接返回
-        PyErr_Clear();
-        return;
-    }
-    if (t != s) { // 返回的引用指针 t 不等于 s，说明 interned 中已经含有该字符串
-        Py_INCREF(t); // 增加原来字符串 t 的引用计数
-        Py_SETREF(*p, t); // 修改当前字符串 p 的引用为 t，使得 p 和 t 是同一个引用，
-        return;       // 这样原来的引用 p 所指向的字符串对象会被垃圾回收
-        // 也就是说其实字符串对象总是会被创建的，但可能昙花一现
-    }
-    /* The two references in interned are not counted by refcnt.
-       The deallocator will take care of this */
-    /* 代码能执行到这里说明 t == s, 即 interned 中不存在该与 s 值相等的字符串，
-      于是在 interned 中驻留，从而返回的 t 就是 s
-      但这样 s 的引用计数会由于存入字典而被加2，因为字典中 key 和 value 都会引用该字符串
-      因此我们需要手动把 s 的引用计数减去2，这样才是 s 的真正引用计数
-     */
-    Py_REFCNT(s) -= 2;
-    _PyUnicode_STATE(s).interned = SSTATE_INTERNED_MORTAL; // 修改 intern 状态为 SSTATE_INTERNED_MORTAL
-}
-</code></pre>
-<p>更多相关源码的研究可以查看 cpython/Objects/ 下的 <a href="https://github.com/python/cpython/blob/3.6/Objects/unicodeobject.c" target="_blank" rel="external">unicodeobject.c</a> 和 <a href="https://github.com/python/cpython/blob/3.6/Objects/codeobject.c" target="_blank" rel="external">codeobject.c</a></p>
-<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
-<li><a href="https://github.com/satwikkansal/wtfpython#-strings-can-be-tricky-sometimes-" target="_blank" rel="external">wtfpython</a></li>
-<li><a href="https://book.douban.com/subject/3117898/" target="_blank" rel="external">Python源码剖析第三章</a></li>
-<li><a href="http://guilload.com/python-string-interning/" target="_blank" rel="external">The internals of Python string interning</a></li>
-<li><a href="https://fanchao01.github.io/blog/2016/10/18/python-string/" target="_blank" rel="external">Python源码剖析—字符串对象PyStringObject</a></li>
-</ul>
-]]></content>
-      
-        
-        <tags>
-            
-            <tag> Python </tag>
-            
-            <tag> wtfpython </tag>
-            
-            <tag> 源码剖析 </tag>
-            
-        </tags>
-        
-    </entry>
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
     
-    <entry>
-      <title><![CDATA[设计模式之单例模式]]></title>
-      <url>/2018/08/15/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/</url>
-      <content type="html"><![CDATA[<p>由于 Python 拥有灵活的动态语言特性和丰富的魔法方法，</p>
-<p>再加上它强大的元类编程，单例模式（Singleton）在 Python 上的实现方式五花八门</p>
-<p>本文主要讨论单例模式在 Python 上的各种实现</p>
-<p>涉及到 Python 中元类编程、魔法方法和装饰器的进阶语法知识，并在最后深入讨论和总结。</p>
-<a id="more"></a>
-<h2 id="关于单例模式"><a href="#关于单例模式" class="headerlink" title="关于单例模式"></a>关于单例模式</h2><h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><blockquote>
-<p>Ensure a class has only one instance, and provide a global point of access to it.</p>
-</blockquote>
-<ol>
-<li>某个类只能有一个实例</li>
-<li>该类必须自行创建和管理这个实例</li>
-<li>必须向整个系统提供这个实例</li>
-</ol>
-<h3 id="模式角色"><a href="#模式角色" class="headerlink" title="模式角色"></a>模式角色</h3><p>只包含一个单例类，在 Python 下可以是一个装饰器（函数）</p>
-<h3 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h3><ol>
-<li>提供对唯一实例的受控访问</li>
-<li>节约系统资源，提高系统性能</li>
-<li>允许可变数目的实例（多例模式）</li>
-</ol>
-<h3 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h3><ol>
-<li>缺少抽象层而难以扩展</li>
-<li>单例类职责过重</li>
-</ol>
-<h3 id="适用场景"><a href="#适用场景" class="headerlink" title="适用场景"></a>适用场景</h3><ol>
-<li>系统只需要一个实例对象（如windows的资源管理器、唯一序列号生成器、py中的None、某些UI窗口）</li>
-<li>客户调用类的单个实例只允许使用一个公共访问点，除了该公共访问点，不能通过其他途径访问该实例</li>
-</ol>
-<h3 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h3><ol>
-<li><p>懒汉单例（常用）：lazy singleton<br>在第一次被引用时，才将自己实例化。避免开始时占用系统资源，但是有多线程访问安全性问题。</p>
-</li>
-<li><p>饿汉单例：eager singleton<br>在类被加载时就将自己实例化（静态初始化）。其优点是躲避了多线程访问的安全性问题，缺点是提前占用系统资源。</p>
-</li>
-</ol>
-<h3 id="线程安全"><a href="#线程安全" class="headerlink" title="线程安全"></a>线程安全</h3><p>懒汉单例在多线程环境下需要考虑线程安全的问题，因此需要使用threading.Lock</p>
-<h3 id="区别"><a href="#区别" class="headerlink" title="区别"></a>区别</h3><p>这里需要注意的是，Python 中类的加载机制与 Java 的不太一样</p>
-<p>前者动态后者静态，因此在 Python 中实现饿汉单例比较特殊</p>
-<p>后面的变量名覆盖方法和import导入其实就是一种饿汉单例</p>
-<p>关于 Python 中类的加载（导入）机制，可以看《流畅的Python》第21章元类编程中：导入时和运行时的比较，其中的一个理解计算时间的练习很有意思</p>
-<h3 id="扩展"><a href="#扩展" class="headerlink" title="扩展"></a>扩展</h3><p>多例模式，返回多个（有限个）实例对象，可以随机也可以按序</p>
-<h2 id="实现方式"><a href="#实现方式" class="headerlink" title="实现方式"></a>实现方式</h2><p>在此之前，建议看我之前的一篇文章：<a href="https://hk4fun.github.io/2018/08/15/%E9%AD%94%E6%B3%95%E6%96%B9%E6%B3%95%E4%B9%8B-new-%E4%B8%8E-init/">魔法方法之 <code>__new__()</code> 与 <code>__init__()</code></a>，因为接下来的各种实现方式很多都是通过重载 <code>__new__()</code> 和 <code>__init__()</code> 来实现的，否则你可能不知为何这么做就可以实现单例</p>
-<h3 id="1-重载-new"><a href="#1-重载-new" class="headerlink" title="1. 重载 __new__()"></a>1. 重载 <code>__new__()</code></h3><p>使用一个字典 <code>_instances</code> 来存放出现过的实例</p>
-<p>采用字典的存储方式是考虑到Singleton可能会有子类，这样可以返回子类的单例</p>
-<p>否则直接返回 Singleton 的单例时子类的 <code>__init__()</code> 不会被调用，因为Singleton 的单例不是其子类的实例</p>
-<p>该方法在每次生成实例时都会调用 <code>__init__()</code> 来重置实例属性</p>
-<pre><code class="python">class Singleton:
-    # 使用字典是考虑到Singleton可能会有子类，这样可以返回子类的单例，
-    # 否则返回Singleton的单例时子类的__init__()不会被调用，因为Singleton的单例不是其子类的实例
-    _instances = {} 
-
-    def __new__(cls, *args, **kwargs):
-        if cls not in cls._instances:
-            cls._instances[cls] = super().__new__(cls, *args, **kwargs)
-        return cls._instances[cls]
-
-    def __init__(self):
-        print(&#39;call Singleton.__init__()&#39;)
-
-class A(Singleton):
-    def __init__(self):
-        print(&#39;call A.__init__()&#39;)
-
-print(Singleton() is Singleton())
-print(&quot;* &quot; * 10)
-print(A() is A())
-print(&quot;* &quot; * 10)
-print(type(A()))
-</code></pre>
-<p>输出：</p>
-<pre><code class="python">call Singleton.__init__()
-call Singleton.__init__()
-True
-* * * * * * * * * * 
-call A.__init__()
-call A.__init__()
-True
-* * * * * * * * * * 
-call A.__init__()
-&lt;class &#39;__main__.A&#39;&gt;
-</code></pre>
-<p>可以看到继承单例类的子类也能成为单例类，但注意到 <code>__init__()</code> 方法被调用了多次</p>
-<p>这意味着每次实例化时虽然返回的是同一个实例对象</p>
-<p>但初始化创建的属性会被重置和改变（传入不同的初始化参数），这往往不是我们想看到的</p>
-<p>我们的要求更高了，返回第一次创建的实例还不够，我们还要求实例内部的环境变量也不能改变和重置</p>
-<p>这就要求单例模式下 <code>__init__()</code> 只会被调用一次，即只在第一次创建实例被调用，如何做到呢？</p>
-<h3 id="2-使用装饰器"><a href="#2-使用装饰器" class="headerlink" title="2. 使用装饰器"></a>2. 使用装饰器</h3><p>使用一个字典来存放不同类对应的实例，因为一个装饰器可以用来装饰多个类</p>
-<p>这样装饰器可以对不同的类生成不同的实例，对相同的类生成相同的实例</p>
-<p>且该方法比第一种方法更优：只有第一次实例化调用了 <code>__init__()</code></p>
-<pre><code class="python">def singleton(cls):
-    instances = {}  # 使用一个字典来存放不同类对应的实例，因为一个装饰器可以用来装饰多个类
-    def wrapper(*args, **kwargs):
-        if cls not in instances:
-            instances[cls] = cls(*args, **kwargs)
-        return instances[cls]
-    return wrapper
-
-
-@singleton
-class A:
-    def __init__(self):
-        print(&#39;call A.__init__&#39;)
-
-@singleton
-class B:
-    def __init__(self):
-        print(&#39;call B.__init__&#39;)
-
-print(A() is B())  # False，对不同的类生成不同的实例
-print(A() is A())  # True，对相同的类生成相同的实例
-print(B() is B())  # True
-</code></pre>
-<p>输出：</p>
-<pre><code class="python">call A.__init__
-call B.__init__
-False
-True
-True
-</code></pre>
-<p>可以看到，类 A 和 B 各自被调用了三次，但只有第一次才调用了各自的 <code>__init__()</code></p>
-<p>且装饰器 singleton 对不同的类生成不同的实例，对相同的类生成相同的实例。</p>
-<p>但使用装饰器可能存在一个问题，即用装饰器修饰的单例类不能再有子类，否则在加载子类时会出错：</p>
-<pre><code class="python">class C(A):
-    pass
-</code></pre>
-<p>输出：</p>
-<pre><code class="python">TypeError Traceback (most recent call last)
-&lt;ipython-input-42-dcf34ebd5f77&gt; in &lt;module&gt;()
-----&gt; 1 class C(A):
-      2     pass
-TypeError: function() argument 1 must be code, not str
-</code></pre>
-<p>因为被装饰器装饰后的A已经不再是类了，而只是一个函数，类是无法去继承函数的</p>
-<p>那如何做到既能只调用一次 <code>__init__()</code>，有能让继承的子类为单例类呢？</p>
-<h3 id="3-使用-metaclass"><a href="#3-使用-metaclass" class="headerlink" title="3. 使用 metaclass"></a>3. 使用 metaclass</h3><p>重载元类的 <code>__init__()</code> 和 <code>__call__()</code> （或 <code>__new__()</code> 和 <code>__call__()</code>）</p>
-<p>其原理和重载 <code>__new__()</code> 一样，因为元类的 <code>__call__()</code> 首先就是调用类的 <code>__new__()</code> 来得到类的一个实例</p>
-<p>因此我们可以在更早的时间点拦截，即在元类中提前检查是否含有单例</p>
-<p>同时该方法和装饰器一样只调用一次 <code>__init__()</code></p>
-<pre><code class="python">class Singleton(type):
-#     def __new__(cls, name, bases, dict, **kwargs):
-#         cls._instance = None
-#         return super().__new__(cls, name, bases, dict, **kwargs)
-
-    def __init__(cls, name, bases, dict, **kwargs):
-        cls._instance = None
-        super().__init__(name, bases, dict)
-
-    def __call__(cls, *args, **kwargs):
-        if cls._instance is None: # 有就直接返回该实例对象，避免进入super().__call__()中重复调用类的__init__()
-            cls._instance = super().__call__(*args, **kwargs)
-        return cls._instance
-
-class A(metaclass=Singleton): # 直接声明元类即可
-    def __init__(self):
-        print(&#39;call A.__init__&#39;)
-
-class B(A): # 继承A，则其元类也是A的元类
-    def __init__(self):
-        print(&#39;call B.__init__&#39;)
-
-print(A() is A())
-print(&#39;* &#39; * 10 )
-print(B() is B())
-print(&#39;* &#39; * 10 )
-print(type(B()))
-</code></pre>
-<p>输出：</p>
-<pre><code>call A.__init__
-True
-* * * * * * * * * * 
-call B.__init__
-True
-* * * * * * * * * * 
-&lt;class &#39;__main__.B&#39;&gt;
-</code></pre><p>可见 B 继承 A 后也为单例类，且 <code>__init__()</code> 也只调用了一次</p>
-<p>因为 <code>__call__()</code> 保证了不会进入<code>super().__call__()</code>中重复调用类的 <code>__init__()</code></p>
-<h3 id="4-使用共享属性"><a href="#4-使用共享属性" class="headerlink" title="4. 使用共享属性"></a>4. 使用共享属性</h3><p>首先强调一点，该方式实现的并不是严格的单例模式，实际上属于为Borg模式</p>
-<p>表面上看，单例就是所有实例对象拥有相同的状态(属性)和行为(方法)</p>
-<p>同一个类的所有实例本来就拥有相同的行为(方法)</p>
-<p>只需要保证同一个类的所有实例具有相同的状态(属性)即可</p>
-<p>所有实例共享属性的最简单最直接的方法就是将 <code>__dict__</code> 属性指向(引用)同一个字典</p>
-<p>虽然这么做各个实例的id不一样，即内存地址不一样，但表现出来的行为和状态却是一样的</p>
-<p>它们共享了同一套属性和方法，这让这些实例“看上去”像是单例的</p>
-<p>注意到该方法也会在每次实例化时调用 <code>__init__</code> 重置实例属性</p>
-<pre><code class="python">class Singleton:
-    _state = {}
-    def __new__(cls, *args, **kwargs):
-        inst = super().__new__(cls)
-        inst.__dict__ = cls._state
-        return inst
-
-class MyClass(Singleton):
-    def __init__(self, v):
-        self.v = v
-
-a = MyClass(1)
-print(a.v)
-b = MyClass(2)
-print(a.v) # 这里a.v会被改为2
-print(b.v)
-print(a is b) # a和b的id其实不一样
-print(a.__dict__ is b.__dict__) # 但a,b共享所有属性
-</code></pre>
-<p>输出：</p>
-<pre><code>1
-2
-2
-False
-True
-</code></pre><p>如果想在比较 id 时<strong>表现出</strong>相等，也就是想更加相似单例模式（在充当字典key时），我们可以重载 <code>__hash__()</code> 和 <code>__eq__()</code>：</p>
-<pre><code class="python">class Singleton:
-    _state = {}
-    def __new__(cls, *args, **kwargs):
-        inst = super().__new__(cls)
-        inst.__dict__ = cls._state
-        return inst
-
-    def __hash__(self):
-        return 0
-
-    def __eq__(self,other):
-        return self.__dict__ is other.__dict__
-
-class MyClass(Singleton):
-    pass
-
-a = MyClass()
-b = MyClass()
-d = {}
-d[a] = 1
-d[b] = 2
-print(d) # 输出{&lt;__main__.MyClass object at 0x05668550&gt;: 2}
-</code></pre>
-<p>字典 d 只有一个键值对，说明实例 a 和 b 在字典 key 上表现相等。</p>
-<p>这里要说明一下： 字典在比较两个key是否相等时会使用 <code>==</code> 符号，而 <code>==</code> 符号会调用 <code>__eq__()</code> 方法</p>
-<p>所以我们只需重载 <code>__eq__()</code> 来使得两个参与比较的单例 key 表现出相等即可</p>
-<p>但还需要重载 <code>__hash__()</code>，因为一个对象要成为字典的 key 就必须重载 <code>__hash__()</code> 来成为可散列对象</p>
-<p>（默认的 <code>__eq__()</code> 方法在 <code>x is y</code> 并且 <code>hash(x) == hash(y)</code> 下才会返回True</p>
-<p><code>is</code> 会去调用 <code>id()</code> 内置方法判断两个对象的内存地址是否一样，这个无法重载</p>
-<p>在共享属性的单例模式下我们两个实例的地址肯定是不一样的，这点没法修改</p>
-<p><code>hash()</code> 在默认情况下会返回一个随机值，每次返回结果几乎不一样， 但它回去调用 <code>__hash__()</code>）</p>
-<h3 id="5-使用-classmethod"><a href="#5-使用-classmethod" class="headerlink" title="5. 使用 @classmethod"></a>5. 使用 @classmethod</h3><p>这种实现方式很牵强，通过实现一个类方法来返回实例，</p>
-<p>用户通过调用该类方法来获取唯一的那个实例，但这不能阻止用户直接调用类（调用 <code>__init__()</code>）来生成</p>
-<p>在Java等静态语言中可以通过一个私有方法来将构造方法屏蔽起来不让用户去调用，但在Python中没有<strong>真正的</strong>私有方法</p>
-<p>如果用户能做到严格按照类方法来获取实例，那么 <code>__init__()</code> 只会被调用一次</p>
-<pre><code class="python">class Singleton():
-    _instance = None
-
-    def __init__(self):
-        print(&#39;call Singleton.__init__&#39;)
-
-    @classmethod
-    def getInstance(cls, *args, **kwargs):
-        if cls._instance is None:
-            cls._instance = cls(*args, **kwargs)
-        return cls._instance
-
-print(Singleton.getInstance() is Singleton.getInstance()) # 用户通过调用类方法来获取实例
-print(&#39;* &#39; * 10)
-print(Singleton() is Singleton()) # 但并不能阻止用户直接调用__init__()
-</code></pre>
-<p>输出：</p>
-<pre><code>call Singleton.__init__
-True
-* * * * * * * * * * 
-call Singleton.__init__
-call Singleton.__init__
-False
-</code></pre><h3 id="6-使用变量名覆盖"><a href="#6-使用变量名覆盖" class="headerlink" title="6.  使用变量名覆盖"></a>6.  使用变量名覆盖</h3><p>最简单最巧妙的实现方式，得益于 Python 强大的动态语言特性和丰富的魔法方法</p>
-<p>一开始就生成一个实例，并用一个与类名相同的变量名作为该实例的变量名</p>
-<p>而我们在类的 <code>__call__()</code> 中总是返回自己，这样后面试图去生成新的实例时</p>
-<p>其本质都是调用了 <code>__call__()</code> 来返回自己，十分巧妙，而且注意到这种实现方式是一种饿汉单例</p>
-<p>同时该方法和装饰器一样只调用一次 <code>__init__()</code></p>
-<pre><code class="python">class Singleton:
-    def __init__(self):
-        print(&#39;call Singleton.__init__&#39;)
-
-    def __call__(self):
-        return self
-
-class A(Singleton):
-    def __init__(self):
-        print(&#39;call A.__init__&#39;)
-
-Singleton = Singleton() # 提前生成实例
-A = A() # # 提前生成实例
-
-# 下面才是正式调用，因此从某种程度来讲，这种实现方式属于饿汉单例
-print(&quot;* &quot; * 10)
-print(Singleton() is Singleton() is Singleton)
-print(A() is A())
-print(&quot;* &quot; * 10)
-print(type(A()))
-</code></pre>
-<p>输出：</p>
-<pre><code>call Singleton.__init__
-call A.__init__
-* * * * * * * * * * 
-True
-True
-* * * * * * * * * * 
-&lt;class &#39;__main__.A&#39;&gt;
-</code></pre><p>可以看到，该方法和装饰器一样只调用一次 <code>__init__()</code>，且子类也能够继承而成为单例类，但要提前生成实例覆盖掉</p>
-<p>注意不能在单例类 Singleton 覆盖后才声明子类，否则会出现意外的错误，因为子类继承的是一个实例了！</p>
-<pre><code class="python">class Singleton:
-    def __init__(self):
-        print(&#39;call Singleton.__init__&#39;)
-
-    def __call__(self, *args):
-        print(&#39;call Singleton.__call__&#39;)
-        return self
-
-Singleton = Singleton() # 在声明子类前覆盖
-
-class A(Singleton):
-    def __init__(self):
-        print(&#39;call A.__init__&#39;)
-
-A()
-</code></pre>
-<p>输出：</p>
-<pre><code class="python">call Singleton.__init__
----------------------------------------------------------------------------
-TypeError                                 Traceback (most recent call last)
-&lt;ipython-input-122-995c78abe87f&gt; in &lt;module&gt;()
-      9 Singleton = Singleton() # 在声明子类前覆盖
-     10 
----&gt; 11 class A(Singleton):
-     12     def __init__(self):
-     13         print(&#39;call A.__init__&#39;)
-
-TypeError: __init__() takes 1 positional argument but 4 were given
-</code></pre>
-<h3 id="7-使用-import-的模块导入"><a href="#7-使用-import-的模块导入" class="headerlink" title="7. 使用 import 的模块导入"></a>7. 使用 import 的模块导入</h3><p>Python 的模块导入方式采用的就是天然的单例模式</p>
-<p>通过 import，一个模块只会被导入并初始化一次，模块内的全局变量将会被绑定到模块上</p>
-<p>因此我们只需把想要的单例提前在一个模块内<strong>作为全局变量</strong>实例化，然后在别的模块中导入即可</p>
-<p>这种实现方式属于饿汉模式，是线程安全的，并且import本身的实现机制也是线程安全的</p>
-<p>其典型的例子就是标准库中的logging模块，它在被导入时会生成一个全局的 Logger.manager 单例作为 root</p>
-<p>然后每次通过 logging.getLogger(name) 调用时总是通过 root.loggerDict 获取同一个 Logger</p>
-<p>通过<a href="https://github.com/python/cpython/blob/3.7/Lib/logging/__init__.py" target="_blank" rel="external">查看源码</a>可以了解更多实现细节</p>
-<h3 id="8-线程安全"><a href="#8-线程安全" class="headerlink" title="8. 线程安全"></a>8. 线程安全</h3><p>到目前为止一共讨论了七种实现单例模式的方法，使用元类的实现方式看起来不错</p>
-<p>但除了<code>变量名覆盖</code>和<code>import模块导入</code>，其他五种实现方式都没有考虑线程安全的问题</p>
-<p>因此这里以重载 <code>__new__()</code> 为例，加入Lock来实现线程安全的单例模式，这里实现一个装饰器 synchronized</p>
-<pre><code class="python">import threading
-
-def synchronized(func):
-    _lock = threading.Lock()
-
-    def lock_func(*args, **kwargs):
-        with _lock:
-            return func(*args, **kwargs)
-
-    return lock_func
-
-class SyncSingleton:
-    _instances = {}
-
-    @synchronized # 注意到装饰器是在载入时执行的，所以装饰器本身是线程安全的 
-    def __new__(cls, *args, **kwargs):
-        if cls not in cls._instances:
-            cls._instances[cls] = super().__new__(cls, *args, **kwargs)
-        return cls._instances[cls]
-</code></pre>
-<p>把装饰器展开来就是：</p>
-<pre><code class="python">class Singleton:
-    _instances = {}
-    _lock = threading.Lock()
-
-    def __new__(cls, *args, **kwargs):
-        with cls._lock:
-            if cls not in cls._instances:
-                cls._instances[cls] = super().__new__(cls, *args, **kwargs)
-        return cls._instances[cls]
-</code></pre>
-<p>注意到线程每次都要阻塞在 <code>with cls._lock</code> ，其实在第一个实例生成时cls的实例就已经在<code>_instances</code>字典中了</p>
-<p>所以我们可以在 <code>with cls._lock</code> 外面再加一层检查判断即可，避免每次都去争取锁而进行不必要的阻塞</p>
-<pre><code class="python"># 双重检查的锁机制
-class Singleton:
-    _instances = {}
-    _lock = threading.Lock()
-
-    def __new__(cls, *args, **kwargs):
-        if cls not in cls._instances: # 外层提高性能
-            with cls._lock:
-                if cls not in cls._instances: # 内层是核心逻辑
-                    cls._instances[cls] = super().__new__(cls, *args, **kwargs)
-        return cls._instances[cls]
-</code></pre>
-<p>以上完整的代码和多线程测试代码见<a href="https://github.com/Hk4Fun/PyPatterns/blob/master/Creational/Singleton.py" target="_blank" rel="external">Github</a></p>
-<h3 id="9-总感觉还有什么没弄明白"><a href="#9-总感觉还有什么没弄明白" class="headerlink" title="9. 总感觉还有什么没弄明白"></a>9. 总感觉还有什么没弄明白</h3><p>是的，往往有时候我们看完一篇技术文章就处于“知其然而不知其所以然”的状态，看似懂了，明白如何用了</p>
-<p>但其实背后更深层的原理我们并不了解</p>
-<p>如果意识到该问题所在，自然就会去深挖，怕的是走马观花，不能静下心来多问自己几个为什么。</p>
-<p>为什么重载 <code>__new__()</code> 就能实现单例？</p>
-<p>如果在此之前你已经仔细阅读过我的这篇文章：<a href="https://hk4fun.github.io/2018/08/15/%E9%AD%94%E6%B3%95%E6%96%B9%E6%B3%95%E4%B9%8B-new-%E4%B8%8E-init/">魔法方法之 <code>__new__()</code> 与 <code>__init__()</code></a>就不会问这样的问题了。</p>
-<p>为什么在 metaclass 中重载元类的 <code>__init__()</code> 和 <code>__call__()</code> （或 <code>__new__()</code> 和 <code>__call__()</code>）就能实现单例？</p>
-<p>这就需要我们搞清楚一个问题：</p>
-<p>一个类从被加载进全局环境，到真正被调用运行并返回一个实例，这中间经历了什么？经历了哪些魔法方法？</p>
-<p>关于这个问题可以参考《流畅的Python》第21章元类编程相关的讲解，十分精彩</p>
-<p>如果看的时候很吃力，不妨先看看我之前写过的另外一篇文章：<a href="https://hk4fun.github.io/2018/08/05/Python-%E4%B8%AD-type-%E4%B8%8E-object-%E7%9A%84%E5%85%B3%E7%B3%BB/">Python 中 type 与 object 的关系</a></p>
-<p>这里我用自己的代码和注释来展现这个过程：</p>
-<pre><code class="python">class ABC:
-    print(&#39;ABC&#39;) # ABC被导入时执行，而__new__和__init__是在被调用时才执行
-
-    class CBA:
-        print(&#39;CBA&#39;)# 嵌套类的定义体也会在被导入时执行
-
-    def __new__(cls):
-        print(&#39;new&#39;)
-        return super().__new__(cls)
-
-    def __init__(self):
-        print(&#39;init&#39;)
-
-# 见《流畅的python》P543--导入时和运行时的比较
-# 类的定义体也属于顶层代码
-# 类被导入时会嵌套地进入定义体，而函数（方法）不会，它只是绑定而已
-# 导入类时这么做的原因是它要绑定类的属性和方法
-print(&#39;* &#39; * 10)
-a = ABC() # 如果把这一行注释掉，那么print(&#39;ABC&#39;)和print(&#39;CBA&#39;)一样会被执行，而__new__和__init__就不会了
-</code></pre>
-<p>输出：</p>
-<pre><code>ABC
-CBA
-* * * * * * * * * * 
-new
-init
-</code></pre><p>上面是一个关于类加载和运行的例子，下面来看看其内部经过的魔法函数：</p>
-<pre><code class="python">class Meta(type):
-    print(&#39;[1]Meta start&#39;)
-
-    def __new__(cls, name, bases, dict, **kwargs): # 在加载时调用，且在类加载完后调用
-        # 这里的cls是Meta本身
-        print(&#39;[3]Meta new&#39;)
-        return super().__new__(cls, name, bases, dict, **kwargs)
-
-    def __init__(cls, name, bases, dict): # 在加载时调用，且在上面的__new__()后调用
-        # 这里是cls，不是self了，因为上面__new__()返回的是一个类，语义上应该是cls，写self也没错
-        print(&#39;[4]Meta init&#39;) 
-        super().__init__(name, bases, dict) # 父类type参数中没有cls
-
-    def __call__(cls, *args, **kwargs): # 在类生成实例时调用，其调用了以它为元类的类的__new__()和__init__()
-        print(&#39;[5]Meta call&#39;)
-        return super().__call__(cls, *args, **kwargs) # 在调用完类的__new__()和__init__()后返回该类的实例
-#         如果自己实现的话大致逻辑如下：
-#         self = cls.__new__(cls, *args, **kwargs)
-#         if isinstance(self, cls): # __new__() 返回的是cls的实例才调用该实例的__init__()
-#             self.__init__(*args, **kwargs)
-#         return self
-
-
-
-class A(metaclass=Meta):
-    print(&#39;[2]A start&#39;)
-
-    def __new__(cls, *args, **kwargs): # 在元类的__call__()中被调用
-        print(&#39;[6]A new&#39;)
-        return super().__new__(cls)
-
-    def __init__(self, *args, **kwargs): # 在元类的__call__()中被调用
-        print(&#39;[7]A init&#39;)
-
-    def __call__(self, *args, **kwargs): # 类的实例作为函数调用时调用该魔法方法
-        print(&#39;[8]A call&#39;)
-        return 1
-
-print(&#39;* &#39;*10)
-a = A() # 调用了A的元类的__call__()
-print(&#39;* &#39;*10)
-aa = a() # 调用了A的__call__()
-print(&#39;* &#39;*10)
-print(aa)
-</code></pre>
-<p>输出：</p>
-<pre><code class="python">[1]Meta start
-[2]A start
-[3]Meat new
-[4]Meta init
-* * * * * * * * * * 
-[5]Meta call
-[6]A new
-[7]A init
-* * * * * * * * * * 
-[8]A call
-* * * * * * * * * * 
-1
-</code></pre>
-<p>相信到这里你就会明白了：</p>
-<p>一个类的加载和运行是两个分开的阶段，先加载，再根据需要运行</p>
-<p>类中的顶层代码（方法之外的定义体）在加载时执行，而方法内的代码在调用时才执行</p>
-<p>这就是输出中 1 和 2 最先出现的原因</p>
-<p>但由于元类是类的类，因此以它为元类的类在加载完后会紧接着执行它指定的元类的 <code>__new__()</code> 和 <code>__init__()</code></p>
-<p>这也是输出中 3 和 4 紧跟着出现在 1 和 2 后面的原因</p>
-<p>至于输出中的 5、6、7，反映的就是我们调用 a = A() 时经过的魔法方法：</p>
-<p>先是元类 Meta 的 <code>__call__()</code>，然后是类 A 的<code>__new__()</code> 和 <code>__init__()</code></p>
-<p>注意到，在类生成实例时，元类的 <code>__call__()</code> 内部会调用以它为元类的类的 <code>__new__()</code> 和 <code>__init__()</code></p>
-<p>这是根据<a href="https://hk4fun.github.io/2018/08/15/%E9%AD%94%E6%B3%95%E6%96%B9%E6%B3%95%E4%B9%8B-new-%E4%B8%8E-init/">魔法方法之 <code>__new__()</code> 与 <code>__init__()</code></a>中讨论的内容模仿 type 而实现的简单逻辑</p>
-<p>因此我们为了可以控制一个类生成实例的行为，我们可以既可以简单地重载该类的 <code>__new__()</code></p>
-<p>也可以自己实现一个元类并重载它的 <code>__init__()</code> 和 <code>__call__()</code> 或 <code>__new__()</code> 和 <code>__call__()</code></p>
-<p>然后该类只需指明它的元类是这个自定义的元类而不是默认的 type 即可（默认情况下就是<code>type.__call__(A)</code>）:</p>
-<pre><code class="python">class Meta(type):
-    def __call__(cls, *args, **kwargs):
-        print(&#39;call Meta.__call__() &#39;)
-        return super().__call__()
-
-class A(metaclass=Meta):
-    pass
-
-a = A() # 调用的是Meta.__call__()
-print(isinstance(a, A)) 
-print(&#39;* &#39; * 10)
-b = type.__call__(A) # 直接调用type.__call__()，绕过Meta.__call__()
-print(isinstance(b ,A))
-</code></pre>
-<p>输出：</p>
-<pre><code class="python">call Meta.__call__() 
-True
-* * * * * * * * * * 
-True
-</code></pre>
-<p>最后输出中的 [8]，是为了更好地理解 <code>__call__()</code>：类的括号调用会去调用元类的<code>__call__()</code> 作为返回</p>
-<p>那么实例的括号调用就会去调用类的<code>__call__()</code> 作为返回</p>
-<p>其本质是一样的，<code>__call__()</code> 总是在使用括号调用时被调用，通过对它的重载我们可以自定义这个返回的对象</p>
-<h2 id="更多探索"><a href="#更多探索" class="headerlink" title="更多探索"></a>更多探索</h2><p>综合前面提到的那两篇文章和本章内容，会看到：</p>
-<p>type 其实负责对 Python 中类和元类在加载完成后的处理和调用时 <code>__new__()</code> 和 <code>__init__()</code> 的调度（当然其工作不止如此）</p>
-<p>这从上面我们模仿 <code>type.__call__</code> 的逻辑实现就可以看出</p>
-<p>我们可以编写自己的元类来自定义加载后的处理和调用时的调度过程，但由于元类本身也是type的实例</p>
-<p>因此元类也要受 type 的处理和调度</p>
-<p>我们还注意到默认情况下在子类的 <code>__new__()</code> 中总是会去调用父类的 <code>__new__()</code></p>
-<p>而父类的 <code>__new__()</code> 也是这么做，最终我们的 cls 参数会一路往上传递来到 object</p>
-<p>而我们知道 object 没有父类，这从 <code>object.__bases__</code> 返回空元组可知</p>
-<p>因此 cls 来到 object 就不会再往上传递了，这时候就由解释器（Cython） 内部来实现并生成 cls 的实例并返回</p>
-<p>所以这就解释了为什么 Python 中所有的实例都是 object 的实例</p>
-<p>而 Dashed Arrow Up Rule 的本质其实就是 cls 在 <code>__new__()</code> 中被往上传递</p>
-<p>那我们能否自定义一个类似 object 的类，它直接生成传递上来的cls的实例并返回呢？</p>
-<p>这样做可以打断这条继承链，让 object 不再是所有实例的类。。。只能说想的美：</p>
-<pre><code class="python">class obj:
-    def __new__(cls):
-        print(&#39;call obj.__new__()&#39;)
-        return cls() # 没有往上传递了，直接生成实例返回
-
-class A(obj):
-    def __new__(cls, *args, **kwargs):
-        print(&#39;call A.__new__()&#39;)
-        return super().__new__(cls)
-
-a = A()
-</code></pre>
-<p>输出：</p>
-<pre><code class="python">call A.__new__()
-call obj.__new__()
-call A.__new__()
-call obj.__new__()
-call A.__new__()
-call obj.__new__()
-# 中间省略n行
----------------------------------------------------------------------------
-RecursionError                            Traceback (most recent call last)
-&lt;ipython-input-41-698ca043359a&gt; in &lt;module&gt;()
-      9         return super().__new__(cls)
-     10 
----&gt; 11 a = A()
-
-&lt;ipython-input-41-698ca043359a&gt; in __new__(cls, *args, **kwargs)
-      7     def __new__(cls, *args, **kwargs):
-      8         print(&#39;call A.__new__()&#39;)
-----&gt; 9         return super().__new__(cls)
-     10 
-     11 a = A()
-
-&lt;ipython-input-41-698ca043359a&gt; in __new__(cls)
-      2     def __new__(cls):
-      3         print(&#39;call obj.__new__()&#39;)
-----&gt; 4         return cls()
-      5 
-      6 class A(obj):
-
-... last 2 frames repeated, from the frame below ...
-
-&lt;ipython-input-41-698ca043359a&gt; in __new__(cls, *args, **kwargs)
-      7     def __new__(cls, *args, **kwargs):
-      8         print(&#39;call A.__new__()&#39;)
-----&gt; 9         return super().__new__(cls)
-     10 
-     11 a = A()
-
-RecursionError: maximum recursion depth exceeded
-</code></pre>
-<p>Boom！直接爆炸溢出，因为父类的 return cls() 明显会再次调用子类的  <code>__new__()</code>，造成无穷递归。。。</p>
-<p>所以，还是乖乖 <code>super().__new__(cls, *args, **kwargs )</code> 吧！</p>
-<p>在 <code>__new__()</code> 中我们可以向父类传递不是本类的cls，从而生成其他类的实例，甚至可以拐个弯：</p>
-<pre><code class="python">class A:
-    def __new__(cls, *args, **kwargs):
-        print(&#39;call A.__new__()&#39;)
-        return B.__new__(cls, *args, **kwargs) # 拐了个弯，返回的其实是A的实例
-
-    def __init__(self, *args, **kwargs):
-        print(&#39;call A.__init__()&#39;) 
-
-class B:
-    def __new__(cls, *args, **kwargs):
-        print(&#39;call B.__new__()&#39;)
-        print(cls) # 来到B.__new__()的cls其实是A而不是B
-        return object.__new__(cls, *args, **kwargs) 
-
-a = A()
-</code></pre>
-<p>输出：</p>
-<pre><code class="python">call A.__new__()
-call B.__new__()
-&lt;class &#39;__main__.A&#39;&gt;
-call A.__init__() # 能自动调用A.__init__()
-</code></pre>
-<p>但无论如何最终一定会来到object，由object负责生成cls的实例</p>
-<p>因此最终：</p>
-<p>对于type，其主“外”，我们使用 metaclass 进行拦截，但最终还得回到type</p>
-<p>对于object，其主“内”，我们使用 <code>__new__()</code> 进行拦截，但最终还是来到object</p>
-<p>类内部生成的实例会经过外部元类的 <code>__call__()</code></p>
-<p>因此我们的单例模式既可以在类（内部）使用 <code>__new__()</code> 进行拦截，也可以在元类（外部）使用<code>__call__()</code>进行拦截</p>
-<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
-<li>《设计模式》刘伟著</li>
-<li>《流畅的Python》第21章：元类编程</li>
-<li><a href="https://stackoverflow.com/questions/6760685/creating-a-singleton-in-python" target="_blank" rel="external">StackOverflow: creating-a-singleton-in-python</a></li>
-</ul>
-]]></content>
-      
-        
-        <tags>
-            
-            <tag> Python </tag>
-            
-            <tag> 元类编程 </tag>
-            
-            <tag> 设计模式 </tag>
-            
-        </tags>
-        
-    </entry>
+<div class="share">
     
-    <entry>
-      <title><![CDATA[魔法方法之 __new__() 与 __init__()]]></title>
-      <url>/2018/08/15/%E9%AD%94%E6%B3%95%E6%96%B9%E6%B3%95%E4%B9%8B-new-%E4%B8%8E-init/</url>
-      <content type="html"><![CDATA[<p>当我们实例化某个类时，如：<code>a = A()</code>， Python 先调用 <code>__new__(cls[, ...])</code> 来生成实例</p>
-<p>然后传递给 <code>__init__(self[, ...])</code> 的 self，从而在 <code>__init__(self[, ...])</code> 中完成初始化</p>
-<p>因此 <code>__new__()</code> 负责创建实例对象，而 <code>__init__()</code> 负责初始化该实例对象：</p>
-<a id="more"></a>
-<pre><code class="python">class A:
-    def __new__(cls, *args, **kwargs): # cls（即A）为第一个默认参数，剩下的就是实例化A（即A([...])）时传进来的参数
-        print(&#39;call A.__new__()&#39;)
-        return super().__new__(cls, *args, **kwargs)
 
-    def __init__(self, *args, **kwargs):
-        print(&#39;call A.__init__()&#39;)
-
-a = A()
-</code></pre>
-<p>输出：</p>
-<pre><code class="python">call A.__new__()
-call A.__init__()
-</code></pre>
-<h2 id="new"><a href="#new" class="headerlink" title="__new__()"></a><code>__new__()</code></h2><p>下面先通过对官方文档的解读来看看 <code>__new__()</code> 方法背后的一些细节:</p>
-<blockquote>
-<p><code>object.__new__(cls[, ...])</code></p>
-<p>Called to create a new instance of class <code>cls. __new__()</code> is a static method (special-cased so you need not declare it as such) that takes the class of which an instance was requested as its first argument. The remaining arguments are those passed to the object constructor expression (the call to the class). The return value of <code>__new__()</code>should be the new object instance (usually an instance of cls).</p>
-</blockquote>
-<p>其实 <code>__new__()</code> 是一个类的静态方法，这里我更加认为是一个类方法</p>
-<p>因为其第一个参数默认就是cls，而静态方法不需要cls也不需要self</p>
-<p>但注意到这里并没有使用装饰器 @classmethod，这是 <code>__new__()</code> 的特殊之处——不用装饰器修饰就可以成为类方法</p>
-<p><code>__new__()</code> 负责创建类的实例，因此它的返回值<strong>应该</strong>是一个新的实例，且<strong>通常</strong>是 cls 的实例。</p>
-<p>（注意体会加粗字的含义，后面会解释）</p>
-<p>那如何创建 cls 的实例呢？</p>
-<blockquote>
-<p>Typical implementations create a new instance of the class by invoking the superclass’s <code>__new__()</code> method using <code>super().__new__(cls[, ...])</code> with appropriate arguments and then modifying the newly-created instance as necessary before returning it.</p>
-</blockquote>
-<p>可以通过调用父类的 <code>__new__()</code> 方法来创建：<code>super().__new__(cls[, ...])</code></p>
-<p>然后根据需求更改新创建的实例再返回，以此达到自定义创建实例的目的</p>
-<blockquote>
-<p>If <code>__new__()</code> returns an instance of cls, then the new instance’s <code>__init__()</code> method will be invoked like <code>__init__(self[, ...])</code>, where self is the new instance and the remaining arguments are the same as were passed to<code>__new__()</code>.</p>
-</blockquote>
-<p><code>__new__()</code> 有个很重要的特性就是：如果它返回是参数中 cls 的实例</p>
-<p>那么 Python 就会<strong>自动调用</strong> cls 的 <code>__init__(self[, ...])</code> 方法，其中的 self 参数就是 <code>__new__()</code> 返回的 cls 的实例</p>
-<p>也就是说我们可以从两个方面去假设（分别对应前面提到的两个加粗字体）：</p>
-<ol>
-<li>假如我们不返回实例对象，比如直接返回 None，结果如何？（其实 None 也是一个实例对象，这里描述的不是很严肃）</li>
-<li>假如我们返回实例对象，但我们不返回当前 cls 的实例对象，而是返回其他 cls 的实例对象，结果如何？</li>
-</ol>
-<p>下面就用代码来实验一下：</p>
-<pre><code class="python"># 第一个假设
-class A:
-    def __new__(cls, *args, **kwargs):
-        print(&#39;call A.__new__()&#39;) 
-        # 有时候就是这样，忘记返回一个实例对象，也是默认返回了 None
-
-    def __init__(self, *args, **kwargs):
-        print(&#39;call A.__init__()&#39;)
-
-a = A()
-print(type(a))
-</code></pre>
-<p>输出：</p>
-<pre><code>call A.__new__()
-&lt;class &#39;NoneType&#39;&gt;
-</code></pre><p>可以看到，<code>A.__init__()</code> 并没有被调用，且发现 a 其实是一个 NoneType 类型的实例，为什么呢？</p>
-<p>我们接着往下进行第二个假设的实验：</p>
-<pre><code class="python"># 第二个假设
-class A:
-    def __new__(cls, *args, **kwargs):
-        print(&#39;call A.__new__()&#39;)
-        return super().__new__(B, *args, **kwargs) # 注意这里传给父类的cls是B，则返回的是B的实例对象
-
-    def __init__(self, *args, **kwargs):
-        print(&#39;call A.__init__()&#39;)
-
-class B:
-    def __new__(cls, *args, **kwargs):
-        print(&#39;call B.__new__()&#39;)
-        return super().__new__(cls, *args, **kwargs) 
-
-    def __init__(self, *args, **kwargs):
-        print(&#39;call B.__init__()&#39;)
-
-
-a = A()
-</code></pre>
-<p>输出：</p>
-<pre><code>call A.__new__()
-</code></pre><p>可以看到 <code>A.__init__()</code> 并没有被调用，且没有调用 <code>B.__init__()</code>，那我们就手动调用一下 <code>a.__init__()</code>：</p>
-<pre><code class="python">a.__init__()
-print(type(a))
-</code></pre>
-<p>输出：</p>
-<pre><code>call B.__init__()
-&lt;class &#39;__main__.B&#39;&gt;
-</code></pre><p>这下都明白了，其实这里的 a 看起来是 A 的实例，毕竟实例化的时候是调用了 A，但实际上是 B 的实例。</p>
-<p>于是对于以上的两个假设和实验，可以得出：</p>
-<ol>
-<li><p><code>__new__()</code> 方法不仅可以生成本类的实例对象，还可以生成其他类的实例对象，这取决于它最终返回的实例对象是本类的还是其他类的。</p>
-</li>
-<li><p>若返回的是其他类的实例对象，则不会自动调用该实例对象的 <code>__init__()</code> 方法，需要我们手动调用来初始化：</p>
-</li>
-</ol>
-<blockquote>
-<p>If <code>__new__()</code> does not return an instance of cls, then the new instance’s <code>__init__()</code> method will not be invoked.</p>
-</blockquote>
-<p>换句话说，如果 <code>__new__()</code> 返回的是本类的实例对象，那该实例的 <code>__init__()</code> 方法总是会被自动调用</p>
-<p>这一点在用 <code>__new__()</code> 方法实现单例模式时要特别注意（<a href="https://hk4fun.github.io/2018/08/15/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/">设计模式之单例模式</a>）</p>
-<blockquote>
-<p><code>__new__()</code> is intended mainly to allow subclasses of immutable types (like int, str, or tuple) to customize instance creation. It is also commonly overridden in custom metaclasses in order to customize class creation.</p>
-</blockquote>
-<p>这里强调了 <code>__new__()</code> 的使用场景：</p>
-<ol>
-<li><p>实现自定义的元类(metaclass)。先留个坑，这个后序文章会讨论；</p>
-</li>
-<li><p>实现单例模式。前面已经讨论过；</p>
-</li>
-<li><p>当我们需要继承内建的不可变类型时(如 int, str 或 tuple)。</p>
-<p>这时候我们需提供自定义实例化过程，因为如果在 <code>__init__()</code> 方法中可能会无效甚至出错。例如：</p>
-</li>
-</ol>
-<pre><code class="python">class CustomInt(int):
-    def __init__(self, v):
-        super().__init__(self, abs(v))
-
-print(CustomInt(-1))
-</code></pre>
-<p>输出：</p>
-<pre><code class="python">---------------------------------------------------------------------------
-
-TypeError                                 Traceback (most recent call last)
-
-&lt;ipython-input-17-875f61a070ee&gt; in &lt;module&gt;()
-      3         super().__init__(self, abs(v))
-      4 
-----&gt; 5 print(CustomInt(-1))
-
-
-&lt;ipython-input-17-875f61a070ee&gt; in __init__(self, v)
-      1 class CustomInt(int):
-      2     def __init__(self, v):
-----&gt; 3         super().__init__(self, abs(v))
-      4 
-      5 print(CustomInt(-1))
-
-
-TypeError: object.__init__() takes no parameters
-</code></pre>
-<p>在 py3 下是直接报错的，而在 py2 下是输出 -1</p>
-<p>也就是说直接通过在子类的 <code>__init__()</code> 调用父类的 <code>__init__()</code> 有时未必能达到我们期望的效果</p>
-<p>但可以通过重写 <code>__new__()</code> 方法来实现：</p>
-<pre><code class="python">class CustomInt(int):
-
-    def __new__(cls, v):
-        return super().__new__(cls, abs(v))
-
-print(CustomInt(-1))
-print(CustomInt(-1) + CustomInt(-2))
-</code></pre>
-<p>输出：</p>
-<pre><code>1
-3
-</code></pre><p>成功地实现了对 int 的继承。</p>
-<h2 id="init"><a href="#init" class="headerlink" title="__init__()"></a><code>__init__()</code></h2><p>接下来看看 <code>__init__()</code> 方法背后的一些细节:</p>
-<blockquote>
-<p><code>object.__init__(self[, ...])</code></p>
-<p>Called after the instance has been created (by <code>__new__()</code>), but before it is returned to the caller. The arguments are those passed to the class constructor expression. If a base class has an <code>__init__()</code> method, the derived class’s <code>__init__()</code> method, if any, must explicitly call it to ensure proper initialization of the base class part of the instance; for example: <code>super().__init__([args...])</code>.</p>
-<p>Because <code>__new__()</code> and <code>__init__()</code> work together in constructing objects (<code>__new__()</code> to create it, and <code>__init__()</code> to customize it), no non-None value may be returned by <code>__init__()</code>; doing so will cause a TypeError to be raised at runtime.</p>
-</blockquote>
-<p>可以看到，<code>__init__()</code> 在 <code>__new__()</code> 后被调用（前提是 <code>__new__()</code> 返回本类的实例对象）</p>
-<p>它的参数除了第一个 self 参数由 <code>__new__()</code> 创建，剩下的参数都是来自调用者在实例化时传入的参数</p>
-<p>也就是 <code>object.__new__(cls[, ...])</code> 中 cls 后面的参数，如果这两处的参数不一致就会产生一个 TypeError：</p>
-<pre><code class="python">class A:
-    def __new__(cls): # 除了cls没有其他参数
-        print(&#39;call __new__()&#39;)
-        return super().__new__(cls) # 这里A的父类是object，它的 __new__() 参数只有cls
-
-    def __init__(self, v1): # 有v1参数
-        print(v1)
-
-a = A(1) # 传进一个参数
-</code></pre>
-<p>输出：</p>
-<pre><code class="python">---------------------------------------------------------------------------
-
-TypeError                                 Traceback (most recent call last)
-
-&lt;ipython-input-19-5effa0b239dd&gt; in &lt;module&gt;()
-      7         print(v1)
-      8 
-----&gt; 9 a = A(1) # 传进一个参数
-
-
-TypeError: __new__() takes 1 positional argument but 2 were given
-</code></pre>
-<p>这里在一开始的 <code>__new__()</code> 就报错了</p>
-<pre><code class="python">class A:
-    def __new__(cls, v1): # 有v1参数
-        print(&#39;call __new__()&#39;)
-        return super().__new__(cls)
-
-    def __init__(self): # 除了self没有其他参数
-        print(v1)
-
-a = A(1) # 传进一个参数
-</code></pre>
-<p>输出：</p>
-<pre><code class="python">call __new__()
----------------------------------------------------------------------------
-
-TypeError                                 Traceback (most recent call last)
-
-&lt;ipython-input-20-fcc859b65f23&gt; in &lt;module&gt;()
-      7         print(v1)
-      8 
-----&gt; 9 a = A(1) # 传进一个参数
-
-
-TypeError: __init__() takes 1 positional argument but 2 were given
-</code></pre>
-<p>这里成功执行 <code>__new__()</code>，但到了 <code>__init__()</code> 就报错了</p>
-<pre><code class="python">class A:
-    def __new__(cls, v1): # 有v1参数
-        print(&#39;call __new__()&#39;)
-        return super().__new__(cls)
-
-    def __init__(self, v1): ## 有v1参数
-        print(v1)
-
-a = A(1) # 传进一个参数
-</code></pre>
-<p>输出：</p>
-<pre><code>call __new__()
-1
-</code></pre><p><code>__new__()</code> 和 <code>__init__()</code> 除了第一个参数以外其他参数一致才不会出错</p>
-<p>另外 <code>__init__()</code> 不允许返回非None 的对象，尝试这么做也会产生一个 TypeError：</p>
-<pre><code class="python">class A:
-    def __init__(self):
-        return 1
-
-a = A()
-</code></pre>
-<p>输出：</p>
-<pre><code>TypeError                                 Traceback (most recent call last)
-&lt;ipython-input-20-d00fb74e6c6d&gt; in &lt;module&gt;()
-      2     def __init__(self):
-      3         return 1
-----&gt; 4 a = A()
-
-TypeError: __init__() should return None, not &#39;int&#39;
-</code></pre><h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://docs.python.org/3/reference/datamodel.html#object.__new__" target="_blank" rel="external">https://docs.python.org/3/reference/datamodel.html#object.__new__</a></p>
-<p><a href="https://docs.python.org/3/reference/datamodel.html#object.__init__" target="_blank" rel="external">https://docs.python.org/3/reference/datamodel.html#object.__init__</a></p>
-]]></content>
-      
-        
-        <tags>
-            
-            <tag> Python </tag>
-            
-            <tag> 元类编程 </tag>
-            
-            <tag> 魔法方法 </tag>
-            
-        </tags>
-        
-    </entry>
     
-    <entry>
-      <title><![CDATA[Python 中 type 与 object 的关系]]></title>
-      <url>/2018/08/05/Python-%E4%B8%AD-type-%E4%B8%8E-object-%E7%9A%84%E5%85%B3%E7%B3%BB/</url>
-      <content type="html"><![CDATA[<p>都知道 Python 有强大的动态语言特性，得益于它“无处不对象”的语言设计思想</p>
-<p>那么这些对象的源头来自哪里？这背后一定有它的<strong>出发点</strong>。</p>
-<p>相信很多人一下就想到元类（<code>metaclass</code>）那种复杂的东西，且慢，心急吃不了热豆腐</p>
-<p>在深入研究元类编程之前，一些基本的但也是最重要的语言知识一定要弄清楚，否则会一头雾水</p>
-<p>在此之前，明白 Python 中 <code>type</code> 与 <code>object</code> 的关系至关重要，它俩才是 Python 中一切对象的<strong>出发点</strong>。</p>
-<a id="more"></a>
-<p>先来看看这8个输出：</p>
-<pre><code class="python">In [1]: isinstance(object, object)
-Out[1]: True
-
-In [2]: isinstance(object, type)
-Out[2]: True
-
-In [3]: isinstance(type, type)
-Out[3]: True
-
-In [4]: isinstance(type, object)
-Out[4]: True
-
-In [5]: issubclass(object, object)
-Out[5]: True
-
-In [6]: issubclass(object, type)
-Out[6]: False
-
-In [7]: issubclass(type, type)
-Out[7]: True
-
-In [8]: issubclass(type, object)
-Out[8]: True
-</code></pre>
-<p>以上输出在 py2.x 和 py3.x 下都一样，如果都能明白为什么，那么 type 与 object 的关系也就容易弄懂了。</p>
-<p>这两者的关系类似鸡和蛋的关系，究竟谁先出现？二者其实都不能独立，它们同时出现而互相依赖。</p>
-<p>首先明白在面向对象概念中存在两种关系：</p>
-<ul>
-<li>父子关系（a kinf of），即继承关系，如 “猫是哺乳动物”，可以通过 __bases__ 属性查看某个类型继承的所有父类（返回一个元组）</li>
-</ul>
-<ul>
-<li>类型实例关系（an instance of），即类的实例化，如 “小白是猫”，可以通过 __class__ 属性或 type() 方法查看某个实例的所属类型</li>
-</ul>
-<p>如果用实线（竖线）表示父子关系，用虚线（横线）表示类型实例关系，那么可以用下图来描述：</p>
-<p><img src="https://ws1.sinaimg.cn/large/006giLD5ly1fwx554gzz5j30an07vwef.jpg" alt="两种关系"></p>
-<p>假设有这么一张白板，分割成三部分，用来描述 Python 里面对象的关系：</p>
-<p><img src="https://ws1.sinaimg.cn/large/006giLD5ly1fwx554h1t8j30ka0d0mx5.jpg" alt="白板"></p>
-<p>先来看看 type 和 object</p>
-<p>在 Python 中，object 是父子关系的顶端，所有类型都是它的子类</p>
-<p>type 是类型实例关系的顶端，所有类型都是它的实例</p>
-<p>注意，不是所有对象都是 type 的实例，因为类型实例关系不具有传递性</p>
-<p>即 <strong>object 是所有类的父类，而 type 是所有类的类</strong>：</p>
-<pre><code class="python">In [1]: object.__class__
-Out[1]: type   # object 的类型是 type
-
-In [2]: object.__bases__
-Out[2]: ()     # object 没有父类，位于链条顶端
-
-In [3]: type.__class__
-Out[3]: type  # type 的类型是它本身
-
-In [4]: type.__bases__
-Out[4]: (object,)    # type 的父类是 object
-</code></pre>
-<p>以上关系可用下图来表示：</p>
-<p><img src="https://ws1.sinaimg.cn/large/006giLD5ly1fwx554h620j30jd0cqjrm.jpg" alt="type 与 object 的关系"></p>
-<p>至此，对于文章一开头的八个输出就可以明确四个了，分别是</p>
-<pre><code class="python">In [2]: isinstance(object, type)
-Out[2]: True  # object 的类型是 type
-
-In [3]: isinstance(type, type)
-Out[3]: True   # type 的类型是它本身
-
-In [6]: issubclass(object, type)
-Out[6]: False  # object 的父类不是 type，它没有父类
-
-In [8]: issubclass(type, object)
-Out[8]: True # type 的父类是 object
-</code></pre>
-<p>那么其他四个如何解释？</p>
-<pre><code class="python">In [1]: isinstance(object, object)
-Out[1]: True
-
-In [4]: isinstance(type, object)
-Out[4]: True
-
-In [5]: issubclass(object, object)
-Out[5]: True
-
-In [7]: issubclass(type, type)
-Out[7]: True
-</code></pre>
-<p>这就要考虑到 isinstance() 遵守的 <strong>Dashed Arrow Up Rule</strong>：</p>
-<p><strong>如果 X 是 A 的实例，且 A 是 B 的子类，那么 X 是 B 的 实例</strong></p>
-<pre><code class="python">&gt;&gt;&gt; class B:
-...     pass
-...
-&gt;&gt;&gt; class A(B):
-...     pass
-...
-&gt;&gt;&gt; X = A()
-&gt;&gt;&gt; isinstance(X, A)
-True
-&gt;&gt;&gt; issubclass(A, B)
-True
-&gt;&gt;&gt; isinstance(X, B)
-True
-</code></pre>
-<p>因此，由 isinstance(object, type) 和 issubclass(type, object)，可以得出</p>
-<pre><code class="python">In [1]: isinstance(object, object)
-Out[1]: True
-</code></pre>
-<p>由 isinstance(type, type) 和 issubclass(type, object) 可以得出</p>
-<pre><code class="python">In [4]: isinstance(type, object)
-Out[4]: True
-</code></pre>
-<p>至于最后两条，对于 issubclass() 方法来说，每个类型都是它自身的子类（父类），因此也就有</p>
-<pre><code class="python">In [5]: issubclass(object, object)
-Out[5]: True
-
-In [7]: issubclass(type, type)
-Out[7]: True
-</code></pre>
-<p>文章到这里貌似就要结束了，但好戏还在后头</p>
-<p>既然有 Dashed Arrow Up Rule，那就有 <strong>Dashed Arrow Down Rule</strong>：</p>
-<p><strong>如果 A 是 B 的子类，且 B 是 M 的实例，那么 A 是 M 的实例</strong></p>
-<pre><code class="python">&gt;&gt;&gt; class A(object):  
-...     pass           
-...                    
-&gt;&gt;&gt; isinstance(object, type) 
-True                         
-&gt;&gt;&gt; issubclass(A, object)    
-True                         
-&gt;&gt;&gt; isinstance(A, type)      
-True
-</code></pre>
-<p>到这里你可能会觉得 Dashed Arrow Up Rule 和 Dashed Arrow Down Rule 隐约有什么关系</p>
-<p>其实它们的名字就已经告诉我们了，这里可用下图来描述：</p>
-<p><img src="https://ws1.sinaimg.cn/large/006giLD5ly1fwx554h6a1j30e008174j.jpg" alt="Up and Down"></p>
-<p>最后还有一条很重要的Rule，<strong>Combine Solid Arrows Rule：</strong></p>
-<p><strong>如果 A 是 B 的子类，且 B 是 C 的子类，那么 A 也是 C 的子类</strong><br>​<br>即继承关系具有传递性：</p>
-<pre><code class="python">&gt;&gt;&gt; class C:
-...     pass
-...
-&gt;&gt;&gt; class B(C):
-...     pass
-...
-&gt;&gt;&gt; class A(B):
-...     pass
-...
-&gt;&gt;&gt; issubclass(A, B)
-True
-&gt;&gt;&gt; issubclass(B, C)
-True
-&gt;&gt;&gt; issubclass(A, C)
-True
-</code></pre>
-<p>总结以上三条Rule，就是：</p>
-<p><img src="https://ws1.sinaimg.cn/large/006giLD5ly1fwx554hhy8j30fg0d63z0.jpg" alt="Three Rules"></p>
-<p>那有没有第四条Rule，即类型实例关系也具有传递性呢（前面有提过）？</p>
-<p><img src="https://ws1.sinaimg.cn/large/006giLD5ly1fwx554h90nj30d805fglo.jpg" alt="类型实例关系具有传递性吗？"></p>
-<p>验证一下：</p>
-<pre><code class="python">&gt;&gt;&gt; isinstance(int, type)
-True
-&gt;&gt;&gt; isinstance(1, int)
-True
-&gt;&gt;&gt; isinstance(1, type)
-False
-</code></pre>
-<p>很明显，实例类型关系不具有传递性，但为什么继承关系可以传递而实例类型关系却不可以？</p>
-<p>Python 对象一次只能有一种类型，如果实例类型关系具有传递性，那么就会出现一个对象同时对应两种不同的类型。</p>
-<p>现在开始完善我们的白板，引入 list, dict, tuple 这些内置数据类型来看看（以下所有输出都是在 py3.x 解释器中）：</p>
-<pre><code class="python">&gt;&gt;&gt; list.__bases__
-(&lt;class &#39;object&#39;&gt;,)  # py2.x 是 (&lt;type &#39;object&#39;&gt;,)
-&gt;&gt;&gt; list.__class__
-&lt;class &#39;type&#39;&gt;  # py2.x 是 &lt;type &#39;type&#39;&gt;
-
-
-&gt;&gt;&gt; dict.__bases__
-(&lt;class &#39;object&#39;&gt;,)
-&gt;&gt;&gt; dict.__class__
-&lt;class &#39;type&#39;&gt;
-
-
-&gt;&gt;&gt; tuple.__bases__
-(&lt;class &#39;object&#39;&gt;,)
-&gt;&gt;&gt; tuple.__class__
-&lt;class &#39;type&#39;&gt;
-</code></pre>
-<p>内置类型都继承于 object，且都是 type 的实例</p>
-<p>再实例化一个list来看看：</p>
-<pre><code class="python">&gt;&gt;&gt; l = [1,2,3]
-&gt;&gt;&gt; l.__bases__
-Traceback (most recent call last):
-  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
-AttributeError: &#39;list&#39; object has no attribute &#39;__bases__&#39;
-&gt;&gt;&gt; l.__class__
-&lt;class &#39;list&#39;&gt;
-</code></pre>
-<p>实例化后的 l 对象没有 __bases__ 属性，也就是没有父类这一说法，它只是 list 的一个实例</p>
-<p>以上全部加到白板上就是：</p>
-<p><img src="https://ws1.sinaimg.cn/large/006giLD5ly1fwx554iku0j30j20f2q3i.jpg" alt="加入内置数据类型"></p>
-<p>注：该图没有完全按照前面三条 Rules 来画，只是按照 __bases__ 和  __class__ 的结果来画，以下同。</p>
-<p>白板上除了 type 和 object，横向虚线代表实例，纵向实线代表继承</p>
-<p>当我们自己去定个一个类并实例化它的时候，和上面的对象之间又是什么关系呢？</p>
-<pre><code class="python">&gt;&gt;&gt; class A:
-...     pass
-...
-&gt;&gt;&gt; a = A()
-&gt;&gt;&gt;
-&gt;&gt;&gt; A.__bases__
-(&lt;class &#39;object&#39;&gt;,)
-&gt;&gt;&gt; A.__class__
-&lt;class &#39;type&#39;&gt;
-&gt;&gt;&gt; a.__class__
-&lt;class &#39;__main__.A&#39;&gt;
-&gt;&gt;&gt; a.__bases__
-Traceback (most recent call last):
-  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
-AttributeError: &#39;A&#39; object has no attribute &#39;__bases__&#39;
-</code></pre>
-<p>如我们所料，A 继承了 object 并成为 type 的一个实例，而 a 只是 A 的一个实例，没有继承任何父类</p>
-<p>注意到object自己也是可以实例化的：</p>
-<pre><code class="python">&gt;&gt;&gt; ob = object()
-&gt;&gt;&gt; ob.__class__
-&lt;class &#39;object&#39;&gt;
-&gt;&gt;&gt; ob.__bases__
-Traceback (most recent call last):
-  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
-AttributeError: &#39;object&#39; object has no attribute &#39;__bases__&#39;
-</code></pre>
-<p>以上全部加入白板后如下：</p>
-<p><img src="https://ws1.sinaimg.cn/large/006giLD5ly1fwx554jen3j30hr0fvdh0.jpg" alt="自定义类"></p>
-<p>到这里就会发现 type 所在那一栏只有它一个，所以引入了 metaclass 用来扩展 type，这需要我们去继承 type</p>
-<p>这就意味着我们可以自定义生成类的模板，达到动态生成类的目的（可见 Python 的动态特性非常完美）：</p>
-<pre><code class="python">&gt;&gt;&gt; class M(type):
-...     pass
-...
-&gt;&gt;&gt; M.__class__
-&lt;class &#39;type&#39;&gt;    # 所有的类都是 type 的实例，包括自定义的元类
-&gt;&gt;&gt; M.__bases__
-(&lt;class &#39;type&#39;&gt;,)
-</code></pre>
-<p>有趣的是自定义的元类既是 type 的子类也是 type 的实例</p>
-<p>那么如何实例化元类来生成一个新类呢？ 可以直接 m = M() 吗？</p>
-<pre><code class="python">&gt;&gt;&gt; m = M()
-Traceback (most recent call last):
-  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
-TypeError: type.__new__() takes exactly 3 arguments (0 given)
-</code></pre>
-<p>显然不行，缺少三个参数，具体是哪三个见<a href="https://stackoverflow.com/questions/100003/what-are-metaclasses-in-python" target="_blank" rel="external">StackOverflow一个关于元类的高票回答</a>，这里就不再展开。</p>
-<p>那如何优雅地实例化元类呢？</p>
-<p>在 py3.x 下是直接在继承时声明：</p>
-<pre><code class="python">&gt;&gt;&gt; class T(metaclass=M):
-...     pass
-...
-&gt;&gt;&gt; T.__bases__
-(&lt;class &#39;object&#39;&gt;,)  # object 是所有类的父类
-&gt;&gt;&gt; T.__class__
-&lt;class &#39;__main__.M&#39;&gt;
-</code></pre>
-<p>在 py2.x 下是定义一个 __metaclass__ 类属性：</p>
-<pre><code class="python">&gt;&gt;&gt; class T:
-...     __metaclass__=M
-...
-&gt;&gt;&gt; T.__class__
-&lt;class &#39;__main__.M&#39;&gt;
-&gt;&gt;&gt; T.__bases__
-(&lt;type &#39;object&#39;&gt;,)
-</code></pre>
-<p>用 T 来生成一个实例看看：</p>
-<pre><code class="python">&gt;&gt;&gt; t = T()
-&gt;&gt;&gt; t.__bases__
-Traceback (most recent call last):
-  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
-AttributeError: &#39;T&#39; object has no attribute &#39;__bases__&#39;
-&gt;&gt;&gt; t.__class__
-&lt;class &#39;__main__.T&#39;&gt;
-</code></pre>
-<p>以上全部加入白板后如下：</p>
-<p><img src="https://ws1.sinaimg.cn/large/006giLD5ly1fwx554lka5j30hp0eqt9v.jpg" alt="加入 metaclass"></p>
-<p>– end –</p>
-<p> 参考资料</p>
-<ul>
-<li><a href="https://www.zhihu.com/question/38791962?sort=created" target="_blank" rel="external">知乎回答：Python 的 type 和 object 之间是怎么一种关系？</a></li>
-<li><a href="http://www.cs.utexas.edu/~cannata/cs345/Class%20Notes/15%20Python%20Types%20and%20Objects.pdf" target="_blank" rel="external">Python Types and Objects.pdf</a></li>
-</ul>
-]]></content>
-      
-        
-        <tags>
-            
-            <tag> Python </tag>
-            
-            <tag> 元类编程 </tag>
-            
-        </tags>
-        
-    </entry>
+        <div class="addthis_sharing_toolbox"></div>
     
-    <entry>
-      <title><![CDATA[为什么Python的coroutine这么特殊]]></title>
-      <url>/2018/07/31/%E4%B8%BA%E4%BB%80%E4%B9%88Python%E7%9A%84corotine%E8%BF%99%E4%B9%88%E7%89%B9%E6%AE%8A/</url>
-      <content type="html"><![CDATA[<p>在北邮人论坛上看到一篇关于 Python 中 coroutine 的文章</p>
-<p>从一个简单的例子出发，对比了 Lua、Ruby、Python 在实现 coroutine 上的区别和联系：</p>
-<p><a href="https://bbs.byr.cn/#!article/Python/22439" target="_blank" rel="external">https://bbs.byr.cn/#!article/Python/22439</a></p>
-<p>这里记录下自己的一些见解</p>
-<a id="more"></a>
-<p>不管是 Lua（stackless）:</p>
-<p><img src="https://ws1.sinaimg.cn/large/006giLD5ly1fwx5rbpc47j30x315nn17.jpg" alt="Lua协程实现"></p>
-<p>还是 Ruby（stackfull）： </p>
-<p><img src="https://ws1.sinaimg.cn/large/006giLD5ly1fwx5rbnm4yj30y90rnq5m.jpg" alt="Ruby协程实现"></p>
-<p>它们在首次进入 flatten 后都没有再去调用 resume，而是直接 flatten(elem)</p>
-<p>因此 flatten 递归调用自己时并没有创建新的协程栈（应用栈），只在第一个 flatten 协程栈上增加函数帧</p>
-<p>因此可以在最顶层的函数帧上直接跳回上一个应用栈（最外层）</p>
-<p>同时也可以在最外层的应用栈上直接跳到下一协程栈的最顶层函数帧。</p>
-<p>也就是说其始终只有两个应用栈，只不过 Lua 的两个应用栈对应的两个C帧在同一个C栈</p>
-<p>而 Ruby 的两个协程栈对应了两个不同的C栈（可以在C栈间转跳）：</p>
-<p><img src="https://ws1.sinaimg.cn/large/006giLD5ly1fwx5rbodcmj30uq1c3n2s.jpg" alt="flatten 递归"></p>
-<p>而 Python（stackfull） 很特殊：</p>
-<p><img src="https://ws1.sinaimg.cn/large/006giLD5ly1fwx5rbo7q8j30jr18p77o.jpg" alt="Python 创建协程"></p>
-<p>它既不是 stackless（在同一C栈上创建新的C帧来创建新的协程栈）</p>
-<p>也没实现在C栈间转跳（创建新的C栈来创建新的协程栈）</p>
-<p>因此其只能在同一个C栈上创建新的C帧来创建新的协程帧</p>
-<p>这些协程帧复用了指向上一帧的指针来表示指向自己的父协程帧，因此 Python 中创建协程就相当于创建函数</p>
-<p>但其 yield 时只消除对应的C帧而保留协程帧</p>
-<p>因此 python 中的协程无法一次性跳回最外层的应用帧（首次发送send的帧）</p>
-<p>只能一层一层地往外（下） yield，并且也只能一层一层地往内（上）send</p>
-<p>体现在代码上就是要多一层 for 循环来帮助内外连通</p>
-<p>想想 for 的实现机制，for 本身在不断 next 和 捕获最后的 StopIteration，至于   yield 需要自己在 for 的代码块中写</p>
-<p>利用 yield from 可以简写为：</p>
-<pre><code class="python">def flatten(obj):
-    if isinstance(obj, list):
-        for elem in obj:
-            yield from flatten(elem)
-    else:
-        yield obj
-</code></pre>
-<p>引入 yield from 的目的就是为了屏蔽那个多出来一层的让人难以理解的for循环，同时又能实现内外连通</p>
-<p>yield from 的实现机制可参考《流畅的Python》第16章</p>
-<p>更加详细的描述见 <a href="https://www.python.org/dev/peps/pep-0380/" target="_blank" rel="external">PEP 380 – Syntax for Delegating to a Subgenerator</a></p>
-<p>最后，可以使用 <a href="http://www.pythontutor.com/visualize.html#mode=edit" target="_blank" rel="external">http://www.pythontutor.com/visualize.html#mode=edit</a> 来可视化整个执行流</p>
-<p>– end –</p>
-]]></content>
-      
-        
-        <tags>
-            
-            <tag> Python </tag>
-            
-            <tag> coroutine </tag>
-            
-        </tags>
-        
-    </entry>
+</div>
+
+
+
+
+
+
+
     
-    <entry>
-      <title><![CDATA[廖雪峰web实战总结]]></title>
-      <url>/2017/10/09/%E5%BB%96%E9%9B%AA%E5%B3%B0web%E5%AE%9E%E6%88%98%E6%80%BB%E7%BB%93/</url>
-      <content type="html"><![CDATA[<p>敲完<a href="https://github.com/Hk4Fun/awesome-python3-webapp" target="_blank" rel="external"> 代码</a> 却一直没写个总结，因为感觉火候不到，学了一段时间的Django后回来重温，</p>
-<p>更是感觉廖雪峰的 <a href="https://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001432170937506ecfb2f6adf8e4757939732f3e32b781c000" target="_blank" rel="external">这个web实战</a> 很是经典，借鉴了不少的框架设计思想</p>
-<a id="more"></a>
-<h2 id="主要模块"><a href="#主要模块" class="headerlink" title="主要模块"></a>主要模块</h2><h3 id="orm-py"><a href="#orm-py" class="headerlink" title="orm.py"></a>orm.py</h3><p>建立类与数据库表的映射，对数据库进行封装</p>
-<p>把表映射成类，把行（记录）映射为实例，把字段映射为实例的属性</p>
-<p>而每个字段实际上是每个 <code>Field</code> 的实例，这也就定义了字段的类型</p>
-<p>因为数据库中每张表的字段都不一样，所以我们需要动态的生成类</p>
-<p>此时元类派上用场，这里推荐<a href="https://stackoverflow.com/questions/100003/what-is-a-metaclass-in-python" target="_blank" rel="external">StackOverflow上的一个高票回答</a>帮助理解元类</p>
-<p>为什么要辛辛苦苦地建立orm而不直接连接数据库操作呢？我的理解有以下几点：</p>
-<ol>
-<li><p>安全：避免SQL语句的拼接，参数化的SQL语句可以有效防止SQL注入</p>
-</li>
-<li><p>封装：对不懂SQL语句的程序员可直接使用orm提供的函数操作数据库，而不用专门去学习SQL语句</p>
-<p>可应对多种数据库，无非就是 <code>migrate</code> 一下，无需关心底层的SQL语句是如何生成的</p>
-</li>
-<li><p>插件化：从django的setting可以看出，更换数据库只需更换orm引擎，而不用更改任何的代码</p>
-</li>
-<li><p>分层：从2、3可以看出，所以还是那句话：计算机领域没有什么问题是不能靠分层解决的</p>
-</li>
-</ol>
-<h3 id="models-py"><a href="#models-py" class="headerlink" title="models.py"></a>models.py</h3><p>建立数据模型</p>
-<p>与django的 <code>models.py</code> 功能一样，实现数据库的建模，也就是定义表的内容和结构</p>
-<p>由于上面的orm实现的不是很完善，我们还是需要自己收到那个在数据库中建立这张表的（借助 <code>schema.sql</code> 实现）</p>
-<p>而在django中只需migrate（迁移）一下就可以了</p>
-<p>这里我们定义了三张表： <code>User</code> 、<code>Blog</code> 、<code>Comment</code>，具体都有哪些字段及其类型看代码就清楚了</p>
-<h3 id="webframe-py"><a href="#webframe-py" class="headerlink" title="webframe.py"></a>webframe.py</h3><p>框架的核心模块</p>
-<p>在web开发中想要让时间和精力更多放在业务逻辑函数的设计上，</p>
-<p>编写更少的代码从而提高开发效率，就只能在底层框架上封装一个更高级的框架</p>
-<p>Django干的就是这件事，而本框架主要基于 <code>aiohttp</code> 异步web框架进行再次封装</p>
-<p>主要是从URL函数中解析需要接收的参数，进而从request中获取必要的参数构造成字典以 <code>**kw</code> 传给该URL函数并调用</p>
-<p>然后对url和静态资源进行了映射（借鉴了flask的router装饰器，即注册url函数</p>
-<p>关于装饰器的理解，还是<a href="https://stackoverflow.com/questions/739654/how-to-make-a-chain-of-function-decorators/1594484#1594484" target="_blank" rel="external">一个StackOverflow的高票回答</a>），在app.py的初始化函数init()中被调用</p>
-<h3 id="handlers-py"><a href="#handlers-py" class="headerlink" title="handlers.py"></a>handlers.py</h3><p>编写业务逻辑函数的模块</p>
-<p>所有处理业务逻辑的函数都在这里编写，也就是说需求改动时只需改动该模块即可</p>
-<p>当然，要修改数据模型还得到 <code>modles.py</code> 中</p>
-<p>但该模块还是有不足之处：参考django的设计，应该把该模块按照功能进行分割，一个功能一个app，便于维护和复用</p>
-<p>因为到后面需求越来越复杂，全部堆在一个模块肯定乱手脚</p>
-<h3 id="app-py"><a href="#app-py" class="headerlink" title="app.py"></a>app.py</h3><p>整个web app的起点和终点</p>
-<p>实现的各个中间件（ <code>middlewares</code> , 拦截器）在请求到来时进行拦截，主要是打印相关日志信息和身份验证</p>
-<p>而在应答数据返回时进行拦截，主要是进行模板的渲染和其他数据流类型的相关处理</p>
-<p>在 <code>init()</code> 中完成所有的初始化：</p>
-<p>连接数据库、加载中间件和jinja2模板、注册url路由、添加静态资源、异步监听请求等</p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>从上面介绍的各个功能模块来看，该web框架借鉴了 django 和 flask 等知名web开发框架的设计思想</p>
-<p>MVC的实现无处不在，对理解web开发框架的实现有参考价值。</p>
-<p>其他模块非主要模块，主要是进行设置的读取和markdown语法的转换以及各种异常请求的处理，这里不再详细介绍</p>
-<p>想了解以上各个模块更多的实现细节请直接阅读代码吧，毕竟 “<strong>Talk is cheap, show me the code</strong>”</p>
-<p>我几乎对每一行进行了注释以及相关知识的补充，非常适合入门学习</p>
-<h2 id="数据流向"><a href="#数据流向" class="headerlink" title="数据流向"></a>数据流向</h2><p>当收到一个http请求时，首先会被</p>
-<p><code>logger_factory</code> （输出请求的信息）、 <code>data_factory</code> （打印post提交的数据）、 <code>auth_factory</code> （cookie解析）</p>
-<p>这三个中间件拦截</p>
-<p>然后才根据请求的url被映射到到<code>handlers.py</code>中的各个相应的url函数进行处理</p>
-<p>而在执行这些url函数之前，会被 <code>RequestHandle</code> 先处理（hook）</p>
-<p>主要是从url函数中解析需要接收的参数，进而从request中获取必要的参数构造成字典以 <code>**kw</code> 传给该url函数并调用。</p>
-<p>最后在应答返回数据前会被response_factory所拦截，进行模板的渲染</p>
-<p>将 <code>request handler</code> 的返回值根据返回的类型转换为 <code>web.Response</code> 对象，吻合aiohttp框架的需求</p>
-<h2 id="TODO"><a href="#TODO" class="headerlink" title="TODO"></a>TODO</h2><ul>
-<li><strong>框架</strong>：其实上面已经提到了，比如 <code>handlers.py</code> 的臃肿、orm框架的不完善等。</li>
-<li><strong>功能</strong>：很多博客的小功能还未实现，如分享、标签、统计等等</li>
-<li><strong>前端</strong>：前端使用的uikit这个css框架界面不是很友好，而自己的前端知识又不足，恶补了前端知识后发现前端也是个大坑，考虑使用bootstrap</li>
-<li><strong>数据库</strong>：可以学习一下hexo的文章管理，它是不需要存储在数据库的，如果发表的文章比较长，放在数据库很不方便，单独形成一个md文件然后打开读取渲染岂不是更加灵活，也就是说我们可以在blog.body存放该文章的路径即可</li>
-</ul>
-<h2 id="致谢"><a href="#致谢" class="headerlink" title="致谢"></a>致谢</h2><ul>
-<li>廖雪峰学长的<a href="https://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000" target="_blank" rel="external">python教程</a>、<a href="https://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000" target="_blank" rel="external">git教程</a>、<a href="https://www.liaoxuefeng.com/wiki/001434446689867b27157e896e74d51a89c25cc8b43bdb3000" target="_blank" rel="external">javascript教程</a></li>
-<li>几位前辈优秀的代码注释和补充：<a href="https://github.com/xwlyy/awesome-python3-webapp" target="_blank" rel="external">xwlyy</a>、<a href="https://github.com/KaimingWan/PureBlog" target="_blank" rel="external">KaimingWan</a>、<a href="https://github.com/zhouxinkai/awesome-python3-webapp" target="_blank" rel="external">zhouxinkai</a>、<a href="https://github.com/Engine-Treasure/awesome-python3-webapp" target="_blank" rel="external">Engine-Treasure</a>、<a href="https://github.com/ReedSun/Preeminent" target="_blank" rel="external">Preeminent</a></li>
-</ul>
-<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
-<li><a href="http://jinja.pocoo.org/docs/2.9/" target="_blank" rel="external">Jinja2官方文档</a></li>
-<li><a href="https://docs.python.org/3/library/asyncio.html" target="_blank" rel="external">asyncio官方文档</a></li>
-<li><a href="http://aiohttp.readthedocs.io/en/stable/web.html" target="_blank" rel="external">aiohttp官方文档</a></li>
-<li><a href="http://aiomysql.readthedocs.io/en/latest/index.html" target="_blank" rel="external">aiomysql官方文档</a></li>
-</ul>
-]]></content>
-      
-        
-        <tags>
-            
-            <tag> Python </tag>
-            
-            <tag> ORM </tag>
-            
-            <tag> Django </tag>
-            
-            <tag> Web </tag>
-            
-        </tags>
-        
-    </entry>
+    <!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zMTA4Ni83NjM0" style="margin-left:30px;margin-right:30px">
+<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+</script>
+<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
     
-  
-  
-</search>
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2018/12/06/那些值得阅读的PEP/" title="下一篇: 那些值得阅读的PEP">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019/01/31/剑指offer题解（Python实现）/">剑指offer题解（Python实现）</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/06/那些值得阅读的PEP/">那些值得阅读的PEP</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/23/Python中子类关系的传递性/">Python中子类关系的传递性</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/21/不要在列表（集合、字典）推导式或生成器表达式中使用-yield/">不要在列表（集合、字典）推导式或生成器表达式中使用 yield</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/09/使用vs2017搭建CPython3.6和CPython2.7源码调试环境/">使用vs2017搭建CPython3.6和CPython2.7源码调试环境</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/08/Python循环导入问题/">Python循环导入问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/07/Python字符串驻留机制/">Python字符串驻留机制</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/15/设计模式之单例模式/">设计模式之单例模式</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/15/魔法方法之-new-与-init/">魔法方法之 __new__() 与 __init__()</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/05/Python-中-type-与-object-的关系/">Python 中 type 与 object 的关系</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/31/为什么Python的corotine这么特殊/">为什么Python的coroutine这么特殊</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/09/廖雪峰web实战总结/">廖雪峰web实战总结</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2017-2019 Hk4Fun
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+            
+            
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+    <script>
+        var originTitle = document.title;
+        var titleTime;
+        document.addEventListener("visibilitychange", function() {
+            if (document.hidden) {
+                document.title = "(つェ⊂) 我藏好了哦~ " + originTitle;
+                clearTimeout(titleTime);
+            }
+            else {
+                document.title = "(*´∇｀*) 被你发现啦~ " + originTitle;
+                titleTime = setTimeout(function() {
+                    document.title = originTitle;
+                }, 2000);
+            }
+        })
+    </script>
+
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<!--prettify代码高亮脚本引入-->
+<script src="/plugins/prettify/prettify.js"></script>
+<script type="text/javascript">
+$(window).load(function(){
+$('pre').addClass('prettyprint linenums').attr('style', 'overflow:auto;');
+ prettyPrint();
+})
+</script>
+  </div>
+</body>
+</html>
