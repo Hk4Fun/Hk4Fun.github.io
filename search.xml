@@ -296,15 +296,15 @@ class Solution:
 <h3 id="最优题解-12"><a href="#最优题解-12" class="headerlink" title="最优题解"></a>最优题解</h3><p>双指针。<br>定义两个指针，第一个先从头开始走k步，第二个保持不动；从第k步开始，第二个指针也开始从头遍历。<br>由于两个指针的距离保持在k，所以当第一个指针遍历完整个链表时，第二个指针正好来到倒数第k个结点</p>
 <h3 id="代码-12"><a href="#代码-12" class="headerlink" title="代码"></a>代码</h3><pre><code class="python">class Solution:
     def FindKthToTail(self, head, k):
-        fast = slow = head
-        while fast and k:
-            fast = fast.next
+        if not head: return
+        l = r = head
+        while k and r:
+            r = r.next
             k -= 1
-        if not fast and k: return # k 大于链表长度
-        while fast:
-            fast = fast.next
-            slow = slow.next
-        return slow
+        if k != 0 and r is None: return # k 大于链表长度
+        while r:
+            l, r = l.next, r.next
+        return l
 </code></pre>
 <h3 id="举一反三-4"><a href="#举一反三-4" class="headerlink" title="举一反三"></a>举一反三</h3><ul>
 <li><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/15_2_%E9%93%BE%E8%A1%A8%E4%B8%AD%E9%97%B4%E7%BB%93%E7%82%B9.py" target="_blank" rel="external">链表中间结点</a></li>

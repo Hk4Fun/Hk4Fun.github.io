@@ -25,7 +25,7 @@
 <meta property="og:description" content="每个题目标题链接到 github，可以查看其他的解题思路、测试用例以及拓展题目 这里只贴上书中题目的最优解法和代码 另外，这里参考的是剑指offer第一版的题目顺序 补充部分添加的是剑指offer第二版多出来的几道题目">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/006giLD5ly1fwx65siwcwj30h103bjr8.jpg">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/006giLD5ly1fwx66yx85wj302s03dmwx.jpg">
-<meta property="og:updated_time" content="2019-02-02T13:51:18.513Z">
+<meta property="og:updated_time" content="2019-02-02T14:28:14.093Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="剑指offer题解（Python实现）">
 <meta name="twitter:description" content="每个题目标题链接到 github，可以查看其他的解题思路、测试用例以及拓展题目 这里只贴上书中题目的最优解法和代码 另外，这里参考的是剑指offer第一版的题目顺序 补充部分添加的是剑指offer第二版多出来的几道题目">
@@ -603,15 +603,15 @@ class Solution:
 <h3 id="最优题解-12"><a href="#最优题解-12" class="headerlink" title="最优题解"></a>最优题解</h3><p>双指针。<br>定义两个指针，第一个先从头开始走k步，第二个保持不动；从第k步开始，第二个指针也开始从头遍历。<br>由于两个指针的距离保持在k，所以当第一个指针遍历完整个链表时，第二个指针正好来到倒数第k个结点</p>
 <h3 id="代码-12"><a href="#代码-12" class="headerlink" title="代码"></a>代码</h3><pre><code class="python">class Solution:
     def FindKthToTail(self, head, k):
-        fast = slow = head
-        while fast and k:
-            fast = fast.next
+        if not head: return
+        l = r = head
+        while k and r:
+            r = r.next
             k -= 1
-        if not fast and k: return # k 大于链表长度
-        while fast:
-            fast = fast.next
-            slow = slow.next
-        return slow
+        if k != 0 and r is None: return # k 大于链表长度
+        while r:
+            l, r = l.next, r.next
+        return l
 </code></pre>
 <h3 id="举一反三-4"><a href="#举一反三-4" class="headerlink" title="举一反三"></a>举一反三</h3><ul>
 <li><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/15_2_%E9%93%BE%E8%A1%A8%E4%B8%AD%E9%97%B4%E7%BB%93%E7%82%B9.py" target="_blank" rel="external">链表中间结点</a></li>
@@ -1947,7 +1947,7 @@ class Solution:
         <p><span>本文标题:</span><a href="/2019/01/31/剑指offer题解（Python实现）/">剑指offer题解（Python实现）</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">Hk4Fun</a></p>
         <p><span>发布时间:</span>2019-01-31, 18:11:06</p>
-        <p><span>最后更新:</span>2019-02-02, 21:51:18</p>
+        <p><span>最后更新:</span>2019-02-02, 22:28:14</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2019/01/31/剑指offer题解（Python实现）/" title="剑指offer题解（Python实现）">https://hk4fun.github.io/2019/01/31/剑指offer题解（Python实现）/</a>
             <span class="copy-path" data-clipboard-text="原文: https://hk4fun.github.io/2019/01/31/剑指offer题解（Python实现）/　　作者: Hk4Fun" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
