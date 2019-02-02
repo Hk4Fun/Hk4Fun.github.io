@@ -97,7 +97,7 @@ class Solution:
 </ul>
 <h2 id="用两个栈实现队列"><a href="#用两个栈实现队列" class="headerlink" title="用两个栈实现队列"></a><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/7_1_%E7%94%A8%E4%B8%A4%E4%B8%AA%E6%A0%88%E5%AE%9E%E7%8E%B0%E9%98%9F%E5%88%97.py" target="_blank" rel="external">用两个栈实现队列</a></h2><h3 id="题目描述-4"><a href="#题目描述-4" class="headerlink" title="题目描述"></a>题目描述</h3><p>用两个栈来实现一个队列，完成队列的入队和出队操作</p>
 <h3 id="最优题解-4"><a href="#最优题解-4" class="headerlink" title="最优题解"></a>最优题解</h3><p>stack1用来入队，stack2用来出队<br>出队时若stack2有数据直接弹出，无数据就要把stack1中的全部弹出并压入stack2，然后stack2继续出队<br>入队时不管stack1有没有数据，直接压入</p>
-<h3 id="代码-4"><a href="#代码-4" class="headerlink" title="代码"></a>代码</h3><pre><code>class Solution:
+<h3 id="代码-4"><a href="#代码-4" class="headerlink" title="代码"></a>代码</h3><pre><code class="python">class Solution:
     def __init__(self):
         self.stack1 = []
         self.stack2 = []
@@ -112,7 +112,8 @@ class Solution:
             while self.stack1:
                 self.stack2.append(self.stack1.pop())
         return self.stack2.pop()  # stack2继续出队
-</code></pre><h3 id="举一反三-1"><a href="#举一反三-1" class="headerlink" title="举一反三"></a>举一反三</h3><ul>
+</code></pre>
+<h3 id="举一反三-1"><a href="#举一反三-1" class="headerlink" title="举一反三"></a>举一反三</h3><ul>
 <li><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/7_2_%E7%94%A8%E4%B8%A4%E4%B8%AA%E9%98%9F%E5%88%97%E5%AE%9E%E7%8E%B0%E6%A0%88.py" target="_blank" rel="external">用两个队列实现栈</a></li>
 </ul>
 <h2 id="旋转数组的最小数字"><a href="#旋转数组的最小数字" class="headerlink" title="旋转数组的最小数字"></a><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/8_%E6%97%8B%E8%BD%AC%E6%95%B0%E7%BB%84%E7%9A%84%E6%9C%80%E5%B0%8F%E6%95%B0%E5%AD%97.py" target="_blank" rel="external">旋转数组的最小数字</a></h2><h3 id="题目描述-5"><a href="#题目描述-5" class="headerlink" title="题目描述"></a>题目描述</h3><p>把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。<br>输入一个递增排序的数组的一个旋转，输出旋转数组的最小元素。<br>例如数组{3,4,5,1,2}为{1,2,3,4,5}的一个旋转，该数组的最小值为1。</p>
@@ -129,7 +130,7 @@ class Solution:
 <li>array[mid] &lt; array[high]</li>
 </ul>
 <p>出现这种情况的array类似[2,2,3,4,5,6,6]，<br>此时最小数字一定就是array[mid]或者在mid的左边，因为右边必然都是递增的<br>若 mid = 0 ,说明low与high之间未发生旋转，最小数字就是array[mid]，<br>或者array[mid-1]&gt;array[mid]，则最小数字也是array[mid]<br>否则mid不为零且array[mid-1]&lt;=array[mid]，最小数字在mid的左边，high = mid - 1</p>
-<h3 id="代码-5"><a href="#代码-5" class="headerlink" title="代码"></a>代码</h3><pre><code>class Solution:
+<h3 id="代码-5"><a href="#代码-5" class="headerlink" title="代码"></a>代码</h3><pre><code class="python">class Solution:
     def minNumber(self, rotateArray):
         if not rotateArray: return 0
         l, r = 0, len(rotateArray) - 1
@@ -144,30 +145,33 @@ class Solution:
                     r = m - 1
             else:
                 r -= 1
-</code></pre><h2 id="斐波那契数列"><a href="#斐波那契数列" class="headerlink" title="斐波那契数列"></a><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/9_1_%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E6%95%B0%E5%88%97.py" target="_blank" rel="external">斐波那契数列</a></h2><h3 id="题目描述-6"><a href="#题目描述-6" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入一个整数n，输出斐波那契数列的第n项f(n)（n从0开始，f(0)=0，f(1)=1）</p>
+</code></pre>
+<h2 id="斐波那契数列"><a href="#斐波那契数列" class="headerlink" title="斐波那契数列"></a><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/9_1_%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E6%95%B0%E5%88%97.py" target="_blank" rel="external">斐波那契数列</a></h2><h3 id="题目描述-6"><a href="#题目描述-6" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入一个整数n，输出斐波那契数列的第n项f(n)（n从0开始，f(0)=0，f(1)=1）</p>
 <h3 id="最优题解-6"><a href="#最优题解-6" class="headerlink" title="最优题解"></a>最优题解</h3><p>a, b = b, a + b</p>
-<h3 id="代码-6"><a href="#代码-6" class="headerlink" title="代码"></a>代码</h3><pre><code>class Solution:
+<h3 id="代码-6"><a href="#代码-6" class="headerlink" title="代码"></a>代码</h3><pre><code class="python">class Solution:
     def Fibonacci(self, n):
         a, b = 0, 1
         for _ in range(n):
             a, b = b, a + b
         return a
-</code></pre><h3 id="举一反三-2"><a href="#举一反三-2" class="headerlink" title="举一反三"></a>举一反三</h3><ul>
+</code></pre>
+<h3 id="举一反三-2"><a href="#举一反三-2" class="headerlink" title="举一反三"></a>举一反三</h3><ul>
 <li><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/9_2_%E9%9D%92%E8%9B%99%E8%B7%B3%E5%8F%B0%E9%98%B6.py" target="_blank" rel="external">青蛙跳台阶</a></li>
 <li><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/9_3_%E5%8F%98%E6%80%81%E9%9D%92%E8%9B%99%E8%B7%B3%E5%8F%B0%E9%98%B6.py" target="_blank" rel="external">变态青蛙跳台阶</a></li>
 <li><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/9_4_%E7%9F%A9%E5%BD%A2%E8%A6%86%E7%9B%96.py" target="_blank" rel="external">矩形覆盖</a></li>
 </ul>
 <h2 id="二进制中1的个数"><a href="#二进制中1的个数" class="headerlink" title="二进制中1的个数"></a><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/10_1_%E4%BA%8C%E8%BF%9B%E5%88%B6%E4%B8%AD1%E7%9A%84%E4%B8%AA%E6%95%B0.py" target="_blank" rel="external">二进制中1的个数</a></h2><h3 id="题目描述-7"><a href="#题目描述-7" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入一个整数，输出该数二进制表示中1的个数。其中负数用补码表示。</p>
 <h3 id="最优题解-7"><a href="#最优题解-7" class="headerlink" title="最优题解"></a>最优题解</h3><p>利用一个位运算技巧：一个整数减1后总是把它二进制表示的最右边的1变为0<br>这里有两种情况：最右边的1在最末位和不在最末位<br>但无论怎样，减一后的数与原数相与就一定可以把最右的1变为0<br>有一点要注意：由于c/c++/java中int位数限定32位，<br>所以n最后一定被全部变为0，循环退出；<br>但python就有区别了，python的整数位数不止32位，<br>所以在负数情况下1的位数会多出很多，所以应先&amp;0xffffffff，保留后面32位，前面全部变成0</p>
-<h3 id="代码-7"><a href="#代码-7" class="headerlink" title="代码"></a>代码</h3><pre><code>class Solution:
+<h3 id="代码-7"><a href="#代码-7" class="headerlink" title="代码"></a>代码</h3><pre><code class="python">class Solution:
     def NumberOf1(self, n):
         n &amp;= 0xffffffff
         count = 0
         while n:
             n &amp;= n - 1
             count += 1
-        return count if n &gt;= 0 else count + 1
-</code></pre><h3 id="举一反三-3"><a href="#举一反三-3" class="headerlink" title="举一反三"></a>举一反三</h3><ul>
+        return count
+</code></pre>
+<h3 id="举一反三-3"><a href="#举一反三-3" class="headerlink" title="举一反三"></a>举一反三</h3><ul>
 <li><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/10_2_2%E7%9A%84%E6%95%B4%E6%95%B0%E6%AC%A1%E6%96%B9.py" target="_blank" rel="external">2的整数次方</a></li>
 <li><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/10_3_%E6%B1%89%E6%98%8E%E8%B7%9D%E7%A6%BB.py" target="_blank" rel="external">汉明距离</a></li>
 </ul>
