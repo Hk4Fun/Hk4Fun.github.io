@@ -452,7 +452,7 @@ class Solution:
         return self.stack.pop()
 
     def top(self):
-        return self.stack if self.stack else None
+        return self.stack[-1] if self.stack else None
 
     def min(self):
         return self.minstack[-1] if self.minstack else None
