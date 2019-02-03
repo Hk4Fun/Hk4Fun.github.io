@@ -25,7 +25,7 @@
 <meta property="og:description" content="每个题目标题链接到 github，可以查看其他的解题思路、测试用例以及拓展题目 这里只贴上书中题目的最优解法和代码 另外，这里参考的是剑指offer第一版的题目顺序 补充部分添加的是剑指offer第二版多出来的几道题目">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/006giLD5ly1fwx65siwcwj30h103bjr8.jpg">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/006giLD5ly1fwx66yx85wj302s03dmwx.jpg">
-<meta property="og:updated_time" content="2019-02-02T14:28:14.093Z">
+<meta property="og:updated_time" content="2019-02-03T05:05:19.212Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="剑指offer题解（Python实现）">
 <meta name="twitter:description" content="每个题目标题链接到 github，可以查看其他的解题思路、测试用例以及拓展题目 这里只贴上书中题目的最优解法和代码 另外，这里参考的是剑指offer第一版的题目顺序 补充部分添加的是剑指offer第二版多出来的几道题目">
@@ -699,7 +699,7 @@ class Solution:
 </code></pre>
 <h2 id="顺时针打印矩阵"><a href="#顺时针打印矩阵" class="headerlink" title="顺时针打印矩阵"></a><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/20_%E9%A1%BA%E6%97%B6%E9%92%88%E6%89%93%E5%8D%B0%E7%9F%A9%E9%98%B5.py" target="_blank" rel="external">顺时针打印矩阵</a></h2><h3 id="题目描述-17"><a href="#题目描述-17" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入一个矩阵，按照从外向里以顺时针的顺序依次打印出每一个数字，<br>例如，如果输入如下矩阵：<br>[[ 1,  2,  3,  4],<br> [ 5,  6,  7,  8],<br> [ 9, 10, 11, 12],<br> [13, 14, 15, 16]]<br>则依次打印出数字 1,2,3,4,8,12,16,15,14,13,9,5,6,7,11,10.</p>
 <h3 id="最优题解-17"><a href="#最优题解-17" class="headerlink" title="最优题解"></a>最优题解</h3><p>时间O（n*m）, 空间O（1）</p>
-<p>一个圈其实只要左上角（startR, startC）和右下角（endR, endC）确定了整个圈也就确定了，<br>​        因此外层循环控制左上角和右下角的变化，内层循环根据这两个坐标分情况绕圈打印就可以了<br>​        外层循环如何控制两个坐标？只需每次让 （startR++, startC++）和 （endR–, endC–）<br>​        什么时候退出？当右下角来到左上角的左上方是退出，因此换句话讲就是当<br>​        startR &lt;= endR and startC &lt;= endC 时我们才可以进入内层循环打印圈<br>​        那外层循环如何分情况打印圈？情况就三种：<br>​        1、当 startR == endR 时，说明只剩一行<br>​        2、当 startC == endC 时，说明只剩一列<br>​        3、否则为一般情况，绕圈打印即可</p>
+<p>一个圈其实只要左上角（startR, startC）和右下角（endR, endC）确定了整个圈也就确定了，<br>​        因此外层循环控制左上角和右下角的变化，内层循环根据这两个坐标分情况绕圈打印就可以了<br>​        外层循环如何控制两个坐标？只需每次让 （startR++, startC++）和 （endR–, endC–）<br>​        什么时候退出？当右下角来到左上角的左上方时退出，换句话讲就是当<br>​        startR &lt;= endR and startC &lt;= endC 时我们才可以进入内层循环打印圈<br>​        那内层循环如何分情况打印圈？情况就三种：<br>​        1、当 startR == endR 时，说明只剩一行<br>​        2、当 startC == endC 时，说明只剩一列<br>​        3、否则为一般情况，绕圈打印即可</p>
 <h3 id="代码-17"><a href="#代码-17" class="headerlink" title="代码"></a>代码</h3><pre><code class="python">class Solution:
     # matrix类型为二维列表，需要返回列表
     def PrintMatrix(self, matrix):
@@ -1947,7 +1947,7 @@ class Solution:
         <p><span>本文标题:</span><a href="/2019/01/31/剑指offer题解（Python实现）/">剑指offer题解（Python实现）</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">Hk4Fun</a></p>
         <p><span>发布时间:</span>2019-01-31, 18:11:06</p>
-        <p><span>最后更新:</span>2019-02-02, 22:28:14</p>
+        <p><span>最后更新:</span>2019-02-03, 13:05:19</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2019/01/31/剑指offer题解（Python实现）/" title="剑指offer题解（Python实现）">https://hk4fun.github.io/2019/01/31/剑指offer题解（Python实现）/</a>
             <span class="copy-path" data-clipboard-text="原文: https://hk4fun.github.io/2019/01/31/剑指offer题解（Python实现）/　　作者: Hk4Fun" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
