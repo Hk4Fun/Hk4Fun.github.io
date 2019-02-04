@@ -543,12 +543,13 @@ class Solution:
 <p>第一步，复制原链表的结点N并创建新结点N’，再把N’链接到N的后面；</p>
 <p>第二步，设置每个N’的random。如果原链表上的结点N的random指向S，则它对应的复制结点N’的random指向S的下一个结点S’</p>
 <p>第三步，把这个长链表拆分成两个链表，奇数位置上的结点组成原链表，偶数位置上的结点组成复制链表</p>
-<h3 id="代码-23"><a href="#代码-23" class="headerlink" title="代码"></a>代码</h3><pre><code class="python">class Solution:
+<h3 id="代码-23"><a href="#代码-23" class="headerlink" title="代码"></a>代码</h3><pre><code class="python">class RandomListNode:
     def __init__(self, x):
         self.label = x
         self.next = None
         self.random = None
 
+class Solution:
     def Clone(self, pHead):
         def clone(head):
             while head:
