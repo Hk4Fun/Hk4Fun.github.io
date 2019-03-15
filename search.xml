@@ -86,11 +86,11 @@ class Solution:
             if preL &gt; preR or tinL &gt; tinR: return
             idx = tin.index(pre[preL])
             node = TreeNode(pre[preL])
-            node.left = build(preL+1, idx + preL - tinL, tinL, idx - 1)
+            node.left = build(preL + 1, idx + preL - tinL, tinL, idx - 1)
             node.right = build(idx + preL - tinL + 1, preR, idx + 1, tinR)
             return node
 
-        return build(0, len(pre)-1, 0, len(tin) - 1)
+        return build(0, len(pre) - 1, 0, len(tin) - 1)
 </code></pre>
 <h3 id="举一反三"><a href="#举一反三" class="headerlink" title="举一反三"></a>举一反三</h3><ul>
 <li><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/6_2_%E9%87%8D%E5%BB%BA%E4%BA%8C%E5%8F%89%E6%A0%91%EF%BC%88%E4%B8%AD%E5%BA%8F%E5%90%8E%E5%BA%8F%EF%BC%89.py" target="_blank" rel="external">重建二叉树（中序后序）</a></li>
