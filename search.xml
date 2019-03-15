@@ -7,12 +7,18 @@
       <url>/2019/01/31/%E5%89%91%E6%8C%87offer%E9%A2%98%E8%A7%A3%EF%BC%88Python%E5%AE%9E%E7%8E%B0%EF%BC%89/</url>
       <content type="html"><![CDATA[<p>每个题目标题链接到 <a href="https://github.com/Hk4Fun/algorithm_offer/tree/master/target_offer" target="_blank" rel="external">github</a>，可以查看其他的解题思路、测试用例以及拓展题目</p>
 <p>这里只贴上书中题目的最优解法和代码</p>
-<p>另外，这里参考的是剑指offer第一版的题目顺序</p>
-<p>补充部分添加的是剑指offer第二版多出来的几道题目</p>
+<p>另外，这里参考的是《剑指offer》第一版的题目顺序</p>
+<p>补充部分添加的是《剑指offer》第二版多出来的几道题目</p>
 <a id="more"></a>
-<h2 id="二维数组中的查找"><a href="#二维数组中的查找" class="headerlink" title=" 二维数组中的查找"></a><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/3_1_%E4%BA%8C%E7%BB%B4%E6%95%B0%E7%BB%84%E4%B8%AD%E7%9A%84%E6%9F%A5%E6%89%BE.py" target="_blank" rel="external"> 二维数组中的查找</a></h2><h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>在一个二维数组中，每一行都按照从左到右递增的顺序排序，每一列都按照从上到下递增的顺序排序。<br>请完成一个函数，输入这样的一个二维数组和一个整数，判断数组中是否含有该整数。</p>
-<h3 id="最优题解"><a href="#最优题解" class="headerlink" title="最优题解"></a>最优题解</h3><p>时间（O（m+n）），空间（O（1））</p>
-<p>从右上角或左下角开始查找，这里选择右上角<br>如果当前元素大于target, 剔除target所在列（col左移-1）<br>如果当前元素小于target, 剔除target所在行（row下移+1）<br>否则等于，结束查找<br>每一次查找都在数组的查找范围中剔除一行或一列，每一步都缩小了查找的范围<br>直到找到要查找的数字，或者查找范围为空</p>
+<h2 id="二维数组中的查找"><a href="#二维数组中的查找" class="headerlink" title=" 二维数组中的查找"></a><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/3_1_%E4%BA%8C%E7%BB%B4%E6%95%B0%E7%BB%84%E4%B8%AD%E7%9A%84%E6%9F%A5%E6%89%BE.py" target="_blank" rel="external"> 二维数组中的查找</a></h2><h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>在一个二维数组中，每一行都按照从左到右递增的顺序排序，每一列都按照从上到下递增的顺序排序。</p>
+<p>请完成一个函数，输入这样的一个二维数组和一个整数，判断数组中是否含有该整数。</p>
+<h3 id="最优题解"><a href="#最优题解" class="headerlink" title="最优题解"></a>最优题解</h3><p>时间（O（m + n）），空间（O（1））</p>
+<p>从右上角或左下角开始查找，这里选择右上角</p>
+<p>如果当前元素大于 target，剔除 target 所在列（col 左移 - 1）</p>
+<p>如果当前元素小于 target，剔除 target 所在行（row 下移 + 1）</p>
+<p>否则等于，结束查找</p>
+<p>每一次查找都在数组的查找范围中剔除一行或一列，每一步都缩小了查找的范围</p>
+<p>直到找到要查找的数字，或者查找范围为空</p>
 <h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><pre><code class="python">class Solution:
     def Find(self, target, array):
         if array is None: return False
@@ -29,11 +35,17 @@
 <h3 id="拓展题目"><a href="#拓展题目" class="headerlink" title="拓展题目"></a>拓展题目</h3><ul>
 <li><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/3_2_%E6%8E%92%E5%BA%8F%E7%9F%A9%E9%98%B5%E4%B8%AD%E7%9A%84%E4%BB%8E%E5%B0%8F%E5%88%B0%E5%A4%A7%E7%AC%ACk%E4%B8%AA%E6%95%B0.py" target="_blank" rel="external">排序矩阵中从小到大第k个数</a></li>
 </ul>
-<h2 id="替换空格"><a href="#替换空格" class="headerlink" title="替换空格"></a><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/4_%E6%9B%BF%E6%8D%A2%E7%A9%BA%E6%A0%BC.py" target="_blank" rel="external">替换空格</a></h2><h3 id="题目描述-1"><a href="#题目描述-1" class="headerlink" title="题目描述"></a>题目描述</h3><p>请实现一个函数，将一个字符串中的空格替换成“%20”。<br>例如，当字符串为We Are Happy.则经过替换之后的字符串为We%20Are%20Happy。</p>
-<h3 id="最优题解-1"><a href="#最优题解-1" class="headerlink" title="最优题解"></a>最优题解</h3><p>使用内置方法replace最佳，这里给出书上的解法：</p>
-<p>原地替换，需要移动替换位置之后的字符，若从左到右扫描，一边移动一边替换，时间复杂度为O（n^2）</p>
-<p>可以考虑从右到左扫描，使用两个索引，一个指向源字符串的末尾oldIdx，另一个指向替换后字符串的末尾newIdx， 没碰到空格时直接复制，碰到空格时newIdx左移3格写入‘20%’，oldIdx左移一格（每替换一个空格，长度增加2，因此替换后字符串的长度=原来长度+2*空格数目），直到newIdx越过oldIdx来到oldIdx的左边则扫描结束</p>
-<p>注：如果是c/c++可以实现原地替换，但python中的str为不可变对象，只能返回新的字符串，所以这里的原地替换只是模拟书中的方法，实际上还是返回一个新的字符串</p>
+<h2 id="替换空格"><a href="#替换空格" class="headerlink" title="替换空格"></a><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/4_%E6%9B%BF%E6%8D%A2%E7%A9%BA%E6%A0%BC.py" target="_blank" rel="external">替换空格</a></h2><h3 id="题目描述-1"><a href="#题目描述-1" class="headerlink" title="题目描述"></a>题目描述</h3><p>请实现一个函数，将一个字符串中的空格替换成 “%20”。</p>
+<p>例如，当字符串为 “We Are Happy”，则经过替换之后的字符串为 “We%20Are%20Happy”。</p>
+<h3 id="最优题解-1"><a href="#最优题解-1" class="headerlink" title="最优题解"></a>最优题解</h3><p>使用内置方法 replace() 最佳，这里给出书上的解法：</p>
+<p>原地替换，需要移动替换位置之后的字符，若从左到右扫描，一边移动一边替换，时间复杂度为 O（n^2）</p>
+<p>可以考虑从右到左扫描，使用两个索引</p>
+<p>一个指向源字符串的末尾 oldIdx，另一个指向替换后字符串的末尾 newIdx</p>
+<p> 没碰到空格时直接复制，碰到空格时 newIdx 左移 3 格写入 ‘20%’，oldIdx 左移一格</p>
+<p>（每替换一个空格，长度增加 2，因此替换后字符串的长度 = 原来长度 + 2 * 空格数目）</p>
+<p>直到 newIdx 越过 oldIdx 来到 oldIdx 的左边则扫描结束</p>
+<p>注：如果是 c / c++ 可以实现原地替换，但 python 中的 str 为不可变对象，只能返回新的字符串</p>
+<p>所以这里的原地替换只是模拟书中的方法，实际上还是返回一个新的字符串</p>
 <h3 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h3><pre><code class="python">class Solution:
     def replaceSpace(self, s):
         if s is None: return &#39;&#39;
@@ -53,7 +65,7 @@
 </code></pre>
 <h2 id="从尾到头打印链表"><a href="#从尾到头打印链表" class="headerlink" title="从尾到头打印链表"></a><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/5_%E4%BB%8E%E5%B0%BE%E5%88%B0%E5%A4%B4%E6%89%93%E5%8D%B0%E9%93%BE%E8%A1%A8.py" target="_blank" rel="external">从尾到头打印链表</a></h2><h3 id="题目描述-2"><a href="#题目描述-2" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入一个链表，从尾到头打印链表每个节点的值（不能改变原链表结构）</p>
 <h3 id="最优题解-2"><a href="#最优题解-2" class="headerlink" title="最优题解"></a>最优题解</h3><p>时间（O（n）），空间（O（n））</p>
-<p>可以自己用list模拟栈，也可以使用递归借助系统栈，这里使用递归实现</p>
+<p>可以自己用 list 模拟栈，也可以使用递归借助系统栈，这里使用递归实现</p>
 <h3 id="代码-2"><a href="#代码-2" class="headerlink" title="代码"></a>代码</h3><pre><code class="python">class ListNode:
     def __init__(self, x):
         self.val = x
@@ -71,8 +83,10 @@ class Solution:
         recursive(listNode)
         return res
 </code></pre>
-<h2 id="重建二叉树"><a href="#重建二叉树" class="headerlink" title="重建二叉树"></a><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/6_1_%E9%87%8D%E5%BB%BA%E4%BA%8C%E5%8F%89%E6%A0%91%EF%BC%88%E5%89%8D%E5%BA%8F%E4%B8%AD%E5%BA%8F%EF%BC%89.py" target="_blank" rel="external">重建二叉树</a></h2><h3 id="题目描述-3"><a href="#题目描述-3" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入某二叉树的前序遍历和中序遍历的结果，请重建出该二叉树。<br>假设输入的前序遍历和中序遍历的结果中都不含重复的数字。</p>
-<h3 id="最优题解-3"><a href="#最优题解-3" class="headerlink" title="最优题解"></a>最优题解</h3><p>前序的第一个元素是根结点的值，在中序中找到该值，<br>中序中该值的左边的元素是根结点的左子树，右边是右子树，然后递归的处理左边和右边</p>
+<h2 id="重建二叉树"><a href="#重建二叉树" class="headerlink" title="重建二叉树"></a><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/6_1_%E9%87%8D%E5%BB%BA%E4%BA%8C%E5%8F%89%E6%A0%91%EF%BC%88%E5%89%8D%E5%BA%8F%E4%B8%AD%E5%BA%8F%EF%BC%89.py" target="_blank" rel="external">重建二叉树</a></h2><h3 id="题目描述-3"><a href="#题目描述-3" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入某二叉树的前序遍历和中序遍历的结果，请重建出该二叉树。</p>
+<p>假设输入的前序遍历和中序遍历的结果中都不含重复的数字。</p>
+<h3 id="最优题解-3"><a href="#最优题解-3" class="headerlink" title="最优题解"></a>最优题解</h3><p>前序的第一个元素是根结点的值，在中序中找到该值</p>
+<p>中序中该值的左边的元素是根结点的左子树，右边是右子树，然后递归的处理左边和右边</p>
 <h3 id="代码-3"><a href="#代码-3" class="headerlink" title="代码"></a>代码</h3><pre><code class="python">class TreeNode:
     def __init__(self, x):
         self.val = x
@@ -96,7 +110,9 @@ class Solution:
 <li><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/6_2_%E9%87%8D%E5%BB%BA%E4%BA%8C%E5%8F%89%E6%A0%91%EF%BC%88%E4%B8%AD%E5%BA%8F%E5%90%8E%E5%BA%8F%EF%BC%89.py" target="_blank" rel="external">重建二叉树（中序后序）</a></li>
 </ul>
 <h2 id="用两个栈实现队列"><a href="#用两个栈实现队列" class="headerlink" title="用两个栈实现队列"></a><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/7_1_%E7%94%A8%E4%B8%A4%E4%B8%AA%E6%A0%88%E5%AE%9E%E7%8E%B0%E9%98%9F%E5%88%97.py" target="_blank" rel="external">用两个栈实现队列</a></h2><h3 id="题目描述-4"><a href="#题目描述-4" class="headerlink" title="题目描述"></a>题目描述</h3><p>用两个栈来实现一个队列，完成队列的入队和出队操作</p>
-<h3 id="最优题解-4"><a href="#最优题解-4" class="headerlink" title="最优题解"></a>最优题解</h3><p>stack1用来入队，stack2用来出队<br>出队时若stack2有数据直接弹出，无数据就要把stack1中的全部弹出并压入stack2，然后stack2继续出队<br>入队时不管stack1有没有数据，直接压入</p>
+<h3 id="最优题解-4"><a href="#最优题解-4" class="headerlink" title="最优题解"></a>最优题解</h3><p>stack1 用来入队，stack2 用来出队</p>
+<p>出队时若 stack2 有数据直接弹出，无数据就要把 stack1 中的全部弹出并压入 stack2，然后 stack2 继续出队</p>
+<p>入队时不管 stack1 有没有数据，直接压入</p>
 <h3 id="代码-4"><a href="#代码-4" class="headerlink" title="代码"></a>代码</h3><pre><code class="python">class Solution:
     def __init__(self):
         self.stack1 = []
@@ -116,20 +132,30 @@ class Solution:
 <h3 id="举一反三-1"><a href="#举一反三-1" class="headerlink" title="举一反三"></a>举一反三</h3><ul>
 <li><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/7_2_%E7%94%A8%E4%B8%A4%E4%B8%AA%E9%98%9F%E5%88%97%E5%AE%9E%E7%8E%B0%E6%A0%88.py" target="_blank" rel="external">用两个队列实现栈</a></li>
 </ul>
-<h2 id="旋转数组的最小数字"><a href="#旋转数组的最小数字" class="headerlink" title="旋转数组的最小数字"></a><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/8_%E6%97%8B%E8%BD%AC%E6%95%B0%E7%BB%84%E7%9A%84%E6%9C%80%E5%B0%8F%E6%95%B0%E5%AD%97.py" target="_blank" rel="external">旋转数组的最小数字</a></h2><h3 id="题目描述-5"><a href="#题目描述-5" class="headerlink" title="题目描述"></a>题目描述</h3><p>把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。<br>输入一个递增排序的数组的一个旋转，输出旋转数组的最小元素。<br>例如数组{3,4,5,1,2}为{1,2,3,4,5}的一个旋转，该数组的最小值为1。</p>
-<h3 id="最优题解-5"><a href="#最优题解-5" class="headerlink" title="最优题解"></a>最优题解</h3><p>部分排序，则可用二分查找，注意在等于的时候让high-1，顺序查找，退化成O(n)<br>（注意到[1,0,1,1,1]和[1,1,1,0,1]的区别，此时无法判断最小值在哪边，故只能用顺序查找）：</p>
+<h2 id="旋转数组的最小数字"><a href="#旋转数组的最小数字" class="headerlink" title="旋转数组的最小数字"></a><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/8_%E6%97%8B%E8%BD%AC%E6%95%B0%E7%BB%84%E7%9A%84%E6%9C%80%E5%B0%8F%E6%95%B0%E5%AD%97.py" target="_blank" rel="external">旋转数组的最小数字</a></h2><h3 id="题目描述-5"><a href="#题目描述-5" class="headerlink" title="题目描述"></a>题目描述</h3><p>把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转</p>
+<p>输入一个递增排序的数组的一个旋转，输出旋转数组的最小元素</p>
+<p>例如数组 [3, 4, 5, 1, 2] 为 [1, 2, 3, 4, 5] 的一个旋转，该数组的最小值为 1</p>
+<h3 id="最优题解-5"><a href="#最优题解-5" class="headerlink" title="最优题解"></a>最优题解</h3><p>部分排序，则可用二分查找，注意在等于的时候让 high - 1，顺序查找，退化成 O(n)</p>
+<p>（注意到 [1, 0, 1, 1, 1] 和 [1, 1, 1, 0, 1] 的区别，此时无法判断最小值在哪边，故只能用顺序查找）：</p>
 <ul>
-<li>array[mid] &gt; array[high]</li>
+<li><p>array[mid] &gt; array[high]</p>
+<p>出现这种情况的 array 类似 [3, 4, 5, 6, 0, 1, 2]</p>
+<p>此时最小数字一定在 mid 的右边</p>
+<p>low = mid + 1</p>
+</li>
+<li><p>array[mid] == array[high]</p>
+<p>出现这种情况的 array 类似 [1, 0, 1, 1, 1] 或者[1, 1, 1, 0, 1]</p>
+<p>此时最小数字不好判断在 mid 左边还是右边,这时只好一个一个试</p>
+<p>high = high - 1</p>
+</li>
+<li><p>array[mid] &lt; array[high]</p>
+<p>出现这种情况的 array 类似[2, 2, 3, 4, 5, 6, 6]</p>
+<p>此时最小数字一定就是 array[mid] 或者在 mid 的左边，因为右边必然都是递增的</p>
+<p>若 mid = 0 ,说明 low 与 high 之间未发生旋转，最小数字就是 array[mid]</p>
+<p>或者 array[mid - 1] &gt; array[mid]，则最小数字也是 array[mid]</p>
+<p>否则 mid 不为零且 array[mid - 1] &lt;= array[mid]，最小数字在 mid 的左边，high = mid - 1</p>
+</li>
 </ul>
-<p>出现这种情况的array类似[3,4,5,6,0,1,2]，<br>此时最小数字一定在mid的右边<br>low = mid + 1</p>
-<ul>
-<li>array[mid] == array[high]</li>
-</ul>
-<p>出现这种情况的array类似 [1,0,1,1,1] 或者[1,1,1,0,1]，<br>此时最小数字不好判断在mid左边还是右边,这时只好一个一个试<br>high = high - 1</p>
-<ul>
-<li>array[mid] &lt; array[high]</li>
-</ul>
-<p>出现这种情况的array类似[2,2,3,4,5,6,6]，<br>此时最小数字一定就是array[mid]或者在mid的左边，因为右边必然都是递增的<br>若 mid = 0 ,说明low与high之间未发生旋转，最小数字就是array[mid]，<br>或者array[mid-1]&gt;array[mid]，则最小数字也是array[mid]<br>否则mid不为零且array[mid-1]&lt;=array[mid]，最小数字在mid的左边，high = mid - 1</p>
 <h3 id="代码-5"><a href="#代码-5" class="headerlink" title="代码"></a>代码</h3><pre><code class="python">class Solution:
     def minNumber(self, rotateArray):
         if not rotateArray: return 0
@@ -146,7 +172,7 @@ class Solution:
             else:
                 r -= 1
 </code></pre>
-<h2 id="斐波那契数列"><a href="#斐波那契数列" class="headerlink" title="斐波那契数列"></a><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/9_1_%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E6%95%B0%E5%88%97.py" target="_blank" rel="external">斐波那契数列</a></h2><h3 id="题目描述-6"><a href="#题目描述-6" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入一个整数n，输出斐波那契数列的第n项f(n)（n从0开始，f(0)=0，f(1)=1）</p>
+<h2 id="斐波那契数列"><a href="#斐波那契数列" class="headerlink" title="斐波那契数列"></a><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/9_1_%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E6%95%B0%E5%88%97.py" target="_blank" rel="external">斐波那契数列</a></h2><h3 id="题目描述-6"><a href="#题目描述-6" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入一个整数 n，输出斐波那契数列的第 n 项 f(n)（n 从 0 开始，f(0) = 0，f(1 )= 1）</p>
 <h3 id="最优题解-6"><a href="#最优题解-6" class="headerlink" title="最优题解"></a>最优题解</h3><p>a, b = b, a + b</p>
 <h3 id="代码-6"><a href="#代码-6" class="headerlink" title="代码"></a>代码</h3><pre><code class="python">class Solution:
     def Fibonacci(self, n):
@@ -160,8 +186,14 @@ class Solution:
 <li><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/9_3_%E5%8F%98%E6%80%81%E9%9D%92%E8%9B%99%E8%B7%B3%E5%8F%B0%E9%98%B6.py" target="_blank" rel="external">变态青蛙跳台阶</a></li>
 <li><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/9_4_%E7%9F%A9%E5%BD%A2%E8%A6%86%E7%9B%96.py" target="_blank" rel="external">矩形覆盖</a></li>
 </ul>
-<h2 id="二进制中1的个数"><a href="#二进制中1的个数" class="headerlink" title="二进制中1的个数"></a><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/10_1_%E4%BA%8C%E8%BF%9B%E5%88%B6%E4%B8%AD1%E7%9A%84%E4%B8%AA%E6%95%B0.py" target="_blank" rel="external">二进制中1的个数</a></h2><h3 id="题目描述-7"><a href="#题目描述-7" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入一个整数，输出该数二进制表示中1的个数。其中负数用补码表示。</p>
-<h3 id="最优题解-7"><a href="#最优题解-7" class="headerlink" title="最优题解"></a>最优题解</h3><p>利用一个位运算技巧：一个整数减1后总是把它二进制表示的最右边的1变为0<br>这里有两种情况：最右边的1在最末位和不在最末位<br>但无论怎样，减一后的数与原数相与就一定可以把最右的1变为0<br>有一点要注意：由于c/c++/java中int位数限定32位，<br>所以n最后一定被全部变为0，循环退出；<br>但python就有区别了，python的整数位数不止32位，<br>所以在负数情况下1的位数会多出很多，所以应先&amp;0xffffffff，保留后面32位，前面全部变成0</p>
+<h2 id="二进制中1的个数"><a href="#二进制中1的个数" class="headerlink" title="二进制中1的个数"></a><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/10_1_%E4%BA%8C%E8%BF%9B%E5%88%B6%E4%B8%AD1%E7%9A%84%E4%B8%AA%E6%95%B0.py" target="_blank" rel="external">二进制中1的个数</a></h2><h3 id="题目描述-7"><a href="#题目描述-7" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入一个整数，输出该数二进制表示中 1 的个数。其中负数用补码表示。</p>
+<h3 id="最优题解-7"><a href="#最优题解-7" class="headerlink" title="最优题解"></a>最优题解</h3><p>利用一个位运算技巧：一个整数减 1 后总是把它二进制表示的最右边的 1 变为 0</p>
+<p>这里有两种情况：最右边的 1 在最末位和不在最末位</p>
+<p>但无论怎样，减一后的数与原数相与就一定可以把最右的 1 变为 0</p>
+<p>有一点要注意：由于 c / c++ / java 中 int 位数限定 32 位</p>
+<p>所以 n 最后一定被全部变为 0，循环退出</p>
+<p>但 python 就有区别了，python 的整数位数不止 32 位</p>
+<p>所以在负数情况下 1 的位数会多出很多，所以应先 &amp;0xffffffff，保留后面 32 位，前面全部变成 0</p>
 <h3 id="代码-7"><a href="#代码-7" class="headerlink" title="代码"></a>代码</h3><pre><code class="python">class Solution:
     def NumberOf1(self, n):
         n &amp;= 0xffffffff
@@ -175,14 +207,20 @@ class Solution:
 <li><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/10_2_2%E7%9A%84%E6%95%B4%E6%95%B0%E6%AC%A1%E6%96%B9.py" target="_blank" rel="external">2的整数次方</a></li>
 <li><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/10_3_%E6%B1%89%E6%98%8E%E8%B7%9D%E7%A6%BB.py" target="_blank" rel="external">汉明距离</a></li>
 </ul>
-<h2 id="数值的整数次方"><a href="#数值的整数次方" class="headerlink" title="数值的整数次方"></a><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/11_%E6%95%B0%E5%80%BC%E7%9A%84%E6%95%B4%E6%95%B0%E6%AC%A1%E6%96%B9.py" target="_blank" rel="external">数值的整数次方</a></h2><h3 id="题目描述-8"><a href="#题目描述-8" class="headerlink" title="题目描述"></a>题目描述</h3><p>给定一个double类型的浮点数base和int类型的整数exponent。求base的exponent次方</p>
+<h2 id="数值的整数次方"><a href="#数值的整数次方" class="headerlink" title="数值的整数次方"></a><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/11_%E6%95%B0%E5%80%BC%E7%9A%84%E6%95%B4%E6%95%B0%E6%AC%A1%E6%96%B9.py" target="_blank" rel="external">数值的整数次方</a></h2><h3 id="题目描述-8"><a href="#题目描述-8" class="headerlink" title="题目描述"></a>题目描述</h3><p>给定一个 double 类型的浮点数 base 和 int 类型的整数 exponent。求 base 的 exponent 次方</p>
 <h3 id="最优题解-8"><a href="#最优题解-8" class="headerlink" title="最优题解"></a>最优题解</h3><p>注意点：</p>
 <ol>
-<li>base = 0 且 exponent &lt; 0 时发生除零错误；</li>
-<li>exponent &lt; 0 时要作倒数；</li>
-<li>0^0=1</li>
-<li>判断 base 是否等于 0 时不能直接 == ，因为base为浮点数，有误差。<br>如果两个小数的差的绝对值很小，比如小于0.0000001，就可以认为它们相等；</li>
-<li>乘方可以考虑用快速幂（递归实现）</li>
+<li><p>base = 0 且 exponent &lt; 0 时发生除零错误；</p>
+</li>
+<li><p>exponent &lt; 0 时要作倒数；</p>
+</li>
+<li><p>0 ^ 0 = 1</p>
+</li>
+<li><p>判断 base 是否等于 0 时不能直接 == ，因为 base 为浮点数，有误差</p>
+<p>如果两个小数的差的绝对值很小，比如小于 0.0000001，就可以认为它们相等；</p>
+</li>
+<li><p>乘方可以考虑用快速幂（递归实现）</p>
+</li>
 </ol>
 <h3 id="代码-8"><a href="#代码-8" class="headerlink" title="代码"></a>代码</h3><pre><code>class Solution:
     def Power(self, base, exponent):
@@ -206,8 +244,11 @@ class Solution:
         if exponent &lt; 0:
             return 1.0 / result
         return result
-</code></pre><h2 id="打印1到最大的n位数"><a href="#打印1到最大的n位数" class="headerlink" title="打印1到最大的n位数"></a><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/12_%E6%89%93%E5%8D%B01%E5%88%B0%E6%9C%80%E5%A4%A7%E7%9A%84n%E4%BD%8D%E6%95%B0.py" target="_blank" rel="external">打印1到最大的n位数</a></h2><h3 id="题目描述-9"><a href="#题目描述-9" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入数字n, 按顺序打印从1最大的n位十进制数，比如输入3, 则打印出1、2、3、到最大的3位数即999<br>（这里不打印，而是返回一个list）</p>
-<h3 id="最优题解-9"><a href="#最优题解-9" class="headerlink" title="最优题解"></a>最优题解</h3><p>由于没有位数限制，所以要考虑大数问题，用字符串或数组表示大数<br>需要注意的问题是字符串或者数组的最高位对于数字上的最低位<br>在字符串表达的数字上模拟加法，然后将字符串表达的数值打印出来</p>
+</code></pre><h2 id="打印1到最大的n位数"><a href="#打印1到最大的n位数" class="headerlink" title="打印1到最大的n位数"></a><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/12_%E6%89%93%E5%8D%B01%E5%88%B0%E6%9C%80%E5%A4%A7%E7%9A%84n%E4%BD%8D%E6%95%B0.py" target="_blank" rel="external">打印1到最大的n位数</a></h2><h3 id="题目描述-9"><a href="#题目描述-9" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入数字 n, 按顺序打印从 1 最大的 n 位十进制数，比如输入 3, 则打印出 1、2、3、到最大的 3 位数即 999</p>
+<p>（这里不打印，而是返回一个 list）</p>
+<h3 id="最优题解-9"><a href="#最优题解-9" class="headerlink" title="最优题解"></a>最优题解</h3><p>由于没有位数限制，所以要考虑大数问题，用字符串或数组表示大数</p>
+<p>需要注意的问题是字符串或者数组的最高位对于数字上的最低位</p>
+<p>在字符串表达的数字上模拟加法，然后将字符串表达的数值打印出来</p>
 <h3 id="代码-9"><a href="#代码-9" class="headerlink" title="代码"></a>代码</h3><pre><code class="python">class Solution:
     def Print1ToMaxOfNDigits(self, n):
         def RmStartZero(number):  # 去掉前面多余的0
@@ -245,9 +286,16 @@ class Solution:
             res.append(&#39;&#39;.join(RmStartZero(number)))
         return res
 </code></pre>
-<h2 id="在O-1-时间删除链表节点"><a href="#在O-1-时间删除链表节点" class="headerlink" title="在O(1)时间删除链表节点"></a><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/13_%E5%9C%A8O%281%29%E6%97%B6%E9%97%B4%E5%88%A0%E9%99%A4%E9%93%BE%E8%A1%A8%E8%8A%82%E7%82%B9.py" target="_blank" rel="external">在O(1)时间删除链表节点</a></h2><h3 id="题目描述-10"><a href="#题目描述-10" class="headerlink" title="题目描述"></a>题目描述</h3><p>给定单向链表的头指针和一个结点指针,定义一个函数在O(1)时间删除该结点</p>
-<h3 id="最优题解-10"><a href="#最优题解-10" class="headerlink" title="最优题解"></a>最优题解</h3><p>不必顺序查找到结点i的前一个节点再删除，这样是O(n)，<br>要删除结点i，可以先把i的下一个结点j的内容复制到i，然后把i的指针指向j的下一个结点，<br>最后再删除结点j，其效果刚好是把结点i给删除了<br>即：当我们想删除一个结点时，并不一定要删除这个结点本身，<br>可以先把下一个结点的内容复制出来覆盖被删除结点的内容，然后把下一个结点删除<br>考虑两种特殊情况：<br>1、如果要删除的是尾结点，它没有下一个结点，此时只能从头开始顺序遍历得到该节点的前序结点，并完成删除<br>2、如果链表中只有一个结点，即要删除的节点是头结点（它连前序结点都没有），需要单独处理（删除后设为NULL）</p>
-<h3 id="代码-10"><a href="#代码-10" class="headerlink" title="代码"></a>代码</h3><pre><code class="python">class ListNode:
+<h2 id="在O-1-时间删除链表节点"><a href="#在O-1-时间删除链表节点" class="headerlink" title="在O(1)时间删除链表节点"></a><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/13_%E5%9C%A8O%281%29%E6%97%B6%E9%97%B4%E5%88%A0%E9%99%A4%E9%93%BE%E8%A1%A8%E8%8A%82%E7%82%B9.py" target="_blank" rel="external">在O(1)时间删除链表节点</a></h2><h3 id="题目描述-10"><a href="#题目描述-10" class="headerlink" title="题目描述"></a>题目描述</h3><p>给定单向链表的头指针和一个结点指针,定义一个函数在 O(1) 时间删除该结点</p>
+<h3 id="最优题解-10"><a href="#最优题解-10" class="headerlink" title="最优题解"></a>最优题解</h3><p>不必顺序查找到结点 i 的前一个节点再删除，这样是 O(n)</p>
+<p>要删除结点 i，可以先把 i 的下一个结点 j 的内容复制到 i，然后把 i 的指针指向 j 的下一个结点</p>
+<p>最后再删除结点 j，其效果刚好是把结点 i 给删除了</p>
+<p>即：当我们想删除一个结点时，并不一定要删除这个结点本身</p>
+<p>可以先把下一个结点的内容复制出来覆盖被删除结点的内容，然后把下一个结点删除</p>
+<p>考虑两种特殊情况：</p>
+<pre><code> 1. 如果要删除的是尾结点，它没有下一个结点，此时只能从头开始顺序遍历得到该节点的前序结点，并完成删除
+ 2. 如果链表中只有一个结点，即要删除的节点是头结点（它连前序结点都没有），需要单独处理（删除后设为 NULL）
+</code></pre><h3 id="代码-10"><a href="#代码-10" class="headerlink" title="代码"></a>代码</h3><pre><code class="python">class ListNode:
     def __init__(self, x=None):
         self.val = x
         self.next = None
@@ -275,9 +323,13 @@ class Solution:
             ToBeDeleted.delete()
         return ListHead
 </code></pre>
-<h2 id="使奇数位于偶数前面"><a href="#使奇数位于偶数前面" class="headerlink" title="使奇数位于偶数前面"></a><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/14_%E4%BD%BF%E5%A5%87%E6%95%B0%E4%BD%8D%E4%BA%8E%E5%81%B6%E6%95%B0%E5%89%8D%E9%9D%A2.py" target="_blank" rel="external">使奇数位于偶数前面</a></h2><h3 id="题目描述-11"><a href="#题目描述-11" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入一个整数数组，实现一个函数来调整该数组中数字的顺序，<br>使得所有的奇数位于数组的前半部分，所有的偶数位于位于数组的后半部分，<br>并保证奇数和奇数，偶数和偶数之间的相对位置不变。</p>
+<h2 id="使奇数位于偶数前面"><a href="#使奇数位于偶数前面" class="headerlink" title="使奇数位于偶数前面"></a><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/14_%E4%BD%BF%E5%A5%87%E6%95%B0%E4%BD%8D%E4%BA%8E%E5%81%B6%E6%95%B0%E5%89%8D%E9%9D%A2.py" target="_blank" rel="external">使奇数位于偶数前面</a></h2><h3 id="题目描述-11"><a href="#题目描述-11" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入一个整数数组，实现一个函数来调整该数组中数字的顺序</p>
+<p>使得所有的奇数位于数组的前半部分，所有的偶数位于位于数组的后半部分</p>
+<p>并保证奇数和奇数，偶数和偶数之间的相对位置不变。</p>
 <h3 id="最优题解-11"><a href="#最优题解-11" class="headerlink" title="最优题解"></a>最优题解</h3><p>时间（O（n）），空间（O（n））</p>
-<p>首先统计奇数的个数i，然后新建一个等长数组，遍历原数组。<br>设置两个指针， 奇数从0开始复制，偶数从i开始（奇数末尾）。<br>稳定排序，时间复杂度降下来了，但空间复杂度提高了。</p>
+<p>首先统计奇数的个数 i，然后新建一个等长数组，遍历原数组</p>
+<p>设置两个指针， 奇数从 0 开始复制，偶数从 i 开始（奇数末尾）</p>
+<p>稳定排序，时间复杂度降下来了，但空间复杂度提高了</p>
 <h3 id="代码-11"><a href="#代码-11" class="headerlink" title="代码"></a>代码</h3><pre><code class="python">class Solution:
     def reOrderArray(self, array):
         odd = 0 # 奇数开始位置
@@ -292,8 +344,10 @@ class Solution:
                 even += 1
         return res
 </code></pre>
-<h2 id="链表倒数第k个结点"><a href="#链表倒数第k个结点" class="headerlink" title="链表倒数第k个结点"></a><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/15_1_%E9%93%BE%E8%A1%A8%E5%80%92%E6%95%B0%E7%AC%ACk%E4%B8%AA%E7%BB%93%E7%82%B9.py" target="_blank" rel="external">链表倒数第k个结点</a></h2><h3 id="题目描述-12"><a href="#题目描述-12" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入一个单向链表，输出该链表中倒数第k个结点。</p>
-<h3 id="最优题解-12"><a href="#最优题解-12" class="headerlink" title="最优题解"></a>最优题解</h3><p>双指针。<br>定义两个指针，第一个先从头开始走k步，第二个保持不动；从第k步开始，第二个指针也开始从头遍历。<br>由于两个指针的距离保持在k，所以当第一个指针遍历完整个链表时，第二个指针正好来到倒数第k个结点</p>
+<h2 id="链表倒数第-k-个结点"><a href="#链表倒数第-k-个结点" class="headerlink" title="链表倒数第 k 个结点"></a><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/15_1_%E9%93%BE%E8%A1%A8%E5%80%92%E6%95%B0%E7%AC%ACk%E4%B8%AA%E7%BB%93%E7%82%B9.py" target="_blank" rel="external">链表倒数第 k 个结点</a></h2><h3 id="题目描述-12"><a href="#题目描述-12" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入一个单向链表，输出该链表中倒数第 k 个结点。</p>
+<h3 id="最优题解-12"><a href="#最优题解-12" class="headerlink" title="最优题解"></a>最优题解</h3><p>双指针问题</p>
+<p>定义两个指针，第一个先从头开始走 k 步，第二个保持不动；从第 k 步开始，第二个指针也开始从头遍历</p>
+<p>由于两个指针的距离保持在 k，所以当第一个指针遍历完整个链表时，第二个指针正好来到倒数第 k 个结点</p>
 <h3 id="代码-12"><a href="#代码-12" class="headerlink" title="代码"></a>代码</h3><pre><code class="python">class Solution:
     def FindKthToTail(self, head, k):
         if not head: return
@@ -314,7 +368,8 @@ class Solution:
 <li><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/15_6_%E6%97%A0%E7%8E%AF%E5%8D%95%E5%90%91%E9%93%BE%E8%A1%A8%E7%9A%84%E7%9B%B8%E4%BA%A4.py" target="_blank" rel="external">无环单向链表的相交</a></li>
 </ul>
 <h2 id="反转链表"><a href="#反转链表" class="headerlink" title="反转链表"></a><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/16_%E5%8F%8D%E8%BD%AC%E9%93%BE%E8%A1%A8.py" target="_blank" rel="external">反转链表</a></h2><h3 id="题目描述-13"><a href="#题目描述-13" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入一个链表的头结点，反转该链表并输出反转后链表的头结点</p>
-<h3 id="最优题解-13"><a href="#最优题解-13" class="headerlink" title="最优题解"></a>最优题解</h3><p>定义三个指针，分别指向当前遍历到的结点、它的前一个结点以及后一个结点<br>指向后一个结点的指针是为了防止链表断裂，因为需要把当前结点的下一个指针指向前一个结点</p>
+<h3 id="最优题解-13"><a href="#最优题解-13" class="headerlink" title="最优题解"></a>最优题解</h3><p>定义三个指针，分别指向当前遍历到的结点、它的前一个结点以及后一个结点</p>
+<p>指向后一个结点的指针是为了防止链表断裂，因为需要把当前结点的下一个指针指向前一个结点</p>
 <h3 id="代码-13"><a href="#代码-13" class="headerlink" title="代码"></a>代码</h3><pre><code class="python">class ListNode:
     def __init__(self, x):
         self.val = x
@@ -349,8 +404,9 @@ class Solution:
         tail.next = pHead1 or pHead2  # 记得将剩余的链表链接到尾结点后面
         return dummy.next  # 伪结点的下一个结点才是真正的头结点
 </code></pre>
-<h2 id="树的子结构"><a href="#树的子结构" class="headerlink" title="树的子结构"></a><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/18_%E6%A0%91%E7%9A%84%E5%AD%90%E7%BB%93%E6%9E%84.py" target="_blank" rel="external">树的子结构</a></h2><h3 id="题目描述-15"><a href="#题目描述-15" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入两棵二叉树A，B，判断B是不是A的子结构（空树不是任意一个树的子结构）</p>
-<h3 id="最优题解-15"><a href="#最优题解-15" class="headerlink" title="最优题解"></a>最优题解</h3><p>先递归遍历（先序遍历）树A，找到相同的根结点子树，<br>再用递归分别判断该子树的左右子树是否与B一样，递归结束的条件是来到B的叶结点</p>
+<h2 id="树的子结构"><a href="#树的子结构" class="headerlink" title="树的子结构"></a><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/18_%E6%A0%91%E7%9A%84%E5%AD%90%E7%BB%93%E6%9E%84.py" target="_blank" rel="external">树的子结构</a></h2><h3 id="题目描述-15"><a href="#题目描述-15" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入两棵二叉树 A，B，判断 B 是不是 A 的子结构（空树不是任意一个树的子结构）</p>
+<h3 id="最优题解-15"><a href="#最优题解-15" class="headerlink" title="最优题解"></a>最优题解</h3><p>先递归遍历（先序遍历）树A，找到相同的根结点子树</p>
+<p>再用递归分别判断该子树的左右子树是否与 B 一样，递归结束的条件是来到 B 的叶结点</p>
 <h3 id="代码-15"><a href="#代码-15" class="headerlink" title="代码"></a>代码</h3><pre><code class="python">class TreeNode:
     def __init__(self, x):
         self.val = x
@@ -375,7 +431,9 @@ class Solution:
         return self.HasSubtree(pRoot1.left, pRoot2) or self.HasSubtree(pRoot1.right, pRoot2)
 </code></pre>
 <h2 id="二叉树的镜像"><a href="#二叉树的镜像" class="headerlink" title="二叉树的镜像"></a><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/19_%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E9%95%9C%E5%83%8F.py" target="_blank" rel="external">二叉树的镜像</a></h2><h3 id="题目描述-16"><a href="#题目描述-16" class="headerlink" title="题目描述"></a>题目描述</h3><p>将给定的二叉树变换为原二叉树的镜像。</p>
-<h3 id="最优题解-16"><a href="#最优题解-16" class="headerlink" title="最优题解"></a>最优题解</h3><p>递归实现，前序遍历二叉树的每个结点，<br>如果遍历到的结点有子结点，就交换它的两个子结点，<br>当交换完所有的非叶子结点的左右子结点之后，就得到了树的镜像</p>
+<h3 id="最优题解-16"><a href="#最优题解-16" class="headerlink" title="最优题解"></a>最优题解</h3><p>递归实现，前序遍历二叉树的每个结点</p>
+<p>如果遍历到的结点有子结点，就交换它的两个子结点</p>
+<p>当交换完所有的非叶子结点的左右子结点之后，就得到了树的镜像</p>
 <h3 id="代码-16"><a href="#代码-16" class="headerlink" title="代码"></a>代码</h3><pre><code class="python">class TreeNode:
     def __init__(self, x):
         self.val = x
@@ -390,9 +448,22 @@ class Solution:
         self.Mirror(root.right)
         return root
 </code></pre>
-<h2 id="顺时针打印矩阵"><a href="#顺时针打印矩阵" class="headerlink" title="顺时针打印矩阵"></a><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/20_%E9%A1%BA%E6%97%B6%E9%92%88%E6%89%93%E5%8D%B0%E7%9F%A9%E9%98%B5.py" target="_blank" rel="external">顺时针打印矩阵</a></h2><h3 id="题目描述-17"><a href="#题目描述-17" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入一个矩阵，按照从外向里以顺时针的顺序依次打印出每一个数字，<br>例如，如果输入如下矩阵：<br>[[ 1,  2,  3,  4],<br> [ 5,  6,  7,  8],<br> [ 9, 10, 11, 12],<br> [13, 14, 15, 16]]<br>则依次打印出数字 1,2,3,4,8,12,16,15,14,13,9,5,6,7,11,10.</p>
-<h3 id="最优题解-17"><a href="#最优题解-17" class="headerlink" title="最优题解"></a>最优题解</h3><p>时间O（n*m）, 空间O（1）</p>
-<p>一个圈其实只要左上角（startR, startC）和右下角（endR, endC）确定了整个圈也就确定了，<br>​        因此外层循环控制左上角和右下角的变化，内层循环根据这两个坐标分情况绕圈打印就可以了<br>​        外层循环如何控制两个坐标？只需每次让 （startR++, startC++）和 （endR–, endC–）<br>​        什么时候退出？当右下角来到左上角的左上方时退出，换句话讲就是当<br>​        startR &lt;= endR and startC &lt;= endC 时我们才可以进入内层循环打印圈<br>​        那内层循环如何分情况打印圈？情况就三种：<br>​        1、当 startR == endR 时，说明只剩一行<br>​        2、当 startC == endC 时，说明只剩一列<br>​        3、否则为一般情况，绕圈打印即可</p>
+<h2 id="顺时针打印矩阵"><a href="#顺时针打印矩阵" class="headerlink" title="顺时针打印矩阵"></a><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/20_%E9%A1%BA%E6%97%B6%E9%92%88%E6%89%93%E5%8D%B0%E7%9F%A9%E9%98%B5.py" target="_blank" rel="external">顺时针打印矩阵</a></h2><h3 id="题目描述-17"><a href="#题目描述-17" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入一个矩阵，按照从外向里以顺时针的顺序依次打印出每一个数字</p>
+<p>例如，如果输入如下矩阵：</p>
+<p>[[ 1,  2,  3,  4],<br> [ 5,  6,  7,  8],<br> [ 9, 10, 11, 12],<br> [13, 14, 15, 16]]</p>
+<p>则依次打印出数字 1, 2, 3, 4, 8, 12, 16, 15, 14, 13, 9, 5, 6, 7, 11, 10.</p>
+<h3 id="最优题解-17"><a href="#最优题解-17" class="headerlink" title="最优题解"></a>最优题解</h3><p>时间 O（n * m）, 空间 O（1）</p>
+<p>一个圈其实只要左上角（startR, startC）和右下角（endR, endC）确定了整个圈也就确定了，</p>
+<p>因此外层循环控制左上角和右下角的变化，内层循环根据这两个坐标分情况绕圈打印就可以了</p>
+<p>外层循环如何控制两个坐标？只需每次让 （startR++, startC++）和 （endR–, endC–）</p>
+<p>什么时候退出？当右下角来到左上角的左上方时退出，换句话讲就是当</p>
+<p>startR &lt;= endR and startC &lt;= endC 时我们才可以进入内层循环打印圈</p>
+<p>那内层循环如何分情况打印圈？情况就三种：</p>
+<ol>
+<li>当 startR == endR 时，说明只剩一行</li>
+<li>当 startC == endC 时，说明只剩一列</li>
+<li>否则为一般情况，绕圈打印即可</li>
+</ol>
 <h3 id="代码-17"><a href="#代码-17" class="headerlink" title="代码"></a>代码</h3><pre><code class="python">class Solution:
     # matrix类型为二维列表，需要返回列表
     def PrintMatrix(self, matrix):
@@ -432,8 +503,10 @@ class Solution:
 <h3 id="举一反三-5"><a href="#举一反三-5" class="headerlink" title="举一反三"></a>举一反三</h3><ul>
 <li><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/20_2_%E9%A1%BA%E6%97%B6%E9%92%88%E5%A1%AB%E5%85%85%E7%9F%A9%E9%98%B5.py" target="_blank" rel="external">顺时针填充矩阵</a></li>
 </ul>
-<h2 id="包含min函数的栈"><a href="#包含min函数的栈" class="headerlink" title="包含min函数的栈"></a><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/21_%E5%8C%85%E5%90%ABmin%E5%87%BD%E6%95%B0%E7%9A%84%E6%A0%88.py" target="_blank" rel="external">包含min函数的栈</a></h2><h3 id="题目描述-18"><a href="#题目描述-18" class="headerlink" title="题目描述"></a>题目描述</h3><p>定义栈的数据结构，请在该类型中实现一个能够得到栈最小元素的min函数。<br>在该栈中，调用min、push及pop的时间复杂度都是O(1)</p>
-<h3 id="最优题解-18"><a href="#最优题解-18" class="headerlink" title="最优题解"></a>最优题解</h3><p>设置一个辅助栈，每次入栈时把最小元素<br>（之前的最小值（辅助栈栈顶）和新压入栈的元素两者的较小值）保存在辅助栈中<br>出栈时辅助栈一起出栈，这样就可以保证辅助栈的栈顶是最小值</p>
+<h2 id="包含min函数的栈"><a href="#包含min函数的栈" class="headerlink" title="包含min函数的栈"></a><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/21_%E5%8C%85%E5%90%ABmin%E5%87%BD%E6%95%B0%E7%9A%84%E6%A0%88.py" target="_blank" rel="external">包含min函数的栈</a></h2><h3 id="题目描述-18"><a href="#题目描述-18" class="headerlink" title="题目描述"></a>题目描述</h3><p>定义栈的数据结构，请在该类型中实现一个能够得到栈最小元素的 min 函数。<br>在该栈中，调用 min、push 及 pop 的时间复杂度都是 O(1)</p>
+<h3 id="最优题解-18"><a href="#最优题解-18" class="headerlink" title="最优题解"></a>最优题解</h3><p>设置一个辅助栈，每次入栈时把最小元素</p>
+<p>（之前的最小值（辅助栈栈顶）和新压入栈的元素两者的较小值）保存在辅助栈中</p>
+<p>出栈时辅助栈一起出栈，这样就可以保证辅助栈的栈顶是最小值</p>
 <h3 id="代码-18"><a href="#代码-18" class="headerlink" title="代码"></a>代码</h3><pre><code class="python">class Solution:
     def __init__(self):
         self.stack = []
@@ -457,8 +530,17 @@ class Solution:
     def min(self):
         return self.minstack[-1] if self.minstack else None
 </code></pre>
-<h2 id="栈的压入弹出序列"><a href="#栈的压入弹出序列" class="headerlink" title="栈的压入弹出序列"></a><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/22_%E6%A0%88%E7%9A%84%E5%8E%8B%E5%85%A5%E5%BC%B9%E5%87%BA%E5%BA%8F%E5%88%97.py" target="_blank" rel="external">栈的压入弹出序列</a></h2><h3 id="题目描述-19"><a href="#题目描述-19" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入两个整数序列，第一个序列表示栈的压入顺序，请判断第二个序列是否为该栈的弹出顺序。<br>假设压入栈的所有数字均不相等。<br>例如序列1,2,3,4,5是某栈的压入顺序，序列4,5,3,2,1是该压栈序列对应的一个弹出序列，<br>但4,3,5,1,2就不可能是该压栈序列的弹出序列。（注意：这两个序列的长度是相等的）</p>
-<h3 id="最优题解-19"><a href="#最优题解-19" class="headerlink" title="最优题解"></a>最优题解</h3><p>设置一个辅助栈，用来装压栈序列，不断压入压栈序列的数，每压入一次，<br>就看一下当前栈顶元素是否为当前弹出数，是的话弹出并遍历下一个弹出数，<br>继续检查，直到辅助栈空或者当前栈顶元素不为弹出序列第一个，<br>就继续压入压栈序列的数，直到压完所有的数，最终检查辅助栈是否为空，空则说明该序列为弹出序列<br>即：如果下一个弹出的数字刚好是栈顶数字，那么直接弹出。如果下一个弹出的数字不在栈顶，<br>就把压栈序列中还没入栈的数字压入辅助栈，直到把下一个需要弹出的数字压入栈顶为止。<br>如果所有的数字都压入栈了仍然没有找到下一个弹出的数字，那么该序列就不可能是一个弹出序列</p>
+<h2 id="栈的压入弹出序列"><a href="#栈的压入弹出序列" class="headerlink" title="栈的压入弹出序列"></a><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/22_%E6%A0%88%E7%9A%84%E5%8E%8B%E5%85%A5%E5%BC%B9%E5%87%BA%E5%BA%8F%E5%88%97.py" target="_blank" rel="external">栈的压入弹出序列</a></h2><h3 id="题目描述-19"><a href="#题目描述-19" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入两个整数序列，第一个序列表示栈的压入顺序，请判断第二个序列是否为该栈的弹出顺序</p>
+<p>假设压入栈的所有数字均不相等</p>
+<p>例如序列 1, 2, 3, 4, 5 是某栈的压入顺序，序列 4, 5, 3, 2, 1 是该压栈序列对应的一个弹出序列</p>
+<p>但 4, 3, 5, 1, 2 就不可能是该压栈序列的弹出序列。（注意：这两个序列的长度是相等的）</p>
+<h3 id="最优题解-19"><a href="#最优题解-19" class="headerlink" title="最优题解"></a>最优题解</h3><p>设置一个辅助栈，用来装压栈序列，不断压入压栈序列的数，每压入一次</p>
+<p>就看一下当前栈顶元素是否为当前弹出数，是的话弹出并遍历下一个弹出数</p>
+<p>继续检查，直到辅助栈空或者当前栈顶元素不为弹出序列第一个</p>
+<p>就继续压入压栈序列的数，直到压完所有的数，最终检查辅助栈是否为空，空则说明该序列为弹出序列</p>
+<p>即：如果下一个弹出的数字刚好是栈顶数字，那么直接弹出。如果下一个弹出的数字不在栈顶</p>
+<p>就把压栈序列中还没入栈的数字压入辅助栈，直到把下一个需要弹出的数字压入栈顶为止</p>
+<p>如果所有的数字都压入栈了仍然没有找到下一个弹出的数字，那么该序列就不可能是一个弹出序列</p>
 <h3 id="代码-19"><a href="#代码-19" class="headerlink" title="代码"></a>代码</h3><pre><code class="python">class Solution:
     def IsPopOrder(self, pushV, popV):
         if not pushV or not popV or len(pushV) != len(popV):
@@ -472,7 +554,10 @@ class Solution:
         return stack == []
 </code></pre>
 <h2 id="从上往下打印二叉树"><a href="#从上往下打印二叉树" class="headerlink" title="从上往下打印二叉树"></a><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/23_%E4%BB%8E%E4%B8%8A%E5%BE%80%E4%B8%8B%E6%89%93%E5%8D%B0%E4%BA%8C%E5%8F%89%E6%A0%91.py" target="_blank" rel="external">从上往下打印二叉树</a></h2><h3 id="题目描述-20"><a href="#题目描述-20" class="headerlink" title="题目描述"></a>题目描述</h3><p>从上往下打印出二叉树的每个节点，同层节点从左至右打印。</p>
-<h3 id="最优题解-20"><a href="#最优题解-20" class="headerlink" title="最优题解"></a>最优题解</h3><p>相当于宽度优先搜索（BFS），用队列来实现：<br>每次从头部取出一个结点时，如果该结点有子结点，<br>就把该结点的子结点从左到右依次放入队列末尾，<br>重复前面的步骤，直到队列为空</p>
+<h3 id="最优题解-20"><a href="#最优题解-20" class="headerlink" title="最优题解"></a>最优题解</h3><p>相当于宽度优先搜索（BFS），用队列来实现</p>
+<p>每次从头部取出一个结点时，如果该结点有子结点</p>
+<p>就把该结点的子结点从左到右依次放入队列末尾</p>
+<p>重复前面的步骤，直到队列为空</p>
 <h3 id="代码-20"><a href="#代码-20" class="headerlink" title="代码"></a>代码</h3><pre><code class="python">class TreeNode:
     def __init__(self, x):
         self.val = x
@@ -495,8 +580,14 @@ class Solution:
             level = next_level
         return res
 </code></pre>
-<h2 id="二叉搜索树的后序遍历序列"><a href="#二叉搜索树的后序遍历序列" class="headerlink" title="二叉搜索树的后序遍历序列"></a><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/24_2_%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E7%9A%84%E5%90%8E%E5%BA%8F%E9%81%8D%E5%8E%86%E5%BA%8F%E5%88%97.py" target="_blank" rel="external">二叉搜索树的后序遍历序列</a></h2><h3 id="题目描述-21"><a href="#题目描述-21" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入一个整数数组，判断该数组是不是某二叉搜索树的后序遍历的结果。<br>假设输入的数组的任意两个数字都互不相同。</p>
-<h3 id="最优题解-21"><a href="#最优题解-21" class="headerlink" title="最优题解"></a>最优题解</h3><p>二叉搜索树对于每一个非叶子节点, 均有结点左子节点&lt;当前节点&lt;结点右子节点<br>后序序列的最后一个值为二叉搜索树根节点的值，前面含有左子树和右子树结点<br>根据二叉搜索树的特性，根节点前面的序列分为两个区域，左边为左子树区，<br>值都比根节点小，右边为右子树区，值都比根节点大，<br>不满足该特性的序列就不是某二叉搜索树的后序遍历的结果，<br>注意左子树区域和右子树区域分别又是一棵二叉搜索树，因此递归检查这两个区域</p>
+<h2 id="二叉搜索树的后序遍历序列"><a href="#二叉搜索树的后序遍历序列" class="headerlink" title="二叉搜索树的后序遍历序列"></a><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/24_2_%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E7%9A%84%E5%90%8E%E5%BA%8F%E9%81%8D%E5%8E%86%E5%BA%8F%E5%88%97.py" target="_blank" rel="external">二叉搜索树的后序遍历序列</a></h2><h3 id="题目描述-21"><a href="#题目描述-21" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入一个整数数组，判断该数组是不是某二叉搜索树的后序遍历的结果</p>
+<p>假设输入的数组的任意两个数字都互不相同。</p>
+<h3 id="最优题解-21"><a href="#最优题解-21" class="headerlink" title="最优题解"></a>最优题解</h3><p>二叉搜索树对于每一个非叶子节点, 均有结点左子节点 &lt; 当前节点 &lt; 结点右子结点</p>
+<p>后序序列的最后一个值为二叉搜索树根节点的值，前面含有左子树和右子树结点</p>
+<p>根据二叉搜索树的特性，根节点前面的序列分为两个区域，左边为左子树区</p>
+<p>值都比根节点小，右边为右子树区，值都比根节点大</p>
+<p>不满足该特性的序列就不是某二叉搜索树的后序遍历的结果</p>
+<p>注意左子树区域和右子树区域分别又是一棵二叉搜索树，因此递归检查这两个区域</p>
 <h3 id="代码-21"><a href="#代码-21" class="headerlink" title="代码"></a>代码</h3><pre><code class="python">class Solution:
     def VerifySquenceOfBST(self, sequence):
         def verify(seq):
@@ -513,7 +604,8 @@ class Solution:
         return verify(sequence)
 </code></pre>
 <h3 id="举一反三-6"><a href="#举一反三-6" class="headerlink" title="举一反三"></a>举一反三</h3><p><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/24_1_%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E7%9A%84%E5%89%8D%E5%BA%8F%E9%81%8D%E5%8E%86%E5%BA%8F%E5%88%97.py" target="_blank" rel="external">二叉搜索树的前序遍历序列</a></p>
-<h2 id="二叉树中和为某一值的路径"><a href="#二叉树中和为某一值的路径" class="headerlink" title="二叉树中和为某一值的路径"></a><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/25_%E4%BA%8C%E5%8F%89%E6%A0%91%E4%B8%AD%E5%92%8C%E4%B8%BA%E6%9F%90%E4%B8%80%E5%80%BC%E7%9A%84%E8%B7%AF%E5%BE%84.py" target="_blank" rel="external">二叉树中和为某一值的路径</a></h2><h3 id="题目描述-22"><a href="#题目描述-22" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入一颗二叉树和一个整数，输出二叉树中结点值的和为输入整数的所有路径。<br>路径定义为从树的根结点开始往下一直到叶结点所经过的结点形成一条路径。</p>
+<h2 id="二叉树中和为某一值的路径"><a href="#二叉树中和为某一值的路径" class="headerlink" title="二叉树中和为某一值的路径"></a><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/25_%E4%BA%8C%E5%8F%89%E6%A0%91%E4%B8%AD%E5%92%8C%E4%B8%BA%E6%9F%90%E4%B8%80%E5%80%BC%E7%9A%84%E8%B7%AF%E5%BE%84.py" target="_blank" rel="external">二叉树中和为某一值的路径</a></h2><h3 id="题目描述-22"><a href="#题目描述-22" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入一颗二叉树和一个整数，输出二叉树中结点值的和为输入整数的所有路径</p>
+<p>路径定义为从树的根结点开始往下一直到叶结点所经过的结点形成一条路径</p>
 <h3 id="最优题解-22"><a href="#最优题解-22" class="headerlink" title="最优题解"></a>最优题解</h3><p>前序遍历，每来到一个结点就检查当前和是否为期望和，所以需要把当前和作为参数传递。</p>
 <h3 id="代码-22"><a href="#代码-22" class="headerlink" title="代码"></a>代码</h3><pre><code class="python">class TreeNode:
     def __init__(self, x):
@@ -538,8 +630,10 @@ class Solution:
         find(root, 0)
         return res
 </code></pre>
-<h2 id="复杂链表的复制"><a href="#复杂链表的复制" class="headerlink" title="复杂链表的复制"></a><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/26_%E5%A4%8D%E6%9D%82%E9%93%BE%E8%A1%A8%E7%9A%84%E5%A4%8D%E5%88%B6.py" target="_blank" rel="external">复杂链表的复制</a></h2><h3 id="题目描述-23"><a href="#题目描述-23" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入一个复杂链表（每个节点中有节点值，以及两个指针，<br>next指向下一个节点，random指向任意一个节点），<br>返回结果为复制后复杂链表的head。</p>
-<h3 id="最优题解-23"><a href="#最优题解-23" class="headerlink" title="最优题解"></a>最优题解</h3><p>时间复杂度O(n)，空间复杂度O(1)</p>
+<h2 id="复杂链表的复制"><a href="#复杂链表的复制" class="headerlink" title="复杂链表的复制"></a><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/26_%E5%A4%8D%E6%9D%82%E9%93%BE%E8%A1%A8%E7%9A%84%E5%A4%8D%E5%88%B6.py" target="_blank" rel="external">复杂链表的复制</a></h2><h3 id="题目描述-23"><a href="#题目描述-23" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入一个复杂链表（每个节点中有节点值，以及两个指针</p>
+<p>next指向下一个节点，random指向任意一个节点）</p>
+<p>返回结果为复制后复杂链表的head</p>
+<h3 id="最优题解-23"><a href="#最优题解-23" class="headerlink" title="最优题解"></a>最优题解</h3><p>时间复杂度 O(n)，空间复杂度 O(1)</p>
 <p>第一步，复制原链表的结点N并创建新结点N’，再把N’链接到N的后面；</p>
 <p>第二步，设置每个N’的random。如果原链表上的结点N的random指向S，则它对应的复制结点N’的random指向S的下一个结点S’</p>
 <p>第三步，把这个长链表拆分成两个链表，奇数位置上的结点组成原链表，偶数位置上的结点组成复制链表</p>
@@ -579,9 +673,12 @@ class Solution:
         connect(pHead)
         return split(pHead)
 </code></pre>
-<h2 id="二叉搜索树与双向链表"><a href="#二叉搜索树与双向链表" class="headerlink" title="二叉搜索树与双向链表"></a><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/27_%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E4%B8%8E%E5%8F%8C%E5%90%91%E9%93%BE%E8%A1%A8.py" target="_blank" rel="external">二叉搜索树与双向链表</a></h2><h3 id="题目描述-24"><a href="#题目描述-24" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入一棵二叉搜索树，将该二叉搜索树转换成一个排序的双向链表。<br>要求不能创建任何新的结点，只能调整树中结点指针的指向。</p>
+<h2 id="二叉搜索树与双向链表"><a href="#二叉搜索树与双向链表" class="headerlink" title="二叉搜索树与双向链表"></a><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/27_%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E4%B8%8E%E5%8F%8C%E5%90%91%E9%93%BE%E8%A1%A8.py" target="_blank" rel="external">二叉搜索树与双向链表</a></h2><h3 id="题目描述-24"><a href="#题目描述-24" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入一棵二叉搜索树，将该二叉搜索树转换成一个排序的双向链表</p>
+<p>要求不能创建任何新的结点，只能调整树中结点指针的指向</p>
 <h3 id="最优题解-24"><a href="#最优题解-24" class="headerlink" title="最优题解"></a>最优题解</h3><p><img src="https://ws1.sinaimg.cn/large/006giLD5ly1fwx65siwcwj30h103bjr8.jpg" alt="转换示意图"></p>
-<p>中序遍历，同时设置一个指针指向当前双向链表的最后一个结点，<br>每个被遍历到的结点都与当前双向链表的最后一个结点互相连接，<br>同时更新该指针为当前被遍历到的结点</p>
+<p>中序遍历，同时设置一个指针指向当前双向链表的最后一个结点</p>
+<p>每个被遍历到的结点都与当前双向链表的最后一个结点互相连接</p>
+<p>同时更新该指针为当前被遍历到的结点</p>
 <h3 id="代码-24"><a href="#代码-24" class="headerlink" title="代码"></a>代码</h3><pre><code class="python">class TreeNode:
     def __init__(self, x):
         self.val = x
@@ -607,8 +704,13 @@ class Solution:
         dummy.right.left = None  # 去掉伪结点
         return dummy.right  # 伪结点的右边是真正的头结点
 </code></pre>
-<h2 id="字符串的排列"><a href="#字符串的排列" class="headerlink" title="字符串的排列"></a><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/28_1_%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E6%8E%92%E5%88%97.py" target="_blank" rel="external">字符串的排列</a></h2><h3 id="题目描述-25"><a href="#题目描述-25" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入一个字符串,按字典序打印出该字符串中字符的所有排列。<br>例如输入字符串abc,则打印出由字符a,b,c所能排列出来的所有字符串abc,acb,bac,bca,cab和cba。<br>输入描述:<br>输入一个字符串,长度不超过9(可能有字符重复),字符只包括大小写字母。</p>
-<h3 id="最优题解-25"><a href="#最优题解-25" class="headerlink" title="最优题解"></a>最优题解</h3><p>递归，从头到尾逐个字符抽出来，剩下字符的进行排列<br>最后再把抽出来的那个字符与排列好的字符串拼在一起返回即可<br>只剩下一个字符时直接返回该字符</p>
+<h2 id="字符串的排列"><a href="#字符串的排列" class="headerlink" title="字符串的排列"></a><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/28_1_%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E6%8E%92%E5%88%97.py" target="_blank" rel="external">字符串的排列</a></h2><h3 id="题目描述-25"><a href="#题目描述-25" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入一个字符串，按字典序打印出该字符串中字符的所有排列</p>
+<p>例如输入字符串 abc，则打印出由字符 a, b, c 所能排列出来的所有字符串 abc, acb, bac, bca, cab和 cba</p>
+<p>输入描述：</p>
+<p>输入一个字符串，长度不超过 9 (可能有字符重复)，字符只包括大小写字母</p>
+<h3 id="最优题解-25"><a href="#最优题解-25" class="headerlink" title="最优题解"></a>最优题解</h3><p>递归，从头到尾逐个字符抽出来，剩下字符的进行排列</p>
+<p>最后再把抽出来的那个字符与排列好的字符串拼在一起返回即可</p>
+<p>只剩下一个字符时直接返回该字符</p>
 <h3 id="代码-25"><a href="#代码-25" class="headerlink" title="代码"></a>代码</h3><pre><code class="python">class Solution:
     def Permutation(self, ss):
         def permutation(ss):
@@ -626,9 +728,17 @@ class Solution:
 <li><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/28_2_%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E7%BB%84%E5%90%88.py" target="_blank" rel="external">字符串的组合</a></li>
 <li><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/28_3_%E5%85%AB%E7%9A%87%E5%90%8E%E9%97%AE%E9%A2%98.py" target="_blank" rel="external">八皇后问题</a></li>
 </ul>
-<h2 id="数组中出现次数超过一半的数字"><a href="#数组中出现次数超过一半的数字" class="headerlink" title="数组中出现次数超过一半的数字"></a><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/29_%E6%95%B0%E7%BB%84%E4%B8%AD%E5%87%BA%E7%8E%B0%E6%AC%A1%E6%95%B0%E8%B6%85%E8%BF%87%E4%B8%80%E5%8D%8A%E7%9A%84%E6%95%B0%E5%AD%97.py" target="_blank" rel="external">数组中出现次数超过一半的数字</a></h2><h3 id="题目描述-26"><a href="#题目描述-26" class="headerlink" title="题目描述"></a>题目描述</h3><p>数组中有一个数字出现的次数超过数组长度的一半，请找出这个数字。<br>例如输入一个长度为9的数组{1,2,3,2,2,2,5,4,2}。<br>由于数字2在数组中出现了5次，超过数组长度的一半，因此输出2。如果不存在则输出0。</p>
-<h3 id="最优题解-26"><a href="#最优题解-26" class="headerlink" title="最优题解"></a>最优题解</h3><p>时间O（n），空间O（1）</p>
-<p>采用阵地攻守的思想：<br>先让第一个数作为守阵地的士兵，HP=1；<br>遇到相同元素，相当于支援兵，补血，HP+1;<br>遇到不相同元素，相当于敌人，掉血，HP-1；<br>当HP削减为0时，以下一个数作为守阵地的士兵；<br>继续下去，到最后还留在阵地上的士兵，有可能是最强士兵（士兵个数超过一半）。<br>为防止该士兵坐收渔翁之利，需再加一次循环，检查该士兵个数是否真的超过一半。</p>
+<h2 id="数组中出现次数超过一半的数字"><a href="#数组中出现次数超过一半的数字" class="headerlink" title="数组中出现次数超过一半的数字"></a><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/29_%E6%95%B0%E7%BB%84%E4%B8%AD%E5%87%BA%E7%8E%B0%E6%AC%A1%E6%95%B0%E8%B6%85%E8%BF%87%E4%B8%80%E5%8D%8A%E7%9A%84%E6%95%B0%E5%AD%97.py" target="_blank" rel="external">数组中出现次数超过一半的数字</a></h2><h3 id="题目描述-26"><a href="#题目描述-26" class="headerlink" title="题目描述"></a>题目描述</h3><p>数组中有一个数字出现的次数超过数组长度的一半，请找出这个数字</p>
+<p>例如输入一个长度为 9 的数组 [1, 2, 3, 2, 2, 2, 5, 4, 2]</p>
+<p>由于数字 2 在数组中出现了 5 次，超过数组长度的一半，因此输出 2。如果不存在则输出 0</p>
+<h3 id="最优题解-26"><a href="#最优题解-26" class="headerlink" title="最优题解"></a>最优题解</h3><p>时间 O（n），空间 O（1）</p>
+<p>采用阵地攻守的思想</p>
+<p>先让第一个数作为守阵地的士兵，HP = 1</p>
+<p>遇到相同元素，相当于支援兵，补血，HP + 1</p>
+<p>遇到不相同元素，相当于敌人，掉血，HP - 1</p>
+<p>当 HP 削减为 0 时，以下一个数作为守阵地的士兵</p>
+<p>继续下去，到最后还留在阵地上的士兵，有可能是最强士兵（士兵个数超过一半）</p>
+<p>为防止该士兵坐收渔翁之利，需再加一次循环，检查该士兵个数是否真的超过一半</p>
 <h3 id="代码-26"><a href="#代码-26" class="headerlink" title="代码"></a>代码</h3><pre><code class="python">class Solution:
     def MoreThanHalfNum(self, numbers):
         if not numbers: return 0
@@ -645,9 +755,9 @@ class Solution:
         isHalf = sum(num == master for num in numbers) &gt; len(numbers) &gt;&gt; 1
         return master if isHalf else 0
 </code></pre>
-<h2 id="最小的K个数"><a href="#最小的K个数" class="headerlink" title="最小的K个数"></a><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/30_%E6%9C%80%E5%B0%8F%E7%9A%84K%E4%B8%AA%E6%95%B0.py" target="_blank" rel="external">最小的K个数</a></h2><h3 id="题目描述-27"><a href="#题目描述-27" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入n个整数，找出其中最小的K个数。例如输入4,5,1,6,2,7,3,8这8个数字，则最小的4个数字是1,2,3,4</p>
-<h3 id="最优题解-27"><a href="#最优题解-27" class="headerlink" title="最优题解"></a>最优题解</h3><p>时间O(nlogk)，空间O(1)</p>
-<p>基于Partition的算法, 只有当我们可以修改输入的数组时可用。<br>利用Partition找到第(k-1)小的数(从0开始)，则数组左边的k个数字就是最小的k个数字（这k个数字不一定是排序的）</p>
+<h2 id="最小的K个数"><a href="#最小的K个数" class="headerlink" title="最小的K个数"></a><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/30_%E6%9C%80%E5%B0%8F%E7%9A%84K%E4%B8%AA%E6%95%B0.py" target="_blank" rel="external">最小的K个数</a></h2><h3 id="题目描述-27"><a href="#题目描述-27" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入 n 个整数，找出其中最小的 K 个数。例如输入 4, 5, 1, 6, 2, 7, 3, 8 这 8 个数字，则最小的 4 个数字是 1, 2, 3, 4</p>
+<h3 id="最优题解-27"><a href="#最优题解-27" class="headerlink" title="最优题解"></a>最优题解</h3><p>时间 O(nlogk)，空间 O(1)</p>
+<p>基于 Partition 的算法，只有当我们可以修改输入的数组时可用。<br>利用 Partition 找到第 (k - 1) 小的数 (从 0 开始)，则数组左边的k个数字就是最小的 k 个数字（这 k 个数字不一定是排序的）</p>
 <h3 id="代码-27"><a href="#代码-27" class="headerlink" title="代码"></a>代码</h3><pre><code class="python">class Solution:
     def GetLeastNumbers(self, tinput, k):
         def partition(l, r):  # 基于快排的partition
@@ -672,9 +782,15 @@ class Solution:
             else:
                 return sorted(tinput[:k])
 </code></pre>
-<h2 id="连续子数组的最大和"><a href="#连续子数组的最大和" class="headerlink" title="连续子数组的最大和"></a><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/31_%E8%BF%9E%E7%BB%AD%E5%AD%90%E6%95%B0%E7%BB%84%E7%9A%84%E6%9C%80%E5%A4%A7%E5%92%8C.py" target="_blank" rel="external">连续子数组的最大和</a></h2><h3 id="题目描述-28"><a href="#题目描述-28" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入一个整型数组，数组中一个或连续的多个整数组成一个子数组。<br>求所有子数组的和的最大值，要求时间复杂度为O(n)</p>
-<h3 id="最优题解-28"><a href="#最优题解-28" class="headerlink" title="最优题解"></a>最优题解</h3><p>动态规划。<br>设 f(i) 为以第 i 个数结尾的连续子数组的最大和，则状态转移方程为：<br><code>f(i) = max(f(i-1)+array[i], array[i])</code><br>最后结果为max(f(i))<br>优化：f(i)只与f(i-1)有关，即只与前一状态有关，所以空间上可以由O(n)降为O(1)</p>
-<p>该状态转移方程的意义是：<br>如果以第 i-1 个数字结尾的子数组中所有数字的和加上当前第 i 个数字比当前第 i 个数字本身还要小，<br>那么就舍弃前面的累加而直接选择第 i 个数字本身作为最大值<br>最后求所有以第 i 个数结尾的连续子数组最大和的最大值</p>
+<h2 id="连续子数组的最大和"><a href="#连续子数组的最大和" class="headerlink" title="连续子数组的最大和"></a><a href="https://github.com/Hk4Fun/algorithm_offer/blob/master/target_offer/31_%E8%BF%9E%E7%BB%AD%E5%AD%90%E6%95%B0%E7%BB%84%E7%9A%84%E6%9C%80%E5%A4%A7%E5%92%8C.py" target="_blank" rel="external">连续子数组的最大和</a></h2><h3 id="题目描述-28"><a href="#题目描述-28" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入一个整型数组，数组中一个或连续的多个整数组成一个子数组。<br>求所有子数组的和的最大值，要求时间复杂度为 O(n)</p>
+<h3 id="最优题解-28"><a href="#最优题解-28" class="headerlink" title="最优题解"></a>最优题解</h3><p>动态规划，设 f(i) 为以第 i 个数结尾的连续子数组的最大和，则状态转移方程为：</p>
+<p><code>f(i) = max(f(i-1)+array[i], array[i])</code></p>
+<p>最后结果为 max(f(i))</p>
+<p>优化：f(i) 只与 f(i - 1) 有关，即只与前一状态有关，所以空间上可以由 O(n) 降为 O(1)</p>
+<p>该状态转移方程的意义是：</p>
+<p>如果以第 i - 1 个数字结尾的子数组中所有数字的和加上当前第 i 个数字比当前第 i 个数字本身还要小</p>
+<p>那么就舍弃前面的累加而直接选择第 i 个数字本身作为最大值</p>
+<p>最后求所有以第 i 个数结尾的连续子数组最大和的最大值</p>
 <h3 id="代码-28"><a href="#代码-28" class="headerlink" title="代码"></a>代码</h3><pre><code class="python">class Solution:
     def FindGreatestSumOfSubArray(self, array):
         if not array: return
@@ -695,7 +811,7 @@ class Solution:
 </ol>
 <p>二、X的数目</p>
 <p>这里的X∈[1,9]，因为X=0不符合下列规律，需要单独计算。<br>首先要知道以下的规律：<br>从 1 至 10，在它们的个位数中，任意的 X 都出现了 1 次。<br>从 1 至 100，在它们的十位数中，任意的 X 都出现了 10 次。<br>从 1 至 1000，在它们的百位数中，任意的 X 都出现了 100 次。<br>依此类推，从1至10^i，在它们的左数第二位（右数第i位）中，任意的X都出现了10^(i-1)次。<br>这个规律很容易验证，这里不再多做说明。</p>
-<p>接下来以 n=2593, X=5 为例来解释如何得到数学公式。从 1 至 2593 中，数字 5 总计出现了 813 次，<br>其中有 259 次出现在个位，260 次出现在十位，294 次出现在百位，0 次出现在千位。<br>现在依次分析这些数据，首先是个位。从 1 至 2590 中，包含了 259 个 10，因此任意的 X 都出现了 259 次。<br>最后剩余的三个数 2591, 2592 和 2593，因为它们最大的个位数字 3 &lt; X，因此不会包含任何 5。<br>（也可以这么看，3 &lt; X，则个位上可能出现的X的次数仅由更高位决定，等于更高位数字（259） * 10 ^ (1 - 1) = 259）。<br>然后是十位。从 1 至 2500 中，包含了 25 个 100，因此任意的 X 都出现了  25 * 10 = 250  次。<br>剩下的数字是从 2501 至 2593，它们最大的十位数字 9 &gt; X，因此会包含全部 10 个 5。<br>最后总计 250 + 10 = 260。（也可以这么看，9 &gt; X，则十位上可能出现的X的次数仅由更高位决定，<br>等于更高位数字(25 + 1) * 10 ^ (2 -  1) = 260）。<br>接下来是百位。从 1 至 2000 中，包含了 2 个 1000，因此任意的 X 都出现了  2 * 100 = 200  次。<br>剩下的数字是从 2001 至 2593，它们最大的百位数字 5 == X，这时情况就略微复杂，<br>它们的百位肯定是包含 5 的，但不会包含全部 100 个。如果把百位是 5 的数字列出来，<br>是从 2500 至 2593，数字的个数与百位和十位数字相关，是 93 + 1 = 94。最后总计 200 + 94 = 294。<br>（也可以这么看，5==X，则百位上可能出现X的次数不仅受更高位影响，还受低位影响，<br>等于更高位数字（2） * 10 ^ (3 - 1) + (93 + 1) = 294）。<br>最后是千位。现在已经没有更高位，因此直接看最大的千位数字 2 &lt; X，所以不会包含任何 5。<br>（也可以这么看，2 &lt; X，则千位上可能出现的X的次数仅由更高位决定，等于更高位数字(0) * 10 ^ (4 - 1) = 0）。<br>到此为止，已经计算出全部数字 5 的出现次数。<br>总结一下以上的算法，可以看到，当计算右数第 i 位包含的 X 的个数时：<br>取第i位左边（所有高位）的数字，乘以  10 ^ (i - 1) ，得到基础值  a 。<br>取第i位数字，计算修正值：<br>如果小于 X，则结果为  a 。<br>如果大于 X，则结果为  a + 10 ^ (i - 1) 。<br>如果等于 X，则取第 i 位右边（所有低位）数字，设为  b ，最后结果为  a + b + 1 。<br>相应的代码非常简单，效率也非常高，时间复杂度只有  O( lg n) 。</p>
+<p>接下来以 n=2593, X=5 为例来解释如何得到数学公式。从 1 至 2593 中，数字 5 总计出现了 813 次，<br>其中有 259 次出现在个位，260 次出现在十位，294 次出现在百位，0 次出现在千位。<br>现在依次分析这些数据，首先是个位。从 1 至 2590 中，包含了 259 个 10，因此任意的 X 都出现了 259 次。<br>最后剩余的三个数 2591, 2592 和 2593，因为它们最大的个位数字 3 &lt; X，因此不会包含任何 5。<br>（也可以这么看，3 &lt; X，则个位上可能出现的X的次数仅由更高位决定，等于更高位数字（259） * 10 ^ (1 - 1) = 259）。<br>然后是十位。从 1 至 2500 中，包含了 25 个 100，因此任意的 X 都出现了  25 * 10 = 250  次。<br>剩下的数字是从 2501 至 2593，它们最大的十位数字 9 &gt; X，因此会包含全部 10 个 5。<br>最后总计 250 + 10 = 260。（也可以这么看，9 &gt; X，则十位上可能出现的X的次数仅由更高位决定，<br>等于更高位数字(25 + 1) * 10 ^ (2 -  1) = 260）。<br>接下来是百位。从 1 至 2000 中，包含了 2 个 1000，因此任意的 X 都出现了  2 * 100 = 200  次。<br>剩下的数字是从 2001 至 2593，它们最大的百位数字 5 == X，这时情况就略微复杂，<br>它们的百位肯定是包含 5 的，但不会包含全部 100 个。如果把百位是 5 的数字列出来，<br>是从 2500 至 2593，数字的个数与百位和十位数字相关，是 93 + 1 = 94。最后总计 200 + 94 = 294。<br>（也可以这么看，5==X，则百位上可能出现X的次数不仅受更高位影响，还受低位影响，<br>等于更高位数字（2） * 10 ^ (3 - 1) + (93 + 1) = 294）。<br>最后是千位。现在已经没有更高位，因此直接看最大的千位数字 2 &lt; X，所以不会包含任何 5。<br>（也可以这么看，2 &lt; X，则千位上可能出现的X的次数仅由更高位决定，等于更高位数字(0) * 10 ^ (4 - 1) = 0）。<br>到此为止，已经计算出全部数字 5 的出现次数。<br>总结一下以上的算法，可以看到，当计算右数第 i 位包含的 X 的个数时：<br>取第i位左边（所有高位）的数字，乘以  10 ^ (i - 1) ，得到基础值  a 。<br>取第i位数字，计算修正值：<br>如果小于 X，则结果为  a 。<br>如果大于 X，则结果为  a + 10 ^ (i - 1) 。<br>如果等于 X，则取第 i 位右边（所有低位）数字，设为  b ，最后结果为  a + b + 1 。<br>相应的代码非常简单，效率也非常高，时间复杂度只有  O( log n) 。</p>
 <h3 id="代码-29"><a href="#代码-29" class="headerlink" title="代码"></a>代码</h3><pre><code class="python">class Solution:
     def NumberOf1Between1AndN(self, n):
         count, weight = 0, 1
