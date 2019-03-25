@@ -2,13 +2,6 @@
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
     <url>
-        <loc>https://hk4fun.github.io/tags/coroutine/</loc>
-        <lastmod>2018-11-07T11:03:47.285Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>https://hk4fun.github.io/tags/ORM/</loc>
         <lastmod>2018-11-07T11:11:24.977Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -79,13 +72,6 @@
     </url>
 
     <url>
-        <loc>https://hk4fun.github.io/tags/Python/</loc>
-        <lastmod>2018-12-09T18:22:24.780Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>https://hk4fun.github.io/tags/PEP/</loc>
         <lastmod>2018-12-09T18:22:24.780Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -109,6 +95,20 @@
     <url>
         <loc>https://hk4fun.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</loc>
         <lastmod>2019-03-18T04:00:48.053Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://hk4fun.github.io/tags/Python/</loc>
+        <lastmod>2019-03-25T16:18:47.939Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://hk4fun.github.io/tags/coroutine/</loc>
+        <lastmod>2019-03-25T16:18:47.939Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>

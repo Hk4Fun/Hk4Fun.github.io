@@ -4778,7 +4778,9 @@ AttributeError: &#39;T&#39; object has no attribute &#39;__bases__&#39;
 <p>yield from 的实现机制可参考《流畅的Python》第16章</p>
 <p>更加详细的描述见 <a href="https://www.python.org/dev/peps/pep-0380/" target="_blank" rel="external">PEP 380 – Syntax for Delegating to a Subgenerator</a></p>
 <p>最后，可以使用 <a href="http://www.pythontutor.com/visualize.html#mode=edit" target="_blank" rel="external">http://www.pythontutor.com/visualize.html#mode=edit</a> 来可视化整个执行流</p>
-<p>– end –</p>
+<p>————</p>
+<p>更新：学长又出了一篇很棒的番外~</p>
+<p><a href="https://bbs.byr.cn/#!article/Python/22645" target="_blank" rel="external">https://bbs.byr.cn/#!article/Python/22645</a></p>
 ]]></content>
       
         
