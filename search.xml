@@ -3574,13 +3574,11 @@ PyUnicode_InternInPlace(PyObject **p) // 注意这里是二级指针，因为可
 <p>关于 Python 中类的加载（导入）机制，可以看《流畅的Python》第21章元类编程中：导入时和运行时的比较，其中的一个理解计算时间的练习很有意思</p>
 <h3 id="扩展"><a href="#扩展" class="headerlink" title="扩展"></a>扩展</h3><p>多例模式，返回多个（有限个）实例对象，可以随机也可以按序</p>
 <h2 id="实现方式"><a href="#实现方式" class="headerlink" title="实现方式"></a>实现方式</h2><p>在此之前，建议看我之前的一篇文章：<a href="https://hk4fun.github.io/2018/08/15/%E9%AD%94%E6%B3%95%E6%96%B9%E6%B3%95%E4%B9%8B-new-%E4%B8%8E-init/">魔法方法之 <code>__new__()</code> 与 <code>__init__()</code></a>，因为接下来的各种实现方式很多都是通过重载 <code>__new__()</code> 和 <code>__init__()</code> 来实现的，否则你可能不知为何这么做就可以实现单例</p>
-<h3 id="1-重载-new"><a href="#1-重载-new" class="headerlink" title="1. 重载 __new__()"></a>1. 重载 <code>__new__()</code></h3><p>使用一个字典 <code>_instances</code> 来存放出现过的实例</p>
-<p>采用字典的存储方式是考虑到Singleton可能会有子类，这样可以返回子类的单例</p>
-<p>否则直接返回 Singleton 的单例时子类的 <code>__init__()</code> 不会被调用，因为Singleton 的单例不是其子类的实例</p>
+<h3 id="1-重载-new"><a href="#1-重载-new" class="headerlink" title="1. 重载 __new__()"></a>1. 重载 <code>__new__()</code></h3><p>使用一个类的字典 <code>_instances</code> 来存放出现过的实例</p>
+<p>采用公共的类字典的存储方式是考虑到Singleton可能会有子类，这样可以返回不同子类的单例</p>
+<p>否则（使用一个类变量存储）一旦先实例化父类Singleton，则子类实例化时总返回父类的实例</p>
 <p>该方法在每次生成实例时都会调用 <code>__init__()</code> 来重置实例属性</p>
 <pre><code class="python">class Singleton:
-    # 使用字典是考虑到Singleton可能会有子类，这样可以返回子类的单例，
-    # 否则返回Singleton的单例时子类的__init__()不会被调用，因为Singleton的单例不是其子类的实例
     _instances = {} 
 
     def __new__(cls, *args, **kwargs):
@@ -3867,7 +3865,17 @@ TypeError: __init__() takes 1 positional argument but 4 were given
 </code></pre>
 <h3 id="7-使用-import-的模块导入"><a href="#7-使用-import-的模块导入" class="headerlink" title="7. 使用 import 的模块导入"></a>7. 使用 import 的模块导入</h3><p>Python 的模块导入方式采用的就是天然的单例模式</p>
 <p>通过 import，一个模块只会被导入并初始化一次，模块内的全局变量将会被绑定到模块上</p>
-<p>因此我们只需把想要的单例提前在一个模块内<strong>作为全局变量</strong>实例化，然后在别的模块中导入即可</p>
+<p>因此我们只需把想要的单例提前在一个模块内<strong>作为全局变量</strong>实例化<strong>并删除该类</strong>，然后在别的模块中导入即可:</p>
+<pre><code class="python"># a.py:
+class A:
+    pass
+
+a = A()
+del A
+
+# b.py:
+from a import a
+</code></pre>
 <p>这种实现方式属于饿汉模式，是线程安全的，并且import本身的实现机制也是线程安全的</p>
 <p>其典型的例子就是标准库中的logging模块，它在被导入时会生成一个全局的 Logger.manager 单例作为 root</p>
 <p>然后每次通过 logging.getLogger(name) 调用时总是通过 root.loggerDict 获取同一个 Logger</p>
